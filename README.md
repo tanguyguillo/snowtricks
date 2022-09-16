@@ -1,4 +1,4 @@
-# Projet P6 of openclassrooms.com : 
+# Projet P6 of openclassrooms.com :
 
 OPENCLASSROOMS project P6 for DEV PHP/SYMFONY certificate
 
@@ -8,8 +8,8 @@ Create a community website With Symfony (snowtricks)
 
 ## Stack
 
- Symfony 5.4.12
- PHP 8.08
+ Symfony 6.1.4
+ PHP 8.1.1
  Maria DB
  Composer
  Twig
