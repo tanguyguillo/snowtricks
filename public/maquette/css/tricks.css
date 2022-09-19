@@ -1,3 +1,98 @@
+
 header {
-  background-image: "asset/img/snowboard-background.jpg" !important;
+  min-height: 1400px;
+}
+
+/*make staying the section on the bottom of the page*/
+section.copyright {
+  z-index: 2;
+  position: fixed;
+  padding: 25px 0;
+  bottom: 0;
+  width: 100%;
+}
+
+#navbarResponsive>ul>li.separator {
+  color: white;
+}
+
+.home-background {
+  background-image: url("../assets/img/snowboard-background.png") !important;
+  background-repeat: no-repeat;
+  background-position-x: center;
+  width: auto;
+  height: auto;
+  background-color: #2c3e50;
+  background-size: cover;
+
+}
+
+.masthead{
+ text-align: center;
+
+}
+
+.masthead-heading {
+   margin-top : 300x;
+}
+
+.pink {
+  color: #e83e8c;
+}
+
+/* link card */
+div > div > div > div > a{
+    color: #1f2d41;
+    text-decoration: underline;
+    background-color: transparent;
+  }
+
+/* to place slogan */
+div.placement{
+height:450px;
+}
+
+h1#slogan {
+ margin-left: auto;
+ margin-right: auto;
+ width: 10em
+}
+
+.scroll-to-top a {
+ /* position fixed bottom:40px;right:35px;top: 100px;left:150px*/
+  width: 3.5rem;
+  height: 3.5rem;
+  background-color: rgba(33, 37, 41, 0.5);
+  line-height: 3.1rem;
+  margin : 10px;
+}
+
+.iconTricks{
+font-size : 9;
+}
+
+.scroll-to-tricks a {
+
+   /* width: 3.5rem;
+    height: 3.5rem;
+    background-color: rgba(33, 37, 41, 0.5);
+    line-height: 3.1rem;*/
+
+}
+
+.visually-hidden {
+  visibility: hidden;
+}
+
+/*div.col-md-2:nth-child(*) > div:nth-child(*) > div:nth-child(*) > div:nth-child(*)*/
+div.col-md-2
+{
+min-width: 225px !important;
+  align-items: center;
+  justify-content: center;
+}
+
+/* only 5 column */
+div.col-md-2.col-lg-2.mb-5{
+margin : 1px;
 }
