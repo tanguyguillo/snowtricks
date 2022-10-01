@@ -17,15 +17,19 @@ class SnowTricksController extends AbstractController
     }
 
     /**
-     *  function home  :  http://snow-tricks.local/
+     *  function home url :  http://snow-tricks.local:8888/  in local or  http://127.0.0.1:8000
      *
      * @return Response
      */
     #[Route('/', name: 'home')]
     public function home(): Response
-    {
+    { 
+        $title = "Jimmy Sweat - Community Tricks Provider";
+
         return $this->render('snow_tricks/home.html.twig', [
-            'controller_name' => 'SnowTricksController',
+            'controller_name' => 'SnowTricksController', [
+                'title' => $title
+            ]
         ]);
     }
 
