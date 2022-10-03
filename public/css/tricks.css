@@ -118,3 +118,11 @@ min-width: 225px !important;
 div.col-md-2.col-lg-2.mb-5{
 margin : 1px;
 }
+
+footer{
+  z-index: 2;
+  position: fixed;
+  padding: 25px 150; 
+  bottom: 0; 
+  width: 100%;
+}

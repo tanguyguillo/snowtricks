@@ -33,10 +33,11 @@
         {% endblock %}
 
     </head>
-    <body id="page-top">
     {% block body %}
+    <body id="page-top">
+
         
-        <h1>Welcome Page snowTricks</h1>
+    <h1>Welcome Page snowTricks</h1>
 
     <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
 
@@ -624,18 +625,17 @@
             </div>
         </div>
     </div>
-    
-    
+</section>
 
-
- </section>
- <div class="scroll-to-tricks">
+    <div class="scroll-to-tricks">
         <div class=""> 
         <a class="js-scroll-trigger d-block text-right text-white rounded font-size30 px-3" href="#tricks">
-           <i class="bi bi-arrow-up-square-fill"></i>
+        <i class="bi bi-arrow-up-square-fill"></i>
         </a>
     </div>
     
+    {% endblock %} {# body  #}
+
     <!-- Copyright Section-->
     <footer class="copyright py-4 text-center text-white">
         <div class="container">
@@ -650,11 +650,6 @@
             </div>
         </div>
     </footer>
-    
-    {% endblock %} {# body  #}
-    
-    
-
 
 {% block javascripts %}
         {# {{ encore_entry_script_tags('app') }} #}
