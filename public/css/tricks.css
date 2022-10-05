@@ -1,6 +1,6 @@
 
 header {
-  min-height: 1400px;
+  min-height: 1110px;
 }
 
 /*make staying the section on the bottom of the page*/
@@ -24,7 +24,6 @@ section.copyright {
   height: auto;
   background-color: #2c3e50;
   background-size: cover;
-
 }
 
 /* warning button in red" */
@@ -42,21 +41,18 @@ section.copyright {
 
 
 .masthead{
- text-align: center;
+text-align: center;
 
 }
 
 .masthead-heading {
-   margin-top : 300x;
+  margin-top : 300x;
 }
 
 .pink {
   color: #e83e8c;
 }
 
-#signin > div > div > div > div > div > div > form > button{
-
-}
 
 /* for register and forgot password  */
 #signin > div > div > div > div > div > div > form > a{
@@ -99,8 +95,13 @@ font-size : 30px;
 color:  #7aadc1;
 } /*ok green*/
 
-/* icon on the top */
-.bi-arrow-down-square-fill{} 
+#absolute {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
+}
 
 .visually-hidden {
   visibility: hidden;
@@ -126,3 +127,39 @@ footer{
   bottom: 0; 
   width: 100%;
 }
+
+.container .row{
+  margin-top: 10px;
+  margin-bottom: 2px;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+/******************/
+ul .footerDown {
+  padding:0;
+  margin:0;
+  list-style-type:none;
+  }
+li .footerDown{
+  margin-left:2px;
+  float:left; /*pour IE*/
+  }
+ul li a f.ooterDown{
+  display:block;
+  float:left;   
+  width:100px;
+  background-color:#6495ED;
+  color:black;
+  text-decoration:none;
+  text-align:center;
+  padding:5px;
+  border:2px solid;
+  /*pour avoir un effet "outset" avec IE :*/
+  border-color:#DCDCDC #696969 #696969 #DCDCDC;
+  }
+ul li a:hover .footerDown{
+  background-color:#D3D3D3;
+  border-color:#696969 #DCDCDC #DCDCDC #696969;
+  } 
+  /******************/

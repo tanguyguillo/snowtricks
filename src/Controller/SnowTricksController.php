@@ -34,7 +34,7 @@ class SnowTricksController extends AbstractController
     }
 
     /**
-     * function createNewTrick :  http://snow-tricks.local/index.php/create-a-new-trick
+     * function createNewTrick : http://127.0.0.1:8000/index.php/create-a-new-trick
      *
      * @return Response
      */

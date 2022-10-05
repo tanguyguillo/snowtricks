@@ -28,7 +28,7 @@ class User
 
     #[ORM\Column(length: 255)]
     private ?string $pictureUserUrl = null;
-
+    
     public function getId(): ?int
     {
         return $this->id;
