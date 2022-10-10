@@ -16,8 +16,10 @@ class RegistrationType extends AbstractType
             ->add('emailUser')
             ->add('username')
             ->add('passwordUser', PasswordType::class)
-            ->add('roleUser')
+            ->add('roleUser') 
             ->add('pictureUserUrl')
+
+            //  $task->setDueDate(new \DateTime('tomorrow'));
         ;
     }
 

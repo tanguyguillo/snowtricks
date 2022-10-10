@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -20,7 +21,14 @@ class User
     #[ORM\Column(length: 255)]
     private ?string $username = null;
 
+
     #[ORM\Column(length: 255)]
+
+ 
+    #[Assert\Length(
+        min: 12,
+        minMessage: 'Your password must be at least {{ limit }} characters long',
+    )]
     private ?string $passwordUser = null;
 
     #[ORM\Column(length: 10)]

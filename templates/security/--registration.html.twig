@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+<div class="container">
+    <h1>regisration</h1>
+    <div class="row">
+
+
+{# 
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $emailUser = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $username = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $passwordUser = null;
+
+    #[ORM\Column(length: 10)]
+    private ?string $roleUser = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $pictureUserUrl = null; #}
+    
+
+        <div>
+        {{form_start(form) }}
+        {# {{form_widget(form)}}  #}
+        {{form_row(form.username)}}  
+
+        {{form_row(form.passwordUser)}}  
+
+        {{form_row(form.emailUser)}}  
+
+        <button type="submit" class="btn btn-success">registration</button>
+        
+        {{form_end(form)}}
+    </div>
+    <div>
+    </div>
+
+
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <!-- tricks Modal - Title-->
+                <h2 class="tricks-modal-title text-secondary mb-0">Registration</h2>
+
+                <br> <br> <br>
+
+                <form>
+                    <div class="form-floating">
+                        <label for="tricks-name">User Name</label>
+                                <input type="text" class="form-control" id="tricks-name" placeholder="My user tricks-name">
+                                </div>
+                                <br>
+
+                            <div class="form-floating">
+                                <label for="ricks-email">Email</label>
+                                <input type="email" class="form-control" id="tricks-email" placeholder="My user tricks-name">
+                            </div>
+                            <br>
+
+                            <div class="form-floating">
+                                <label for="floatingPassword">Password</label>
+                                <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                            </div>
+
+                            <br><br>
+
+                        <button class="w-100 btn btn-lg btn-info" type="submit">Create an account</button>
+
+                            <br><br><br>
+                            <div class = "readyAccount" data-dismiss="modal" data-toggle="modal">
+                            <a href="#signin">Already an account </a>
+                            </div>
+                            <br><br>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <br><br>   <br><br>   <br><br>   
+{% endblock %}
