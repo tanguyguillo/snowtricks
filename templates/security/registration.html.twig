@@ -4,15 +4,24 @@
 <div class="container">
     <div class="row justify-content-center">
     <div class="col-lg-8">
-    <br><br>   
-    <h2 class="tricks-modal-title text-secondary mb-0">Registration</h2>
+    <br>
+    
+    {# {% if error %}
+        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %} #}
+    
+    <br>   
+    <h2 class="tricks-modal-title text-secondary mb-0 text-center">Registration</h2>
     <br><br>  
     <div class="form-floating">
                     {{form_start(form) }}
-                    {{form_row(form.username)}}  
-                    {{form_row(form.emailUser)}}  
-                    {{form_row(form.passwordUser)}}  
-                    <button class="w-100 btn btn-lg btn-info" type="submit">Create an account</button
+                    {{form_row(form.username) }}  
+                    {{form_row(form.emailUser) }}  
+                    {{form_row(form.passwordUser) }}  
+                    {{form_widget(form._token) }}
+            
+                    <button class="w-100 btn btn-lg btn-info" type="submit">Create an account</button>
+                    {# <button type="submit">Create an account</button> #}
                     {{form_end(form)}}
                 </div>
             </div>
@@ -21,3 +30,4 @@
 
     <br><br><br><br><br><br>   
 {% endblock %}
+

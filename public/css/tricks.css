@@ -39,6 +39,10 @@ section.copyright {
   border-color: #009da2;
 }
 
+.displayNone{
+  display:none;
+}
+
 
 .masthead{
 text-align: center;
