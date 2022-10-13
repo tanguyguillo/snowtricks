@@ -5,19 +5,17 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
+
 /**
- *  implements //UserInterface, PasswordAuthenticatedUserInterface
+ *  class User with constrains
  */
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
-
-
-/**
- * Undocumented class
- */
+#[UniqueEntity('emailUser')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -34,11 +32,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $username = null;
 
+    #[ORM\Column(name: 'email_user', type: 'string', length: 255, unique: true)]   
     #[Assert\Email(
         message: 'The email {{ value }} is not a valid email.',
     )]
-    #[ORM\Column(type: 'string', length: 180, unique: true)]
-    private ?string $emailUser = null;
+    protected ?string $emailUser = null;
 
     #[Assert\Length(
         min: 8,
