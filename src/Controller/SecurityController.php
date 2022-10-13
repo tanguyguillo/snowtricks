@@ -22,19 +22,21 @@ class SecurityController extends AbstractController
 public function registrationPost(Request $request, EntityManagerInterface $manager, UserPasswordHasherInterface $passwordHasher)
 {
     $user = new User();
+
     // binding fields
     $form = $this->createForm(RegistrationType::class, $user);
     $form->handleRequest($request);
 
+
     if ($form->isSubmitted() && $form->isValid()) {
+        $plaintextPassword = $form->get('passwordUser')->getData();
+
         // hash the password (based on the security.yaml config for the $user class)
-
-        //var_dump($user->getPasswordUser());  // string(24) "toto@toto.frtoto@toto.fr"
-
-        //$hashedPassword = $password_hashers->hashPassword($user, $user->getPasswordUser());
-        //$hashedPassword = $password_hashers->hashPassword($user, $user->getPasswordUser());
-
-       //$user->setPasswordUser($hashedPassword);
+        $hashedPassword = $passwordHasher->hashPassword(
+            $user,
+            $plaintextPassword
+        );
+        $user->setPassword($hashedPassword);
 
         // necessary
         $user->setRoleUser('ROLE_USER');

@@ -18,7 +18,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 /**
  * Undocumented class
  */
-class User
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue] 
@@ -40,7 +40,10 @@ class User
     #[ORM\Column(type: 'string', length: 180, unique: true)]
     private ?string $emailUser = null;
 
-   
+    #[Assert\Length(
+        min: 8,
+        minMessage: 'Your password must be at least {{ limit }} characters long',
+    )]
     #[ORM\Column(length: 255)]
     private ?string $passwordUser = null;
 
@@ -108,10 +111,29 @@ class User
         return $this;
     }
 
+    /**
+     * @return string the hashed password for this user
+     */
     public function getPasswordUser(): ?string
     {
         return $this->passwordUser;
     }
+
+    /**
+     * function getPassword necessary for UserInterface,
+     *
+     * @return string|null
+     */
+    public function  getPassword(): ?string
+    {
+        return $this->passwordUser;
+    }
+    public function  setPassword(string $passwordUser): self
+    {
+        $this->passwordUser = $passwordUser;
+        return $this;
+    }
+
 
     public function setPasswordUser(string $passwordUser): self
     {
@@ -151,6 +173,16 @@ class User
         // The bcrypt and argon2i algorithms don't require a separate salt.
         // You *may* need a real salt if you choose a different encoder.
         return null;
+    }
+
+    /**
+     * The public representation of the user (e.g. a username, an email address, etc.)
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->email;
     }
 
     /**
