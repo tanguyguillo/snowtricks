@@ -16,7 +16,7 @@
     <div class="form-floating">
                     {{form_start(form) }}
                     {{form_row(form.username, {'label': 'Username', 'attr' : {placeHolder : 'Your username : min 3 chars'}}) }} 
-                    {{form_row(form.emailUser, {'label': 'Email', 'attr' : {placeHolder : 'Your email : for example firstname.username@gmail.com'}}) }} 
+                    {{form_row(form.emailUser, {'label': 'Email', 'attr' : {placeHolder : 'Your email'}}) }} 
                     {{form_row(form.passwordUser, {'label': 'Password', 'attr' : {placeHolder : 'Your password : min 8 chars'}}) }} 
                     {{form_widget(form._token) }}
                     <button class="w-100 btn btn-lg btn-info" type="submit">Create an account</button>

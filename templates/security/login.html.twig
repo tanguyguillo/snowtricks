@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+
+{# {% block main %}
+<div class="container">
+    <div class="row justify-content-center">
+    <div class="col-lg-8">
+    <br>
+
+    <br>   
+    <h2 class="tricks-modal-title text-secondary mb-0 text-center">Registration</h2>
+    <br><br>  
+    <div class="form-floating">
+                    {{form_start(form) }}
+                    {{form_row(form.username, {'label': 'Username', 'attr' : {placeHolder : 'Your username : min 3 chars'}}) }} 
+                    {{form_row(form.emailUser, {'label': 'Email', 'attr' : {placeHolder : 'Your email'}}) }} 
+                    {{form_row(form.passwordUser, {'label': 'Password', 'attr' : {placeHolder : 'Your password : min 8 chars'}}) }} 
+                    {{form_widget(form._token) }}
+                    <button class="w-100 btn btn-lg btn-info" type="submit">Create an account</button>
+                    {{form_end(form)}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br><br><br><br><br><br>   
+{% endblock %} #}
+
+{% block main %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+    <br>
+                        <h2 class="tricks-modal-title text-secondary mb-0">Login</h2>
+                        <br><br>
+                            <form>
+                                    <div class="form-floating">
+                                        <label for="floatingInput">User Name</label>
+                                        <input type="text" class="form-control" id="floatingInput" placeholder="My user tricks-name">
+                                    </div>
+                                        <br>
+
+                                    <div class="form-floating">
+                                        <label for="floatingPassword">Password</label>
+                                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                                    </div>
+
+                                    <br><br>
+
+                                    <div class="checkbox mb-3">
+                                    <label>
+                                        <input type="checkbox" value="remember-me"> Remember me
+                                    </label>
+                                    </div>
+
+
+                                <button class="w-100 btn btn-lg btn-info" type="submit">login</button>
+                                    <br><br><br><br>
+
+                                <span>You don't have a account : </span><a href="#">Register </a>
+                                    <br><br>
+                                    <a href="#">Forgot password ? </a>
+                                    <br><br>    
+
+                        </form>
+                        <br><br><br><br><br><br>   
+{% endblock %}

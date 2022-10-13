@@ -6,30 +6,33 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * class  with home (/)
+ */
 class SnowTricksController extends AbstractController
 {
-    #[Route('/snow/tricks', name: 'app_snow_tricks')]
-    public function index(): Response
-    {
-        return $this->render('snow_tricks/index.html.twig', [
-            'controller_name' => 'SnowTricksController',
-        ]);
-    }
-
     /**
-     *  function home url :  http://snow-tricks.local:8888/  in local or  http://127.0.0.1:8000
+     *  function home 
      *
      * @return Response
      */
     #[Route('/', name: 'home')]
     public function home(): Response
     { 
-        $title = "Jimmy Sweat - Community Tricks Provider";
+        $title = "Snowtricks";
 
         return $this->render('snow_tricks/home.html.twig', [
             'controller_name' => 'SnowTricksController', [
                 'title' => $title
             ]
+        ]);
+    }
+
+    #[Route('/snow/tricks', name: 'app_snow_tricks')]
+    public function index(): Response
+    {
+        return $this->render('snow_tricks/index.html.twig', [
+            'controller_name' => 'SnowTricksController',
         ]);
     }
 
