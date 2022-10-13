@@ -6,7 +6,7 @@
     <div class="col-lg-8">
     <br>
     
-    {# {% if error %}
+    {# {% if error %}  // Variable "error" does not exist.
         <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %} #}
     
@@ -15,13 +15,11 @@
     <br><br>  
     <div class="form-floating">
                     {{form_start(form) }}
-                    {{form_row(form.username) }}  
-                    {{form_row(form.emailUser) }}  
-                    {{form_row(form.passwordUser) }}  
+                    {{form_row(form.username, {'label': 'Username', 'attr' : {placeHolder : 'Your username : min 3 chars'}}) }} 
+                    {{form_row(form.emailUser, {'label': 'Email', 'attr' : {placeHolder : 'Your email)'}}) }} 
+                    {{form_row(form.passwordUser, {'label': 'Password', 'attr' : {placeHolder : 'Your password : min 8 chars'}}) }} 
                     {{form_widget(form._token) }}
-            
                     <button class="w-100 btn btn-lg btn-info" type="submit">Create an account</button>
-                    {# <button type="submit">Create an account</button> #}
                     {{form_end(form)}}
                 </div>
             </div>

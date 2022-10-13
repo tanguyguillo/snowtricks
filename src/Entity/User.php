@@ -2,40 +2,71 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
+use App\Repository\UserRepository;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
+/**
+ *  implements //UserInterface, PasswordAuthenticatedUserInterface
+ */
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 
-class User //implements UserInterface
+
+/**
+ * Undocumented class
+ */
+class User
 {
     #[ORM\Id]
     #[ORM\GeneratedValue] 
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\Length(
+        min: 3,
+        max: 50,
+        minMessage: 'Your first name must be at least {{ limit }} characters long',
+        maxMessage: 'Your first name cannot be longer than {{ limit }} characters',
+    )]
     #[ORM\Column(length: 255)]
     private ?string $username = null;
 
+    #[Assert\Email(
+        message: 'The email {{ value }} is not a valid email.',
+    )]
     #[ORM\Column(type: 'string', length: 180, unique: true)]
     private ?string $emailUser = null;
 
-
+   
     #[ORM\Column(length: 255)]
     private ?string $passwordUser = null;
 
-
+    /**
+     * variable : issue with $roles....
+     *
+     * @var string|null
+     */
     #[ORM\Column(length: 10)]
     private ?string $roleUser = null;
 
     #[ORM\Column(length: 255)]
     private ?string $pictureUserUrl = null;
 
+    /**
+    * variable witche have nothing with DB
+    *
+    * @var [string]
+    */
+    public $confirm_password;
 
-
+    /**
+     * variables for 
+     *
+     * @var array
+     */
     private $roles = [];
     public $eraseCredentials;
 
@@ -89,11 +120,11 @@ class User //implements UserInterface
         return $this;
     }
 
-    public function getRoleUser(): ?string
+    public function getRoleUser()
     {
-        return $this->roleUser;
-          // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        $this->getRoles();
+
+        return $this;
     }
 
     public function setRoleUser(string $roleUser): self
@@ -115,7 +146,6 @@ class User //implements UserInterface
         return $this;
     }
 
-
     public function getSalt()
     {
         // The bcrypt and argon2i algorithms don't require a separate salt.
@@ -123,13 +153,24 @@ class User //implements UserInterface
         return null;
     }
 
-    // public function getRoles()
-    // {
-    //     return $this->roleUser;
-    // }
+    /**
+     * @see UserInterface
+     */
+
+    public function setRoles()
+    {
+        return $this->roleUser;
+    }
+
+    public function getRoles(): array
+    {
+        return $this->roleUser;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+        return array_unique($roles);
+    }
 
     public function eraseCredentials()
     {
     }
-
 }

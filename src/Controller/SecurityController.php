@@ -18,7 +18,6 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class SecurityController extends AbstractController
 {
-
 #[Route('/registration', name: 'app_security_registration', methods: ['POST', 'GET'])]
 public function registrationPost(Request $request, EntityManagerInterface $manager, UserPasswordHasherInterface $passwordHasher)
 {
@@ -29,9 +28,13 @@ public function registrationPost(Request $request, EntityManagerInterface $manag
 
     if ($form->isSubmitted() && $form->isValid()) {
         // hash the password (based on the security.yaml config for the $user class)
+
+        //var_dump($user->getPasswordUser());  // string(24) "toto@toto.frtoto@toto.fr"
+
+        //$hashedPassword = $password_hashers->hashPassword($user, $user->getPasswordUser());
         //$hashedPassword = $password_hashers->hashPassword($user, $user->getPasswordUser());
 
-       // $user->setPasswordUser($hashedPassword);
+       //$user->setPasswordUser($hashedPassword);
 
         // necessary
         $user->setRoleUser('ROLE_USER');
@@ -39,6 +42,8 @@ public function registrationPost(Request $request, EntityManagerInterface $manag
 
         $manager->persist($user);
         $manager->flush();
+
+        //  $task->setDueDate(new \DateTime('tomorrow'));
     }
 
     return $this->renderForm('security/registration.html.twig', [
