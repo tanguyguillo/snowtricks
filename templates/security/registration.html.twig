@@ -1,15 +1,13 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Snowtricks - Registration{% endblock %}
+
 {% block main %}
 <div class="container">
     <div class="row justify-content-center">
     <div class="col-lg-8">
     <br>
-    
-    {# {% if error %}  // Variable "error" does not exist.
-        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %} #}
-    
+
     <br>   
     <h2 class="tricks-modal-title text-secondary mb-0 text-center">Registration</h2>
     <br><br>  
@@ -19,6 +17,7 @@
                     {{form_row(form.emailUser, {'label': 'Email', 'attr' : {placeHolder : 'Your email'}}) }} 
                     {{form_row(form.passwordUser, {'label': 'Password', 'attr' : {placeHolder : 'Your password : min 8 chars'}}) }} 
                     {{form_widget(form._token) }}
+                    <br><br>
                     <button class="w-100 btn btn-lg btn-info" type="submit">Create an account</button>
                     {{form_end(form)}}
                 </div>

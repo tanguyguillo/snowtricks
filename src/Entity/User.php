@@ -21,7 +21,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue] 
-    #[ORM\Column]
+    #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
     #[Assert\Length(
@@ -46,13 +46,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $passwordUser = null;
 
-    /**
-     * variable : issue with $roles....
-     *
-     * @var string|null
-     */
-    #[ORM\Column(length: 10)]
-    private ?string $roleUser = null;
+    #[ORM\Column(type: 'json')]
+    private $roles = [];
+
+    // /**
+    //  * variable : issue with $roles....
+    //  *
+    //  * @var string|null
+    //  */
+    // #[ORM\Column(length: 10)]
+    // private ?string $roleUser = null;
 
     #[ORM\Column(length: 255)]
     private ?string $pictureUserUrl = null;
@@ -65,11 +68,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public $confirm_password;
 
     /**
-     * variables for 
+     * variables for inferface
      *
-     * @var array
+     *
      */
-    private $roles = [];
     public $eraseCredentials;
 
     /**
@@ -77,7 +79,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     function __construct() {
 
-        $this->roles[] = 'ROLE_USER';
+        // $this->roles[] = 'ROLE_USER';
         $this->pictureUserUrl = "../assets/img/snowboard-background.png";
     }
     
@@ -141,19 +143,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getRoleUser()
-    {
-        $this->getRoles();
+    // public function getRoleUser()
+    // {
+    //     $this->getRoles();
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function setRoleUser(string $roleUser): self
-    {
-        $this->roleUser = $roleUser;
+    // public function setRoleUser(string $roleUser): self
+    // {
+    //     $this->roleUser = $roleUser;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getPictureUserUrl(): ?string
     {
@@ -181,21 +183,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return (string) $this->emailUser;
     }
 
     /**
      * @see UserInterface
      */
 
-    public function setRoles()
+    public function setRoles(array $roles): self
     {
-        return $this->roleUser;
+        $this->roles = $roles;
+
+        return $this;
     }
 
     public function getRoles(): array
     {
-        return $this->roleUser;
+        return $this->roles;
         // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
         return array_unique($roles);

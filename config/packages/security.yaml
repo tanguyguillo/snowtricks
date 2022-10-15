@@ -8,13 +8,43 @@ security:
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
         users_in_memory: { memory: null }
+        users_in_database:
+            entity:
+                class: App\Entity\User
+                property: emailUser
+
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+            
         main:
             lazy: true
-            provider: users_in_memory
+            provider: users_in_database
+            #provider: users_in_memory
+
+            form_login:
+                    #"security_login" is the name of the route created previously
+                    login_path: security_login
+                    check_path: security_login
+                    enable_csrf: true
+
+            # # This allows the user to login by submitting a username and password
+            # # Reference: https://symfony.com/doc/current/security/form_login_setup.html
+            # form_login:
+            #     # The route name that the login form submits to
+            #     check_path: security_login
+            #     # The name of the route where the login form lives
+            #     # When the user tries to access a protected page, they are redirected here
+            #     login_path: security_login
+            #     # Secure the login form against CSRF
+            #     # Reference: https://symfony.com/doc/current/security/csrf.html#csrf-protection-in-login-forms
+            #     csrf_token_generator: security.csrf.token_manager
+            #     # The page users are redirect to when there is no previous page stored in the
+            #     # session (for example when the users access directly to the login page).
+            #     default_target_path: blog_index
+
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall

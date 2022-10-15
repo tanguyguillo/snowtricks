@@ -4,17 +4,11 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationType;
-
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-
 /**
  * class  registration  / login /
  */
@@ -29,10 +23,8 @@ public function registrationPost(Request $request, EntityManagerInterface $manag
     $form = $this->createForm(RegistrationType::class, $user);
     $form->handleRequest($request);
 
-
     if ($form->isSubmitted() && $form->isValid()) {
         $plaintextPassword = $form->get('passwordUser')->getData();
-
         // hash the password (based on the security.yaml config for the $user class)
         $hashedPassword = $passwordHasher->hashPassword(
             $user,
@@ -40,32 +32,44 @@ public function registrationPost(Request $request, EntityManagerInterface $manag
         );
         $user->setPassword($hashedPassword);
 
-        // necessary
-        $user->setRoleUser('ROLE_USER');
-        $user->setPictureUserUrl = "../assets/img/snowboard-background.png";
+        // necessary for interface
+        $user->setRoles(['ROLE_USER']);
+
+        // necessary for me
+        $user->setPictureUserUrl = "../assets/img/snowboard-background.png"; // picture by defahlt
+        //  $task->setDueDate(new \DateTime('tomorrow')); mahage date for suppression
+
+        //$submittedToken = $request->request->get('token'); // 
 
         $manager->persist($user);
         $manager->flush();
 
-        //  $task->setDueDate(new \DateTime('tomorrow'));
+        return $this->redirectToRoute('home'); // return home after inscription
+        //return $this->redirectToRoute('app_security_login'); // another way to do go back login
 
-        return $this->redirectToRoute('home'); // home after inscription
     }
-
+    //else show me the form
     return $this->renderForm('security/registration.html.twig', [
         'form' => $form,
     ]);
 }
 
-/**
- * function login
- *
- * @return void
- */
-#[Route('/connexion', name: 'app_security_', methods: ['POST', 'GET'])]
-public function login(){
-return$this->render('security/login.html.twig');
-}
 
+
+// #[Route('/login', name: 'security_login')] // name is here he name of the rooute
+// public function login(AuthenticationUtils $authenticationUtils): Response
+// {
+//     // get the login error if there is one
+//     $error = $authenticationUtils->getLastAuthenticationError();
+
+//     // last username entered by the user
+//     $lastUsername = $authenticationUtils->getLastUsername();
+
+
+//     return $this->render('security/login.html.twig', [
+//         'last_username' => $lastUsername,
+//         'error'         => $error,
+//     ]);
+// }
 
 }

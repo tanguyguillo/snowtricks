@@ -1,66 +1,32 @@
 {% extends 'base.html.twig' %}
 
-
-{# {% block main %}
-<div class="container">
-    <div class="row justify-content-center">
-    <div class="col-lg-8">
-    <br>
-
-    <br>   
-    <h2 class="tricks-modal-title text-secondary mb-0 text-center">Registration</h2>
-    <br><br>  
-    <div class="form-floating">
-                    {{form_start(form) }}
-                    {{form_row(form.username, {'label': 'Username', 'attr' : {placeHolder : 'Your username : min 3 chars'}}) }} 
-                    {{form_row(form.emailUser, {'label': 'Email', 'attr' : {placeHolder : 'Your email'}}) }} 
-                    {{form_row(form.passwordUser, {'label': 'Password', 'attr' : {placeHolder : 'Your password : min 8 chars'}}) }} 
-                    {{form_widget(form._token) }}
-                    <button class="w-100 btn btn-lg btn-info" type="submit">Create an account</button>
-                    {{form_end(form)}}
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <br><br><br><br><br><br>   
-{% endblock %} #}
+{% block title %}Snowtricks - login revisited
+{% endblock %}
 
 {% block main %}
-<div class="row justify-content-center">
-    <div class="col-lg-8">
-    <br>
-                        <h2 class="tricks-modal-title text-secondary mb-0">Login</h2>
-                        <br><br>
-                            <form>
-                                    <div class="form-floating">
-                                        <label for="floatingInput">User Name</label>
-                                        <input type="text" class="form-control" id="floatingInput" placeholder="My user tricks-name">
-                                    </div>
-                                        <br>
 
-                                    <div class="form-floating">
-                                        <label for="floatingPassword">Password</label>
-                                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                                    </div>
+<form action="{{ path('security_login') }}" method="post">
 
-                                    <br><br>
+    <div class="form-group">
+        <label for="username">Username: ...; in fact now emailUser</label>
+        <input type="text" id="username" name="_username" value="{{ last_username }}" class="form-control" />
+    </div>
 
-                                    <div class="checkbox mb-3">
-                                    <label>
-                                        <input type="checkbox" value="remember-me"> Remember me
-                                    </label>
-                                    </div>
+    <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="_password" class="form-control" />
+    </div>
+
+    <input type="hidden" name="_target_path" value="{{ app.request.get('redirect_to') }}"/>
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
 
 
-                                <button class="w-100 btn btn-lg btn-info" type="submit">login</button>
-                                    <br><br><br><br>
+    {# If you want to control the URL the user is redirected to on success
+    <input type="hidden" name="_target_path" value="/account" /> #}
 
-                                <span>You don't have a account : </span><a href="#">Register </a>
-                                    <br><br>
-                                    <a href="#">Forgot password ? </a>
-                                    <br><br>    
+    <button type="submit">login</button>
 
-                        </form>
-                        <br><br><br><br><br><br>   
+</form> 
+
+
 {% endblock %}
