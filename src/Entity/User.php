@@ -74,13 +74,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public $eraseCredentials;
 
+    #[ORM\Column(length: 255)]
+    private ?string $token = null;
+
+    #[ORM\Column]
+    private ?bool $check_token = null;
+
     /**
      * initialisation function
      */
     function __construct() {
-
-        // $this->roles[] = 'ROLE_USER';
         $this->pictureUserUrl = "../assets/img/snowboard-background.png";
+        $this->token = "0";
+        $this->check_token = 0;
     }
     
     public function getId(): ?int
@@ -207,5 +213,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function eraseCredentials()
     {
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(string $token): self
+    {
+        $this->token = $token;
+
+        return $this;
+    }
+
+    public function isCheckToken(): ?bool
+    {
+        return $this->check_token;
+    }
+
+    public function setCheckToken(bool $check_token): self
+    {
+        $this->check_token = $check_token;
+
+        return $this;
     }
 }
