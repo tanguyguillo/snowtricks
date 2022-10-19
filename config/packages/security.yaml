@@ -11,7 +11,8 @@ security:
         users_in_database:
             entity:
                 class: App\Entity\User
-                property: emailUser
+                property: username
+                # property: emailUser
 
 
     firewalls:
@@ -29,6 +30,8 @@ security:
                     login_path: security_login
                     check_path: security_login
                     enable_csrf: true
+            logout:
+                path: app_logout
 
             # # This allows the user to login by submitting a username and password
             # # Reference: https://symfony.com/doc/current/security/form_login_setup.html

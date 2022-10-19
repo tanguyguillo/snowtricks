@@ -14,12 +14,12 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
  */
 class SecurityController extends AbstractController
 {
+
+    
 #[Route('/registration', name: 'app_security_registration', methods: ['POST', 'GET'])]
 public function registrationPost(Request $request, EntityManagerInterface $manager, UserPasswordHasherInterface $passwordHasher)
 {
     $user = new User();
-
-    // binding fields
     $form = $this->createForm(RegistrationType::class, $user);
     $form->handleRequest($request);
 
@@ -32,14 +32,26 @@ public function registrationPost(Request $request, EntityManagerInterface $manag
         );
         $user->setPassword($hashedPassword);
 
+        // $this->generateToken();
+        // >setDate(new $Creation_date = \DateTime());
+
         // necessary for interface
         $user->setRoles(['ROLE_USER']);
 
         // necessary for me
         $user->setPictureUserUrl = "../assets/img/snowboard-background.png"; // picture by defahlt
         //  $task->setDueDate(new \DateTime('tomorrow')); mahage date for suppression
+        // token
+        // confirmed
 
         //$submittedToken = $request->request->get('token'); // 
+
+        // $p = new \OAuthProvider();
+        // $t = $p->generateToken(12);
+
+        // $token = JsonResponse(['token' => $JWTManager->create($user)]);
+
+        // dd($token);
 
         $manager->persist($user);
         $manager->flush();
@@ -54,6 +66,15 @@ public function registrationPost(Request $request, EntityManagerInterface $manag
     ]);
 }
 
+/***
+ * Only to log out
+ */
+#[Route('/logout', name: 'app_logout', methods: ['GET'])]
+    public function logout()
+    {
+        // controller can be blank: it will never be called!
+        throw new \Exception('Don\'t forget to activate logout in security.yaml');
+    }
 
 
 // #[Route('/login', name: 'security_login')] // name is here he name of the rooute
