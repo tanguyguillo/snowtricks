@@ -5,20 +5,33 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\RegistrationType;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Routing\Annotation\Route;
+
 /**
- * class  registration  / login /
+ * class  registration  / login / log out / generateToken
  */
 class SecurityController extends AbstractController
 {
 
-    
-#[Route('/registration', name: 'app_security_registration', methods: ['POST', 'GET'])]
-public function registrationPost(Request $request, EntityManagerInterface $manager, UserPasswordHasherInterface $passwordHasher)
-{
+    public function __construct()
+    {
+
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @param UserPasswordHasherInterface $passwordHasher
+     * @return void
+     */
+    #[Route('/registration', name:'app_security_registration', methods:['POST', 'GET'])]
+function registrationPost(Request $request, EntityManagerInterface $manager, UserPasswordHasherInterface $passwordHasher)
+    {
     $user = new User();
     $form = $this->createForm(RegistrationType::class, $user);
     $form->handleRequest($request);
@@ -31,34 +44,14 @@ public function registrationPost(Request $request, EntityManagerInterface $manag
             $plaintextPassword
         );
         $user->setPassword($hashedPassword);
-
-        // $this->generateToken();
-        // >setDate(new $Creation_date = \DateTime());
-
-        // necessary for interface
         $user->setRoles(['ROLE_USER']);
-
-        // necessary for me
-        $user->setPictureUserUrl = "../assets/img/snowboard-background.png"; // picture by defahlt
-        //  $task->setDueDate(new \DateTime('tomorrow')); mahage date for suppression
-        // token
-        // confirmed
-
-        //$submittedToken = $request->request->get('token'); // 
-
-        // $p = new \OAuthProvider();
-        // $t = $p->generateToken(12);
-
-        // $token = JsonResponse(['token' => $JWTManager->create($user)]);
-
-        // dd($token);
-
+        $user->setToken($this->generateToken()); // to in a other way....
+        $user->setDate(new \DateTime());
         $manager->persist($user);
         $manager->flush();
 
         return $this->redirectToRoute('home'); // return home after inscription
         //return $this->redirectToRoute('app_security_login'); // another way to do go back login
-
     }
     //else show me the form
     return $this->renderForm('security/registration.html.twig', [
@@ -69,13 +62,22 @@ public function registrationPost(Request $request, EntityManagerInterface $manag
 /***
  * Only to log out
  */
-#[Route('/logout', name: 'app_logout', methods: ['GET'])]
-    public function logout()
+#[Route('/logout', name:'app_logout', methods:['GET'])]
+function logout()
     {
-        // controller can be blank: it will never be called!
-        throw new \Exception('Don\'t forget to activate logout in security.yaml');
-    }
+    // controller can be blank: it will never be called!
+    throw new \Exception('Don\'t forget to activate logout in security.yaml');
+}
 
+/**
+ * function token .... to review
+ *
+ * @return void
+ */
+function generateToken()
+    {
+    return rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-%'), '=');
+}
 
 // #[Route('/login', name: 'security_login')] // name is here he name of the rooute
 // public function login(AuthenticationUtils $authenticationUtils): Response
@@ -85,7 +87,6 @@ public function registrationPost(Request $request, EntityManagerInterface $manag
 
 //     // last username entered by the user
 //     $lastUsername = $authenticationUtils->getLastUsername();
-
 
 //     return $this->render('security/login.html.twig', [
 //         'last_username' => $lastUsername,

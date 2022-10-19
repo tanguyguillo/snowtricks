@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -80,6 +81,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?bool $check_token = null;
 
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $date = null;
+
     /**
      * initialisation function
      */
@@ -149,19 +153,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    // public function getRoleUser()
-    // {
-    //     $this->getRoles();
+    public function getRoleUser()
+    {
+        $this->getRoles();
 
-    //     return $this;
-    // }
+        return $this;
+    }
 
-    // public function setRoleUser(string $roleUser): self
-    // {
-    //     $this->roleUser = $roleUser;
+    public function setRoleUser(string $roleUser): self
+    {
+        $this->roleUser = $roleUser;
 
-    //     return $this;
-    // }
+        return $this;
+    }
 
     public function getPictureUserUrl(): ?string
     {
@@ -235,6 +239,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCheckToken(bool $check_token): self
     {
         $this->check_token = $check_token;
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): self
+    {
+        $this->date = $date;
 
         return $this;
     }
