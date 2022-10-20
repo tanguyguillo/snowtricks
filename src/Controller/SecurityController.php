@@ -45,7 +45,7 @@ function registrationPost(Request $request, EntityManagerInterface $manager, Use
         );
         $user->setPassword($hashedPassword);
         $user->setRoles(['ROLE_USER']);
-        $user->setToken($this->generateToken()); // to in a other way....
+        $user->setToken(strtr(base64_encode(random_bytes(32)), '+/', '-%'), '='); // to in a other way....
         $user->setDate(new \DateTime());
         $manager->persist($user);
         $manager->flush();
@@ -72,12 +72,12 @@ function logout()
 /**
  * function token .... to review
  *
- * @return void
- */
-function generateToken()
-    {
-    return rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-%'), '=');
-}
+//  * @return void
+//  */
+// function generateToken()
+//     {
+//     return rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-%'), '=');
+// }
 
 // #[Route('/login', name: 'security_login')] // name is here he name of the rooute
 // public function login(AuthenticationUtils $authenticationUtils): Response
