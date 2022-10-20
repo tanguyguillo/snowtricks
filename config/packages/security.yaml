@@ -32,6 +32,10 @@ security:
                     enable_csrf: true
             logout:
                 path: app_logout
+            
+            login_link:
+                check_route: login_check
+                signature_properties: ['id']
 
             # # This allows the user to login by submitting a username and password
             # # Reference: https://symfony.com/doc/current/security/form_login_setup.html
