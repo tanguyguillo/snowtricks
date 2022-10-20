@@ -45,7 +45,9 @@ function registrationPost(Request $request, EntityManagerInterface $manager, Use
         );
         $user->setPassword($hashedPassword);
         $user->setRoles(['ROLE_USER']);
-        $user->setToken($this->generateToken()); // to in a other way....
+        //$user->setToken($this->generateToken()); // to in a other way....
+        $user->setToken(rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-%'), '=')); // to in a other way....
+
         $user->setDate(new \DateTime());
         $manager->persist($user);
         $manager->flush();
