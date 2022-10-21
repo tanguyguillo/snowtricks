@@ -5,15 +5,16 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationType;
-use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
+use Symfony\Component\Notifier\NotifierInterface;
+use Symfony\Component\Notifier\Recipient\Recipient;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\LoginLink\LoginLinkHandlerInterface;
+use Symfony\Component\Security\Http\LoginLink\LoginLinkNotification;
 
 //use App\Controller\MailerController;
 
@@ -30,7 +31,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * Undocumented function
+     * Ufunction //     MailerInterface $mailer
      *
      * @param Request $request
      * @param EntityManagerInterface $manager
@@ -38,8 +39,13 @@ class SecurityController extends AbstractController
      * @return void
      */
     #[Route('/registration', name:'app_security_registration', methods:['POST', 'GET'])]
-function registrationPost(Request $request, EntityManagerInterface $manager, UserPasswordHasherInterface $passwordHasher, MailerInterface $mailer)
-    {
+function registrationPost(
+    Request $request,
+    EntityManagerInterface $manager,
+    UserPasswordHasherInterface $passwordHasher,
+    LoginLinkHandlerInterface $loginLinkHandler,
+    NotifierInterface $notifier
+) {
     $user = new User();
     $form = $this->createForm(RegistrationType::class, $user);
     $form->handleRequest($request);
@@ -52,6 +58,7 @@ function registrationPost(Request $request, EntityManagerInterface $manager, Use
             $plaintextPassword
         );
 
+        // DB
         $last_username = $user->getUsername();
         $user->setPassword($hashedPassword);
         $user->setRoles(['ROLE_USER']);
@@ -60,21 +67,51 @@ function registrationPost(Request $request, EntityManagerInterface $manager, Use
         $manager->persist($user);
         $manager->flush();
 
-        // EmailValidation  ->to($user->getEmailUser())
-        $email = (new Email())
-            ->from('snowtricks')
-            ->to('tanguy.guillo@gmail.com')
-            ->subject('Time for Symfony Mailer!')
-            ->text('Sending emails is fun again!')
-            ->html('<p>See Twig integration for better HTML integration!</p>');
+        // other way link
+        $email = $request->request->get('email');
+        $name = $user->getUsername();
 
-        $mailer->send($email);
+        // create a login link for $user this returns an instance
+        // of LoginLinkDetails
+        $email = $request->request->get('email');
+
+        $loginLinkDetails = $loginLinkHandler->createLoginLink($user);
+        $loginLink = $loginLinkDetails->getUrl();
+
+        // create a login link for $user this returns an instance
+        // of LoginLinkDetails
+        $loginLinkDetails = $loginLinkHandler->createLoginLink($user);
+        $loginLink = $loginLinkDetails->getUrl(); // OK
+
+        // create a notification based on the login link details
+        $notification = new LoginLinkNotification(
+            $loginLinkDetails,
+            'Welcome to MY WEBSITE!' // email subject
+        );
+        // create a recipient for this user
+        $recipient = new Recipient($user->getEmailUser());
+
+        // send the notification to the user
+        $notifier->send($notification, $recipient);
+
+        dd($notifier);
+
+        //EmailValidation  ->to($user->getEmailUser())
+        // $email = (new Email())
+        //     ->from('tanguy.guillo@gmail.com')
+        //     ->to('tanguy.guillo@gmail.com')
+        //     ->subject('Time for Symfony Mailer!')
+        //     ->text('Sending emails is fun again!')
+        //     ->html('<p>See Twig integration for better HTML integration!</p>');
+        // $mailer->send($email);
+
         return $this->redirectToRoute('home');
     }
     return $this->renderForm('security/registration.html.twig', ['form' => $form]);
 }
 /***
- * Only to log out
+ * Only to logOut
+ * @return void
  */
 #[Route('/logout', name:'app_logout', methods:['GET'])]
 function logout()
@@ -85,43 +122,28 @@ function logout()
 
 /**
  *  function  https: //symfony.com/doc/current/security/login_link.html
-
- *
  * @return void
  */
+// #[Route('/login_check', name:'login_check')]
+// function check()
+//     {
+//     throw new \LogicException('This code should never be reached');
+// }
+
 #[Route('/login_check', name:'login_check')]
-function check()
+function check(Request $request)
     {
-    throw new \LogicException('This code should never be reached');
-}
+    // get the login link query parameters
+    $expires = $request->query->get('expires');
+    $username = $request->query->get('user');
+    $hash = $request->query->get('hash');
 
-#[Route('/login2', name:'login2')]
-function requestLoginLink(LoginLinkHandlerInterface $loginLinkHandler, UserRepository $userRepository, Request $request)
-    {
-
-    var_dump('1');
-
-    // check if login form is submitted
-    if ($request->isMethod('POST')) {
-
-        var_dump('2');
-
-        exit;
-
-        // load the user in some way (e.g. using the form input)
-        $email = $request->request->get('email');
-        $user = $userRepository->findOneBy(['email' => $email]);
-
-        // create a login link for $user this returns an instance
-        // of LoginLinkDetails
-        $loginLinkDetails = $loginLinkHandler->createLoginLink($user);
-        $loginLink = $loginLinkDetails->getUrl();
-
-        // ... send the link and return a response (see next section)
-    }
-
-    // if it's not submitted, render the "login" form
-    return $this->render('security/login.html.twig');
+    // and render a template with the button
+    return $this->render('security/process_login_link.html.twig', [
+        'expires' => $expires,
+        'user' => $username,
+        'hash' => $hash,
+    ]);
 }
 
 }
