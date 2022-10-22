@@ -1,0 +1,7 @@
+# app/config/services.yaml
+
+services:
+    # Register EventListener onKernelResponse
+    App\EventListener\RequestListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }

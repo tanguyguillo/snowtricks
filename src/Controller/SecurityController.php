@@ -82,11 +82,14 @@ function registrationPost(
         // of LoginLinkDetails
         $loginLinkDetails = $loginLinkHandler->createLoginLink($user);
         $loginLink = $loginLinkDetails->getUrl(); // OK
+        // for exemple : http: //127.0.0.1:8001/login_check?user=test3@test3.fr&expires=1666376910&hash=NDJmNGEyMjNiNjA4M2RjNmJmZGI5YTQxNDU1NjNmZDFiMTlhZDY4MmJkOTU1NWU3ZjBmNmVmYzYwMTllMzczMA%3D%3D
+
+        dd($loginLink);
 
         // create a notification based on the login link details
         $notification = new LoginLinkNotification(
             $loginLinkDetails,
-            'Welcome to MY WEBSITE!' // email subject
+            'Welcome to Snoxtricks' // email subject
         );
         // create a recipient for this user
         $recipient = new Recipient($user->getEmailUser());
@@ -94,8 +97,7 @@ function registrationPost(
         // send the notification to the user
         $notifier->send($notification, $recipient);
 
-        dd($notifier);
-
+        // Oher way //
         //EmailValidation  ->to($user->getEmailUser())
         // $email = (new Email())
         //     ->from('tanguy.guillo@gmail.com')
