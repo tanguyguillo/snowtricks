@@ -8,7 +8,6 @@ use App\Form\RegistrationType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Notifier\NotifierInterface;
 use Symfony\Component\Notifier\Recipient\Recipient;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -23,7 +22,6 @@ use Symfony\Component\Security\Http\LoginLink\LoginLinkNotification;
  */
 class SecurityController extends AbstractController
 {
-
     public $mailer;
 
     public function __construct()
@@ -31,7 +29,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * Ufunction //     MailerInterface $mailer
+     * function creating account and sending validation Email
      *
      * @param Request $request
      * @param EntityManagerInterface $manager
@@ -122,22 +120,15 @@ function logout()
     throw new \Exception('Don\'t forget to activate logout in security.yaml');
 }
 
-/**
- *  function  https: //symfony.com/doc/current/security/login_link.html
- * @return void
- */
-// #[Route('/login_check', name:'login_check')]
-// function check()
-//     {
-//     throw new \LogicException('This code should never be reached');
-// }
-
 #[Route('/login_check', name:'login_check')]
 function check(Request $request)
     {
     // get the login link query parameters
     $expires = $request->query->get('expires');
     $username = $request->query->get('user');
+
+    dd($username);
+
     $hash = $request->query->get('hash');
 
     // and render a template with the button

@@ -5,11 +5,11 @@ framework:
     #http_method_override: false
     mailer:
         envelope:
-            sender: 'tanguy.guillo@gmail.com'
+            sender: 'snowtricks@omegawebprod.com'
             #recipients: ['foo@example.com', 'bar@example.com']
         headers:
-            From: 'tanguy <tanguy.guillo@gmail.com>'
-            #Bcc: 'tanguy.guillo@gmail.com'
+            From: 'snowtricks <snowtricks@omegawebprod.com>'
+            #Bcc: 'another.me@test.fr'
             #X-Custom-Header: 'foobar'
 
     # Enables session support. Note that the session will ONLY be started if you read or write from it.
