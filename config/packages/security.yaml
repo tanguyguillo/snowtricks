@@ -33,10 +33,11 @@ security:
                 path: app_logout
             
             login_link:
+                login_path: login_check
                 check_route: login_check
                 signature_properties: ['id']
                 # only allow the link to be used 3 times
-                max_uses: 3
+                #max_uses: 3
 
             # # This allows the user to login by submitting a username and password
             # # Reference: https://symfony.com/doc/current/security/form_login_setup.html
