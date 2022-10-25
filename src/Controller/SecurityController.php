@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationType;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -69,43 +70,44 @@ function registrationPost(
         $email = $request->request->get('email');
         $name = $user->getUsername();
 
-        // create a login link for $user this returns an instance
-        // of LoginLinkDetails
-        $email = $request->request->get('email');
+        //$userRepository = $this->entityManager->getRepository(User::class);
+        // $userRepository = $this->$user->getRepository(User::class);
 
-        $loginLinkDetails = $loginLinkHandler->createLoginLink($user);
-        $loginLink = $loginLinkDetails->getUrl();
+        $test = 0;
+        if ($test == 1) {
+            $this->requestLoginLink($notifier, $loginLinkHandler, $userRepository, $request);
+        }
 
-        // create a login link for $user this returns an instance
-        // of LoginLinkDetails
-        $loginLinkDetails = $loginLinkHandler->createLoginLink($user);
-        $loginLink = $loginLinkDetails->getUrl(); // OK
-        // for exemple : http: //127.0.0.1:8001/login_check?user=test3@test3.fr&expires=1666376910&hash=NDJmNGEyMjNiNjA4M2RjNmJmZGI5YTQxNDU1NjNmZDFiMTlhZDY4MmJkOTU1NWU3ZjBmNmVmYzYwMTllMzczMA%3D%3D
+        // // create a login link for $user this returns an instance
+        // // of LoginLinkDetails
+        // $email = $request->request->get('email');
 
-        //echo ($loginLink);
+        // $loginLinkDetails = $loginLinkHandler->createLoginLink($user);
+        // $loginLink = $loginLinkDetails->getUrl();
 
-        // create a notification based on the login link details
-        $notification = new LoginLinkNotification(
-            $loginLinkDetails,
-            'Welcome to Snowtricks' // email subject
-        );
-        // create a recipient for this user
-        $recipient = new Recipient($user->getEmailUser());
+        // // create a login link for $user this returns an instance
+        // // of LoginLinkDetails
+        // $loginLinkDetails = $loginLinkHandler->createLoginLink($user);
+        // $loginLink = $loginLinkDetails->getUrl(); // OK
+        // // for exemple : http: //127.0.0.1:8001/login_check?user=test3@test3.fr&expires=1666376910&hash=NDJmNGEyMjNiNjA4M2RjNmJmZGI5YTQxNDU1NjNmZDFiMTlhZDY4MmJkOTU1NWU3ZjBmNmVmYzYwMTllMzczMA%3D%3D
 
-        // send the notification to the user
-        $notifier->send($notification, $recipient);
+        // //echo ($loginLink);
 
-        // Oher way //
-        //EmailValidation  ->to($user->getEmailUser())
-        // $email = (new Email())
-        //     ->from('tanguy.guillo@gmail.com')
-        //     ->to('tanguy.guillo@gmail.com')
-        //     ->subject('Time for Symfony Mailer!')
-        //     ->text('Sending emails is fun again!')
-        //     ->html('<p>See Twig integration for better HTML integration!</p>');
-        // $mailer->send($email);
+        // // create a notification based on the login link details
+        // $notification = new LoginLinkNotification(
+        //     $loginLinkDetails,
+        //     'Welcome to Snowtricks' // email subject
+        // );
 
-        return $this->redirectToRoute('home');
+        // //dd($loginLinkDetails);  OK : http: //127.0.0.1:8000/login_check?user=rrrrrr@rr.fr&expi etc.....
+
+        // // create a recipient for this user
+        // $recipient = new Recipient($user->getEmailUser()); // OK
+
+        // // send the notification to the user
+        // $notifier->send($notification, $recipient); // OK  .. / render a "Login link is sent!" page
+
+        return $this->redirectToRoute('home'); // or render a "Login link is sent!" page
     }
     return $this->renderForm('security/registration.html.twig', ['form' => $form]);
 }
@@ -123,20 +125,36 @@ function logout()
 #[Route('/login_check', name:'login_check')]
 function check(Request $request)
     {
-    // get the login link query parameters
-    $expires = $request->query->get('expires');
-    $username = $request->query->get('user');
-
-    dd($username);
-
-    $hash = $request->query->get('hash');
-
-    // and render a template with the button
-    return $this->render('security/process_login_link.html.twig', [
-        'expires' => $expires,
-        'user' => $username,
-        'hash' => $hash,
-    ]);
+    throw new \LogicException('This code should never be reached');
 }
 
+#[Route('/login', name:'login')]
+function requestLoginLink(NotifierInterface $notifier, LoginLinkHandlerInterface $loginLinkHandler, UserRepository $userRepository, Request $request)
+    {
+
+    var_dump('test');
+
+    if ($request->isMethod('POST')) {
+        $email = $request->request->get('email');
+        $user = $userRepository->findOneBy(['email' => $email]);
+
+        $loginLinkDetails = $loginLinkHandler->createLoginLink($user);
+
+        // create a notification based on the login link details
+        $notification = new LoginLinkNotification(
+            $loginLinkDetails,
+            'Welcome to MY WEBSITE!' // email subject
+        );
+        // create a recipient for this user
+        $recipient = new Recipient($user->getEmailUser());
+
+        // send the notification to the user
+        $notifier->send($notification, $recipient);
+
+        // render a "Login link is sent!" page
+        return $this->render('security/login_link_sent.html.twig');
+    }
+
+    return $this->render('security/login.html.twig');
+}
 }

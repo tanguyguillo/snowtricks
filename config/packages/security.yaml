@@ -33,7 +33,6 @@ security:
                 path: app_logout
             
             login_link:
-                login_path: login_check
                 check_route: login_check
                 signature_properties: ['id']
                 # only allow the link to be used 3 times
