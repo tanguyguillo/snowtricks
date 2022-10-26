@@ -24,9 +24,13 @@ use Symfony\Component\Security\Http\LoginLink\LoginLinkNotification;
 class SecurityController extends AbstractController
 {
     public $mailer;
+    public $userRepository;
+    public $email;
+    private $user;
 
-    public function __construct()
+    public function __construct(UserRepository $userRepository)
     {
+        $this->userRepository = $userRepository; // injection
     }
 
     /**
@@ -66,16 +70,15 @@ function registrationPost(
         $manager->persist($user);
         $manager->flush();
 
+        $this->user = $user;
         // other way link
-        $email = $request->request->get('email');
+        $email = $user->getEmailUser();
+        $this->email = $email;
         $name = $user->getUsername();
 
-        //$userRepository = $this->entityManager->getRepository(User::class);
-        // $userRepository = $this->$user->getRepository(User::class);
-
-        $test = 0;
+        $test = 1;
         if ($test == 1) {
-            $this->requestLoginLink($notifier, $loginLinkHandler, $userRepository, $request);
+            $this->requestLoginLink($notifier, $loginLinkHandler, $this->userRepository, $request);
         }
 
         // // create a login link for $user this returns an instance
@@ -129,32 +132,36 @@ function check(Request $request)
 }
 
 #[Route('/login', name:'login')]
-function requestLoginLink(NotifierInterface $notifier, LoginLinkHandlerInterface $loginLinkHandler, UserRepository $userRepository, Request $request)
-    {
-
-    var_dump('test');
+function requestLoginLink(
+    NotifierInterface $notifier,
+    LoginLinkHandlerInterface $loginLinkHandler,
+    UserRepository $userRepository,
+    Request $request) {
 
     if ($request->isMethod('POST')) {
-        $email = $request->request->get('email');
-        $user = $userRepository->findOneBy(['email' => $email]);
+        $email = $request->request->get('emailUser');
+        $user = $userRepository->findOneBy(['emailUser' => $email]);
 
-        $loginLinkDetails = $loginLinkHandler->createLoginLink($user);
+        $loginLinkDetails = $loginLinkHandler->createLoginLink($this->user);
 
         // create a notification based on the login link details
         $notification = new LoginLinkNotification(
             $loginLinkDetails,
-            'Welcome to MY WEBSITE!' // email subject
+            'Welcome on SnowTricks' // email subject
         );
+
         // create a recipient for this user
-        $recipient = new Recipient($user->getEmailUser());
+        $recipient = new Recipient($this->email);
 
         // send the notification to the user
         $notifier->send($notification, $recipient);
 
         // render a "Login link is sent!" page
-        return $this->render('security/login_link_sent.html.twig');
-    }
+        //return $this->render('security/login_link_sent.html.twig');
 
+        return $this->redirectToRoute('home');
+
+    }
     return $this->render('security/login.html.twig');
 }
 }
