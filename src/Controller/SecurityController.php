@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Notifier\NotifierInterface;
 use Symfony\Component\Notifier\Recipient\Recipient;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -25,14 +26,12 @@ class SecurityController extends AbstractController
 {
     public $mailer;
     public $userRepository;
-    public $mailer
     private $user;
 
     public function __construct(UserRepository $userRepository, MailerInterface $mailer)
     {
         $this->userRepository = $userRepository; // injection
         $this->mailer = $mailer;
-
     }
 
     /**
@@ -75,8 +74,8 @@ function registrationPost(
 
         $this->user = $user;
         // other way link
-        //$email = $user->getEmailUser();
-        //$this->email = $email;
+        $email = $user->getEmailUser();
+        $this->email = $email;
         $name = $user->getUsername();
 
         $email = (new Email())
@@ -87,8 +86,6 @@ function registrationPost(
             ->subject('Validation email of your inscription')
             ->text('Sending emails is fun again!')
             ->html('<p>See Twig integration for better HTML integration!</p>');
-    
-        $mailer->send($email);
 
         $test = 1;
         if ($test == 1) {
