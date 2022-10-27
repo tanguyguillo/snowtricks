@@ -78,19 +78,19 @@ function registrationPost(
         $this->email = $email;
         $name = $user->getUsername();
 
-        $email = (new Email())
-            ->from('snowtricks@omegawebprod')
-            ->from('snowtricks@omegawebprod')
-            ->to('tanguy.guillo@gmail.com')
-            ->bcc('tanguy.guillo@gmail.com')
-            ->subject('Validation email of your inscription')
-            ->text('Sending emails is fun again!')
-            ->html('<p>See Twig integration for better HTML integration!</p>');
+        // $email = (new Email())
+        //     ->from('snowtricks@omegawebprod')
+        //     ->from('snowtricks@omegawebprod')
+        //     ->to('tanguy.guillo@gmail.com')
+        //     ->bcc('tanguy.guillo@gmail.com')
+        //     ->subject('Validation email of your inscription')
+        //     ->text('Sending emails is fun again!')
+        //     ->html('<p>See Twig integration for better HTML integration!</p>');
 
-        $test = 1;
-        if ($test == 1) {
-            $this->requestLoginLink($notifier, $loginLinkHandler, $this->userRepository, $request);
-        }
+        // $test = 1;
+        // if ($test == 1) {
+        //     $this->requestLoginLink($notifier, $loginLinkHandler, $this->userRepository, $request);
+        // }
 
         // // create a login link for $user this returns an instance
         // // of LoginLinkDetails
