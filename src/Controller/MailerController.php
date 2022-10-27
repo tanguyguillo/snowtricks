@@ -15,12 +15,12 @@ class MailerController extends AbstractController
 function sendEmail(MailerInterface $mailer): Response
     {
     $email = (new Email())
-        ->from('tanguy.guillo@gmail.com')
+        ->from('snowtricks@omegawebprod')
         ->to('tanguy.guillo@gmail.com')
-        //->cc('cc@example.com')
-        //->bcc('bcc@example.com')
+        //->cc('tanguy.guillo@gmail.com')
+        ->bcc('tanguy.guillo@gmail.com')
         //->replyTo('fabien@example.com')
-        //->priority(Email::PRIORITY_HIGH)
+        ->priority(Email::PRIORITY_HIGH)
         ->subject('Validation email of your inscription')
         ->text('Sending emails is fun again!')
         ->html('<p>See Twig integration for better HTML integration!</p>');

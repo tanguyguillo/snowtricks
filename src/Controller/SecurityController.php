@@ -9,6 +9,7 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Notifier\NotifierInterface;
 use Symfony\Component\Notifier\Recipient\Recipient;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -16,8 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\LoginLink\LoginLinkHandlerInterface;
 use Symfony\Component\Security\Http\LoginLink\LoginLinkNotification;
 
-//use App\Controller\MailerController;
-
+//
 /**
  * class  registration  / login / log out / generateToken
  */
@@ -25,12 +25,14 @@ class SecurityController extends AbstractController
 {
     public $mailer;
     public $userRepository;
-    public $email;
+    public $mailer
     private $user;
 
-    public function __construct(UserRepository $userRepository)
+    public function __construct(UserRepository $userRepository, MailerInterface $mailer)
     {
         $this->userRepository = $userRepository; // injection
+        $this->mailer = $mailer;
+
     }
 
     /**
@@ -47,7 +49,8 @@ function registrationPost(
     EntityManagerInterface $manager,
     UserPasswordHasherInterface $passwordHasher,
     LoginLinkHandlerInterface $loginLinkHandler,
-    NotifierInterface $notifier
+    NotifierInterface $notifier,
+    MailerInterface $email
 ) {
     $user = new User();
     $form = $this->createForm(RegistrationType::class, $user);
@@ -72,9 +75,20 @@ function registrationPost(
 
         $this->user = $user;
         // other way link
-        $email = $user->getEmailUser();
-        $this->email = $email;
+        //$email = $user->getEmailUser();
+        //$this->email = $email;
         $name = $user->getUsername();
+
+        $email = (new Email())
+            ->from('snowtricks@omegawebprod')
+            ->from('snowtricks@omegawebprod')
+            ->to('tanguy.guillo@gmail.com')
+            ->bcc('tanguy.guillo@gmail.com')
+            ->subject('Validation email of your inscription')
+            ->text('Sending emails is fun again!')
+            ->html('<p>See Twig integration for better HTML integration!</p>');
+    
+        $mailer->send($email);
 
         $test = 1;
         if ($test == 1) {
@@ -158,6 +172,8 @@ function requestLoginLink(
 
         // render a "Login link is sent!" page
         //return $this->render('security/login_link_sent.html.twig');
+
+        // test
 
         return $this->redirectToRoute('home');
 
