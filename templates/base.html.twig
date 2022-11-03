@@ -257,10 +257,6 @@
     </section> {# end main area #}
     {% endblock %}
 
-    {% block scrollToricks %}
-
-    {% endblock %}
-
 
     {% block footer %}
     <!-- Copyright Section-->
@@ -280,13 +276,6 @@
     {% endblock %}
 
     {% block javascripts %}
-    {# {{ encore_entry_script_tags('app') }} #}
-    <script>
-        $('#myModal').on('shown.bs.modal', function () {
-            $('#myInput').trigger('focus')
-        })
-    </script>
-
     <!-- Bootstrap core JS-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
@@ -295,6 +284,7 @@
     <!-- Core theme JS-->
     <script src="{{ app.request.getSchemeAndHttpHost() }}/js/scripts.js"></script>
     {% endblock %}
+
 </body>
 
 </html>
