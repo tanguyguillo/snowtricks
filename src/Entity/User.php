@@ -2,256 +2,293 @@
 
 namespace App\Entity;
 
-use Doctrine\DBAL\Types\Types;
-use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
-use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
  *  class User with constrains
  */
-#[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ORM\Table(name: '`user`')]
+#[ORM\Entity(repositoryClass:UserRepository::class)]
+#[ORM\Table(name:'`user`')]
 #[UniqueEntity('emailUser')]
 #[UniqueEntity('username')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue] 
-    #[ORM\Column(type: 'integer')]
-    private ?int $id = null;
+#[ORM\Id]
+#[ORM\GeneratedValue]
+#[ORM\Column(type:'integer')]
+private ?int $id = null;
 
-    #[Assert\Length(
-        min: 3,
-        max: 50,
-        minMessage: 'Your first name must be at least {{ limit }} characters long',
-        maxMessage: 'Your first name cannot be longer than {{ limit }} characters',
-    )]
-    #[ORM\Column(length: 255)]
-    private ?string $username = null;
+#[Assert\Length(
+    min : 3,
+    max:50,
+    minMessage:'Your first name must be at least {{ limit }} characters long',
+    maxMessage:'Your first name cannot be longer than {{ limit }} characters',
+)]
+#[ORM\Column(length:255)]
+private ?string $username = null;
 
-    #[ORM\Column(name: 'email_user', type: 'string', length: 255, unique: true)]   
-    #[Assert\Email(
-        message: 'The email {{ value }} is not a valid email.',
-    )]
-    protected ?string $emailUser = null;
+#[ORM\Column(name : 'email_user', type:'string', length:255, unique:true)]
+#[Assert\Email(
+    message:'The email {{ value }} is not a valid email.',
+)]
+protected ?string $emailUser = null;
 
-    #[Assert\Length(
-        min: 8,
-        minMessage: 'Your password must be at least {{ limit }} characters long',
-    )]
-    #[ORM\Column(length: 255)]
-    private ?string $passwordUser = null;
+#[Assert\Length(
+    min : 8,
+    minMessage:'Your password must be at least {{ limit }} characters long',
+)]
+#[ORM\Column(length:255)]
+private ?string $passwordUser = null;
 
-    #[ORM\Column(type: 'json')]
-    private $roles = [];
+#[ORM\Column(type : 'json')]
+private $roles = [];
 
-    // /**
-    //  * variable : issue with $roles....
-    //  *
-    //  * @var string|null
-    //  */
-    // #[ORM\Column(length: 10)]
-    // private ?string $roleUser = null;
+// /**
+//  * variable : issue with $roles....
+//  *
+//  * @var string|null
+//  */
+// #[ORM\Column(length: 10)]
+// private ?string $roleUser = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $pictureUserUrl = null;
+#[ORM\Column(length:255)]
+private ?string $pictureUserUrl = null;
 
-    /**
-    * variable witche have nothing with DB
-    *
-    * @var [string]
-    */
-    public $confirm_password;
+/**
+ * variable witche have nothing with DB
+ *
+ * @var [string]
+ */
+public $confirm_password;
 
-    /**
-     * variables for inferface
-     *
-     *
-     */
-    public $eraseCredentials;
+/**
+ * variables for inferface
+ *
+ *
+ */
+public $eraseCredentials;
 
-    #[ORM\Column(length: 255)]
-    private ?string $token = null;
+#[ORM\Column(length : 255)]
+private ?string $token = null;
 
-    #[ORM\Column]
-    private ?bool $check_token = null;
+#[ORM\Column]
+private ?bool $check_token = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $date = null;
+#[ORM\Column(type : Types::DATE_MUTABLE)]
+private ?\DateTimeInterface $date = null;
 
-    /**
-     * initialisation function
-     */
-    function __construct() {
-        $this->pictureUserUrl = "../assets/img/snowboard-background.png";
-        $this->token = "0";
-        $this->check_token = 0;
-    }
-    
-    public function getId(): ?int
+#[ORM\OneToMany(mappedBy : 'user_id', targetEntity : Trick::class)]
+private Collection $tricks;
+
+/**
+ * initialisation function
+ */
+function __construct()
     {
-        return $this->id;
-    }
+    $this->pictureUserUrl = "../assets/img/snowboard-background.png";
+    $this->token = "0";
+    $this->check_token = 0;
+    $this->tricks = new ArrayCollection();
+}
 
-    public function getEmailUser(): ?string
+function getId(): ?int
     {
-        return $this->emailUser;
-    }
+    return $this->id;
+}
 
-    public function setEmailUser(?string $emailUser): self
+function getEmailUser(): ?string
     {
-        $this->emailUser = $emailUser;
+    return $this->emailUser;
+}
 
-        return $this;
-    }
-
-    public function getUsername(): ?string
+function setEmailUser(?string $emailUser): self
     {
-        return $this->username;
-    }
+    $this->emailUser = $emailUser;
 
-    public function setUsername(string $username): self
+    return $this;
+}
+
+function getUsername(): ?string
     {
-        $this->username = $username;
+    return $this->username;
+}
 
-        return $this;
-    }
-
-    /**
-     * @return string the hashed password for this user
-     */
-    public function getPasswordUser(): ?string
+function setUsername(string $username): self
     {
-        return $this->passwordUser;
-    }
+    $this->username = $username;
 
-    /**
-     * function getPassword necessary for UserInterface,
-     *
-     * @return string|null
-     */
-    public function  getPassword(): ?string
+    return $this;
+}
+
+/**
+ * @return string the hashed password for this user
+ */
+function getPasswordUser(): ?string
     {
-        return $this->passwordUser;
-    }
-    public function  setPassword(string $passwordUser): self
+    return $this->passwordUser;
+}
+
+/**
+ * function getPassword necessary for UserInterface,
+ *
+ * @return string|null
+ */
+function getPassword(): ?string
     {
-        $this->passwordUser = $passwordUser;
-        return $this;
-    }
-
-
-    public function setPasswordUser(string $passwordUser): self
+    return $this->passwordUser;
+}
+function setPassword(string $passwordUser): self
     {
-        $this->passwordUser = $passwordUser;
+    $this->passwordUser = $passwordUser;
+    return $this;
+}
 
-        return $this;
-    }
-
-    public function getRoleUser()
+function setPasswordUser(string $passwordUser): self
     {
-        $this->getRoles();
+    $this->passwordUser = $passwordUser;
 
-        return $this;
-    }
+    return $this;
+}
 
-    public function setRoleUser(string $roleUser): self
+function getRoleUser()
     {
-        $this->roleUser = $roleUser;
+    $this->getRoles();
 
-        return $this;
-    }
+    return $this;
+}
 
-    public function getPictureUserUrl(): ?string
+function setRoleUser(string $roleUser): self
     {
-        return $this->pictureUserUrl;
-    }
+    $this->roleUser = $roleUser;
 
-    public function setPictureUserUrl(string $pictureUserUrl): self
+    return $this;
+}
+
+function getPictureUserUrl(): ?string
     {
-        $this->pictureUserUrl = $pictureUserUrl;
+    return $this->pictureUserUrl;
+}
 
-        return $this;
-    }
-
-    public function getSalt()
+function setPictureUserUrl(string $pictureUserUrl): self
     {
-        // The bcrypt and argon2i algorithms don't require a separate salt.
-        // You *may* need a real salt if you choose a different encoder.
-        return null;
-    }
+    $this->pictureUserUrl = $pictureUserUrl;
 
-    /**
-     * The public representation of the user (e.g. a username, an email address, etc.)
-     *
-     * @see UserInterface
-     */
-    public function getUserIdentifier(): string
+    return $this;
+}
+
+function getSalt()
     {
-        return (string) $this->emailUser;
-    }
+    // The bcrypt and argon2i algorithms don't require a separate salt.
+    // You *may* need a real salt if you choose a different encoder.
+    return null;
+}
 
-    /**
-     * @see UserInterface
-     */
-
-    public function setRoles(array $roles): self
+/**
+ * The public representation of the user (e.g. a username, an email address, etc.)
+ *
+ * @see UserInterface
+ */
+function getUserIdentifier(): string
     {
-        $this->roles = $roles;
+    return (string) $this->emailUser;
+}
 
-        return $this;
-    }
+/**
+ * @see UserInterface
+ */
 
-    public function getRoles(): array
+function setRoles(array $roles): self
     {
-        return $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-        return array_unique($roles);
-    }
+    $this->roles = $roles;
 
-    public function eraseCredentials()
+    return $this;
+}
+
+function getRoles(): array
+{
+    return $this->roles;
+    // guarantee every user at least has ROLE_USER
+    $roles[] = 'ROLE_USER';
+    return array_unique($roles);
+}
+
+function eraseCredentials()
     {
-    }
+}
 
-    public function getToken(): ?string
+function getToken(): ?string
     {
-        return $this->token;
-    }
+    return $this->token;
+}
 
-    public function setToken(string $token): self
+function setToken(string $token): self
     {
-        $this->token = $token;
+    $this->token = $token;
 
-        return $this;
-    }
+    return $this;
+}
 
-    public function isCheckToken(): ?bool
+function isCheckToken(): ?bool
     {
-        return $this->check_token;
-    }
+    return $this->check_token;
+}
 
-    public function setCheckToken(bool $check_token): self
+function setCheckToken(bool $check_token): self
     {
-        $this->check_token = $check_token;
+    $this->check_token = $check_token;
 
-        return $this;
-    }
+    return $this;
+}
 
-    public function getDate(): ?\DateTimeInterface
+function getDate(): ?\DateTimeInterface
+{
+    return $this->date;
+}
+
+function setDate(\DateTimeInterface$date): self
     {
-        return $this->date;
-    }
+    $this->date = $date;
 
-    public function setDate(\DateTimeInterface $date): self
+    return $this;
+}
+
+/**
+ * @return Collection<int, Trick>
+ */
+function getTricks(): Collection
     {
-        $this->date = $date;
+    return $this->tricks;
+}
 
-        return $this;
+function addTrick(Trick $trick): self
+    {
+    if (!$this->tricks->contains($trick)) {
+        $this->tricks->add($trick);
+        $trick->setUserId($this);
     }
+
+    return $this;
+}
+
+function removeTrick(Trick $trick): self
+    {
+    if ($this->tricks->removeElement($trick)) {
+        // set the owning side to null (unless already changed)
+        if ($trick->getUserId() === $this) {
+            $trick->setUserId(null);
+        }
+    }
+
+    return $this;
+}
 }

@@ -17,7 +17,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\LoginLink\LoginLinkHandlerInterface;
 use Symfony\Component\Security\Http\LoginLink\LoginLinkNotification;
-
+use Symfony\Component\Notifier\Notification\Notification;
 //
 /**
  * class  registration  / login / log out / generateToken
@@ -155,11 +155,14 @@ function requestLoginLink(
 
         $loginLinkDetails = $loginLinkHandler->createLoginLink($this->user);
 
+        $notification = (new Notification('New Invoice', ['email']))
+        ->content('You got a new invoice for 15 EUR.');
+
         // create a notification based on the login link details
-        $notification = new LoginLinkNotification(
-            $loginLinkDetails,
-            'Welcome on SnowTricks' // email subject
-        );
+        // $notification = new LoginLinkNotification(
+        //     $loginLinkDetails,
+        //     'Welcome on SnowTricks' // email subject
+        // );
 
         // create a recipient for this user
         $recipient = new Recipient($this->email);

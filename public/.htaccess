@@ -64,7 +64,3 @@ DirectoryIndex index.php
         # RedirectTemp cannot be used instead
     </IfModule>
 </IfModule>
-
-Order Deny,Allow
-Allow from 176.151.227.183
-Deny from all
