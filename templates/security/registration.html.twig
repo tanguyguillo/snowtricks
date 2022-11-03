@@ -3,28 +3,30 @@
 {% block title %}Snowtricks - Registration{% endblock %}
 
 {% block main %}
+<br><br><br>
 <div class="container text-center">
     <div class="row justify-content-center">
         <div class="col-lg-8">
+            <br>
+            <br>
+            <h2 class="tricks-modal-title text-secondary mb-0 text-center">Registration</h2>
+            <br><br>
+            <div class="form-floating border">
+                {{form_start(form) }}
+                {{form_row(form.username, {'label': 'Username', 'attr' : {placeHolder : 'Your username : min 3 chars'}})
+                }}
+                {{form_row(form.emailUser, {'label': 'Email', 'attr' : {placeHolder : 'Your email'}}) }}
+                {{form_row(form.passwordUser, {'label': 'Password', 'attr' : {placeHolder : 'Your password : min 8
+                chars'}}) }}
+                {{form_widget(form._token) }}
                 <br>
                 <br>
-                <h2 class="tricks-modal-title text-secondary mb-0 text-center">Registration</h2>
-                <br><br>
-                <div class="form-floating border">
-                    {{form_start(form) }}
-                    {{form_row(form.username, {'label': 'Username', 'attr' : {placeHolder : 'Your username : min 3 chars'}}) }} 
-                    {{form_row(form.emailUser, {'label': 'Email', 'attr' : {placeHolder : 'Your email'}}) }} 
-                    {{form_row(form.passwordUser, {'label': 'Password', 'attr' : {placeHolder : 'Your password : min 8 chars'}}) }} 
-                    {{form_widget(form._token) }}
-                    <br>
-                    <br>
-                    <button class="w-50 btn btn-lg btn-info" type="submit">Create an account</button>
-                    {{form_end(form)}}
-                </div>
+                <button class="w-50 btn btn-lg btn-info" type="submit">Create an account</button>
+                {{form_end(form)}}
             </div>
         </div>
     </div>
+</div>
 
-    <br><br><br><br><br><br>   
+<br><br><br><br><br><br>
 {% endblock %}
-

@@ -1,5 +1,7 @@
 header {
-  min-height: 1110px;
+  /* min-height: 1110px; */
+  max-height: 800;
+  overflow: hidden;
 }
 
 /*make staying the section on the bottom of the page*/
@@ -11,18 +13,24 @@ section.copyright {
   width: 100%;
 }
 
+.scroll-to-tricks {
+  margin-bottom: 50px;
+}
+
 #navbarResponsive>ul>li.separator {
   color: white;
 }
 
 .home-background {
-  background-image: url("../assets/img/snowboard-background.png") !important;
+
   background-repeat: no-repeat;
   background-position-x: center;
   width: auto;
   height: auto;
-  background-color: #2c3e50;
+  background-image: url("../assets/img/snowboard-background.png") !important;
+  background-color: white;
   background-size: cover;
+  z-index: 10;
 }
 
 .border {
@@ -46,14 +54,6 @@ section.copyright {
 }
 
 
-.masthead {
-  text-align: center;
-
-}
-
-.masthead-heading {
-  margin-top: 300x;
-}
 
 .pink {
   color: #e83e8c;
@@ -129,7 +129,7 @@ div.col-md-2.col-lg-2.mb-5 {
 
 footer {
   z-index: 2;
-  position: fixed;
+  /* position: fixed; */
   padding: 25px 150;
   bottom: 0;
   width: 100%;
@@ -174,4 +174,34 @@ ul li a:hover .footerDown {
   border-color: #696969 #DCDCDC #DCDCDC #696969;
 }
 
-/******************/
+
+*,
+::after,
+::before {
+  box-sizing: border-box;
+}
+
+/* TO GO DOWN*/
+.chevron-down {
+  position: absolute;
+  right: 1%;
+  bottom: 3%;
+}
+
+/* .chevron-up {
+  position: absolute;
+  right: 1%;
+  bottom: 8%;
+} */
+
+.slogan {
+  height: 80vh;
+  /* Relative to 100% of the height of the viewport**/
+  text-align: center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-transform: uppercase;
+  color: black;
+}
