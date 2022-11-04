@@ -90,6 +90,9 @@ private ?\DateTimeInterface $date = null;
 #[ORM\OneToMany(mappedBy : 'user_id', targetEntity : Trick::class)]
 private Collection $tricks;
 
+#[ORM\OneToMany(mappedBy: 'user_id', targetEntity: Comment::class)]
+private Collection $comments;
+
 /**
  * initialisation function
  */
@@ -99,6 +102,7 @@ function __construct()
     $this->token = "0";
     $this->check_token = 0;
     $this->tricks = new ArrayCollection();
+    $this->comments = new ArrayCollection();
 }
 
 function getId(): ?int
@@ -286,6 +290,36 @@ function removeTrick(Trick $trick): self
         // set the owning side to null (unless already changed)
         if ($trick->getUserId() === $this) {
             $trick->setUserId(null);
+        }
+    }
+
+    return $this;
+}
+
+/**
+ * @return Collection<int, Comment>
+ */
+public function getComments(): Collection
+{
+    return $this->comments;
+}
+
+public function addComment(Comment $comment): self
+{
+    if (!$this->comments->contains($comment)) {
+        $this->comments->add($comment);
+        $comment->setUserId($this);
+    }
+
+    return $this;
+}
+
+public function removeComment(Comment $comment): self
+{
+    if ($this->comments->removeElement($comment)) {
+        // set the owning side to null (unless already changed)
+        if ($comment->getUserId() === $this) {
+            $comment->setUserId(null);
         }
     }
 

@@ -46,15 +46,17 @@
     <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
 
         <a href="{{ app.request.getSchemeAndHttpHost() }}/#page-top">
-            <img src = "{{ app.request.getSchemeAndHttpHost() }}/assets/img/logo-jimmy-sweat.png" 
-                alt="Logo Jimmy Sweat"
-                class="logoTop"/>
+            <img src="{{ app.request.getSchemeAndHttpHost() }}/assets/img/logo-jimmy-sweat.png" alt="Logo Jimmy Sweat"
+                class="logoTop" />
         </a>
 
         <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded" type="button"
             data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
             aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button>
-            
+
+
+
+
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
 
@@ -79,14 +81,12 @@
                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" <a
                         href="{{ app.request.getSchemeAndHttpHost() }}/registration">Sign up</a>
 
-
-                    <!-- Sign outif allready connect (else ou....)-->
-                <li class="visually-hidden py-3 px-0 px-lg-3 rounded js-scroll-trigger separator visually-hidden">|
-                </li>
-                <li class="visually-hidden nav-item mx-0 mx-lg-1 visually-hidden"><a
-                        class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#">Sign out</a>
-                </li>
-
+                    <!-- if connected possibibity to deconnect)-->
+                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                <li class="py-3 px-0 px-lg-3 rounded js-scroll-trigger separator">|</li>
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" <a class="link"
+                        href="{{ app.request.getSchemeAndHttpHost() }}/logout"}}">Logout</a>
+                    {% endif %}
 
             </ul>
         </div>
@@ -263,14 +263,14 @@
     </section> {# end main area #}
     {% endblock %}
 
-{# footer not fixed for home page #}
-{% set current_path = app.request.get('_route') %}
-{% set ifOfOrNot  = '' %}
-{% if  current_path  ==  'home' %}
-    {% set ifOfOrNot  = '' %}
-{% else %}
-    {% set ifOfOrNot  = 'position-fixed' %}
-{% endif %}
+    {# footer not fixed for home page #}
+    {% set current_path = app.request.get('_route') %}
+    {% set ifOfOrNot = '' %}
+    {% if current_path == 'home' %}
+    {% set ifOfOrNot = '' %}
+    {% else %}
+    {% set ifOfOrNot = 'position-fixed' %}
+    {% endif %}
 
     {% block footer %}
     <!-- Copyright Section-->
