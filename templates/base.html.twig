@@ -41,6 +41,7 @@
 
 <body id="page-top">
 
+    {# {{ is_granted(role, object = null, field = null) }} #}
     {% block menuTop %}
     <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
 
@@ -262,10 +263,18 @@
     </section> {# end main area #}
     {% endblock %}
 
+{# footer not fixed for home page #}
+{% set current_path = app.request.get('_route') %}
+{% set ifOfOrNot  = '' %}
+{% if  current_path  ==  'home' %}
+    {% set ifOfOrNot  = '' %}
+{% else %}
+    {% set ifOfOrNot  = 'position-fixed' %}
+{% endif %}
 
     {% block footer %}
     <!-- Copyright Section-->
-    <footer class="copyright py-4 text-center text-white">
+    <footer class="copyright py-4 text-center text-white {{ ifOfOrNot }}">
         <div class="container">
             <div class="footer-below">
                 <div class="container">
