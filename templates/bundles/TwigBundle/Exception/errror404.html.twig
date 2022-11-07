@@ -1,0 +1,14 @@
+{# templates/bundles/TwigBundle/Exception/error404.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Page not found</h1>
+
+    {# http://127.0.0.1:8000/_error/404 #}
+    {# In case you need them, the TwigErrorRenderer passes some information to the error template via the status_code and status_text variables that store the HTTP status code and message respectively. #}
+
+    <p>
+        The requested page couldn't be located. Checkout for any URL
+        misspelling or <a href="{{ path('home') }}">return to the homepage</a>.
+    </p>
+{% endblock %}
