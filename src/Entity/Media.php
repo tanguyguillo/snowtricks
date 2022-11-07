@@ -27,6 +27,11 @@ class Media
     #[ORM\JoinColumn(nullable: false)]
     private ?trick $trick_id = null;
 
+    public function __construct()
+    {
+
+    }
+
     public function getId(): ?int
     {
         return $this->id;

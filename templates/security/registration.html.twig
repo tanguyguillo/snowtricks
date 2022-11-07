@@ -13,11 +13,10 @@
             <br><br>
             <div class="form-floating border">
                 {{form_start(form) }}
-                {{form_row(form.username, {'label': 'Username', 'attr' : {placeHolder : 'Your username : min 3 chars'}})
+                {{form_row(form.username, {'label': 'Username', 'attr' : {placeHolder : 'Your firstname and your lastname'}})
                 }}
-                {{form_row(form.emailUser, {'label': 'Email', 'attr' : {placeHolder : 'Your email'}}) }}
-                {{form_row(form.passwordUser, {'label': 'Password', 'attr' : {placeHolder : 'Your password : min 8
-                chars'}}) }}
+                {{form_row(form.emailUser, {'label': 'Email', 'attr' : {placeHolder : 'john.doe@mydomain.fr'}}) }}
+                {{form_row(form.passwordUser, {'label': 'Password', 'attr' : {placeHolder : 'A sentence that you can easely remember, min 8 chars'}}) }}
                 {{form_widget(form._token) }}
                 <br>
                 <br>
