@@ -9,10 +9,8 @@ use Doctrine\DBAL\Types\Types;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-
 
 /**
  *  class User with constrains
@@ -37,7 +35,7 @@ private ?int $id = null;
 #[ORM\Column(length:255)]
 private ?string $username = null;
 
-#[ORM\Column(name : 'email_user', type:'string', length:255, unique:true)]
+#[ORM\Column(name : 'emailUser', type:'string', length:255, unique:true)]
 #[Assert\Email(
     message:'The email {{ value }} is not a valid email.',
 )]
@@ -69,7 +67,7 @@ private ?string $pictureUserUrl = null;
  *
  * @var [string]
  */
-public $confirm_password;
+public $confirmPassword;
 
 /**
  * variables for inferface
@@ -82,15 +80,15 @@ public $eraseCredentials;
 private ?string $token = null;
 
 #[ORM\Column]
-private ?bool $check_token = null;
+private ?bool $checkToken = null;
 
 #[ORM\Column(type : Types::DATE_MUTABLE)]
 private ?\DateTimeInterface $date = null;
 
-#[ORM\OneToMany(mappedBy : 'user_id', targetEntity : Trick::class)]
+#[ORM\OneToMany(mappedBy : 'userId', targetEntity : Trick::class)]
 private Collection $tricks;
 
-#[ORM\OneToMany(mappedBy: 'user_id', targetEntity: Comment::class)]
+#[ORM\OneToMany(mappedBy: 'userId', targetEntity: Comment::class)]
 private Collection $comments;
 
 /**
@@ -100,7 +98,7 @@ function __construct()
     {
     $this->pictureUserUrl = "../assets/img/snowboard-background.png";
     $this->token = "0";
-    $this->check_token = 0;
+    $this->checkToken = 0;
     $this->tricks = new ArrayCollection();
     $this->comments = new ArrayCollection();
 }
@@ -244,12 +242,12 @@ function setToken(string $token): self
 
 function isCheckToken(): ?bool
     {
-    return $this->check_token;
+    return $this->checkToken;
 }
 
-function setCheckToken(bool $check_token): self
+function setCheckToken(bool $checkToken): self
     {
-    $this->check_token = $check_token;
+    $this->checkToken = $checkToken;
 
     return $this;
 }

@@ -17,30 +17,30 @@ class Trick
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $trick_name = null;
+    private ?string $trickName = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $trick_description = null;
+    private ?string $trickDescription = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $trich_created = null;
+    private ?\DateTimeInterface $trichCreated = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $trick_modified = null;
+    private ?\DateTimeInterface $trickModified = null;
 
     #[ORM\ManyToOne(inversedBy: 'tricks')]
-    private ?user $user_id = null;
+    private ?user $userId = null;
 
-    #[ORM\ManyToOne(inversedBy: 'trick_id')]
+    #[ORM\ManyToOne(inversedBy: 'trickId')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Category $cadegory_id = null;
+    private ?Category $cadegoryId = null;
 
-    #[ORM\OneToMany(mappedBy: 'trick_id', targetEntity: Media::class)]
-    private Collection $media_type;
+    #[ORM\OneToMany(mappedBy: 'trickId', targetEntity: Media::class)]
+    private Collection $mediaType;
 
     public function __construct()
     {
-        $this->media_type = new ArrayCollection();
+        $this->mediaType = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -50,72 +50,72 @@ class Trick
 
     public function getTrickName(): ?string
     {
-        return $this->trick_name;
+        return $this->trickName;
     }
 
-    public function setTrickName(string $trick_name): self
+    public function setTrickName(string $trickName): self
     {
-        $this->trick_name = $trick_name;
+        $this->trickName = $trickName;
 
         return $this;
     }
 
     public function getTrickDescription(): ?string
     {
-        return $this->trick_description;
+        return $this->trickDescription;
     }
 
-    public function setTrickDescription(string $trick_description): self
+    public function setTrickDescription(string $trickDescription): self
     {
-        $this->trick_description = $trick_description;
+        $this->trickDescription = $trickDescription;
 
         return $this;
     }
 
     public function getTrichCreated(): ?\DateTimeInterface
     {
-        return $this->trich_created;
+        return $this->trichCreated;
     }
 
-    public function setTrichCreated(\DateTimeInterface $trich_created): self
+    public function setTrichCreated(\DateTimeInterface $trichCreated): self
     {
-        $this->trich_created = $trich_created;
+        $this->trichCreated = $trichCreated;
 
         return $this;
     }
 
     public function getTrickModified(): ?\DateTimeInterface
     {
-        return $this->trick_modified;
+        return $this->trickModified;
     }
 
-    public function setTrickModified(?\DateTimeInterface $trick_modified): self
+    public function setTrickModified(?\DateTimeInterface $trickModified): self
     {
-        $this->trick_modified = $trick_modified;
+        $this->trickModified = $trickModified;
 
         return $this;
     }
 
     public function getUserId(): ?user
     {
-        return $this->user_id;
+        return $this->userId;
     }
 
-    public function setUserId(?user $user_id): self
+    public function setUserId(?user $userId): self
     {
-        $this->user_id = $user_id;
+        $this->userId = $userId;
 
         return $this;
     }
 
     public function getCadegoryId(): ?Category
     {
-        return $this->cadegory_id;
+        return $this->cadegoryId;
     }
 
-    public function setCadegoryId(?Category $cadegory_id): self
+    public function setCadegoryId(?Category $cadegoryId): self
     {
-        $this->cadegory_id = $cadegory_id;
+        $this->cadegoryId = $cadegoryId;
 
         return $this;
     }
@@ -125,13 +125,13 @@ class Trick
      */
     public function getMediaType(): Collection
     {
-        return $this->media_type;
+        return $this->mediaType;
     }
 
     public function addMediaType(Media $mediaType): self
     {
-        if (!$this->media_type->contains($mediaType)) {
-            $this->media_type->add($mediaType);
+        if (!$this->mediaType->contains($mediaType)) {
+            $this->mediaType->add($mediaType);
             $mediaType->setTrickId($this);
         }
 
@@ -140,7 +140,7 @@ class Trick
 
     public function removeMediaType(Media $mediaType): self
     {
-        if ($this->media_type->removeElement($mediaType)) {
+        if ($this->mediaType->removeElement($mediaType)) {
             // set the owning side to null (unless already changed)
             if ($mediaType->getTrickId() === $this) {
                 $mediaType->setTrickId(null);

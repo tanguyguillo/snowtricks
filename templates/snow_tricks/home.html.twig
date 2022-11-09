@@ -29,17 +29,18 @@
                 <div class="col-md-2 col-lg-2 mb-5">
                     <div class="mx-auto">
                         <div class="d-flex align-items-center justify-content-center h-100 w-100">
-                <!-- tricks -->
+                            <!-- tricks -->
 
 
-                {# {% for media in medias %}
-                    <li>{{ media[0].media_name }}</li>
-                {% endfor %} #}
+                            {# {% for media in medias %} working....
+                            <li>{{ media.mediaName }}</li>
+                            {% endfor %} #}
 
+                            {# {{ medias[0] }} Object of class App\Entity\Media could not be converted to string #}
 
                             {# {% for media in medias %}
-                                  {{ media.media_name }}
-                             {% endfor %} #}
+                            {{ media.mediaName }}
+                            {% endfor %} #}
 
                             <div class="card">
                                 <img class="img-fluid"
@@ -63,10 +64,10 @@
                                     {% endif %}
                                 </div>
                             </div>
-                          
 
 
-            
+
+
 
 
                         </div>

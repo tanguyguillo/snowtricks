@@ -15,17 +15,17 @@ class Media
     private ?int $id = null;
 
     #[ORM\Column(length: 1000)]
-    private ?string $media_url = null;
+    private ?string $mediaUrl = null;
 
     #[ORM\Column(length: 45)]
-    private ?string $media_name = null;
+    private ?string $mediaName = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $media_created = null;
+    private ?\DateTimeInterface $mediaCreated = null;
 
-    #[ORM\ManyToOne(inversedBy: 'media_type')]
+    #[ORM\ManyToOne(inversedBy: 'mediaType')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?trick $trick_id = null;
+    private ?trick $trickId = null;
 
     public function __construct()
     {
@@ -39,48 +39,48 @@ class Media
 
     public function getMediaUrl(): ?string
     {
-        return $this->media_url;
+        return $this->mediaUrl;
     }
 
-    public function setMediaUrl(string $media_url): self
+    public function setMediaUrl(string $mediaUrl): self
     {
-        $this->media_url = $media_url;
+        $this->mediaUrl = $mediaUrl;
 
         return $this;
     }
 
     public function getMediaName(): ?string
     {
-        return $this->media_name;
+        return $this->mediaName;
     }
 
-    public function setMediaName(string $media_name): self
+    public function setMediaName(string $mediaName): self
     {
-        $this->media_name = $media_name;
+        $this->mediaName = $mediaName;
 
         return $this;
     }
 
     public function getMediaCreated(): ?\DateTimeInterface
     {
-        return $this->media_created;
+        return $this->mediaCreated;
     }
 
-    public function setMediaCreated(\DateTimeInterface $media_created): self
+    public function setMediaCreated(\DateTimeInterface $mediaCreated): self
     {
-        $this->media_created = $media_created;
+        $this->mediaCreated = $mediaCreated;
 
         return $this;
     }
 
     public function getTrickId(): ?trick
     {
-        return $this->trick_id;
+        return $this->trickId;
     }
 
-    public function setTrickId(?trick $trick_id): self
+    public function setTrickId(?trick $trickId): self
     {
-        $this->trick_id = $trick_id;
+        $this->trickId = $trickId;
 
         return $this;
     }

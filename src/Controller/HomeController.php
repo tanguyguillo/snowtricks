@@ -33,16 +33,14 @@ class HomeController extends AbstractController
     function home(): Response
     {
 
-   //$medias = $this->mediaRepository->findAll(); // by date by default : array
+   $medias = $this->mediaRepository->findAll(); // by date by default : array
     //$medias = array($medias);
 
-    //dd($medias);
-
-    // dd($medias[][0]);
+    // dd($medias);
 
     $title = "Snowtricks";
 
-    return $this->render('snow_tricks/home.html.twig', compact('title'));
+    return $this->render('snow_tricks/home.html.twig', compact('title', 'medias'));
 }
 
 /**

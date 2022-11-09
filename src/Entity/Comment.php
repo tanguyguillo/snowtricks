@@ -15,20 +15,20 @@ class Comment
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $comment_created = null;
+    private ?\DateTimeInterface $commentCreated = null;
 
     #[ORM\Column(length: 100)]
-    private ?string $comment_status = null;
+    private ?string $commentStatus = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $comment_content = null;
+    private ?string $commentContent = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?trick $trick_id = null;
+    private ?trick $trickId = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
-    private ?user $user_id = null;
+    private ?user $userId = null;
 
     public function getId(): ?int
     {
@@ -37,60 +37,60 @@ class Comment
 
     public function getCommentCreated(): ?\DateTimeInterface
     {
-        return $this->comment_created;
+        return $this->commentCreated;
     }
 
-    public function setCommentCreated(\DateTimeInterface $comment_created): self
+    public function setCommentCreated(\DateTimeInterface $commentCreated): self
     {
-        $this->comment_created = $comment_created;
+        $this->commentCreated = $commentCreated;
 
         return $this;
     }
 
     public function getCommentStatus(): ?string
     {
-        return $this->comment_status;
+        return $this->commentStatus;
     }
 
-    public function setCommentStatus(string $comment_status): self
+    public function setCommentStatus(string $commentStatus): self
     {
-        $this->comment_status = $comment_status;
+        $this->commentStatus = $commentStatus;
 
         return $this;
     }
 
     public function getCommentContent(): ?string
     {
-        return $this->comment_content;
+        return $this->commentContent;
     }
 
-    public function setCommentContent(?string $comment_content): self
+    public function setCommentContent(?string $commentContent): self
     {
-        $this->comment_content = $comment_content;
+        $this->commentContent = $commentContent;
 
         return $this;
     }
 
     public function getTrickId(): ?trick
     {
-        return $this->trick_id;
+        return $this->trickId;
     }
 
-    public function setTrickId(trick $trick_id): self
+    public function setTrickId(trick $trickId): self
     {
-        $this->trick_id = $trick_id;
+        $this->trickId = $trickId;
 
         return $this;
     }
 
     public function getUserId(): ?user
     {
-        return $this->user_id;
+        return $this->userId;
     }
 
-    public function setUserId(?user $user_id): self
+    public function setUserId(?user $userId): self
     {
-        $this->user_id = $user_id;
+        $this->userId = $userId;
 
         return $this;
     }
