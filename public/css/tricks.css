@@ -27,7 +27,7 @@ section.copyright {
   background-position-x: center;
   width: auto;
   height: auto;
-  background-image: url("../assets/background/snowboard-background-01.png") !important;
+  background-image: url("../assets/background/yann-allegre-8FG9tt8qZ-8-unsplash.jpeg") !important;
   background-color: white;
   background-size: cover;
   z-index: 10;
@@ -187,6 +187,7 @@ height: 70px;
 
 /* TO GO DOWN*/
 .chevron-down {
+  color: #1f2d41;
   position: absolute;
   right: 1%;
   bottom: 3%;
