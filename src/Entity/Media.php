@@ -25,7 +25,7 @@ class Media
 
     #[ORM\ManyToOne(inversedBy: 'mediaType')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?trick $trickId = null;
+    private ?Trick $trickId = null;
 
     public function __construct()
     {

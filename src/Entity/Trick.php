@@ -29,7 +29,7 @@ class Trick
     private ?\DateTimeInterface $trickModified = null;
 
     #[ORM\ManyToOne(inversedBy: 'tricks')]
-    private ?user $userId = null;
+    private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'trickId')]
     #[ORM\JoinColumn(nullable: false)]
