@@ -25,10 +25,10 @@ class Comment
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?trick $trickId = null;
+    private ?trick $trick = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
-    private ?user $userId = null;
+    private ?user $user = null;
 
     public function getId(): ?int
     {

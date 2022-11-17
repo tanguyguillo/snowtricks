@@ -31,11 +31,11 @@ class Trick
     #[ORM\ManyToOne(inversedBy: 'tricks')]
     private ?User $user = null;
 
-    #[ORM\ManyToOne(inversedBy: 'trickId')]
+    #[ORM\ManyToOne(inversedBy: 'trick')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Category $cadegoryId = null;
+    private ?Category $cadegory = null;
 
-    #[ORM\OneToMany(mappedBy: 'trickId', targetEntity: Media::class)]
+    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Media::class)]
     private Collection $mediaType;
 
     public function __construct()
@@ -108,14 +108,14 @@ class Trick
         return $this;
     }
 
-    public function getCadegoryId(): ?Category
+    public function getCadegory(): ?Category
     {
         return $this->cadegoryId;
     }
 
-    public function setCadegoryId(?Category $cadegoryId): self
+    public function setCadegory(?Category $cadegory): self
     {
-        $this->cadegoryId = $cadegoryId;
+        $this->cadegory = $cadegory;
 
         return $this;
     }

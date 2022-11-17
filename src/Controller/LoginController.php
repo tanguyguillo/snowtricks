@@ -19,10 +19,10 @@ public function index(AuthenticationUtils $authenticationUtils): Response
         $error = $authenticationUtils->getLastAuthenticationError();
 
         // last username entered by the user
-        $lastUsername = $authenticationUtils->getLastUsername();
+        $lastUserName = $authenticationUtils->getLastUserName();
 
         return $this->render('security/login.html.twig', [
-            'last_username' => $lastUsername,
+            'last_username' => $lastUserName,
             'error'     => $error,
         ]);
     }

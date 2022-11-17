@@ -85,10 +85,10 @@ private ?bool $checkToken = null;
 #[ORM\Column(type : Types::DATE_MUTABLE)]
 private ?\DateTimeInterface $date = null;
 
-#[ORM\OneToMany(mappedBy : 'userId', targetEntity : Trick::class)]
+#[ORM\OneToMany(mappedBy : 'user', targetEntity : Trick::class)]
 private Collection $tricks;
 
-#[ORM\OneToMany(mappedBy: 'userId', targetEntity: Comment::class)]
+#[ORM\OneToMany(mappedBy: 'user', targetEntity: Comment::class)]
 private Collection $comments;
 
 /**
@@ -96,7 +96,7 @@ private Collection $comments;
  */
 function __construct()
     {
-    $this->pictureUserUrl = "../assets/img/snowboard-background.png";
+    $this->pictureUserUrl = "../assets/avatars/05.jpg";
     $this->token = "0";
     $this->checkToken = 0;
     $this->tricks = new ArrayCollection();
@@ -120,12 +120,12 @@ function setEmailUser(?string $emailUser): self
     return $this;
 }
 
-function getUsername(): ?string
+function getUserName(): ?string
     {
     return $this->username;
 }
 
-function setUsername(string $username): self
+function setUserName(string $username): self
     {
     $this->username = $username;
 
@@ -196,7 +196,7 @@ function getSalt()
 }
 
 /**
- * The public representation of the user (e.g. a username, an email address, etc.)
+ * The public representation of the user (e.g. a userName, an email address, etc.)
  *
  * @see UserInterface
  */
