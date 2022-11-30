@@ -7,16 +7,10 @@ framework:
         #    twilio: '%env(TWILIO_DSN)%'
         #    nexmo: '%env(NEXMO_DSN)%'
         channel_policy:
-        # Use SMS, Slack and email for urgent notifications
-            urgent: ['sms', 'chat/slack', 'email']
-
-            # Use Slack for highly important notifications
-            high: ['chat/slack']
-
-            # Use browser for medium and low notifications
-            medium: ['browser']
-            low: ['browser']
+            # use chat/slack, chat/telegram, sms/twilio or sms/nexmo
+            urgent: ['email']
+            high: ['email']
+            medium: ['email']
+            low: ['email']
         admin_recipients:
-            - { email: snowtricks@snowtricks.omegawebprod.com }
-        texter_transports:
-            expo: '%env(EXPO_DSN)%'
+            - { email: admin@example.com }
