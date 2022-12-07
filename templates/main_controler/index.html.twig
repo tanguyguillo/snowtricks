@@ -17,26 +17,31 @@
     }
 </style>
 
-<div class="example-wrapper"> 
+<div class="example-wrapper">
     <h1>Home page Snowtricks</h1>
 
     {% for message in app.flashes('success') %}
     <div class="alert success" role="alert">{{ message }}</div>
-{% endfor %}
+    {% endfor %}
 
-<p>http://127.0.0.1:8000/registration</p>
-<p>http://127.0.0.1:8000/login</p>
-<p>http://127.0.0.1:8000/reset-password</p>
-
-<hr>
-<ul>
-<i class="fas fa-meh-rolling-eyes">- role</i>
-<i class="fas fa-meh-rolling-eyes">- surname</i>
-<i class="fas fa-meh-rolling-eyes">- reset ... au lieu de forgot_password</i>
-</ul>
+    <p>http://127.0.0.1:8000/registration</p>
+    <p>http://127.0.0.1:8000/login</p>
+    <p>http://127.0.0.1:8000/reset-password</p>
+    <p>http://127.0.0.1:8000/logout</p>
 
 
+    exemple link verif email : reset-password/reset/token
+    <p></p>http://127.0.0.1:8000/reset-password/reset/2ljjGWvK5nAHJoCaAOxSpIri3fNJabITNTtzlS7o</p>
 
+    <hr>
+    <ul>
+        <i class="fas fa-meh-rolling-eyes">- role</i>
+        <i class="fas fa-meh-rolling-eyes">- surname</i>
+        <i class="fas fa-meh-rolling-eyes">- reset ... au lieu de forgot_password</i>
+    </ul>
+
+
+ 
 
 </div>
-{% endblock %}    
+{% endblock %}
