@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello MainControlerController!{% endblock %}
+{% block title %}Snowtricks{% endblock %}
 
 {% block body %}
 <style>
@@ -18,20 +18,25 @@
 </style>
 
 <div class="example-wrapper"> 
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>Home page Snowtricks</h1>
 
     {% for message in app.flashes('success') %}
     <div class="alert success" role="alert">{{ message }}</div>
 {% endfor %}
 
-    This friendly message is coming from: 
-    <ul>
-        <li>Your controller at
-MainControlerController.php of snowtricks
-        </li>
-        <li>Your template at
-           main_controler de snowtricks
-        </li>
-    </ul>
+<p>http://127.0.0.1:8000/registration</p>
+<p>http://127.0.0.1:8000/login</p>
+<p>http://127.0.0.1:8000/reset-password</p>
+
+<hr>
+<ul>
+<i class="fas fa-meh-rolling-eyes">- role</i>
+<i class="fas fa-meh-rolling-eyes">- surname</i>
+<i class="fas fa-meh-rolling-eyes">- reset ... au lieu de forgot_password</i>
+</ul>
+
+
+
+
 </div>
 {% endblock %}    
