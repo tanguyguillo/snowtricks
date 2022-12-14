@@ -15,6 +15,7 @@ use Doctrine\DBAL\Types\Types;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[UniqueEntity(fields: ['username'], message: 'There is already an account with this username')] 
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -22,14 +23,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
-    // #[Assert\Length(
-    //     min: 3,
-    //     max: 50,
-    //     minMessage: 'Your first name must be at least {{ limit }} characters long',
-    //     maxMessage: 'Your first name cannot be longer than {{ limit }} characters',
-    // )]
-    // #[ORM\Column(180)] // , unique: true
-    // private ?string $username = null;
+    #[Assert\Length(
+        min: 3,
+        max: 50,
+        minMessage: 'Your first name must be at least {{ limit }} characters long',
+        maxMessage: 'Your first name cannot be longer than {{ limit }} characters',
+    )]
+    #[ORM\Column(length: 180, unique: true)] 
+    private ?string $username = null;
 
     #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
@@ -40,14 +41,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\Column(type : 'json')]
+    #[ORM\Column(type: 'json')]
     private $roles = [];
 
     // #[ORM\Column(length: 255)]
     // private ?string $avatar = "";
 
     #[ORM\Column(type: 'boolean')]
-    private $isVerified = false;
+  private $isVerified = false;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Tricks::class, orphanRemoval: true)]
     private Collection $tricks;
@@ -57,7 +58,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     function __construct()
     {
-        //$this->getRoles();
+        $this->addRole('ROLE_USER');
         // $this->token = "0";
         // $this->checkToken = 0;
         // $this->tricks = new ArrayCollection();
@@ -70,17 +71,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
 
-    // function getUserName(): ?string
-    // {
-    //     return $this->username;
-    // }
+    function getUserName(): ?string
+    {
+        return $this->username;
+    }
 
-    // function setUserName(string $username): self
-    // {
-    //     $this->username = $username;
+    function setUserName(string $username): self
+    {
+        $this->username = $username;
 
-    //     return $this;
-    // }
+        return $this;
+    }
 
     public function getEmail(): ?string
     {
@@ -116,7 +117,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        //return (string) $this->email;
+        return (string) $this->username;
     }
 
     /**
@@ -125,10 +127,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] =  'ROLE_USER';
+        return  $roles;
+    }
 
-        return array_unique($roles);
+    public function addRole(string $role): self
+    {
+        if (!in_array($role, $this->roles)) {
+            $this->roles[] = $role;
+        }
+
+        return $this;
     }
 
     public function setRoles(array $roles): self

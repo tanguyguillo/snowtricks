@@ -32,7 +32,6 @@ class RegistrationController extends AbstractController
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
-        // t0.180
 
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setPassword(
@@ -54,7 +53,6 @@ class RegistrationController extends AbstractController
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
             // do anything else you need here, like send an email
-
             $this->addFlash('success', 'Your email address have to be verified.');
 
             return $this->redirectToRoute('app_home'); 
