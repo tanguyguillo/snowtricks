@@ -2,7 +2,7 @@
 
 
 
-# Projet P5 of openclassrooms.com : create your own blog web site
+# Projet P6 of openclassrooms.com : create web site with symfony
 
 OPENCLASSROOMS project P6 for DEV PHP/SYMFONY certificate
 
