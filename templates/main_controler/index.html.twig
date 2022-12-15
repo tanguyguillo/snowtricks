@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Snowtricks{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper {
+        margin: 1em auto;
+        max-width: 800px;
+        width: 95%;
+        font: 18px/1.5 sans-serif;
+    }
+
+    .example-wrapper code {
+        background: #F5F5F5;
+        padding: 2px 6px;
+    }
+</style>
+
+<div class="example-wrapper"> 
+    <h1>Home page Snowtricks</h1>
+
+    {% for message in app.flashes('success') %}
+    <div class="alert success" role="alert">{{ message }}</div>
+{% endfor %}
+
+<p>http://127.0.0.1:8000/registration</p>
+<p>http://127.0.0.1:8000/login</p>
+<p>http://127.0.0.1:8000/reset-password</p>
+
+<hr>
+<ul>
+<i class="fas fa-meh-rolling-eyes">- role</i>
+<i class="fas fa-meh-rolling-eyes">- surname</i>
+<i class="fas fa-meh-rolling-eyes">- reset ... au lieu de forgot_password</i>
+</ul>
+
+
+
+
+</div>
+{% endblock %}    
