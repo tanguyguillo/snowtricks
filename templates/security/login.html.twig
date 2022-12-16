@@ -1,41 +1,60 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Login{% endblock %}
+{% block title %}Snowtricks - login{% endblock %}
 
-{% block body %}
-<form method="post">
-    {% if error %}
-    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+{% block main %}
+<br><br><br>
+<div class="container text-center">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <br>
+            <br>
+            <br>
+            <br>
+            <h2 class="tricks-modal-title text-secondary mb-0 text-center">Login</h2>
+            <br><br>
+            <div class="form-floating border">
 
-    {% if app.user %}
-    <div class="mb-3">
-        You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+                <form method="post">
+                    {% if error %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
+
+                    {% if app.user %}
+                    <div class="mb-3">
+                        You are logged in as {{ app.user.userIdentifier }}, <a
+                            href="{{ path('app_logout') }}">Logout</a>
+                    </div>
+                    {% endif %}
+
+                    {% for message in app.flashes('success') %}
+                    <div class="alert success" role="alert">{{ message }}</div>
+                    {% endfor %}
+
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="username" value="{{ last_username }}" name="username" id="inputUsername"
+                            class="form-control" autocomplete="username" required autofocus>
+                    </div>
+
+
+                    <div class="mb-3"><label for="password" class="form-label required">Password</label>
+                        <input type="password" name="password" id="inputPassword" class="form-control"
+                            autocomplete="current-password" required>
+
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                        <p>
+                            <br>
+                            <a href="{{ path('app_forgot_password_request') }}">forgot password ?</a>
+                            <br>
+                        </p>
+
+                        <button class="w-50 btn btn-lg btn-info" type="submit">login</button>
+                </form>
+            </div>
+        </div>
     </div>
-    {% endif %}
-    
-    {% for message in app.flashes('success') %}
-    <div class="alert success" role="alert">{{ message }}</div>
-    {% endfor %}
-
-    <h1 class="h3 mb-3 font-weight-normal">Login</h1>
-
-    <label for="inputUsername">Username</label>
-    <input type="username" value="{{ last_username }}" name="username" id="inputUsername" class="form-control"
-        autocomplete="username" required autofocus>
-
-
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password"
-        required>
-
-    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-    <p><a href="{{ path('app_forgot_password_request') }}">forgot password ?</a></p>
-
-    <button class="btn btn-lg btn-primary" type="submit">
-        login
-    </button>
-</form>
+</div>
 
 {% endblock %}

@@ -2,46 +2,85 @@
 
 {% block title %}Snowtricks{% endblock %}
 
-{% block body %}
-<style>
-    .example-wrapper {
-        margin: 1em auto;
-        max-width: 800px;
-        width: 95%;
-        font: 18px/1.5 sans-serif;
-    }
+{% block visualCentral %}
+<header class="masthead text-white text-center home-background">
+    <div class="container">
+        <div class="slogan">
+            <h1>Share yours tricks</h1>
+            <H2class="pre-wrap masthead-subheading font-weight-light mb-0">Push your limits and share incredible
+                experiences
+                friends. </h2>
+        </div>
+        <!-- go down to the tricks -->
+        <div>
+            <a class="js-scroll-trigger d-block text-center  text-white rounded" href="#tricks">
+                <i class=" bi bi-arrow-down-square-fill fa-3x chevron-down"></i>
+            </a>
+        </div>
+</header>
+{% endblock %}
 
-    .example-wrapper code {
-        background: #F5F5F5;
-        padding: 2px 6px;
-    }
-</style>
-
-<div class="example-wrapper">
-    <h1>Home page Snowtricks</h1>
-
-    {% for message in app.flashes('success') %}
-    <div class="alert success" role="alert">{{ message }}</div>
-    {% endfor %}
-
-    <p>http://127.0.0.1:8000/registration</p>
-    <p>http://127.0.0.1:8000/login</p>
-    <p>http://127.0.0.1:8000/reset-password</p>
-    <p>http://127.0.0.1:8000/logout</p>
-
-
-    exemple link verif email : reset-password/reset/token
-    <p></p>http://127.0.0.1:8000/reset-password/reset/2ljjGWvK5nAHJoCaAOxSpIri3fNJabITNTtzlS7o</p>
-
-    <hr>
-    <ul>
-        <i class="fas fa-meh-rolling-eyes">- role</i>
-        <i class="fas fa-meh-rolling-eyes">- surname</i>
-        <i class="fas fa-meh-rolling-eyes">- reset ... au lieu de forgot_password</i>
-    </ul>
+{% block main%}
+<section class="page-section tricks" id="tricks">
+    <div>
+        </di>
+        <div class="container">
+            <!-- tricks Grid Items -->
+            <div class="row justify-content-center">
+                <!-- tricks Items-->
+                <div class="col-md-2 col-lg-2 mb-5">
+                    <div class="mx-auto">
+                        <div class="d-flex align-items-center justify-content-center h-100 w-100">
+                            <!-- tricks -->
 
 
- 
+                            {# {% for media in medias %} working....
+                            <li>{{ media.mediaName }}</li>
+                            {% endfor %} #}
 
-</div>
+                            {# {{ medias[0] }} Object of class App\Entity\Media could not be converted to string #}
+
+                            {# {% for media in medias %}
+                            {{ media.mediaName }}
+                            {% endfor %} #}
+
+                            <div class="card">
+                                <img class="img-fluid"
+                                    src="{{ app.request.getSchemeAndHttpHost() }}/assets/img/tricks/trick-example.png"
+                                    alt="trick-name" />
+                                <div class="card-body">
+
+                                    <a href="#" class="link-primary">trick 1</a>
+
+                                    <!-- tricks Items -->
+                                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                                    <span>
+                                        <a href="#tricksDelete" class="float-right ml-1" data-toggle="modal">
+                                            <i class="bi bi-trash-fill iconTricks"></i>
+                                        </a>
+
+                                        <a href="#" class="float-right ml-1">
+                                            <i class="bi bi-pencil-fill iconTricks"></i>
+                                        </a>
+                                    </span>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- go up tricks Items -->
+                <div>
+                    <a class="arrow-up" href="#tricks">
+                        <i class=" bi bi-arrow-up-square-fill fa-3x"></i>
+                    </a>
+                </div>
+</section>
 {% endblock %}
