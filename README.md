@@ -47,7 +47,7 @@ Every registred user is his own admin
 
 user's role:
 
-make your own
+Make your own (email validation)
 
 ## IDE
 
