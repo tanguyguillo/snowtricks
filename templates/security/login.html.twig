@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Login{% endblock %}
 
 {% block body %}
 <form method="post">
@@ -22,7 +22,7 @@
 
     <label for="inputUsername">Username</label>
     <input type="username" value="{{ last_username }}" name="username" id="inputUsername" class="form-control"
-        autocomplete="email" required autofocus>
+        autocomplete="username" required autofocus>
 
 
     <label for="inputPassword">Password</label>
@@ -33,16 +33,9 @@
 
     <p><a href="{{ path('app_forgot_password_request') }}">forgot password ?</a></p>
 
-    {# ----- todo {{ app.user.isVerified }} #}
-
-    {# <div class="mb-3">
-        You are logged witha status (verified) : {{ app.user.isVerified }}
-    </div> #}
-
     <button class="btn btn-lg btn-primary" type="submit">
         login
     </button>
 </form>
-
 
 {% endblock %}

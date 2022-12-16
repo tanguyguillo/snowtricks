@@ -19,9 +19,10 @@ class SecurityController extends AbstractController
         $lastUsername = $authenticationUtils->getLastUsername();
 
         if ($this->getUser()) {
-           // return $this->redirectToRoute('app_logout'); // to see
-            $security->logout(false);
+            $security->logout(false); // specific to 6.2
         }
+
+        //var_dump('lastUsername : '.$lastUsername);
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
