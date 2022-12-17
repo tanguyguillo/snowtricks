@@ -62,6 +62,7 @@ class ResetPasswordController extends AbstractController
         // Generate a fake token if the user does not exist or someone hit this page directly.
         // This prevents exposing whether or not a user was found with the given email address or not
         if (null === ($resetToken = $this->getTokenObjectFromSession())) {
+
             $resetToken = $this->resetPasswordHelper->generateFakeResetToken();
         }
 
@@ -128,13 +129,25 @@ class ResetPasswordController extends AbstractController
             'resetForm' => $form->createView(),
         ]);
     }
-
+    /**
+     *  function processSendingPasswordResetEmail // in fact here it's from username
+     *
+     * @param string $emailFormData
+     * @param MailerInterface $mailer
+     * @param TranslatorInterface $translator
+     * @return RedirectResponse
+     */
     private function processSendingPasswordResetEmail(string $emailFormData, MailerInterface $mailer, TranslatorInterface $translator): RedirectResponse
     {
+ 
+        // in fact here it's from username
+        $userNameFormData = $emailFormData;
+
         $user = $this->entityManager->getRepository(User::class)->findOneBy([
-            'email' => $emailFormData,
+            'username' => $userNameFormData,
         ]);
 
+     
         // Do not reveal whether a user account was found or not.
         if (!$user) {
             return $this->redirectToRoute('app_check_email');
@@ -159,7 +172,7 @@ class ResetPasswordController extends AbstractController
         $email = (new TemplatedEmail())
             ->from(new Address('no-reply@snowtricks.omegawebprod.com', 'snowtricks.omegawebprod.com'))
             ->to($user->getEmail())
-            ->subject('Your password reset request')
+            ->subject('Your password reset request from Snowtricks')
             ->htmlTemplate('reset_password/email.html.twig')
             ->context([
                 'resetToken' => $resetToken,
