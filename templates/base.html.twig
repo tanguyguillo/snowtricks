@@ -48,6 +48,7 @@
 <body id="page-top">
 
     {# {{ is_granted(role, object = null, field = null) }} #}
+
     {% block menuTop %}
     <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
 
@@ -102,8 +103,11 @@
     {% endblock %}
 
     {% block begincContainer %}
-
     {% endblock %}
+
+    {# {% for message in app.flashes('success') %}
+    <div class="alert success" role="alert">{{ message }}</div>
+    {% endfor %} #}
 
     {% block main%}
     {% endblock %}

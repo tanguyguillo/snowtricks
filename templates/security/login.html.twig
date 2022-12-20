@@ -37,20 +37,20 @@
                             class="form-control" autocomplete="username" required autofocus>
                     </div>
 
-
                     <div class="mb-3"><label for="password" class="form-label required">Password</label>
                         <input type="password" name="password" id="inputPassword" class="form-control"
                             autocomplete="current-password" required>
+                    </div>
+                    
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                    <p>
+                        <br>
+                        <a href="{{ path('app_forgot_password_request') }}">forgot password ?</a>
+                        <br>
+                    </p>
 
-                        <p>
-                            <br>
-                            <a href="{{ path('app_forgot_password_request') }}">forgot password ?</a>
-                            <br>
-                        </p>
-
-                        <button class="w-50 btn btn-lg btn-info" type="submit">login</button>
+                    <button class="w-50 btn btn-lg btn-info" type="submit">login</button>
                 </form>
             </div>
         </div>

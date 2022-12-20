@@ -25,13 +25,20 @@ class RegistrationController extends AbstractController
         $this->emailVerifier = $emailVerifier;
     }
 
+/**
+ * function register
+ *
+ * @param Request $request
+ * @param UserPasswordHasherInterface $userPasswordHasher
+ * @param EntityManagerInterface $entityManager
+ * @return Response
+ */
     #[Route('/registration', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
-
 
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setPassword(

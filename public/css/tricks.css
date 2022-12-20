@@ -186,16 +186,14 @@ ul li a:hover .footerDown {
   box-sizing: border-box;
 }
 
-/* TO GO DOWN*/
+/* TO GO DOWN */
 .chevron-down {
   color: #1f2d41;
   position: absolute;
   right: 1%;
-  bottom: 3%;
+  bottom: 10%;
   padding: 25px 150;
 }
-
-
 
 .slogan {
   height: 80vh;

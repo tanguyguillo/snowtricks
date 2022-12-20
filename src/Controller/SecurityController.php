@@ -22,12 +22,9 @@ class SecurityController extends AbstractController
             $security->logout(false); // specific to 6.2
         }
 
-        //var_dump('lastUsername : '.$lastUsername);
-
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
-
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
