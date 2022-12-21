@@ -6,28 +6,27 @@ use App\Entity\Category;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
+use Symfony\Component\String\Slugger\AsciiSlugger;
 
 
 /**
  * class fixture (testing)
- * php bin/console doctrine:fixtures:load
+ * php bin/console doctrine:fixtures:load.... to see make:fixtures
  */
 class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        $category = new Category();
-        $category ->setName('test');
-        $category ->setslug('test-slug');
+        $catList = ['Stalls', 'Straight Airs', 'Grabs', 'Spins', "Flips and inversed rotations", 'Slides', "Tweats and variations", "Inverted hand plants", "Else"];
+        $slugger = new AsciiSlugger();
 
-        $manager->persist($category);
-
-        $category = new Category();
-        $category ->setName('test2');
-        $category ->setslug('test-slug2');
-
-        $manager->persist($category);
-
+        foreach ($catList as $valeur) {
+            $category = new Category();
+            $category->setName($valeur);
+            $slug = $slugger->slug($valeur);
+            $category->setslug($slug);
+            $manager->persist($category);
+        }
         $manager->flush();
     }
 }

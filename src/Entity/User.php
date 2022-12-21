@@ -44,11 +44,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'json')]
     private $roles = [];
 
-    // #[ORM\Column(length: 255)]
-    // private ?string $avatar = "";
+    #[ORM\Column(length: 255)]
+    private ?string $avatar = "";
 
     #[ORM\Column(type: 'boolean')]
-  private $isVerified = false;
+    private $isVerified = false;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Tricks::class, orphanRemoval: true)]
     private Collection $tricks;
@@ -59,8 +59,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     function __construct()
     {
         $this->addRole('ROLE_USER');
-        // $this->token = "0";
-        // $this->checkToken = 0;
+        $this->setAvatar("avatar-252×230.png");
         // $this->tricks = new ArrayCollection();
         // $this->comments = new ArrayCollection();
     }
@@ -167,17 +166,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    // function getAvatar(): ?string
+    // public function getVerified(): bool
     // {
-    //     return $this->avatar;
+    //     $checkVerified = $this->isVerified;
+
+    //     return $checkVerified;
     // }
 
-    // function setAvatar(string $avatar): self
-    // {
-    //     $this->avatar = $avatar;
+    function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
 
-    //     return $this;
-    // }
+    function setAvatar(string $avatar): self
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
 
     /**
      * @return Collection<int, Tricks>
