@@ -8,10 +8,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 
-
-
-
-
 /**
  * class MainControler route /
  */
@@ -22,7 +18,7 @@ class MainControlerController extends AbstractController
     {
         // $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
         // verified the user is verified
-         $user = new User;
+        $user = new User;
 
         // if ($user->getVerified() == 0 ){
         //     //$this->addFlash('success', 'Your email address have to be verified.');
