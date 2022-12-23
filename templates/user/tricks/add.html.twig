@@ -13,24 +13,52 @@
             <br>
             <h2 class="tricks-modal-title text-secondary mb-0 text-center">Add a trick</h2>
             <br><br>
-            <div class="form-floating border">
 
-                {# {% for flash_error in app.flashes('reset_password_error') %}
+                {% for flash_error in app.flashes('verify_email_error') %}
                 <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-                {% endfor %} #}
+                {% endfor %}
 
+                {{ form_start(formAddTrick) }}
 
-                {{ form(form) }}
+                    {{ form_row(formAddTrick.title, {
+                    label: 'Trick name',
+                    attr : {'class': 'form-control'}
+                    }) }}
+
+                    <br>
+
+                    {{ form_row(formAddTrick.description, {
+                        label: 'Description',
+                        attr : {'class': 'form-control'}
+                    }) }}
+
+                    <br>
+
+                    {{ form_row(formAddTrick.content, {
+                        label: 'Content',
+                        attr : {'class': 'form-control'}
+                    }) }}
+
+                    <br>
+
+                    {{ form_row(formAddTrick.category, {
+                        label: 'Categories',
+                        attr : {'class': 'form-control'}
+                    }) }}
 
                 <br>
-                
+
+                <br><br>
+
+                {# {{ form_row(form.submit, { 'label': 'Submit me' }) }} #}
+
+                <button class="w-50 btn btn-lg btn-info" type="submit">Add this trick</button>
+
+                {{ form_end(formAddTrick) }}
+
+                <br> 
                 <br>
 
-                {# <button class="w-50 btn btn-lg btn-info"> NNNN </button> #}
-
-
-
-            </div>
         </div>
     </div>
 

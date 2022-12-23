@@ -6,6 +6,8 @@ use App\Repository\TricksRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\String\Slugger\AsciiSlugger;
+
 #[ORM\Entity(repositoryClass: TricksRepository::class)]
 class Tricks
 {
@@ -21,7 +23,7 @@ class Tricks
     private ?string $slug = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $content = null;
+    private ?string $content = null; 
 
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
@@ -29,6 +31,8 @@ class Tricks
     #[ORM\Column]
     private ?bool $active = null;
 
+
+    // relations
     #[ORM\ManyToOne(inversedBy: 'tricks')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
@@ -39,6 +43,21 @@ class Tricks
 
     #[ORM\Column(length: 255)]
     private ?string $description = null;
+
+    // private $slugger;
+
+    public function __construct()
+    {
+        $this->setActive(1);
+        $this->setCreatedAt(new \DateTimeImmutable("now"));
+        // $this->slugger = new AsciiSlugger();
+    }
+
+    public function __toString()
+    {
+        return $this->name;
+    }
+
 
     public function getId(): ?int
     {
@@ -52,8 +71,8 @@ class Tricks
 
     public function setTitle(string $title): self
     {
+        // $slug = $slugger->slug($slug);
         $this->title = $title;
-
         return $this;
     }
 
@@ -65,7 +84,6 @@ class Tricks
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
-
         return $this;
     }
 
@@ -77,7 +95,6 @@ class Tricks
     public function setContent(string $content): self
     {
         $this->content = $content;
-
         return $this;
     }
 
@@ -89,7 +106,6 @@ class Tricks
     public function setCreatedAt(\DateTimeImmutable $created_at): self
     {
         $this->created_at = $created_at;
-
         return $this;
     }
 
@@ -101,7 +117,6 @@ class Tricks
     public function setActive(bool $active): self
     {
         $this->active = $active;
-
         return $this;
     }
 
@@ -113,7 +128,6 @@ class Tricks
     public function setUser(?User $user): self
     {
         $this->user = $user;
-
         return $this;
     }
 
@@ -125,7 +139,6 @@ class Tricks
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
-
         return $this;
     }
 
@@ -137,7 +150,9 @@ class Tricks
     public function setDescription(string $description): self
     {
         $this->description = $description;
-
         return $this;
     }
+
+
+
 }

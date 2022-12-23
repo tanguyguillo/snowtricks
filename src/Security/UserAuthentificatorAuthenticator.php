@@ -23,12 +23,13 @@ class UserAuthentificatorAuthenticator extends AbstractLoginFormAuthenticator
 
     public function __construct(private UrlGeneratorInterface $urlGenerator)
     {
-       
     }
 
     public function authenticate(Request $request): Passport
     {
         $username= $request->request->get('username', '');
+
+        // if user is not verified : to go  ... $userTest = UserBadge($username),
 
         $request->getSession()->set(Security::LAST_USERNAME, $username);
 
@@ -44,7 +45,6 @@ class UserAuthentificatorAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName, ): ?Response
     {
-      
         // if (!$user->setIsVerified(true)) { //isVerified show "undefined method"
 
         //     $request->getSession()->set(Security::AUTHENTICATION_ERROR, "You are not verified. Check your emails.");

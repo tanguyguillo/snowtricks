@@ -2,9 +2,7 @@
 
 namespace App\Controller;
 
-
 use App\Entity\Tricks;
-
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,16 +24,20 @@ class UserController extends AbstractController
     }
 
 
-    // #[Route('/tricks/details/add', name: 'app_user_tricks_add')]
+/**
+ * addTricks
+ *
+ * @return void
+ */
     #[Route('/tricks/details/add', name: 'app_user_tricks_add')]
     public function addTricks()
     {
         $tricks =  new Tricks;
 
-        $form = $this->createForm(TricksType::class, $tricks ); 
+        $formAddTrick = $this->createForm(TricksType::class, $tricks ); 
 
         return $this->render('user/tricks/add.html.twig', [
-            'form' => $form->createView(),
+            'formAddTrick' =>  $formAddTrick->createView(),
         ]);
     }
 }

@@ -18,49 +18,41 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
+use App\Entity\Category;
 
+
+/**
+ * class TricksType
+ */
 class TricksType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-
         $builder
-        ->add('title', TextType::class, ['label' => 'Title'])
-        //->add('slug')
-        ->add('description', TextType::class,)
+        ->add('title', TextType::class, 
+        ['label' => 'Title'],
+        new Length([
+            'min' => 4,
+            'minMessage' => 'Your trick name should be at least {{ limit }} characters',
+        ]),)
+        ->add('description', TextType::class)
         ->add('content', TextareaType::class)
-        //->add('user')
-        //->add('created_at')
-        //->add('active')
-        ->add('Save', submitType::class)
+        ->add('category', EntityType::class, [
+                'class' => Category::class
+            ])
         ;
-
-    // $builder
-    //         ->add('title', TextType::class, ['label' => 'Title'])
-        ;
-        // $builder
-        //     ->add('title',TextType::class)
-        //     ->add('slug')
-        //     ->add('content', TextareaType::class)
-        //     ->add('created_at')
-        //     ->add('active')
-        //     ->add('user')
-            
-        // ;
-
-        // ->add('category', EntityType::class, [
-        //     'class' => Category::class
-        // ]
-
     }
 
+    /**
+     *  function configureOptions
+     *
+     * @param OptionsResolver $resolver
+     * @return void
+     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         // 'data_class' => TricksType::class,
-        // 'data_class' => TricksType::class,
-
         $resolver->setDefaults([
-        
         ]);
     }
 }
