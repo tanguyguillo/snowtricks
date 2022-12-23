@@ -37,17 +37,12 @@ class UserController extends AbstractController
     {
         $tricks =  new Tricks;
 
-        
-
-
         $formAddTrick = $this->createForm(TricksType::class, $tricks);
 
 
         if ($formAddTrick->isSubmitted() && $formAddTrick->isValid()) {
             $entityManager = $doctrine->getManager();
 
-            $tricks->setSlug("test-slug");
-            
             $entityManager->persist($tricks);
             $entityManager->flush();
 
