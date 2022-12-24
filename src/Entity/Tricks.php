@@ -2,6 +2,9 @@
 
 namespace App\Entity;
 
+use App\Entity\User;
+use App\Entity\UniqueEntity;
+
 use App\Repository\TricksRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -9,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 
 #[ORM\Entity(repositoryClass: TricksRepository::class)]
+#[UniqueEntity(fields: ['title'], message: 'There is already an title like this one!')] 
 class Tricks
 {
     #[ORM\Id]
@@ -16,21 +20,20 @@ class Tricks
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)] 
     private ?string $title = null;
 
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $content = null; 
+    private ?string $content = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
 
     #[ORM\Column]
     private ?bool $active = null;
-
 
     // relations
     #[ORM\ManyToOne(inversedBy: 'tricks')]
@@ -44,20 +47,19 @@ class Tricks
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
-    // private $slugger;
+    private $slugger;
 
     public function __construct()
     {
         $this->setActive(1);
         $this->setCreatedAt(new \DateTimeImmutable("now"));
-        // $this->slugger = new AsciiSlugger();
+        $this->slugger = new AsciiSlugger();
     }
 
     public function __toString()
     {
         return $this->name;
     }
-
 
     public function getId(): ?int
     {
@@ -71,7 +73,8 @@ class Tricks
 
     public function setTitle(string $title): self
     {
-        // $slug = $slugger->slug($slug);
+
+        $this->setSlug($this->slugger->slug($title));
         $this->title = $title;
         return $this;
     }
@@ -152,7 +155,4 @@ class Tricks
         $this->description = $description;
         return $this;
     }
-
-
-
 }

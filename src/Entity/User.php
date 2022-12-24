@@ -60,8 +60,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->addRole('ROLE_USER');
         $this->setAvatar("avatar-252×230.png");
-        // $this->tricks = new ArrayCollection();
-        // $this->comments = new ArrayCollection();
+        $this->tricks = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->username;
     }
 
     public function getId(): ?int

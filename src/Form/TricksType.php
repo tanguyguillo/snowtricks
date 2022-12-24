@@ -6,20 +6,13 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use App\Entity\User;
-
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-
 use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 use App\Entity\Category;
-
+use App\Entity\User;
 
 /**
  * class TricksType
@@ -29,18 +22,25 @@ class TricksType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('title', TextType::class, 
-        ['label' => 'Title'],
-        new Length([
-            'min' => 4,
-            'minMessage' => 'Your trick name should be at least {{ limit }} characters',
-        ]),)
-        ->add('description', TextType::class)
-        ->add('content', TextareaType::class)
-        ->add('category', EntityType::class, [
-                'class' => Category::class
-            ])
-        ;
+            ->add(
+                'title',
+                TextType::class,
+                ['label' => 'Title'],
+                new Length([
+                    'min' => 4,
+                    'minMessage' => 'Your trick name should be at least {{ limit }} characters',
+                ]),
+            )
+            ->add('description', TextType::class)
+            ->add('content', TextareaType::class)
+            ->add(
+                'category',
+                EntityType::class,
+                [
+                    'class' => Category::class
+                ]
+            )
+            ;
     }
 
     /**
@@ -52,7 +52,6 @@ class TricksType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         // 'data_class' => TricksType::class,
-        $resolver->setDefaults([
-        ]);
+        $resolver->setDefaults([]);
     }
 }

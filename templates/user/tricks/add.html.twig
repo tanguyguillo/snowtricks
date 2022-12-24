@@ -14,9 +14,9 @@
             <h2 class="tricks-modal-title text-secondary mb-0 text-center">Add a trick</h2>
             <br><br>
 
-                {% for flash_error in app.flashes('verify_email_error') %}
+                {# {% for flash_error in app.flashes('verify_email_error') %}
                 <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-                {% endfor %}
+                {% endfor %} #}
 
                 {{ form_start(formAddTrick) }}
 
@@ -49,8 +49,6 @@
                 <br>
 
                 <br><br>
-
-                {# {{ form_row(form.submit, { 'label': 'Submit me' }) }} #}
 
                 <button class="w-50 btn btn-lg btn-info" type="submit">Add this trick</button>
 
