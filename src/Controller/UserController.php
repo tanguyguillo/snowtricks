@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Tricks;
 use App\Entity\User;
 
+
 use App\Form\TricksType;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,7 +28,6 @@ class UserController extends AbstractController
         ]);
     }
 
-
     /**
      * function addTricks
      * 
@@ -39,25 +39,22 @@ class UserController extends AbstractController
     {
         $tricks =  new Tricks;
 
-        // get the current user
-        $tricks->setUser($this->getUser());
-
         $formAddTrick = $this->createForm(TricksType::class, $tricks);
         $formAddTrick->handleRequest($request);
 
         if ($formAddTrick->isSubmitted() && $formAddTrick->isValid()) {
-            $entityManager = $doctrine->getManager();
 
-            $tricks->setSlug("test-slug");
+            // get the current user
+            $tricks->setUser($this->getUser());
+
+            $entityManager = $doctrine->getManager();
 
             $entityManager->persist($tricks);
             $entityManager->flush();
 
-            //return $this->redirectToRoute('/');
-        }
-
-        else {
-           // return new Response('Not valid');
+            return $this->redirectToRoute('app_home');
+        } else {
+            // return new Response('Not valid');
         }
 
         return $this->render('user/tricks/add.html.twig', [

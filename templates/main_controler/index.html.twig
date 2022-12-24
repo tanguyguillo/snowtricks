@@ -11,76 +11,127 @@
                 experiences
                 friends. </h2>
         </div>
-        
-      <!-- go down to the tricks -->
-      <div>
-        <a class="js-scroll-trigger d-block text-center text-white rounded" href="#tricks">
-            <i class=" bi bi-arrow-down-circle-fill fa-3x chevron-down"></i>
-        </a>
-    </div>  
+
+        <!-- go down to the tricks -->
+        <div>
+            <a class="js-scroll-trigger d-block text-center text-white rounded" href="#tricks">
+                <i class=" bi bi-arrow-down-circle-fill fa-3x chevron-down"></i>
+            </a>
+        </div>
 </header>
 
 {% endblock %}
 
 {% block main%}
 <section class="page-section tricks" id="tricks">
-    <div>
-        </di>
-        <div class="container">
-            <!-- tricks Grid Items -->
-            <div class="row justify-content-center">
-                <!-- tricks Items-->
-                <div class="col-md-2 col-lg-2 mb-5">
-                    <div class="mx-auto">
-                        <div class="d-flex align-items-center justify-content-center h-100 w-100">
-                            <!-- tricks -->
+    <div class="container">
+        <!-- tricks Grid Items -->
+        <div class="row justify-content-center">
+            {% for trick in tricks %}
+            <!-- tricks Items-->
+            <div class="col-md-2 col-lg-2 mb-5">
+                <div class="mx-auto">
+                    <div class="d-flex align-items-center justify-content-center h-100 w-100">
+                        <div class="card">
+                            <img class="img-fluid" src="assets/img/tricks/{{ trick.picture }}"
+                                alt="{{ trick.title|striptags}}" />
+                            <div class="card-body">
+                                {# <a href="#" class="link-primary">{{ trick.title|striptags|u.truncate(14, '...')}}</a> #}
+                                <a href="tricks/details/{{ trick.slug }}" class="link-primary">{{ trick.title|striptags}}</a>
+
+                                {# Only if connected #}
+                                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                                <span>
+                                    <a href="#tricksDelete" class="float-right ml-1" data-toggle="modal">
+                                        <i class="bi bi-trash-fill iconTricks"></i>
+                                    </a>
+                                    <a href="#" class="float-right ml-1">
+                                        <i class="bi bi-pencil-fill iconTricks"></i>
+                                    </a>
+                                </span>
+                                {% endif %}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
 
 
-                            {# {% for media in medias %} working....
-                            <li>{{ media.mediaName }}</li>
-                            {% endfor %} #}
+            <!-- tricks Modal-->
+            <div class="tricks-modal modal fade" id="tricksDelete" tabindex="-1" role="dialog"
+                aria-labelledby="#tricksModal0Label" aria-hidden="true">
+                <div class="modal-dialog modal-xl" role="document">
+                    <div class="modal-content">
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true"><i class="fas fa-times"></i></span></button>
+                        <div class="modal-body text-center">
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-8">
+                                        <!-- tricks Modal - Title-->
+                                        <h2 class="tricks-modal-title text-secondary mb-0">Delete the trick</h2>
 
-                            {# {{ medias[0] }} Object of class App\Entity\Media could not be converted to string #}
+                                        <!-- tricks Modal - Image <img class="img-fluid rounded mb-5"
+                                                        src="" alt="" /> -->
+                                        <!-- tricks Modal - Text-->
+                                        <p class="mb-5">Are your sur to deteting this item ?
+                                        </p>
+                                        <button class="btn btn-secondary" href="#" data-dismiss="modal">
+                                            <i class="fas fa-times fa-fw"></i>Yes</button>
 
-                            {# {% for media in medias %}
-                            {{ media.mediaName }}
-                            {% endfor %} #}
-
-                            <div class="card">
-                                <img class="img-fluid"
-                                    src="{{ app.request.getSchemeAndHttpHost() }}/assets/img/tricks/trick-example.png"
-                                    alt="trick-name" />
-                                <div class="card-body">
-                                    <a href="#" class="link-primary">trick 1</a>
-                                    <!-- tricks Items only if auth -->
-                                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                                    <span>
-                                        <a href="#tricksDelete" class="float-right ml-1" data-toggle="modal">
-                                            <i class="bi bi-trash-fill iconTricks"></i>
-                                        </a>
-                                        <a href="#" class="float-right ml-1">
-                                            <i class="bi bi-pencil-fill iconTricks"></i>
-                                        </a>
-                                    </span>
-                                    {% endif %}
+                                        <button class="btn btn btn-warning" href="#" data-dismiss="modal">
+                                            <i class="fas fa-times fa-fw"></i>No</button>
+                                    </div>
                                 </div>
-                            </div><!--end card -->
-
-                        </div>   
+                            </div>
+                        </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- go up tricks Items -->
-                <div class="d-flex align-items-center justify-content-center h-100 w-100">
-                    <a class="arrow-up" href="#tricks">
-                        <i class=" bi bi-arrow-up-circle-fill fa-3x"></i>
-                    </a>
 
-                    <div class="row justify-content-center m-3">
-                        <a href="#" id="loadMoreTrick"><i class="bi bi-plus-circle-fill fa-3x"></i></a>
-                        {# <a href="#" id="loadMoreTrick"><i class="fas fa-plus-circle fa-3x"></i></a> #}
-                        {# <a href="#" id="loadLessTrick"><i class="fas fa-minus-circle fa-3x"></i></a>               #}
-                    </div>
+
+            {# {% for trick in tricks %}
+            <div class="card">
+                <img class="img-fluid" <div class="card">
+                <img class="img-fluid"
+                    src="{{ app.request.getSchemeAndHttpHost() }}/assets/img/tricks/{{ trick.picture }}"
+                    alt="{{ trick.title }}" />
+                <div class="card-body">
+                    <a href="#" class="link-primary">{{ trick.title }}</a>
+
+                    <!-- tricks Items only if auth -->
+                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                    <span>
+                        <a href="#tricksDelete" class="float-right ml-1" data-toggle="modal">
+                            <i class="bi bi-trash-fill iconTricks"></i>
+                        </a>
+                        <a href="#" class="float-right ml-1">
+                            <i class="bi bi-pencil-fill iconTricks"></i>
+                        </a>
+                    </span>
+                    {% endif %}
                 </div>
+            </div><!--end card -->
+        </div>
+        {% endfor %} #}
+
+
+
+    </div>
+    </div>
+
+    <!-- go up tricks Items -->
+    <div class="d-flex align-items-center justify-content-center h-100 w-100">
+        <a class="arrow-up" href="#tricks">
+            <i class=" bi bi-arrow-up-circle-fill fa-3x"></i>
+        </a>
+
+        <div class="row justify-content-center m-3">
+            <a href="#" id="loadMoreTrick"><i class="bi bi-plus-circle-fill fa-3x"></i></a>
+        </div>
+    </div>
 </section>
 {% endblock %}

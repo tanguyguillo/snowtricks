@@ -254,3 +254,9 @@ li {
 div > form > div > ul > li {
   color: #e83e8c;
 }
+
+/* tricks vignette */
+.mini{
+  width : 158px;
+  height : 204px;
+}

@@ -12,7 +12,7 @@ use Symfony\Component\String\Slugger\AsciiSlugger;
  * class fixture (testing)
  * php bin/console doctrine:fixtures:load.... to see make:fixtures
  */
-class AppFixtures extends Fixture
+class CategoryFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
@@ -27,6 +27,5 @@ class AppFixtures extends Fixture
             $manager->persist($category);
         }
         $manager->flush();
-
     }
 }
