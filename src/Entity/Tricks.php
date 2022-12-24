@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use App\Entity\User;
-use App\Entity\UniqueEntity;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 use App\Repository\TricksRepository;
 use Doctrine\DBAL\Types\Types;
@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 
 #[ORM\Entity(repositoryClass: TricksRepository::class)]
-#[UniqueEntity(fields: ['title'], message: 'There is already an title like this one!')] 
+#[UniqueEntity(fields: ['title'], message: "There's already a trick name like this one!")] 
 class Tricks
 {
     #[ORM\Id]
@@ -49,11 +49,16 @@ class Tricks
 
     private $slugger;
 
+    #[ORM\Column(length: 255)]
+    private ?string $picture = null;
+
     public function __construct()
     {
         $this->setActive(1);
         $this->setCreatedAt(new \DateTimeImmutable("now"));
         $this->slugger = new AsciiSlugger();
+
+        $this->setPicture("main-picture.jpg");
     }
 
     public function __toString()
@@ -153,6 +158,18 @@ class Tricks
     public function setDescription(string $description): self
     {
         $this->description = $description;
+        return $this;
+    }
+
+    public function getPicture(): ?string
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(string $picture): self
+    {
+        $this->picture = $picture;
+
         return $this;
     }
 }

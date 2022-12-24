@@ -9,13 +9,12 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 use App\Entity\Category;
-use App\Entity\User;
 
 /**
  * class TricksType
+ * 
  */
 class TricksType extends AbstractType
 {
@@ -25,7 +24,7 @@ class TricksType extends AbstractType
             ->add(
                 'title',
                 TextType::class,
-                ['label' => 'Title'],
+                ['label' => ''],
                 new Length([
                     'min' => 4,
                     'minMessage' => 'Your trick name should be at least {{ limit }} characters',

@@ -29,10 +29,8 @@ class UserController extends AbstractController
 
 
     /**
-     * addTricks
-     * https://symfony.com/doc/current/doctrine.html#persisting-objects-to-the-database
+     * function addTricks
      * 
-     *  public function addTricks(ManagerRegistry $doctrine): Response
      * 
      * @return void
      */
@@ -41,8 +39,8 @@ class UserController extends AbstractController
     {
         $tricks =  new Tricks;
 
-        
-
+        // get the current user
+        $tricks->setUser($this->getUser());
 
         $formAddTrick = $this->createForm(TricksType::class, $tricks);
         $formAddTrick->handleRequest($request);
@@ -51,16 +49,16 @@ class UserController extends AbstractController
             $entityManager = $doctrine->getManager();
 
             $tricks->setSlug("test-slug");
-            
+
             $entityManager->persist($tricks);
             $entityManager->flush();
 
             //return $this->redirectToRoute('/');
         }
 
-        // } else {
-        //     return new Response('Not valid');
-        // }
+        else {
+           // return new Response('Not valid');
+        }
 
         return $this->render('user/tricks/add.html.twig', [
             'formAddTrick' =>  $formAddTrick->createView(),
