@@ -14,10 +14,6 @@
             <h2 class="tricks-modal-title text-secondary mb-0 text-center">Add a trick</h2>
             <br><br>
 
-                {# {% for flash_error in app.flashes('verify_email_error') %}
-                <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-                {% endfor %} #}
-
                 {{ form_start(formAddTrick) }}
 
                     {{ form_row(formAddTrick.title, {
@@ -26,12 +22,6 @@
                     }) }}
 
                     <br>
-
-                    {# {{ form_row(formAddTrick.description, {
-                        label: 'Description',
-                        attr : {'class': 'form-control'}
-                    }) }}
-                    <br> #}
 
                     {# in fact field content #}
                     {{ form_row(formAddTrick.content, {

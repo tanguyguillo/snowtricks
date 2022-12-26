@@ -14,7 +14,7 @@ use App\Entity\Category;
 
 /**
  * class TricksType
- * 
+ *  // ->add('description', TextType::class) no here it's content
  */
 class TricksType extends AbstractType
 {
@@ -30,7 +30,6 @@ class TricksType extends AbstractType
                     'minMessage' => 'Your trick name should be at least {{ limit }} characters',
                 ]),
             )
-            // ->add('description', TextType::class)
             ->add('content', TextareaType::class)
             ->add(
                 'category',

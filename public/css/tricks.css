@@ -255,7 +255,25 @@ div > form > div > ul > li {
   color: #e83e8c;
 }
 
+.modification{
+  border-color: #e83e8c;
+}
+
 .mini{
   width : 15px;
   height : 150px;
+}
+
+.smallPicture{
+  width : 150px;
+  height : 150px;
+}
+
+
+
+.post-content {
+  background: none repeat scroll 0 0 #FFFFFF;
+  opacity: 0.5;
+  margin: -54px 20px 12px; 
+  position: relative;
 }
