@@ -9,23 +9,23 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * class TrickController
- * /tricks//details/{slug}
+ * class  TrickModificaionController
  */
 #[Route('/tricks', name: 'tricks_')]
-class TrickController extends AbstractController
+class TrickModificaionController extends AbstractController
 {
+
     /**
-     * function details
+     * function modification
      */
-    #[Route('/details/{slug}', name: 'details')]
-    public function details($slug, TricksRepository $tricksRepository): Response
+    #[Route('/modification/{slug}', name: 'modification')]
+    public function modification($slug, TricksRepository $tricksRepository): Response
     {
         $trick = $tricksRepository->findOneBy(['slug' => $slug]);
 
         if(! $trick){
             throw new NotFoundHttpException("No trick found");
         }
-        return $this->render('tricks/details.html.twig', compact('trick'));
+        return $this->render('tricks/modification.html.twig', compact('trick'));
     }
 }

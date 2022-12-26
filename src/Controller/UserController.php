@@ -57,7 +57,7 @@ class UserController extends AbstractController
             // return new Response('Not valid');
         }
 
-        return $this->render('user/tricks/add.html.twig', [
+        return $this->render('tricks/add.html.twig', [
             'formAddTrick' =>  $formAddTrick->createView(),
         ]);
     }
