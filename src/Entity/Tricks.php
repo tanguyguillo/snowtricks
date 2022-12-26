@@ -52,6 +52,9 @@ class Tricks
     #[ORM\Column(length: 255)]
     private ?string $picture = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $modified_at = null;
+
     public function __construct()
     {
         $this->setActive(1);
@@ -172,6 +175,18 @@ class Tricks
     public function setPicture(string $picture): self
     {
         $this->picture = $picture;
+
+        return $this;
+    }
+
+    public function getModifiedAt(): ?\DateTimeImmutable
+    {
+        return $this->modified_at;
+    }
+
+    public function setModifiedAt(?\DateTimeImmutable $modified_at): self
+    {
+        $this->modified_at = $modified_at;
 
         return $this;
     }
