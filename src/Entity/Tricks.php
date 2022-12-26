@@ -59,6 +59,7 @@ class Tricks
         $this->slugger = new AsciiSlugger();
 
         $this->setPicture("main-picture.jpg");
+        $this->setDescription("use field content for description");
     }
 
     public function __toString()
@@ -78,8 +79,10 @@ class Tricks
 
     public function setTitle(string $title): self
     {
+        $titleMin = strtolower($title);
+        $this->setSlug($this->slugger->slug($titleMin));
 
-        $this->setSlug($this->slugger->slug($title));
+        $title = ucfirst($title);
         $this->title = $title;
         return $this;
     }

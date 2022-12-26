@@ -9,7 +9,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * http://127.0.0.1:8000/tricks/details/stalefish
+ * class TrickController
  * /tricks//details/{slug}
  */
 #[Route('/tricks', name: 'tricks_')]
@@ -23,14 +23,6 @@ class TrickController extends AbstractController
         if(! $trick){
             throw new NotFoundHttpException("No trick found");
         }
-
-        // dd($trick);
-
-        // return $this->render('main_controler/index.html.twig', [
-        //     'controller_name' => 'MainControlerController',
-        //     'tricks' => $TricksRepository->findBy(['active' => true], ['created_at' => 'asc'])
-        // ]);
-
         return $this->render('tricks/details.html.twig', compact('trick'));
     }
 }

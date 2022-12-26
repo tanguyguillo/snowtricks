@@ -49,6 +49,11 @@
 
 <body id="page-top">
 
+    {% for message in app.flashes('success') %}
+        <div class="alert success" role="alert">{{ message }}</div>
+    {% endfor %}
+
+
     {# {{ is_granted(role, object = null, field = null) }} #}
 
     {% block menuTop %}
@@ -89,7 +94,7 @@
 
                 <li class="py-3 px-0 px-lg-3 rounded js-scroll-trigger separator">|</li>
                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" <a class="link"
-                        href="{{ app.request.getSchemeAndHttpHost() }}/tricks/details/add" }}">Add Trick</a>
+                        href="{{ app.request.getSchemeAndHttpHost() }}/tricks/add" }}">Add Trick</a>
                 
                 <li class="py-3 px-0 px-lg-3 rounded js-scroll-trigger separator">|</li>
                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" <a class="link"
@@ -102,7 +107,8 @@
     </nav>
     {% endblock %}
 
-    {% block visualCentral %}
+
+    {% block visualCentral %}      
     {% endblock %}
 
     {% block begincContainer %}

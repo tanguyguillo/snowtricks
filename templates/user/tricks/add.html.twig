@@ -27,22 +27,22 @@
 
                     <br>
 
-                    {{ form_row(formAddTrick.description, {
+                    {# {{ form_row(formAddTrick.description, {
+                        label: 'Description',
+                        attr : {'class': 'form-control'}
+                    }) }}
+                    <br> #}
+
+                    {# in fact field content #}
+                    {{ form_row(formAddTrick.content, {
                         label: 'Description',
                         attr : {'class': 'form-control'}
                     }) }}
 
                     <br>
 
-                    {{ form_row(formAddTrick.content, {
-                        label: 'Content',
-                        attr : {'class': 'form-control'}
-                    }) }}
-
-                    <br>
-
                     {{ form_row(formAddTrick.category, {
-                        label: 'Categories',
+                        label: 'Groupe',
                         attr : {'class': 'form-control'}
                     }) }}
 

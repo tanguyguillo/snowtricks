@@ -30,7 +30,7 @@ class TricksType extends AbstractType
                     'minMessage' => 'Your trick name should be at least {{ limit }} characters',
                 ]),
             )
-            ->add('description', TextType::class)
+            // ->add('description', TextType::class)
             ->add('content', TextareaType::class)
             ->add(
                 'category',

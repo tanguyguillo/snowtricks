@@ -34,7 +34,7 @@ class UserController extends AbstractController
      * 
      * @return void
      */
-    #[Route('/tricks/details/add', name: 'app_user_tricks_add')]
+    #[Route('/tricks/add', name: 'app_user_tricks_add')]
     public function addTricks(Request $request, ManagerRegistry $doctrine): Response
     {
         $tricks =  new Tricks;

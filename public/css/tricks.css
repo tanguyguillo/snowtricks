@@ -27,7 +27,7 @@ section.copyright {
   background-position-x: center;
   width: auto;
   height: auto;
-  background-image: url("../assets/background/yann-allegre-8FG9tt8qZ-8-unsplash.jpeg") !important;
+  background-image: url("../assets/background/yann-allegre-8FG9tt8qZ-8-unsplash.png") !important;
   background-color: white;
   background-size: cover;
   z-index: 10;
@@ -255,8 +255,7 @@ div > form > div > ul > li {
   color: #e83e8c;
 }
 
-/* tricks vignette */
 .mini{
-  width : 158px;
-  height : 204px;
+  width : 15px;
+  height : 150px;
 }
