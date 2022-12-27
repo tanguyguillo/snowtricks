@@ -16,6 +16,14 @@
 
                 {{ form_start(formAddTrick) }}
 
+                    {{ form_row(formAddTrick.picture, {
+                        label: 'Add a picture',
+                        attr : {'class': 'form-control'}
+                        }) }}
+                
+
+                        <br>
+
                     {{ form_row(formAddTrick.title, {
                     label: 'Trick name',
                     attr : {'class': 'form-control'}

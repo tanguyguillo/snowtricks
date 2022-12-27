@@ -44,6 +44,9 @@ class UserController extends AbstractController
 
         if ($formAddTrick->isSubmitted() && $formAddTrick->isValid()) {
 
+                //get the main picture
+            $picture = $formAddTrick->get('picture')->getData();
+
             // get the current user
             $tricks->setUser($this->getUser());
 

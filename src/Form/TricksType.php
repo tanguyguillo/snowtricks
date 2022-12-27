@@ -10,6 +10,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\Length;
 
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+
 use App\Entity\Category;
 
 /**
@@ -37,7 +39,17 @@ class TricksType extends AbstractType
                 [
                     'class' => Category::class
                 ]
-            )
+                ) 
+            ->add(
+                'picture', 
+                FileType::class, 
+                [
+                'label' => false ,
+                'data_class' => null,
+                'multiple' => false,
+                'required' =>  false 
+                ]
+                )
             ;
     }
 
