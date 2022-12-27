@@ -13,6 +13,15 @@ section.copyright {
   width: 100%;
 }
 
+section.menuTop .footer-below{
+  visibility: visible;
+  }
+
+  .menuBottom{
+    visibility: hidden;
+    }
+  
+
 .scroll-to-tricks {
   margin-bottom: 50px;
 }
@@ -22,15 +31,13 @@ section.copyright {
 }
 
 .home-background {
-
   background-repeat: no-repeat;
   background-position-x: center;
   width: auto;
   height: auto;
-  background-image: url("../assets/background/yann-allegre-8FG9tt8qZ-8-unsplash.png") !important;
+  background-image: url("../assets/background/yann-allegre-8FG9tt8qZ-8-unsplash.png") !important; 
   background-color: white;
   background-size: cover;
-  z-index: 10;
 }
 
 .border {
@@ -78,16 +85,16 @@ div>div>div>div>a {
   background-color: transparent;
 }
 
-/* to place slogan */
+/* to place myTagLine/slogan */
 div.placement {
   height: 450px;
 }
 
-h1#slogan {
+/* h1#myTagLine {
   margin-left: auto;
   margin-right: auto;
   width: 10em
-}
+} */
 
 .font-size30 {
   font-size: 30px;
@@ -98,13 +105,6 @@ h1#slogan {
   right: 1%;
 }
 
-/* icon tricks of the bottom 
-.bi-arrow-up-square-fill {
-  color: #7aadc1;
-}*/
-
-/*ok green*/
-
 #absolute {
   width: 100px;
   height: 100px;
@@ -113,11 +113,6 @@ h1#slogan {
   right: 20px;
 }
 
-.visually-hidden {
-  visibility: hidden;
-}
-
-/*div.col-md-2:nth-child(*) > div:nth-child(*) > div:nth-child(*) > div:nth-child(*)*/
 div.col-md-2 {
   min-width: 225px !important;
   align-items: center;
@@ -144,7 +139,6 @@ footer {
   margin-right: 2px;
 }
 
-/******************/
 ul .footerDown {
   padding: 0;
   margin: 0;
@@ -186,7 +180,7 @@ ul li a:hover .footerDown {
   box-sizing: border-box;
 }
 
-/* TO GO DOWN */
+/* go down */
 .chevron-down {
   color: #1f2d41;
   position: absolute;
@@ -217,12 +211,28 @@ ul li a:hover .footerDown {
   }
 }
 
+@media (max-width: 992px) {
+  /* hidden top menu on small screen */
+  section.menuTop{
+    visibility: hidden;
+    }
+
+    /* copyright */
+    .footer-below{
+      visibility: hidden;
+    }
+
+    .menuBottom{
+      visibility: visible;
+      }
+}
+
 ul {
   list-style-type: none;
 }
 
 li {
-  color: grey;
+  color: rgb(245, 238, 238);
 }
 
 .danger {
@@ -244,7 +254,6 @@ li {
   border: 1px solid transparent;
   border-radius: 0.25rem;
 }
-
 
 .texteAreaHight{
   height:150px
@@ -269,11 +278,24 @@ div > form > div > ul > li {
   height : 150px;
 }
 
-
-
 .post-content {
   background: none repeat scroll 0 0 #FFFFFF;
   opacity: 0.5;
   margin: -54px 20px 12px; 
   position: relative;
+}
+
+div.card{
+min-width: 90px;
+min-height: 50px;
+margin: 2px;
+}
+
+.btn-menu-down{
+  font-size: 30px; 
+  color: #fff;
+}
+
+#page-top > footer{
+  max-height: 80px;
 }

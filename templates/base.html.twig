@@ -14,11 +14,12 @@
     <!--avicon.ico in the root directory -->
     <link rel="apple-touch-icon" href="{{ app.request.getSchemeAndHttpHost() }}/icon.png">
 
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     {% block stylesheets %}
 
     <!-- Font Awesome icons (free version)-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
-        crossorigin="anonymous"></script>
+    <link href="{{ app.request.getSchemeAndHttpHost() }}/css/styles.css" rel="stylesheet">
 
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="{{ app.request.getSchemeAndHttpHost() }}/css/styles.css" rel="stylesheet">
@@ -41,54 +42,62 @@
     {% endfor %}
 
     {% block menuTop %}
-    <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
 
-        <a href="{{ app.request.getSchemeAndHttpHost() }}/#page-top">
-            <img src="{{ app.request.getSchemeAndHttpHost() }}/assets/logo/logo-jimmy-sweat-top.png"
-                alt="Logo Jimmy Sweat" class="logoTop" />
-        </a>
+    <section class="menuTop">
+        <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
 
-        <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded" type="button"
-            data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
-            aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button>
+            <a href="{{ app.request.getSchemeAndHttpHost() }}/#page-top">
+                <img src="{{ app.request.getSchemeAndHttpHost() }}/assets/logo/logo-jimmy-sweat-top.png"
+                    alt="Logo Jimmy Sweat" class="logoTop" />
+            </a>
 
-        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded"
+                type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
+                aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button>
 
-            <ul class="navbar-nav ml-auto">
+            <div class="collapse navbar-collapse" id="navbarResponsive">
 
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" <a
-                        href="{{ app.request.getSchemeAndHttpHost() }}/#page-top">Home </a>
-                </li>
+                <ul class="navbar-nav ml-auto">
 
-                <li class="py-3 px-0 px-lg-3 rounded js-scroll-trigger  separator">|</li>
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" <a
-                        href="{{ app.request.getSchemeAndHttpHost() }}/#tricks">Tricks</a>
-                </li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" <a
+                            href="{{ app.request.getSchemeAndHttpHost() }}/#page-top">Home </a>
+                    </li>
 
-                <li class="py-3 px-0 px-lg-3 rounded js-scroll-trigger separator">|</li>
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" <a
-                        href="{{ app.request.getSchemeAndHttpHost() }}/login">Sign in</a>
-                </li>
+                    <li class="py-3 px-0 px-lg-3 rounded js-scroll-trigger  separator">|</li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" <a
+                            href="{{ app.request.getSchemeAndHttpHost() }}/#tricks">Tricks</a>
+                    </li>
 
-                <li class="py-3 px-0 px-lg-3 rounded js-scroll-trigger separator">|</li>
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" <a
-                        href="{{ app.request.getSchemeAndHttpHost() }}/registration">Sign up</a>
+                    <!-- not if connected : login + registration -->
+                    {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                    <li class="py-3 px-0 px-lg-3 rounded js-scroll-trigger separator">|</li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" <a
+                            href="{{ app.request.getSchemeAndHttpHost() }}/login">Sign in</a>
+                    </li>
 
-                    <!-- if connected -->
-                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                        <li class="py-3 px-0 px-lg-3 rounded js-scroll-trigger separator">|</li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" <a class="link"
+                    <li class="py-3 px-0 px-lg-3 rounded js-scroll-trigger separator">|</li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" <a
+                            href="{{ app.request.getSchemeAndHttpHost() }}/registration">Sign up</a>
+                        {% endif %}
+
+
+
+                        <!-- if connected : log out-->
+                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                    <li class="py-3 px-0 px-lg-3 rounded js-scroll-trigger separator">|</li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" <a class="link"
                             href="{{ app.request.getSchemeAndHttpHost() }}/tricks/add">Add Trick</a>
 
-                        <li class="py-3 px-0 px-lg-3 rounded js-scroll-trigger separator">|</li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" <a class="link"
-                                href="{{ app.request.getSchemeAndHttpHost() }}/logout">Logout</a>
-                    {% endif %}
-            </ul>
+                    <li class="py-3 px-0 px-lg-3 rounded js-scroll-trigger separator">|</li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" <a class="link"
+                            href="{{ app.request.getSchemeAndHttpHost() }}/logout">Logout</a>
+                        {% endif %}
+                </ul>
 
-        </div>
-        </div>
-    </nav>
+            </div>
+            </div>
+        </nav>
+    </section>
     {% endblock %}
 
 
@@ -103,7 +112,7 @@
 
     {% block modal %}
 
-    <!-- tricks Modal-->
+    {# <!-- tricks Modal-->
     <div class="tricks-modal modal fade" id="tricksDelete" tabindex="-1" role="dialog"
         aria-labelledby="#tricksModal0Label" aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
@@ -133,127 +142,11 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> #}
 
-    <!-- sign in -->
-    <div class="tricks-modal modal fade" id="signin" tabindex="-1" role="dialog" aria-labelledby="#tricksModal0Label"
-        aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i
-                            <i class="fas fa-times"></i></span></button>
-                <div class="modal-body text-center">
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-8">
-                                <!-- tricks Modal - Title-->
-                                <h2 class="tricks-modal-title text-secondary mb-0">Login</h2>
+    {% endblock %}
 
-                                <br> <br> <br>
-                                <form>
-                                    <div class="form-floating">
-                                        <label for="floatingInput">User Name</label>
-                                        <input type="text" class="form-control" id="floatingInput"
-                                            placeholder="My user tricks-name">
-                                    </div>
-                                    <br>
-
-                                    <div class="form-floating">
-                                        <label for="floatingPassword">Password</label>
-                                        <input type="password" class="form-control" id="floatingPassword"
-                                            placeholder="Password">
-                                    </div>
-
-                                    <br><br>
-
-                                    <div class="checkbox mb-3">
-                                        <label>
-                                            <input type="checkbox" value="remember-me"> Remember me
-                                        </label>
-                                    </div>
-
-
-                                    <button class="w-100 btn btn-lg btn-info" type="submit">login</button>
-                                    <br><br><br><br>
-
-                                    <span>You don't have a account : </span><a href="#">Register </a>
-                                    <br><br>
-
-                                    <a href="#">Forgot password ? </a>
-                                    <br><br>
-                                </form>
-                                </main>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- Registration -->
-    <div class="tricks-modal modal fade" id="signup" tabindex="-1" role="dialog" aria-labelledby="#tricksModal0Label"
-        aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i
-                            <i class="fas fa-times"></i></span></button>
-                <div class="modal-body text-center">
-
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-8">
-                                <!-- tricks Modal - Title-->
-                                <h2 class="tricks-modal-title text-secondary mb-0">Registration</h2>
-
-                                <br> <br> <br>
-
-                                <form>
-                                    <div class="form-floating">
-                                        <label for="tricks-name">User Name</label>
-                                        <input type="text" class="form-control" id="tricks-name"
-                                            placeholder="My user tricks-name">
-                                    </div>
-                                    <br>
-
-                                    <div class="form-floating">
-                                        <label for="ricks-email">Email</label>
-                                        <input type="email" class="form-control" id="tricks-email"
-                                            placeholder="My user tricks-name">
-                                    </div>
-                                    <br>
-
-                                    <div class="form-floating">
-                                        <label for="floatingPassword">Password</label>
-                                        <input type="password" class="form-control" id="floatingPassword"
-                                            placeholder="Password">
-                                    </div>
-
-                                    <br><br>
-
-                                    <button class="w-100 btn btn-lg btn-info" type="submit">Create an
-                                        account</button>
-
-                                    <br><br><br>
-                                    <div class="readyAccount" data-dismiss="modal" data-toggle="modal">
-                                        <a href="#signin">Already an account </a>
-                                    </div>
-                                    <br><br>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                </div>
-            </div>
-        </div>
-
-        {% endblock %}
-
-        {% block endContainer %}
+    {% block endContainer %}
     </div>
     </div>
     </section> {# end main area #}
@@ -270,18 +163,63 @@
 
     {% block footer %}
     <!-- Copyright Section-->
-    <footer class="copyright py-4 text-center text-white {{ ifOfOrNot }}">
-        <div class="container">
-            <div class="footer-below">
-                <div class="container">
-                    <div class="row">
-                        <span class="">
-                            Copyright &copy; {{ "now"|date("Y") }}
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <footer class="copyright py-4 text-left text-white {{ ifOfOrNot }}">
+
+        <ul class="list-inline-item text-left">
+            <li class="list-inline-item menuBottom">
+                <a href="{{ app.request.getSchemeAndHttpHost() }}/">
+                    <button class="btn btn-menu-down"><i class="fa fa-home"></i></button>
+            </li>
+
+            <li class="list-inline-item">
+                <span class="footer-below">
+                    Copyright &copy; {{ "now"|date("Y") }}
+                </span>
+            </li>
+
+
+            <!-- not if connected : login + registration -->
+            {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+
+            <li class="list-inline-item menuBottom">
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            </li>
+
+            <li class="list-inline-item menuBottom">
+                <a href="{{ app.request.getSchemeAndHttpHost() }}/login">
+                    <button class="btn btn-menu-down"><i class="fa fa-sign-in" aria-hidden="true"></i></button>
+                </a>
+            </li>
+            <li class="list-inline-item menuBottom">
+
+                <a href="{{ app.request.getSchemeAndHttpHost() }}/registration">
+                    <button class="btn btn-menu-down"><i class="fa fa-user-plus"></i></button>
+                </a>
+            </li>
+            {% endif %}
+
+            <!-- if connected -->
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            <li class="list-inline-item menuBottom">
+            <a href="{{ app.request.getSchemeAndHttpHost() }}/tricks/add">
+                <button class="btn btn-menu-down"><i class="fa fa-bookmark"></i></button>
+            </a> </li>
+
+            <li class="list-inline-item menuBottom">
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            </li>
+
+            <li class="list-inline-item menuBottom">
+                <a href="{{ app.request.getSchemeAndHttpHost() }}/logout">
+                    <button class="btn btn-menu-down"><i class="fa fa-sign-out"></i></button>
+            </li>
+
+            {% endif %}
+        </ul>
+
+
     </footer>
     {% endblock %}
 

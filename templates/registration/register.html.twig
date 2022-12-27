@@ -41,11 +41,17 @@
 
                 <br><br>
 
-                <button class="w-50 btn btn-lg btn-info" type="submit">Create an
-                    account</button>
+                <button class="w-50 btn btn-lg btn-info" type="submit">Create an account</button>
 
                 {{ form_end(registrationForm) }}
+
+                <div>
+                    <br>
+                    <a href="{{ app.request.getSchemeAndHttpHost() }}/login">Already an account ?</a>
+                </div>
             </div>
+
+            
 
         </div>
     </div>
