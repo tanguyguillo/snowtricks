@@ -299,3 +299,8 @@ margin: 2px;
 #page-top > footer{
   max-height: 80px;
 }
+
+.black{
+  /* color:#050505; */
+  color:#696969;
+}

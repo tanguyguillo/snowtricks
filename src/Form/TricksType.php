@@ -45,13 +45,14 @@ class TricksType extends AbstractType
                 FileType::class, 
                 [
                 'label' => false ,
-                'data_class' => null,
-                'multiple' => false,
-                'required' =>  false 
+                'data_class' => null
                 ]
                 )
             ;
     }
+
+                    // 'multiple' => false,
+                // 'required' =>  false 
 
     /**
      *  function configureOptions

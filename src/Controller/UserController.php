@@ -14,6 +14,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\String\Slugger\SluggerInterface;
+
 
 /**
  * UserController
@@ -30,34 +32,45 @@ class UserController extends AbstractController
 
     /**
      * function addTricks
-     * 
+     *  https://symfony.com/doc/current/controller/upload_file.html
      * 
      * @return void
      */
     #[Route('/tricks/add', name: 'app_user_tricks_add')]
-    public function addTricks(Request $request, ManagerRegistry $doctrine): Response
+    public function addTricks(Request $request, ManagerRegistry $doctrine, SluggerInterface $slugger): Response
     {
-        $tricks =  new Tricks;
-
+        $tricks =  new Tricks();
         $formAddTrick = $this->createForm(TricksType::class, $tricks);
         $formAddTrick->handleRequest($request);
 
+        //dd($this->getParameter('pictues_directory'));
+
         if ($formAddTrick->isSubmitted() && $formAddTrick->isValid()) {
+            $pictureFile =  $formAddTrick->get('picture')->getData();
+            if ($pictureFile) {
+                $originalFilename = $pictureFile;
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = md5(uniqid()) . '.' . $originalFilename->guessExtension();
+                $tricks->setPicture($newFilename);
 
-                //get the main picture
-            $picture = $formAddTrick->get('picture')->getData();
-
-            // get the current user
+                try {
+                    $pictureFile->move(
+                        $this->getParameter('pictues_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+                $tricks->setPicture($newFilename);
+            }
+            // 'user_id' cannot be null
             $tricks->setUser($this->getUser());
 
             $entityManager = $doctrine->getManager();
-
             $entityManager->persist($tricks);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_home');
-        } else {
-            // return new Response('Not valid');
         }
 
         return $this->render('tricks/add.html.twig', [
