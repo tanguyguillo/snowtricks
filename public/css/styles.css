@@ -6913,7 +6913,7 @@ button.bg-primary:focus {
 }
 
 .bg-secondary {
-  background-color: #00cfd5 !important;
+  background-color:  #009da2 !important;
 }
 
 a.bg-secondary:hover,
@@ -8181,7 +8181,8 @@ button.bg-dark:focus {
   top: 0;
   right: 0;
   left: 0;
-  z-index: 1030;
+  z-index: 3;
+  /* z-index: 1030; */
 }
 
 .fixed-bottom {

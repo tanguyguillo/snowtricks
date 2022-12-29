@@ -254,6 +254,8 @@ li {
   margin-bottom: 1rem;
   border: 1px solid transparent;
   border-radius: 0.25rem;
+  z-index: 289;
+  
 }
 
 .texteAreaHight {
@@ -264,12 +266,6 @@ li {
 div>form>div>ul>li {
   color: #e83e8c;
 }
-
-
-
-/* .green-blue{
-  color: #696969 !important;
-} */
 
 .modification {
   border-color: #e83e8c;
@@ -307,21 +303,7 @@ div.card {
   max-height: 80px;
 }
 
-header.masterhrad.text-white-center.home-background {
-  background-color: #6495ED !important;
+
+i{
+  color :#009da2;
 }
-
-.black {
-  /* color:#050505; */
-  color: #696969;
-}
-
-/* header>masthead>text-white>text-center>home-background
-{
-  background-color: #e83e8c;
-} */
-
-/* .alert{
-  color : yellow;
-  z-index: 50;
-} */

@@ -26,9 +26,6 @@ class TricksType extends AbstractType
             ->add(
                 'title',
                 TextType::class,
-                [
-                    'empty_data' => 'John Doe',
-                ],
                 ['label' => ''],
                 new Length([
                     'min' => 4,
