@@ -13,14 +13,14 @@ section.copyright {
   width: 100%;
 }
 
-section.menuTop .footer-below{
+section.menuTop .footer-below {
   visibility: visible;
-  }
+}
 
-  .menuBottom{
-    visibility: hidden;
-    }
-  
+.menuBottom {
+  visibility: hidden;
+}
+
 
 .scroll-to-tricks {
   margin-bottom: 50px;
@@ -35,7 +35,7 @@ section.menuTop .footer-below{
   background-position-x: center;
   width: auto;
   height: auto;
-  background-image: url("../assets/background/yann-allegre-8FG9tt8qZ-8-unsplash.png") !important; 
+  background-image: url("../assets/background/yann-allegre-8FG9tt8qZ-8-unsplash.png") !important;
   background-color: white;
   background-size: cover;
 }
@@ -212,19 +212,20 @@ ul li a:hover .footerDown {
 }
 
 @media (max-width: 992px) {
+
   /* hidden top menu on small screen */
-  section.menuTop{
+  section.menuTop {
     visibility: hidden;
-    }
+  }
 
-    /* copyright */
-    .footer-below{
-      visibility: hidden;
-    }
+  /* copyright */
+  .footer-below {
+    visibility: hidden;
+  }
 
-    .menuBottom{
-      visibility: visible;
-      }
+  .menuBottom {
+    visibility: visible;
+  }
 }
 
 ul {
@@ -255,52 +256,72 @@ li {
   border-radius: 0.25rem;
 }
 
-.texteAreaHight{
-  height:150px
+.texteAreaHight {
+  height: 150px
 }
 
 /* error message */
-div > form > div > ul > li {
+div>form>div>ul>li {
   color: #e83e8c;
 }
 
-.modification{
+
+
+/* .green-blue{
+  color: #696969 !important;
+} */
+
+.modification {
   border-color: #e83e8c;
 }
 
-.mini{
-  width : 15px;
-  height : 150px;
+.mini {
+  width: 15px;
+  height: 150px;
 }
 
-.smallPicture{
-  width : 150px;
-  height : 150px;
+.smallPicture {
+  width: 150px;
+  height: 150px;
 }
 
 .post-content {
   background: none repeat scroll 0 0 #FFFFFF;
   opacity: 0.5;
-  margin: -54px 20px 12px; 
+  margin: -54px 20px 12px;
   position: relative;
 }
 
-div.card{
-min-width: 90px;
-min-height: 50px;
-margin: 2px;
+div.card {
+  min-width: 90px;
+  min-height: 50px;
+  margin: 2px;
 }
 
-.btn-menu-down{
-  font-size: 30px; 
+.btn-menu-down {
+  font-size: 30px;
   color: #fff;
 }
 
-#page-top > footer{
+#page-top>footer {
   max-height: 80px;
 }
 
-.black{
-  /* color:#050505; */
-  color:#696969;
+header.masterhrad.text-white-center.home-background {
+  background-color: #6495ED !important;
 }
+
+.black {
+  /* color:#050505; */
+  color: #696969;
+}
+
+/* header>masthead>text-white>text-center>home-background
+{
+  background-color: #e83e8c;
+} */
+
+/* .alert{
+  color : yellow;
+  z-index: 50;
+} */

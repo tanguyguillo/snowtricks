@@ -12,13 +12,17 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-
+/**
+ *  class RegistrationFormType
+ * 'empty_data' => 'John Doe' .... name completed
+ */
 class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('username', TextType::class, ['label' => 'username'])
+            ->add('username', TextType::class, 
+            ['label' => 'username'],)
             ->add('email', EmailType::class, ['label' => 'email'])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,

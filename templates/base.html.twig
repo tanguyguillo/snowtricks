@@ -27,19 +27,21 @@
     <!-- CSS only -->
 
     <!-- Fonts CSS-->
+    {# <link rel="stylesheet" href="https://bootswatch.com/5/quartz/bootstrap.min.css"/> #}
+
     <link rel="stylesheet" href="{{ app.request.getSchemeAndHttpHost() }}/css/heading.css">
     <link rel="stylesheet" href="{{ app.request.getSchemeAndHttpHost() }}/css/body.css">
     <link rel="stylesheet" href="{{ app.request.getSchemeAndHttpHost() }}/css/tricks.css">
 
     {% endblock %}
 
+    {# {% form_theme form 'bootstrap_5_layout.html.twig' %}   #}
+
 </head>
 
 <body id="page-top">
 
-    {% for message in app.flashes('success') %}
-    <div class="alert success" role="alert">{{ message }}</div>
-    {% endfor %}
+    
 
     {% block menuTop %}
 
@@ -100,8 +102,11 @@
     </section>
     {% endblock %}
 
+   
+
 
     {% block visualCentral %}
+
     {% endblock %}
 
     {% block begincContainer %}
@@ -161,9 +166,20 @@
     {% set ifOfOrNot = 'position-fixed' %}
     {% endif %}
 
+
+ 
     {% block footer %}
     <!-- Copyright Section-->
     <footer class="copyright py-4 text-left text-white {{ ifOfOrNot }}">
+
+        {% for message in app.flashes('success') %}
+        <div class="alert success" role="alert">{{ message }}</div>
+        {% endfor %}
+    
+        {% for message in app.flashes('error') %}
+        <div class="alert error" role="alert">{{ message }}</div>
+        {% endfor %}
+
 
         <ul class="list-inline-item text-left">
             <li class="list-inline-item menuBottom">

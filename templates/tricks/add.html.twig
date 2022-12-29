@@ -14,13 +14,21 @@
             <h2 class="tricks-modal-title text-secondary mb-0 text-center">Add a trick</h2>
             <br><br>
 
+            {# <div class="form-group">
+                <label for="exampleInputFile">File input</label>
+                <input type="file" id="exampleInputFile">
+                <p class="help-block">Example block-level help text here.</p>
+              </div> #}
+
                 {{ form_start(formAddTrick) }}
 
+                <div class="form-group">
                     {{ form_row(formAddTrick.picture, {
                         label: 'Add a picture',
-                        attr : {'class': 'form-control'}
+                        type : "file",
+                        attr : {'class': 'form-control'},
                         }) }}
-                
+                    </div>
 
                         <br>
 
@@ -57,5 +65,7 @@
 
         </div>
     </div>
-
+    <br>
+    <br>
+    <br>
     {% endblock %}
