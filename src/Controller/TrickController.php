@@ -8,6 +8,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
+use App\Controller\Tricks;
+use App\Repository\UserRepository;
+
+
 /**
  * class TrickController
  * /tricks//details/{slug}
@@ -19,13 +23,30 @@ class TrickController extends AbstractController
      * function details
      */
     #[Route('/details/{slug}', name: 'details')]
-    public function details($slug, TricksRepository $tricksRepository): Response
+    public function details($slug, TricksRepository $tricksRepository, UserRepository $userRepository): Response
     {
         $trick = $tricksRepository->findOneBy(['slug' => $slug]);
+
+        $AuthorId=$trick->getUser();
+        $Author = $userRepository->findOneBy(['id' => $AuthorId]);
 
         if(! $trick){
             throw new NotFoundHttpException("No trick found");
         }
-        return $this->render('tricks/details.html.twig', compact('trick'));
+
+        return $this->render('tricks/details.html.twig', compact('trick', 'Author'));
     }
+
+    /**
+     * [Route('/delete-tricks/{slug}', name: 'tricks_delete'), methods={"DELETE"}]
+     *
+     */
+    // public function deleteTricks(Tricks $triks, Request $request){
+
+
+    
+    // }
+
 }
+
+

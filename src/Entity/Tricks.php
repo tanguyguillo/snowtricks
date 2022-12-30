@@ -10,6 +10,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 use Symfony\Component\String\Slugger\AsciiSlugger;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TricksRepository::class)]
 #[UniqueEntity(fields: ['title'], message: "There's already a trick name like this one!")] 
@@ -50,6 +51,11 @@ class Tricks
     private $slugger;
 
     #[ORM\Column(length: 255)]
+    #[Assert\File(
+        maxSize: '3M',
+        // extensions: ['png', 'jpg'],
+        // extensionsMessage: 'Please upload a valid picture file',
+    )]
     private ?string $picture = null;
 
     #[ORM\Column(nullable: true)]

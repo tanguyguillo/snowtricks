@@ -69,6 +69,8 @@ class UserController extends AbstractController
                 }
                 $tricks->setPicture($newFilename);
             }
+
+        //    $txt = $formAddTrick->get('content')->getData();  to see later     
             
             $tricks->setUser($this->getUser());
 
@@ -79,7 +81,8 @@ class UserController extends AbstractController
             $this->addFlash('success', 'Your trick have been added.');
 
             return $this->redirectToRoute('app_home');
-        }
+        } //end form
+
         return $this->render('tricks/add.html.twig', [
             'formAddTrick' =>  $formAddTrick->createView(),
         ]);
