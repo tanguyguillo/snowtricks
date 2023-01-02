@@ -25,6 +25,9 @@ class TrickController extends AbstractController
     #[Route('/details/{slug}', name: 'details')]
     public function details($slug, TricksRepository $tricksRepository, UserRepository $userRepository): Response
     {
+        
+   
+        
         $trick = $tricksRepository->findOneBy(['slug' => $slug]);
 
         $AuthorId=$trick->getUser();
@@ -37,6 +40,8 @@ class TrickController extends AbstractController
         return $this->render('tricks/details.html.twig', compact('trick', 'Author'));
     }
 
+    
+
     /**
      * [Route('/delete-tricks/{slug}', name: 'tricks_delete'), methods={"DELETE"}]
      *
@@ -46,6 +51,7 @@ class TrickController extends AbstractController
 
     
     // }
+    
 
 }
 

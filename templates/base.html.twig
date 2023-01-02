@@ -8,6 +8,7 @@
     <meta name="author" content="">
 
     <title>
+        {% block preTitle %}{% endblock %}
         {% block title %}Snowtricks{% endblock %}
     </title>
 
@@ -42,7 +43,7 @@
 
 <body id="page-top">
 
-   
+
 
     {% block menuTop %}
 
@@ -83,8 +84,6 @@
                             href="{{ app.request.getSchemeAndHttpHost() }}/registration">Sign up</a>
                         {% endif %}
 
-
-
                         <!-- if connected : log out-->
                         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                     <li class="py-3 px-0 px-lg-3 rounded js-scroll-trigger separator">|</li>
@@ -114,11 +113,7 @@
 
 
     {% block visualCentral %}
-
     {% endblock %}
-
-    
-
 
     {% block begincContainer %}
     {% endblock %}
@@ -128,8 +123,49 @@
 
     {% block modal %}
 
-    {# <!-- tricks Modal-->
-    <div class="tricks-modal modal fade" id="tricksDelete" tabindex="-1" role="dialog"
+    {# <div class="modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Modal body text goes here.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div> #}
+
+
+    <!-- Modal -->
+    {# <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div> #}
+
+
+    <!-- tricks Modal-->
+    <div class="tricks-modal modal-dialog fade" id="tricksDelete" tabindex="-1" role="dialog"
         aria-labelledby="#tricksModal0Label" aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
@@ -158,7 +194,7 @@
                 </div>
             </div>
         </div>
-    </div> #}
+    </div>
 
     {% endblock %}
 
@@ -177,12 +213,9 @@
     {% set ifOfOrNot = 'position-fixed' %}
     {% endif %}
 
-
-
     {% block footer %}
     <!-- Copyright Section-->
     <footer class="copyright py-4 text-left text-white {{ ifOfOrNot }}">
-
 
         <ul class="list-inline-item text-left">
             <li class="list-inline-item menuBottom">
@@ -241,6 +274,9 @@
 
 
     </footer>
+
+
+
     {% endblock %}
 
     {% block javascripts %}
@@ -259,10 +295,11 @@
     <!-- jQuery 1.7.2+ or Zepto.js 1.0+ -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
-    
 
-<!-- Magnific Popup core JS file -->
-{# <script src="magnific-popup/jquery.magnific-popup.js"></script> #}
+
+    <!-- Magnific Popup core JS file -->
+    {#
+    <script src="magnific-popup/jquery.magnific-popup.js"></script> #}
 
 
     <!-- Core theme JS-->
