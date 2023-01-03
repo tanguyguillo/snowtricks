@@ -43,8 +43,6 @@
 
 <body id="page-top">
 
-
-
     {% block menuTop %}
 
     <section class="menuTop">
@@ -164,8 +162,8 @@
     </div> #}
 
 
-    <!-- tricks Modal-->
-    <div class="tricks-modal modal-dialog fade" id="tricksDelete" tabindex="-1" role="dialog"
+    {# <!-- tricks Modal-->
+    <div class="tricks-modal modal fade" id="tricksDelete" tabindex="-1" role="dialog"
         aria-labelledby="#tricksModal0Label" aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
@@ -194,7 +192,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> #}
 
     {% endblock %}
 
@@ -204,7 +202,7 @@
     </section> {# end main area #}
     {% endblock %}
 
-    {# footer not fixed for home page #}
+    {# footer not fixed for home page only #}
     {% set current_path = app.request.get('_route') %}
     {% set ifOfOrNot = '' %}
     {% if current_path == 'home' %}
@@ -214,70 +212,71 @@
     {% endif %}
 
     {% block footer %}
-    <!-- Copyright Section-->
+
+    {# div class="container text-center">
+    <div class="row align-items-start">
+        <div class="col">
+            One of three columns
+        </div>
+        <div class="col">
+            One of three columns
+        </div>
+        <div class="col">
+            One of three columns
+        </div>
+    </div>
+    </div> #}
+
+
+
     <footer class="copyright py-4 text-left text-white {{ ifOfOrNot }}">
 
+        <!-- Copyright or home-->
         <ul class="list-inline-item text-left">
-            <li class="list-inline-item menuBottom">
-                <a href="{{ app.request.getSchemeAndHttpHost() }}/">
-                    <button class="btn btn-menu-down"><i class="fa fa-home"></i></button>
+            <li class="list-inline-item menuBottom position-absolute bottom-0">
+                <button class="btn btn-menu-down"><i class="fa fa-home"> <a
+                            href="{{ app.request.getSchemeAndHttpHost() }}/"></a></i></button>
             </li>
-
             <li class="list-inline-item">
                 <span class="footer-below">
                     Copyright &copy; {{ "now"|date("Y") }}
                 </span>
             </li>
 
-
             <!-- not if connected : login + registration -->
             {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
 
-            <li class="list-inline-item menuBottom">
-                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-            </li>
+            <span class="position-absolute bottom-0 end-0">
+                <li class="list-inline-item menuBottom">
+                    <a href="{{ app.request.getSchemeAndHttpHost() }}/login">
+                        <button class="btn btn-menu-down"><i class="fa fa-sign-in" aria-hidden="true"></i></button>
+                    </a>
+                </li>
+                <li class="list-inline-item menuBottom">
 
-            <li class="list-inline-item menuBottom">
-                <a href="{{ app.request.getSchemeAndHttpHost() }}/login">
-                    <button class="btn btn-menu-down"><i class="fa fa-sign-in" aria-hidden="true"></i></button>
-                </a>
-            </li>
-            <li class="list-inline-item menuBottom">
+                    <a href="{{ app.request.getSchemeAndHttpHost() }}/registration">
+                        <button class="btn btn-menu-down"><i class="fa fa-user-plus"></i></button>
+                    </a>
+                </li>
+                {% endif %}
 
-                <a href="{{ app.request.getSchemeAndHttpHost() }}/registration">
-                    <button class="btn btn-menu-down"><i class="fa fa-user-plus"></i></button>
-                </a>
-            </li>
-            {% endif %}
+                <!-- if connected -->
+                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                <li class="list-inline-item menuBottom position-absolute bottom-0 start-50 translate-middle-x">
+                    <a href="{{ app.request.getSchemeAndHttpHost() }}/tricks/add">
+                        <button class="btn btn-menu-down"><i class="fa fa-bookmark"></i></button>
+                    </a>
+                </li>
 
-            <!-- if connected -->
-            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-            <li class="list-inline-item menuBottom">
-                <a href="{{ app.request.getSchemeAndHttpHost() }}/tricks/add">
-                    <button class="btn btn-menu-down"><i class="fa fa-bookmark"></i></button>
-                </a>
-            </li>
-
-            <li class="list-inline-item menuBottom">
-                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-            </li>
-
-            <li class="list-inline-item menuBottom">
-                <a href="{{ app.request.getSchemeAndHttpHost() }}/logout">
-                    <button class="btn btn-menu-down"><i class="fa fa-sign-out"></i></button>
-            </li>
-
-            {% endif %}
-        </ul>
-
-
+                <li class="list-inline-item menuBottom position-absolute bottom-0 end-0">
+                    <a href="{{ app.request.getSchemeAndHttpHost() }}/logout">
+                        <button class="btn btn-menu-down"><i class="fa fa-sign-out"></i></button>
+                </li>
+                {% endif %}
+            </span>
     </footer>
-
-
-
     {% endblock %}
+
 
     {% block javascripts %}
     <!-- Bootstrap core JS-->

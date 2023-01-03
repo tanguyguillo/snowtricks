@@ -280,40 +280,38 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                 </div>
 
                 {######### description ##########}
-                <div class="text-left content text-white"> {{ trick.content }}</div>
+                <div class="text-left content text-white">
+                    {{ trick.content }}
+                </div>
+
             </div>
+
+            {######### buttons and groupe ##########}
+            <br>
+            <div class="container text-center">
+                <div class="row">
+                    <div class="col">
+                        Groupe
+                    </div>
+                    <div class="col">
+                        &nbsp;
+                    </div>
+                    <div class="col">
+                        <button class=" btn btn-danger" id="delete" type="submit">delete</button>
+                    </div>
+                    <div class="col">
+                        <button class=" btn btn-info" type="submit">save</button>
+                    </div>
+                </div>
+            </div>
+
         </div>
-    </div>
-</div>
-<div>
-    <br>
-    <br>
-    <br>
-    <div class="container text-center">
-        <div class="row">
-            <div class="col">
-                Groupe
-            </div>
 
-            <div class="col">
-            </div>
-
-            <div class="col">
-                <button class=" btn btn-danger" id="delete" type="submit">delete</button>
-            </div>
-            <div class="col">
-                <button class=" btn btn-info" type="submit">save</button>
-
-            </div>
-        </div>
     </div>
 
 
-</div>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-{% endblock %}
+    <br>
+    <br>
+    <br>
+    <br>
+    {% endblock %}

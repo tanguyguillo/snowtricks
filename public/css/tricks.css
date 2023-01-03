@@ -1,5 +1,12 @@
+
+html,body{
+  min-width:800px;
+    width: auto !important;
+    width:800px;
+}
+
 header {
-  /* min-height: 1110px; */
+  /* min-widtht: 1110px;  */
   max-height: 800;
   overflow: hidden;
 }
@@ -215,14 +222,15 @@ ul li a:hover .footerDown {
   }
 }
 
+/* *********** @media (max-width: 992px **************** */
 @media (max-width: 992px) {
 
-  /* hidden top menu on small screen */
+  /* hidden top menu on smalls screens */
   section.menuTop {
     visibility: hidden;
   }
 
-  /* copyright */
+  /* copyright hidden on smalls screens */
   .footer-below {
     visibility: hidden;
   }
@@ -230,7 +238,12 @@ ul li a:hover .footerDown {
   .menuBottom {
     visibility: visible;
   }
+
+.fa{
+    color: white;
+  }
 }
+/* ************ @media (max-width: 992px end *************** */
 
 ul {
   list-style-type: none;
@@ -425,3 +438,5 @@ i{
 .list .list-element:nth-child(2) {
     display: block;
 }
+
+
