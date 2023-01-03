@@ -23,12 +23,10 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
 {% endblock %}
 
 
-
-
 {% block main %}
 
 <br><br><br>
-<div class="container text-center">
+<div class="container text-center" id="#tricks">
     <br>
     <br>
     <br>
@@ -37,9 +35,6 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
         {{ app.request.attributes.get('_route') }}
         {{ route }}
     </pre>
-
-
-
 
     {# {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and route%}
     <p> test....</p>
