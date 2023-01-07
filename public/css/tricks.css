@@ -278,7 +278,7 @@ height: 70px;
 
 
   /* copyright */
-  .footer-below .{
+  .footer-below {
     visibility: hidden;
   }
 
@@ -398,3 +398,44 @@ i{
 /* .ul->list-inline-item{
  text-align: right;
 } */
+
+
+/* modal */
+.modal-content{
+border: none;
+box-shadow: inset 1px 1px rgb(255 255 255 / 20%), inset -1px -1px rgb(255 255 255 / 10%), 1px 3px 24px -1px rgb(0 0 0 / 15%);
+background-color: transparent;
+background-image: linear-gradient(125deg,rgba(255,255,255,.3),rgba(255,255,255,.2) 70%);
+-webkit-backdrop-filter: blur(5px);
+backdrop-filter: blur(5px);
+}
+
+h5.modal-title{
+  color:#fff;
+}
+
+div > div > div.modal-body > p{
+  color:#fff;
+  /* border-bottom: var(--bs-modal-header-border-width) solid */
+}
+
+div > div > div.modal-footer > button.btn.btn-primary{
+  background-color:#e83e8c;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+div > div > div.modal-footer > button.btn.btn-secondary{
+  background-color: rgba(255, 255, 255, 0.4);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+div.modal-header{
+  color:#fff;
+border-bottom: var(--bs-modal-header-border-width) solid
+}
+
+div.modal-body{
+  color:#fff;
+  border-bottom: var(--bs-modal-header-border-width) solid
+}
+/* End modal */

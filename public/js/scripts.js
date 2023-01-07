@@ -36,23 +36,23 @@
     });
 
     // Activate scrollspy to add active class to navbar items on scroll
-    $('body').scrollspy({
-        target: '#mainNav',
-        offset: 80
-    });
+    // $('body').scrollspy({
+    //     target: '#mainNav',
+    //     offset: 80
+    // });
 
     // Collapse Navbar
-    var navbarCollapse = function () {
-        if ($("#mainNav").offset().top > 100) {
-            $("#mainNav").addClass("navbar-shrink");
-        } else {
-            $("#mainNav").removeClass("navbar-shrink");
-        }
-    };
+    // var navbarCollapse = function () {
+    //     if ($("#mainNav").offset().top > 100) {
+    //         $("#mainNav").addClass("navbar-shrink");
+    //     } else {
+    //         $("#mainNav").removeClass("navbar-shrink");
+    //     }
+    // };
     // Collapse now if page is not at top
-    navbarCollapse();
+    // navbarCollapse();
     // Collapse the navbar when page is scrolled
-    $(window).scroll(navbarCollapse);
+    // $(window).scroll(navbarCollapse);
 
     // Floating label headings for the contact form
     $(function () {
@@ -65,4 +65,28 @@
         });
     });
 
-})(jQuery); // End of use strict
+
+
+
+
+    var theHREF;
+
+    $(".confirmModalLink").click(function (e) {
+        console.log("yep");
+        e.preventDefault();
+       // theHREF = $(this).attr("href");
+        $("#confirmModal").modal("show");
+    });
+
+    $("#confirmModalNo").click(function (e) {
+        $("#confirmModal").modal("hide");
+    });
+
+    $("#confirmModalYes").click(function (e) {
+        window.location.href = theHREF;
+    });
+
+
+
+
+}) (jQuery); // End of use strict

@@ -23,13 +23,16 @@
     <!--avicon.ico in the root directory -->
     <link rel="apple-touch-icon" href="https://snowtricks.omegawebprod.com/icon.png">
 
-    <!-- Core theme CSS (includes Bootstrap)-->
+    <!-- Core theme CSS (includes Bootstrap) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <!-- Fonts CSS-->
+    <!-- Fonts CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Font Awesome 4 -->
+    {# <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css"> #}
 
     <!-- theme -->
     {# {% form_theme form 'bootstrap_5_layout.html.twig' %} #}
@@ -124,6 +127,25 @@
     {% block modal %}
 
     <!-- tricks Modal-->
+
+    {# <div class="modal hide fade" id="confirmModal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Confirmation de la suppression</h3>
+        </div>
+        <div class="modal-body">
+            <p>Etes-vous sûr de vouloir supprimer cet élément ?</p>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn" id="confirmModalNo">Non</a>
+        <a href="#" class="btn btn-primary" id="confirmModalYes">Oui</a>
+        </div>
+    </div>
+
+
+
+
+
     <div class="tricks-modal modal fade" id="tricksDelete" tabindex="-1" role="dialog"
         aria-labelledby="#tricksModal0Label" aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
@@ -153,7 +175,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> #}
 
     {% endblock %}
 
@@ -244,13 +266,15 @@
 
 
     {% block javascripts %}
+
+    <!-- jQuery 1.9.1  -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
 
-    <!-- jQuery 1.7.2+ or Zepto.js 1.0+ -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
     <!-- Magnific Popup core JS file -->
     {#
