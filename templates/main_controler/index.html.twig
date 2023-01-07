@@ -21,7 +21,6 @@
             </a>
         </div>
 </header>
-
 {% endblock %}
 
 {% block main%}
@@ -29,18 +28,18 @@
 <section class="page-section tricks">
     <div class="container">
         <!-- tricks Grid Items -->
-        <div class="row justify-content-center">
-
+        <div class="row justify-content-center items">
             {% for trick in tricks %}
             <!-- tricks Items-->
-            <div class="col-md-2 col-lg-2 mb-5">
+            <div class="col-md-2 col-lg-2 mb-5 item">
                 <div class="mx-auto">
                     <div class="d-flex align-items-center justify-content-center h-100 w-100">
                         <div class="card">
                             <img class="img-fluid" src="assets/img/tricks/{{ trick.picture }}"
                                 alt="{{ trick.title|striptags}}" />
                             <div class="card-body">
-                                <a href="tricks/details/{{ trick.slug }}" class="link-primary">{{ trick.title|striptags}}</a>
+                                <a href="tricks/details/{{ trick.slug }}" class="link-primary">{{
+                                    trick.title|striptags}}</a>
                                 {######### Only if connected : delete and update ###########}
                                 {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                                 <span>
@@ -50,7 +49,7 @@
                                     </a>
                                     <a href="{{ app.request.getSchemeAndHttpHost() }}/tricks/details/{{ trick.slug }}"
                                         class="float-right ml-1">
-                                        <i class="bi bi-pencil-fill iconTricks"><small>-></small></i>
+                                        <i class="bi bi-pencil-fill iconTricks"><small><i class="bi bi-arrow-right-short"></i></small></i>
                                     </a>
                                 </span>
                                 {% endif %}
@@ -61,7 +60,6 @@
             </div>
             {% endfor %}
 
-            <!-- tricks Modal-->
             <div class="modal fade" id="deleteThisTrick">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -72,7 +70,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <p>Are your sur to deteting this trick ?</p>
+                            <p>Are your sur to want to detete this trick ?</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary">Yes</button>
@@ -84,14 +82,13 @@
         </div>
     </div>
 
-    <!-- go up tricks Items -->
     <div class="d-flex align-items-center justify-content-center h-100 w-100">
         <a class="arrow-up" href="#tricks">
             <i class=" bi bi-arrow-up-circle-fill fa-3x"></i>
         </a>
-        <!-- more tricks Items -->
-        <div class="row justify-content-center m-3">
-            <a href="#" id="loadMoreTrick"><i class="bi bi-plus-circle-fill fa-3x"></i></a>
+
+        <div class="row justify-content-center m-3 buttonToogle" style="display: none;">
+            <a href="javascript:;" class="showMore"><i class="bi bi-plus-circle-fill fa-3x"></i></a>
         </div>
     </div>
 </section>

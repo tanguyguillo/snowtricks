@@ -399,6 +399,14 @@ i{
  text-align: right;
 } */
 
+/* #page-top > section.page-section.tricks > div.d-flex.align-items-center.justify-content-center.h-100.w-100 > div > a > i */
+.bi-plus-circle-fill{
+  color:#fff;
+}
+
+.bi-arrow-up-circle-fill{
+  color:#fff;
+}
 
 /* modal */
 .modal-content{
