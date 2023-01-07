@@ -211,11 +211,6 @@ height: 70px;
 .separator{
   display: none;
 }
-/* @media (min-width: 992px) {
-  .separator {
-    display: block;
-  }
-} */
 
 /* *********** @media (max-width: 992px **************** */
 @media (max-width: 992px) {
@@ -238,8 +233,13 @@ height: 70px;
     color: white;
   }
 }
-/* ************ @media (max-width: 992px end *************** */
+/* ************ End @media (max-width: 992px *************** */
 
+@media (min-width: 992px) {
+    .footer-below{
+      visibility: visible !important;
+  }
+}
 
 .list-element .content {
     position: relative;
@@ -249,7 +249,7 @@ height: 70px;
     transition: transform 0.8s cubic-bezier(0.75, 0, 0.85, 1);
 }
 
-#loadmore {
+/* #loadmore {
     margin: 15px auto 0px;
     display: table;
     border: none;
@@ -260,7 +260,7 @@ height: 70px;
     border-radius: 2px;
     background-color: #ffffff;
     border: solid 1px green;
-}
+} */
 
 .list .list-element:nth-child(1) {
     display: block;
@@ -270,12 +270,7 @@ height: 70px;
     display: block;
 }
 
-/**
- * 
- * 
- * 
- * */
-
+/***************************/
 
   /* copyright */
   .footer-below {
@@ -285,7 +280,6 @@ height: 70px;
   .menuBottom {
     visibility: visible;
   }
-
 
 ul {
   list-style-type: none;
@@ -358,9 +352,9 @@ div.card {
   color: #fff;
 }
 
-#page-top>footer {
-  /* max-height: 80px; */
-}
+/* #page-top>footer {
+  max-height: 80px;
+} */
 
 i{
   color :#009da2;
@@ -447,3 +441,36 @@ div.modal-body{
   border-bottom: var(--bs-modal-header-border-width) solid
 }
 /* End modal */
+
+
+/******** Single image lightbox ************/
+img{height:100px;}
+
+#overlay{
+  position: fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  /* background: rgba(249, 246, 246, 0.8) none 100% / contain no-repeat; */
+  background: whitesmoke none 100% / contain no-repeat; 
+  transition: 0.3s;
+  z-index: 800;
+  visibility: hidden;
+  opacity: 1;
+}
+#overlay.open {
+  visibility: visible;
+  cursor: zoom-out;
+  opacity: 1;
+}
+
+#overlay:after { /* X button icon */
+  content: "\2715";
+  position: absolute;
+  color:rgb(6, 6, 6);
+  top: 10px;
+  right:20px;
+  font-size: 2em;
+}
+/******** End Single image lightbox ************/

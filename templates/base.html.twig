@@ -110,7 +110,6 @@
     <div class="alert error alert-dismissible fade show" role="alert">{{ message }}</div>
     {% endfor %}
 
-
     {% block visualCentral %}
     {% endblock %}
 
@@ -121,57 +120,6 @@
     {% endblock %}
 
     {% block modal %}
-
-    <!-- tricks Modal-->
-
-    {# <div class="modal hide fade" id="confirmModal">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3>Confirmation de la suppression</h3>
-        </div>
-        <div class="modal-body">
-            <p>Etes-vous sûr de vouloir supprimer cet élément ?</p>
-        </div>
-        <div class="modal-footer">
-            <a href="#" class="btn" id="confirmModalNo">Non</a>
-        <a href="#" class="btn btn-primary" id="confirmModalYes">Oui</a>
-        </div>
-    </div>
-
-
-
-
-
-    <div class="tricks-modal modal fade" id="tricksDelete" tabindex="-1" role="dialog"
-        aria-labelledby="#tricksModal0Label" aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i
-                            class="fas fa-times"></i></span></button>
-                <div class="modal-body text-center">
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-8">
-                                <!-- tricks Modal - Title-->
-                                <h2 class="tricks-modal-title text-secondary mb-0">Delete the trick</h2>
-
-                                <!-- tricks Modal - Image <img class="img-fluid rounded mb-5"
-                                    src="" alt="" /> -->
-                                <!-- tricks Modal - Text-->
-                                <p class="mb-5">Are your sur to deteting this trick ?
-                                </p>
-                                <button class="btn btn-secondary" href="#" data-dismiss="modal">
-                                    <i class="fas fa-times fa-fw"></i>Yes</button>
-
-                                <button class="btn btn btn-warning" href="#" data-dismiss="modal">
-                                    <i class="fas fa-times fa-fw"></i>No</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> #}
 
     {% endblock %}
 
@@ -194,11 +142,11 @@
     {% block footer %}
     <footer class="copyright py-4 text-white {{ ifOfOrNot }}">
 
-        <div class="container">
+       {# <div class="container"> #}
             <div class="row align-items-start">
+
+        {############## Copyright or home ##############}
                 <div class="col align-self-start">
-                    {############## Copyright or home ##############}
-                    <!-- Copyright or home-->
                     <ul class="list-inline-item">
                         <li class="list-inline-item menuBottom  bottom-0">
                             <a href="{{ app.request.getSchemeAndHttpHost() }}/">
@@ -253,7 +201,7 @@
                     </ul>
                 </div>
             </div>
-        </div>
+        {# </div> end container #}
 
         {% endif %}
 

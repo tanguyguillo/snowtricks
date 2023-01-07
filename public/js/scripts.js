@@ -35,24 +35,35 @@
         $('.navbar-collapse').collapse('hide');
     });
 
+
+    // Image to Lightbox Overlay
+    // $('#slot img').attr('class')... to see later
+$('img').on('click', function() {
+    $('#overlay')
+      .css({backgroundImage: `url(${this.src})`})
+      .addClass('open')
+      .one('click', function() { $(this).removeClass('open'); });
+  });
+
+
     // Activate scrollspy to add active class to navbar items on scroll
-    // $('body').scrollspy({
-    //     target: '#mainNav',
-    //     offset: 80
-    // });
+    $('body').scrollspy({
+        target: '#mainNav',
+        offset: 80
+    });
 
     // Collapse Navbar
-    // var navbarCollapse = function () {
-    //     if ($("#mainNav").offset().top > 100) {
-    //         $("#mainNav").addClass("navbar-shrink");
-    //     } else {
-    //         $("#mainNav").removeClass("navbar-shrink");
-    //     }
-    // };
+    var navbarCollapse = function () {
+        if ($("#mainNav").offset().top > 100) {
+            $("#mainNav").addClass("navbar-shrink");
+        } else {
+            $("#mainNav").removeClass("navbar-shrink");
+        }
+    };
     // Collapse now if page is not at top
-    // navbarCollapse();
+    navbarCollapse();
     // Collapse the navbar when page is scrolled
-    // $(window).scroll(navbarCollapse);
+    $(window).scroll(navbarCollapse);
 
     // Floating label headings for the contact form
     $(function () {
@@ -66,25 +77,25 @@
     });
 
 
-
+    // console.log("yep");
 
 
     var theHREF;
 
-    $(".confirmModalLink").click(function (e) {
-        console.log("yep");
-        e.preventDefault();
-        // theHREF = $(this).attr("href");
-        $("#confirmModal").modal("show");
-    });
+    // $(".confirmModalLink").click(function (e) {
+      
+    //     e.preventDefault();
+    //     // theHREF = $(this).attr("href");
+    //     $("#confirmModal").modal("show");
+    // });
 
-    $("#confirmModalNo").click(function (e) {
-        $("#confirmModal").modal("hide");
-    });
+    // $("#confirmModalNo").click(function (e) {
+    //     $("#confirmModal").modal("hide");
+    // });
 
-    $("#confirmModalYes").click(function (e) {
-        window.location.href = theHREF;
-    });
+    // $("#confirmModalYes").click(function (e) {
+    //     window.location.href = theHREF;
+    // });
 
 
 
@@ -123,6 +134,10 @@
         });
 
     });
+
+
+
+
 
 
 

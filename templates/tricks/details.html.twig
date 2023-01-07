@@ -1,24 +1,27 @@
 {% extends 'base.html.twig' %}
 
+
+
+
 {% set route = '' %}
 {% set routeTitre = '' %}
 
 {# titre #}
 {% block title %}
-{% set route = app.request.attributes.get('_route') %}
+    {% set route = app.request.attributes.get('_route') %}
 
-{% if route == 'tricks_details' %}
-{% set routeTitre = 'details' %}
-{% endif %}
+    {% if route == 'tricks_details' %}
+    {% set routeTitre = 'details' %}
+    {% endif %}
 
-{% if route == 'tricks_modification' %}
-{% set routeTitre = 'modifications' %}
-{% endif %}
+    {% if route == 'tricks_modification' %}
+    {% set routeTitre = 'modifications' %}
+    {% endif %}
 
-{% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.request.attributes.get('_route') == "tricks_modification" %}
-{% set routeTitre = 'modifications' %}
-{% endif %}
-
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.request.attributes.get('_route') == "tricks_modification" %}
+    {% set routeTitre = 'modifications' %}
+    {% endif %}
+    
 Snowtricks - {{ routeTitre }} - {{ trick.title }}
 {% endblock %}
 
@@ -38,6 +41,8 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
     {# {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and route%}
     <p> test....</p>
     {% endif %} #}
+
+    
 
     <div class="row justify-content-center" id="#tricks">
         <div class="col-lg-12">
@@ -80,15 +85,16 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                 </div>
 
 
-                {####### additionnal picture #########}
+                {####### additionnals pictures #########}
                 <div class="row justify-content-center">
 
+                    <div id="overlay"></div>
                     <!-- tricks Items-->
                     <div class="col-sm-2">
                         <div class="mx-auto">
                             <div class="d-flex align-items-center justify-content-center h-100 w-100">
-                                <div class="card">
-                                    <img class="img-fluid"
+                                <div class="card image-popup-vertical-fit">
+                                    <img class="img-fluid zoom"
                                         src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/main-picture.jpg"
                                         alt="Additionnal picture {{ trick.title|striptags}} 1" />
 
