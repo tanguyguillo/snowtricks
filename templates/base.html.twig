@@ -103,11 +103,10 @@
     </section>
     {% endblock %}
 
-    {# msg #}
+    {########### msg #################}
     {% for message in app.flashes('success') %}
     <div class="alert success alert-dismissible fade show" role="alert">{{ message }}</div>
     {% endfor %}
-
     {% for message in app.flashes('error') %}
     <div class="alert error alert-dismissible fade show" role="alert">{{ message }}</div>
     {% endfor %}
@@ -124,48 +123,7 @@
 
     {% block modal %}
 
-    {# <div class="modal">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Modal title</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true"></span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Modal body text goes here.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div> #}
-
-
-    <!-- Modal -->
-    {# <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div> #}
-
-
-    {# <!-- tricks Modal-->
+    <!-- tricks Modal-->
     <div class="tricks-modal modal fade" id="tricksDelete" tabindex="-1" role="dialog"
         aria-labelledby="#tricksModal0Label" aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
@@ -182,7 +140,7 @@
                                 <!-- tricks Modal - Image <img class="img-fluid rounded mb-5"
                                     src="" alt="" /> -->
                                 <!-- tricks Modal - Text-->
-                                <p class="mb-5">Are your sur to deteting this item ?
+                                <p class="mb-5">Are your sur to deteting this trick ?
                                 </p>
                                 <button class="btn btn-secondary" href="#" data-dismiss="modal">
                                     <i class="fas fa-times fa-fw"></i>Yes</button>
@@ -195,7 +153,7 @@
                 </div>
             </div>
         </div>
-    </div> #}
+    </div>
 
     {% endblock %}
 
@@ -205,8 +163,7 @@
     </section> {# end main area #}
     {% endblock %}
 
-    {# footer not fixed for home page only #}
-    {# {{ dump(app.request.get('_route')) }} #}
+{############## footer not fixed for home page only  ##############}
     {% set current_path = app.request.get('_route') %}
     {% set ifOfOrNot = '' %}
     {% if current_path == 'app_home' %}
@@ -215,14 +172,14 @@
     {% set ifOfOrNot = 'position-fixed' %}
     {% endif %}
 
+{############## footer ##############}
     {% block footer %}
-
-
     <footer class="copyright py-4 text-white {{ ifOfOrNot }}">
 
         <div class="container">
             <div class="row align-items-start">
                 <div class="col align-self-start">
+                    {############## Copyright or home ##############}
                     <!-- Copyright or home-->
                     <ul class="list-inline-item">
                         <li class="list-inline-item menuBottom  bottom-0">
@@ -242,14 +199,11 @@
 
                 </div>
 
-               
-
                 <div class="col">
                     <ul class="list-inline-item">
-                        <!-- not if connected : login + registration -->
+                        {############## not if connected : login + registration ##############}
                         {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                         <li class="list-inline-item menuBottom">
-
                         </li>
 
                         <li class="list-inline-item menuBottom tar">

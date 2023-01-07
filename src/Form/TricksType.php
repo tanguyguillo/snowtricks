@@ -44,16 +44,12 @@ class TricksType extends AbstractType
                 'picture',
                 FileType::class,
                 [
+                    'attr' => ['accept'=> "image/*",],
                     'label' => false,
                     'data_class' => null,
                 ]
             );
     }
-
-    // mimeTypes={"image/jpeg","image/gif","image/png"},
-    // 'mimeTypesMessage' => "This picture isn't valid.",
-    // 'multiple' => false,
-    // 'required' =>  false 
 
     /**
      *  function configureOptions

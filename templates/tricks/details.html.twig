@@ -22,11 +22,10 @@
 Snowtricks - {{ routeTitre }} - {{ trick.title }}
 {% endblock %}
 
-
 {% block main %}
 
 <br><br><br>
-<div class="container text-center" id="#tricks">
+<div class="container text-center">
     <br>
     <br>
     <br>
@@ -40,8 +39,7 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
     <p> test....</p>
     {% endif %} #}
 
-
-    <div class="row justify-content-center">
+    <div class="row justify-content-center" id="#tricks">
         <div class="col-lg-12">
             <div class="modifications">
                 <div class="rounded shadow p-3 mb-5 bg-white">
@@ -53,7 +51,7 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                         <a href="#tricksDelete" class="float-right ml-1">
                             <i class="bi bi-trash-fill iconTricks"></i>
                         </a>
-                        <a href="/tricks/modification/{{ trick.slug }}" class="float-right ml-1" alt="fff">
+                        <a href="/tricks/modification/{{ trick.slug }}" class="float-right ml-1" alt="update trick">
                             <i class="bi bi-pencil-fill iconTricks"></i>
                         </a>
                     </span>

@@ -39,17 +39,17 @@
                             <img class="img-fluid" src="assets/img/tricks/{{ trick.picture }}"
                                 alt="{{ trick.title|striptags}}" />
                             <div class="card-body">
-                                {# <a href="#" class="link-primary">{{ trick.title|striptags|u.truncate(14, '...')}}</a> #}
-                                <a href="tricks/details/{{ trick.slug }}" class="link-primary">{{ trick.title|striptags}}</a>
-
-                                {# Only if connected #}
+                                {# <a href="tricks/details/{{ trick.slug }}" class="link-primary">{{
+                                    trick.title|striptags}}</a> #}
+                                  <span class = "trickName"> {{ trick.slug }} </span> 
+                                {######### Only if connected : delete and update  ###########}
                                 {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                                 <span>
                                     <a href="#tricksDelete" class="float-right ml-1" data-toggle="modal">
                                         <i class="bi bi-trash-fill iconTricks"></i>
                                     </a>
-                                    <a href="#" class="float-right ml-1">
-                                        <i class="bi bi-pencil-fill iconTricks"></i>
+                                    <a href="{{ app.request.getSchemeAndHttpHost() }}/tricks/details/{{ trick.slug }}" class="float-right ml-1">
+                                        <i class="bi bi-pencil-fill iconTricks"><small>-></small></i>
                                     </a>
                                 </span>
                                 {% endif %}
@@ -128,7 +128,7 @@
         <a class="arrow-up" href="#tricks">
             <i class=" bi bi-arrow-up-circle-fill fa-3x"></i>
         </a>
-     <!-- more tricks Items -->    
+        <!-- more tricks Items -->
         <div class="row justify-content-center m-3">
             <a href="#" id="loadMoreTrick"><i class="bi bi-plus-circle-fill fa-3x"></i></a>
         </div>
