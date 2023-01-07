@@ -30,6 +30,43 @@
         }
     });
 
+
+    // read more fc
+    // $(function () {
+        // items to show
+        var increment = 12;
+        var startFilter = 0;
+        var endFilter = increment;
+
+        // item selector
+        var $this = $('.items');
+
+        var elementLength = $this.find('div').length;
+        $('.listLength').text(elementLength);
+
+        // show/hide the Load More button
+        if (elementLength > 12) {
+            $('.buttonToogle').show();
+        }
+
+        $('.items .item').slice(startFilter, endFilter).addClass('shown');
+        $('.shownLength').text(endFilter);
+        $('.items .item').not('.shown').hide();
+        $('.buttonToogle .showMore').on('click', function () {
+            if (elementLength > endFilter) {
+                startFilter += increment;
+                endFilter += increment;
+                $('.items .item').slice(startFilter, endFilter).not('.shown').addClass('shown').toggle(500);
+                $('.shownLength').text((endFilter > elementLength) ? elementLength : endFilter);
+                if (elementLength <= endFilter) {
+                    $(this).remove();
+                }
+            }
+        });
+
+    // });
+
+
     // Closes responsive menu when a scroll trigger link is clicked
     $('.js-scroll-trigger').click(function () {
         $('.navbar-collapse').collapse('hide');
@@ -80,7 +117,7 @@ $('img').on('click', function() {
     // console.log("yep");
 
 
-    var theHREF;
+    //var theHREF;
 
     // $(".confirmModalLink").click(function (e) {
       
@@ -100,40 +137,7 @@ $('img').on('click', function() {
 
 
 
-    // read more fc
-    $(function () {
-        // items to show
-        var increment = 12;
-        var startFilter = 0;
-        var endFilter = increment;
-
-        // item selector
-        var $this = $('.items');
-
-        var elementLength = $this.find('div').length;
-        $('.listLength').text(elementLength);
-
-        // show/hide the Load More button
-        if (elementLength > 12) {
-            $('.buttonToogle').show();
-        }
-
-        $('.items .item').slice(startFilter, endFilter).addClass('shown');
-        $('.shownLength').text(endFilter);
-        $('.items .item').not('.shown').hide();
-        $('.buttonToogle .showMore').on('click', function () {
-            if (elementLength > endFilter) {
-                startFilter += increment;
-                endFilter += increment;
-                $('.items .item').slice(startFilter, endFilter).not('.shown').addClass('shown').toggle(500);
-                $('.shownLength').text((endFilter > elementLength) ? elementLength : endFilter);
-                if (elementLength <= endFilter) {
-                    $(this).remove();
-                }
-            }
-        });
-
-    });
+    
 
 
 
