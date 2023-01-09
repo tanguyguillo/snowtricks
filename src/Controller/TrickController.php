@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
-use App\Controller\Tricks;
 use App\Repository\UserRepository;
 
 
@@ -25,9 +24,23 @@ class TrickController extends AbstractController
     #[Route('/details/{slug}', name: 'details')]
     public function details($slug, TricksRepository $tricksRepository, UserRepository $userRepository): Response
     {
-        
-   
-        
+        $trick = $tricksRepository->findOneBy(['slug' => $slug]);
+
+        $AuthorId=$trick->getUser();
+        $Author = $userRepository->findOneBy(['id' => $AuthorId]);
+
+        if(! $trick){
+            throw new NotFoundHttpException("No trick found");
+        }
+        return $this->render('tricks/details.html.twig', compact('trick', 'Author'));
+    }
+
+    /**
+     * tricks/details/modifications/stalefish
+     */
+    #[Route('/details/modifications/{slug}', name: 'modifications')]
+    public function modification($slug, TricksRepository $tricksRepository, UserRepository $userRepository): Response
+    {
         $trick = $tricksRepository->findOneBy(['slug' => $slug]);
 
         $AuthorId=$trick->getUser();
@@ -37,6 +50,7 @@ class TrickController extends AbstractController
             throw new NotFoundHttpException("No trick found");
         }
 
+        // we go to details but it's the modifications page also  : route modification
         return $this->render('tricks/details.html.twig', compact('trick', 'Author'));
     }
 

@@ -1,48 +1,40 @@
 {% extends 'base.html.twig' %}
 
-
-
-
 {% set route = '' %}
 {% set routeTitre = '' %}
+{% set route = app.request.attributes.get('_route') %}
+
+    {% if route == 'tricks_details' %}
+        {% set routeTitre = 'Trick details' %}
+    {% endif %}
+
+    {% if route == 'tricks_modifications' %}
+        {% set routeTitre = 'modifications' %}
+    {% endif %}
+
+    {# {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.request.attributes.get('_route') == "tricks_modifications" %}
+        {% set routeTitre = 'modifications' %}
+    {% endif %} #}
+
 
 {# titre #}
 {% block title %}
-    {% set route = app.request.attributes.get('_route') %}
-
-    {% if route == 'tricks_details' %}
-    {% set routeTitre = 'details' %}
-    {% endif %}
-
-    {% if route == 'tricks_modification' %}
-    {% set routeTitre = 'modifications' %}
-    {% endif %}
-
-    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.request.attributes.get('_route') == "tricks_modification" %}
-    {% set routeTitre = 'modifications' %}
-    {% endif %}
-    
-Snowtricks - {{ routeTitre }} - {{ trick.title }}
+    Snowtricks - {{ routeTitre }} - {{ trick.title }}
 {% endblock %}
 
 {% block main %}
-
 <br><br><br>
 <div class="container text-center">
     <br>
     <br>
     <br>
 
-    <pre>
+    {# <pre>
         {{ app.request.attributes.get('_route') }}
         {{ route }}
-    </pre>
+    </pre> #}
 
-    {# {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and route%}
-    <p> test....</p>
-    {% endif %} #}
-
-    
+    <span class="badge bg-primary">Snowtricks - {{ routeTitre }} </span>
 
     <div class="row justify-content-center" id="#tricks">
         <div class="col-lg-12">
@@ -50,13 +42,13 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                 <div class="rounded shadow p-3 mb-5 bg-white">
 
                     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.request.attributes.get('_route') ==
-                    "tricks_modification" %}
+                    "tricks_modifications" %}
 
                     <span>
                         <a href="#tricksDelete" class="float-right ml-1">
                             <i class="bi bi-trash-fill iconTricks"></i>
                         </a>
-                        <a href="/tricks/modification/{{ trick.slug }}" class="float-right ml-1" alt="update trick">
+                        <a href="/tricks/modifications/{{ trick.slug }}" class="float-right ml-1" alt="update trick">
                             <i class="bi bi-pencil-fill iconTricks"></i>
                         </a>
                     </span>
@@ -75,7 +67,7 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                             {# <a href="#tricksDelete" class="float-right ml-1">
                                 <i class="bi bi-trash-fill iconTricks"></i>
                             </a> #}
-                            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.request.attributes.get('_route') == "tricks_modifications" %}
                             <a href="/tricks/modification/{{ trick.slug }}" class="float-right ml-1">
                                 <i class="bi bi-pencil-fill iconTricks"></i>
                             </a>
@@ -88,7 +80,8 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                 {####### additionnals pictures #########}
                 <div class="row justify-content-center">
 
-                    <div id="overlay"></div>
+                   
+
                     <!-- tricks Items-->
                     <div class="col-sm-2">
                         <div class="mx-auto">
@@ -98,7 +91,7 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                                         src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/main-picture.jpg"
                                         alt="Additionnal picture {{ trick.title|striptags}} 1" />
 
-                                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.request.attributes.get('_route') == "tricks_modifications" %}
                                     <div class="card-body">
                                         {# Only if connected #}
                                         <span>
@@ -117,145 +110,35 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                         </div>
                     </div>
 
-
-
-
-                    <!-- tricks Items-->
-                    <div class="col-sm-2">
-                        <div class="mx-auto">
-                            <div class="d-flex align-items-center justify-content-center h-100 w-100">
-                                <div class="card">
-                                    <img class="img-fluid"
-                                        src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/main-picture.jpg"
-                                        alt="Additionnal picture {{ trick.title|striptags}}" />
-                                    <div class="card-body">
-                                        {# Only if connected #}
-                                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                                        <span>
-                                            <a href="#tricksDelete" class="float-center ml-1">
-                                                <i class="bi bi-trash-fill iconTricks"></i>
-                                            </a>
-                                            <a href="/tricks/modification/{{ trick.slug }}" class="float-center ml-1">
-                                                <i class="bi bi-pencil-fill iconTricks"></i>
-                                            </a>
-                                        </span>
-                                        {% endif %}
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    <!-- tricks Items-->
-                    <div class="col-sm-2">
-                        <div class="mx-auto">
-                            <div class="d-flex align-items-center justify-content-center">
-                                <div class="card">
-                                    <img class="img-fluid"
-                                        src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/main-picture.jpg"
-                                        alt="Additionnal picture {{ trick.title|striptags}}" />
-                                    <div class="card-body">
-                                        {# Only if connected #}
-                                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                                        <span>
-                                            <a href="#tricksDelete" class="float-center ml-1">
-                                                <i class="bi bi-trash-fill iconTricks"></i>
-                                            </a>
-                                            <a href="/tricks/modification/{{ trick.slug }}" class="float-center ml-1">
-                                                <i class="bi bi-pencil-fill iconTricks"></i>
-                                            </a>
-                                        </span>
-                                        {% endif %}
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                     <br>
 
                     {####### additionnal video #########}
-                    <div class="col-sm-2">
-                        <div class="mx-auto">
-                            <div class="d-flex align-items-center justify-content-center">
-                                <div class="card">
-                                    <img class="img-fluid"
+                        <div class="col-sm-2">
+                            <div class="mx-auto">
+                                <div class="d-flex align-items-center justify-content-center h-100 w-100">
+                                    <div class="card image-popup-vertical-fit">
+                                        <img class="img-fluid zoom"
                                         src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/main-video.png"
-                                        alt="Additionnal video {{ trick.title|striptags}} 1" />
-                                    <div class="card-body">
-                                        {# Only if connected #}
-                                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                                        <span>
-                                            <a href="#tricksDelete" class="float-center ml-1">
-                                                <i class="bi bi-trash-fill iconTricks"></i>
-                                            </a>
-                                            <a href="/tricks/modification/{{ trick.slug }}" class="float-center ml-1">
-                                                <i class="bi bi-pencil-fill iconTricks"></i>
-                                            </a>
-                                        </span>
+                                            alt="Additionnal video {{ trick.title|striptags}} 1" />
+    
+                                            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.request.attributes.get('_route') == "tricks_modifications" %}
+                                        <div class="card-body">
+                                            {# Only if connected #}
+                                            <span>
+                                                <a href="#tricksDelete" class="float-center ml-1">
+                                                    <i class="bi bi-trash-fill iconTricks"></i>
+                                                </a>
+                                                <a href="/tricks/modification/{{ trick.slug }}" class="float-center ml-1">
+                                                    <i class="bi bi-pencil-fill iconTricks"></i>
+                                                </a>
+                                            </span>
+                                        </div>
                                         {% endif %}
-
+    
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <!-- video -->
-                    <div class="col-sm-2">
-                        <div class="mx-auto">
-                            <div class="d-flex align-items-center justify-content-center h-100 w-100">
-                                <div class="card">
-                                    <img class="img-fluid"
-                                        src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/main-video.png"
-                                        alt="Additionnal video {{ trick.title|striptags}} 2" />
-                                    <div class="card-body">
-                                        {# Only if connected #}
-                                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                                        <span>
-                                            <a href="#tricksDelete" class="float-center ml-1">
-                                                <i class="bi bi-trash-fill iconTricks"></i>
-                                            </a>
-                                            <a href="/tricks/modification/{{ trick.slug }}" class="float-center ml-1">
-                                                <i class="bi bi-pencil-fill iconTricks"></i>
-                                            </a>
-                                        </span>
-                                        {% endif %}
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    <!-- video -->
-                    <div class="col-sm-2">
-                        <div class="mx-auto">
-                            <div class="d-flex align-items-center justify-content-center h-100 w-100">
-                                <div class="card">
-                                    <img class="img-fluid"
-                                        src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/main-video.png"
-                                        alt="Additionnal video {{ trick.title|striptags}} 3" />
-                                    <div class="card-body">
-                                        {# Only if connected #}
-                                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                                        <span>
-                                            <a href="#tricksDelete" class="float-center ml-1">
-                                                <i class="bi bi-trash-fill iconTricks"></i>
-                                            </a>
-                                            <a href="/tricks/modification/{{ trick.slug }}" class="float-center ml-1">
-                                                <i class="bi bi-pencil-fill iconTricks"></i>
-                                            </a>
-                                        </span>
-                                        {% endif %}
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
                 </div>
 
@@ -285,6 +168,8 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
 
             </div>
 
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.request.attributes.get('_route') ==
+            "tricks_modifications" %}
             {######### buttons and groupe ##########}
             <br>
             <div class="container text-center">
@@ -303,10 +188,14 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                     </div>
                 </div>
             </div>
+            {% endif %}
 
         </div>
 
     </div>
+
+  <!-- tricks Zoom do a hite flash on loading-->
+  {# <div id="overlay"></div> #}
 
 
     <br>

@@ -1,3 +1,4 @@
+
 header {
   /* min-height: 1110px; */
   /* min-width: 900px !important; */
@@ -422,7 +423,12 @@ div > div > div.modal-body > p{
 }
 
 div > div > div.modal-footer > button.btn.btn-primary{
-  background-color:#e83e8c;
+  background-color:#e83e8c !important;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.badge{
+  background-color:#e83e8c !important; 
   border-color: rgba(255, 255, 255, 0.4);
 }
 
