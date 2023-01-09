@@ -36,6 +36,15 @@
 
     <span class="badge bg-primary">Snowtricks - {{ routeTitre }} </span>
 
+    {# <button type="button" 
+    class="btn btn-lg btn-danger" 
+    data-bs-toggle="popover" 
+    data-bs-title="Popover title" 
+    data-bs-content="And here's some amazing content. It's very engaging. Right?">
+    
+    Click to toggle popover</button> #}
+
+
     <div class="row justify-content-center" id="#tricks">
         <div class="col-lg-12">
             <div class="modifications">
@@ -48,7 +57,8 @@
                         <a href="#tricksDelete" class="float-right ml-1">
                             <i class="bi bi-trash-fill iconTricks"></i>
                         </a>
-                        <a href="/tricks/modifications/{{ trick.slug }}" class="float-right ml-1" alt="update trick">
+                        {# <a href="/tricks/modifications/{{ trick.slug }}" class="float-right ml-1" alt="update trick"> #}
+                        <a href="#" class="float-right ml-1" alt="update trick">
                             <i class="bi bi-pencil-fill iconTricks"></i>
                         </a>
                     </span>
@@ -195,7 +205,7 @@
     </div>
 
   <!-- tricks Zoom do a hite flash on loading-->
-  {# <div id="overlay"></div> #}
+  <div id="overlay"></div>
 
 
     <br>

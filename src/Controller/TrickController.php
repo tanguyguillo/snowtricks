@@ -13,7 +13,7 @@ use App\Repository\UserRepository;
 
 /**
  * class TrickController
- * /tricks//details/{slug}
+ * 
  */
 #[Route('/tricks', name: 'tricks_')]
 class TrickController extends AbstractController
@@ -22,6 +22,7 @@ class TrickController extends AbstractController
      * function details
      */
     #[Route('/details/{slug}', name: 'details')]
+    #[Route('/details/modifications/{slug}', name: 'modifications')]
     public function details($slug, TricksRepository $tricksRepository, UserRepository $userRepository): Response
     {
         $trick = $tricksRepository->findOneBy(['slug' => $slug]);
@@ -36,23 +37,24 @@ class TrickController extends AbstractController
     }
 
     /**
+     * function modifications
      * tricks/details/modifications/stalefish
      */
-    #[Route('/details/modifications/{slug}', name: 'modifications')]
-    public function modification($slug, TricksRepository $tricksRepository, UserRepository $userRepository): Response
-    {
-        $trick = $tricksRepository->findOneBy(['slug' => $slug]);
+    // #[Route('/details/modifications/{slug}', name: 'modifications')]
+    // public function modification($slug, TricksRepository $tricksRepository, UserRepository $userRepository): Response
+    // {
+    //     $trick = $tricksRepository->findOneBy(['slug' => $slug]);
 
-        $AuthorId=$trick->getUser();
-        $Author = $userRepository->findOneBy(['id' => $AuthorId]);
+    //     $AuthorId=$trick->getUser();
+    //     $Author = $userRepository->findOneBy(['id' => $AuthorId]);
 
-        if(! $trick){
-            throw new NotFoundHttpException("No trick found");
-        }
+    //     if(! $trick){
+    //         throw new NotFoundHttpException("No trick found");
+    //     }
 
-        // we go to details but it's the modifications page also  : route modification
-        return $this->render('tricks/details.html.twig', compact('trick', 'Author'));
-    }
+    //     // we go to details but it's the modifications page also  : route modification
+    //     return $this->render('tricks/details.html.twig', compact('trick', 'Author'));
+    // }
 
     
 

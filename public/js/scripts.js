@@ -33,55 +33,52 @@
 
     // read more fc
     // $(function () {
-        // items to show
-        var increment = 12;
-        var startFilter = 0;
-        var endFilter = increment;
+    // items to show
+    var increment = 15;
+    var startFilter = 0;
+    var endFilter = increment;
 
-        // item selector
-        var $this = $('.items');
+    // item selector
+    var $this = $('.items');
 
-        var elementLength = $this.find('div').length;
-        $('.listLength').text(elementLength);
+    var elementLength = $this.find('div').length;
+    $('.listLength').text(elementLength);
 
-        // show/hide the Load More button
-        if (elementLength > 12) {
-            $('.buttonToogle').show();
-        }
+    // show/hide the Load More button
+    if (elementLength > 15) {
+        $('.buttonToogle').show();
+    }
 
-        $('.items .item').slice(startFilter, endFilter).addClass('shown');
-        $('.shownLength').text(endFilter);
-        $('.items .item').not('.shown').hide();
-        $('.buttonToogle .showMore').on('click', function () {
-            if (elementLength > endFilter) {
-                startFilter += increment;
-                endFilter += increment;
-                $('.items .item').slice(startFilter, endFilter).not('.shown').addClass('shown').toggle(500);
-                $('.shownLength').text((endFilter > elementLength) ? elementLength : endFilter);
-                if (elementLength <= endFilter) {
-                    $(this).remove();
-                }
+    $('.items .item').slice(startFilter, endFilter).addClass('shown');
+    $('.shownLength').text(endFilter);
+    $('.items .item').not('.shown').hide();
+    $('.buttonToogle .showMore').on('click', function () {
+        if (elementLength > endFilter) {
+            startFilter += increment;
+            endFilter += increment;
+            $('.items .item').slice(startFilter, endFilter).not('.shown').addClass('shown').toggle(500);
+            $('.shownLength').text((endFilter > elementLength) ? elementLength : endFilter);
+            if (elementLength <= endFilter) {
+                $(this).remove();
             }
-        });
+        }
+    });
 
     // });
-
 
     // Closes responsive menu when a scroll trigger link is clicked
     $('.js-scroll-trigger').click(function () {
         $('.navbar-collapse').collapse('hide');
     });
 
-
     // Image to Lightbox Overlay
     // $('#slot img').attr('class')... to see later
-$('img').on('click', function() {
-    $('#overlay')
-      .css({backgroundImage: `url(${this.src})`})
-      .addClass('open')
-      .one('click', function() { $(this).removeClass('open'); });
-  });
-
+    $('img').on('click', function () {
+        $('#overlay')
+            .css({ backgroundImage: `url(${this.src})` })
+            .addClass('open')
+            .one('click', function () { $(this).removeClass('open'); });
+    });
 
     // Activate scrollspy to add active class to navbar items on scroll
     $('body').scrollspy({
@@ -89,7 +86,7 @@ $('img').on('click', function() {
         offset: 80
     });
 
-    // Collapse Navbar
+    // Collapse Navbar  // not used....
     var navbarCollapse = function () {
         if ($("#mainNav").offset().top > 100) {
             $("#mainNav").addClass("navbar-shrink");
@@ -113,6 +110,11 @@ $('img').on('click', function() {
         });
     });
 
+    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+        return new bootstrap.Popover(popoverTriggerEl)
+    })
+
 
     // console.log("yep");
 
@@ -120,7 +122,7 @@ $('img').on('click', function() {
     //var theHREF;
 
     // $(".confirmModalLink").click(function (e) {
-      
+
     //     e.preventDefault();
     //     // theHREF = $(this).attr("href");
     //     $("#confirmModal").modal("show");
@@ -137,7 +139,7 @@ $('img').on('click', function() {
 
 
 
-    
+
 
 
 
