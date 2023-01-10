@@ -16,7 +16,7 @@ use App\Entity\Category;
 
 /**
  * class TricksType
- *  // ->add('description', TextType::class) no here it's content
+ *
  */
 class TricksType extends AbstractType
 {
@@ -26,11 +26,11 @@ class TricksType extends AbstractType
             ->add(
                 'title',
                 TextType::class,
-                ['label' => ''],
-                new Length([
-                    'min' => 4,
-                    'minMessage' => 'Your trick name should be at least {{ limit }} characters',
-                ]),
+                [
+                    'attr' => [
+                        'class' => 'form-control',
+                    ]
+                ]
             )
             ->add('content', TextareaType::class)
             ->add(
@@ -44,7 +44,7 @@ class TricksType extends AbstractType
                 'picture',
                 FileType::class,
                 [
-                    'attr' => ['accept'=> "image/*",],
+                    'attr' => ['accept' => "image/*",],
                     'label' => false,
                     'data_class' => null,
                 ]

@@ -22,7 +22,15 @@ class Tricks
     private ?int $id = null;
 
     #[ORM\Column(length: 255, unique: true)] 
+    #[Assert\Length(
+        min: 4,
+        max: 50,
+        minMessage: 'Your trick title must be at least {{ limit }} characters long',
+        maxMessage: 'Your trick title cannot be longer than {{ limit }} characters',
+        )]
     private ?string $title = null;
+
+
 
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
@@ -71,10 +79,10 @@ class Tricks
         $this->setDescription("use field content for description");
     }
 
-    public function __toString()
-    {
-        return $this->name;
-    }
+    // public function __toString()
+    // {
+    //     return $this->name;
+    // }
 
     public function getId(): ?int
     {
