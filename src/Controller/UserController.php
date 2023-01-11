@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Tricks;
 use App\Entity\User;
 
+use  App\Repository\TricksRepository;
+
 use App\Form\TricksType;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
