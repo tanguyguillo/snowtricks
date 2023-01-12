@@ -4,22 +4,22 @@
 {% set routeTitre = '' %}
 {% set route = app.request.attributes.get('_route') %}
 
-    {% if route == 'tricks_details' %}
-        {% set routeTitre = 'Trick details' %}
-    {% endif %}
+{% if route == 'tricks_details' %}
+{% set routeTitre = 'Trick details' %}
+{% endif %}
 
-    {% if route == 'tricks_modifications' %}
-        {% set routeTitre = 'modifications' %}
-    {% endif %}
+{% if route == 'tricks_modifications' %}
+{% set routeTitre = 'modifications' %}
+{% endif %}
 
-    {# {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.request.attributes.get('_route') == "tricks_modifications" %}
-        {% set routeTitre = 'modifications' %}
-    {% endif %} #}
+{# {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.request.attributes.get('_route') == "tricks_modifications" %}
+{% set routeTitre = 'modifications' %}
+{% endif %} #}
 
 
 {# titre #}
 {% block title %}
-    Snowtricks - {{ routeTitre }} - {{ trick.title }}
+Snowtricks - {{ routeTitre }} - {{ trick.title }}
 {% endblock %}
 
 {% block main %}
@@ -29,20 +29,18 @@
     <br>
     <br>
 
-    {# <pre>
+    {#
+    <pre>
         {{ app.request.attributes.get('_route') }}
         {{ route }}
     </pre> #}
 
     <span class="badge bg-primary">Snowtricks - {{ routeTitre }} </span>
 
-    {# <button type="button" 
-    class="btn btn-lg btn-danger" 
-    data-bs-toggle="popover" 
-    data-bs-title="Popover title" 
-    data-bs-content="And here's some amazing content. It's very engaging. Right?">
-    
-    Click to toggle popover</button> #}
+    {# <button type="button" class="btn btn-lg btn-danger" data-bs-toggle="popover" data-bs-title="Popover title"
+        data-bs-content="And here's some amazing content. It's very engaging. Right?">
+
+        Click to toggle popover</button> #}
 
 
     <div class="row justify-content-center" id="#tricks">
@@ -57,10 +55,11 @@
                         <a href="#tricksDelete" class="float-right ml-1">
                             <i class="bi bi-trash-fill iconTricks"></i>
                         </a>
-                        {# <a href="/tricks/modifications/{{ trick.slug }}" class="float-right ml-1" alt="update trick"> #}
-                        <a href="#" class="float-right ml-1" alt="update trick">
-                            <i class="bi bi-pencil-fill iconTricks"></i>
-                        </a>
+                        {# <a href="/tricks/modifications/{{ trick.slug }}" class="float-right ml-1" alt="update trick">
+                            #}
+                            <a href="#" class="float-right ml-1" alt="update trick">
+                                <i class="bi bi-pencil-fill iconTricks"></i>
+                            </a>
                     </span>
 
                     {% endif %}
@@ -77,7 +76,8 @@
                             {# <a href="#tricksDelete" class="float-right ml-1">
                                 <i class="bi bi-trash-fill iconTricks"></i>
                             </a> #}
-                            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.request.attributes.get('_route') == "tricks_modifications" %}
+                            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.request.attributes.get('_route') ==
+                            "tricks_modifications" %}
                             <a href="/tricks/modification/{{ trick.slug }}" class="float-right ml-1">
                                 <i class="bi bi-pencil-fill iconTricks"></i>
                             </a>
@@ -90,8 +90,6 @@
                 {####### additionnals pictures #########}
                 <div class="row justify-content-center">
 
-                   
-
                     <!-- tricks Items-->
                     <div class="col-sm-2">
                         <div class="mx-auto">
@@ -101,7 +99,8 @@
                                         src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/main-picture.jpg"
                                         alt="Additionnal picture {{ trick.title|striptags}} 1" />
 
-                                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.request.attributes.get('_route') == "tricks_modifications" %}
+                                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and
+                                    app.request.attributes.get('_route') == "tricks_modifications" %}
                                     <div class="card-body">
                                         {# Only if connected #}
                                         <span>
@@ -123,32 +122,33 @@
                     <br>
 
                     {####### additionnal video #########}
-                        <div class="col-sm-2">
-                            <div class="mx-auto">
-                                <div class="d-flex align-items-center justify-content-center h-100 w-100">
-                                    <div class="card image-popup-vertical-fit">
-                                        <img class="img-fluid zoom"
+                    <div class="col-sm-2">
+                        <div class="mx-auto">
+                            <div class="d-flex align-items-center justify-content-center h-100 w-100">
+                                <div class="card image-popup-vertical-fit">
+                                    <img class="img-fluid zoom"
                                         src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/main-video.png"
-                                            alt="Additionnal video {{ trick.title|striptags}} 1" />
-    
-                                            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.request.attributes.get('_route') == "tricks_modifications" %}
-                                        <div class="card-body">
-                                            {# Only if connected #}
-                                            <span>
-                                                <a href="#tricksDelete" class="float-center ml-1">
-                                                    <i class="bi bi-trash-fill iconTricks"></i>
-                                                </a>
-                                                <a href="/tricks/modification/{{ trick.slug }}" class="float-center ml-1">
-                                                    <i class="bi bi-pencil-fill iconTricks"></i>
-                                                </a>
-                                            </span>
-                                        </div>
-                                        {% endif %}
-    
+                                        alt="Additionnal video {{ trick.title|striptags}} 1" />
+
+                                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and
+                                    app.request.attributes.get('_route') == "tricks_modifications" %}
+                                    <div class="card-body">
+                                        {# Only if connected #}
+                                        <span>
+                                            <a href="#tricksDelete" class="float-center ml-1">
+                                                <i class="bi bi-trash-fill iconTricks"></i>
+                                            </a>
+                                            <a href="/tricks/modification/{{ trick.slug }}" class="float-center ml-1">
+                                                <i class="bi bi-pencil-fill iconTricks"></i>
+                                            </a>
+                                        </span>
                                     </div>
+                                    {% endif %}
+
                                 </div>
                             </div>
                         </div>
+                    </div>
 
                 </div>
 
@@ -204,8 +204,8 @@
 
     </div>
 
-  <!-- tricks Zoom do a hite flash on loading-->
-  <div id="overlay"></div>
+    <!-- tricks Zoom do a hite flash on loading-->
+    <div id="overlay"></div>
 
 
     <br>

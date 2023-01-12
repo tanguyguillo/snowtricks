@@ -47,7 +47,7 @@
                                 {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                                 <span>
                                     <a class="portfolio-link float-right ml-1 btndelete" data-bs-toggle="modal"
-                                        href="#deleteThisTrick" id="{{trick.slug}}">
+                                        href="#deleteThisTrick" id="{{trick.id}}">
 
                                         <i class="bi bi-trash-fill iconTricks"></i>
                                     </a>
@@ -82,15 +82,17 @@
                         </div>
                         <div class="modal-footer">
 
-                            {# put the slug here id="confirmDeleteTrick"#}
-                            <form action="{{ app.request.getSchemeAndHttpHost() }}/tricks/delete-tricks/127"
+                            {% for trick in tricks %}
+
+                            <a href="{{ path('tricks_app_tricks_delete', {id: trick.id}) }}" data-delete
+                                data-token="{{ csrf_token('delete'~trick.id)}}">supprimer {{trick.id}} </a>
+
+                            {% endfor %}
+                            {# <form action="{{ app.request.getSchemeAndHttpHost() }}/tricks/delete-tricks/127"
                                 method="post" id="confirmDeleteTrick">
-                                {# the argument of csrf_token() is an arbitrary string used to generate the
-                                token #}
-                                <input type="hidden" name="token" value="{{ csrf_token('delete-item') }}" />
-                                {# put the slug here id="confirmDeleteTrick"#}
+                                <input type="hidden" name="token" value="{{ csrf_token('delete') }}" />
                                 <button type="submit" class="btn btn-secondary" id="confirmDeleteTrick">Yes</button>
-                                <form>
+                                <form> #}
 
                                     {# <form action="{{ url('admin_post_delete', { id: post.id }) }}" method="post"
                                         id="confirmDeleteTrick"> #}
