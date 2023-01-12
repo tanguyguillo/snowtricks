@@ -82,19 +82,36 @@
                         </div>
                         <div class="modal-footer">
 
-                            {% for trick in tricks %}
-                            <button type="button" class="btn btn-primary displayNone {{trick.id}} ">
-                                {# <a href="{{ path('tricks_app_tricks_delete', {id: trick.id}) }}" data-delete
-                                    data-token="{{ csrf_token('delete'~trick.id)}}">Yes {{trick.id}} #}
+                            {# {% for trick in tricks %}
+                            <button type="button" class="btn-validate btn btn-primary displayNone {{trick.id}} ">
+                                <a href="{{ app.request.getSchemeAndHttpHost() }}/tricks/delete-tricks/{{ trick.id }}"
+                                    data-delete data-token="{{ csrf_token('delete'~trick.id)}}">Yes {{trick.id}}
+                                </a>
+                            </button>
+                            {% endfor %} #}
 
-                                    {# <a
-                                        href="{{ app.request.getSchemeAndHttpHost() }}/tricks/details/modifications/{{ trick.slug }}"
-                                        #} <a
-                                        href="{{ app.request.getSchemeAndHttpHost() }}/tricks/delete-tricks/{{ trick.id }}"
-                                        data-delete data-token="{{ csrf_token('delete'~trick.id)}}">Yes {{trick.id}}
-                                    </a>
+                            {% for trick in tricks %}
+                            <button type="button" class="btn-validate btn btn-primary displayNone {{trick.id}} ">
+                                <form
+                                    action="{{ app.request.getSchemeAndHttpHost() }}/tricks/delete-tricks/{{ trick.id }}"
+                                    method="POST" data-confirmation="true">
+                                    {# <input type="hidden" name="_method" value="DELETE"> #}
+                                    <input type="hidden" name="token" value="{{ csrf_token('delete') }}" />
+                                    <button type="submit" class="btn btn-primary">
+                                        Yes {{ trick.id }}
+                                    </button>
+                                </form>
                             </button>
                             {% endfor %}
+
+                            {# <form action="{{ app.request.getSchemeAndHttpHost() }}/tricks/delete-tricks/127"
+                                method="post" data-confirmation="true">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="token" value="{{ csrf_token('delete') }}" />
+                                <button type="submit" class="dropdown-item text-danger">
+                                    <i class="tio-delete-outlined dropdown-item-icon text-danger"></i> Yes
+                                </button>
+                            </form> #}
 
                             <button type="button" class="btn btn-secondary close-modal"
                                 data-bs-dismiss="modal">No</button>
