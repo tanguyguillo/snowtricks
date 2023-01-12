@@ -46,11 +46,10 @@ class TrickController extends AbstractController
         return $this->render('tricks/details.html.twig', compact('trick', 'Author'));
     }
 
-
     /**
      * function delete trick
+     *
      */
-    // 
     #[Route('/delete-tricks/{id}', name: 'app_tricks_delete', methods: ['DELETE'])]
     public function delete(Request $request, Tricks $trick, TricksRepository $tricksRepository)
     {
@@ -58,8 +57,7 @@ class TrickController extends AbstractController
         $data = json_decode($request->getContent(), true);
 
         // we check the token
-        if ($this->isCsrfTokenValid('delete' . $trick->getId(), $data['_toke,'])) {
-
+        if ($this->isCsrfTokenValid('delete' . $trick->getId(), $data['_token'])) {
             dd('bien');
 
             //$tricksRepository->remove($trick, true);

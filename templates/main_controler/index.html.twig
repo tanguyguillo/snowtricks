@@ -83,35 +83,28 @@
                         <div class="modal-footer">
 
                             {% for trick in tricks %}
+                            <button type="button" class="btn btn-primary displayNone {{trick.id}} ">
+                                {# <a href="{{ path('tricks_app_tricks_delete', {id: trick.id}) }}" data-delete
+                                    data-token="{{ csrf_token('delete'~trick.id)}}">Yes {{trick.id}} #}
 
-                            <a href="{{ path('tricks_app_tricks_delete', {id: trick.id}) }}" data-delete
-                                data-token="{{ csrf_token('delete'~trick.id)}}">supprimer {{trick.id}} </a>
-
+                                    {# <a
+                                        href="{{ app.request.getSchemeAndHttpHost() }}/tricks/details/modifications/{{ trick.slug }}"
+                                        #} <a
+                                        href="{{ app.request.getSchemeAndHttpHost() }}/tricks/delete-tricks/{{ trick.id }}"
+                                        data-delete data-token="{{ csrf_token('delete'~trick.id)}}">Yes {{trick.id}}
+                                    </a>
+                            </button>
                             {% endfor %}
-                            {# <form action="{{ app.request.getSchemeAndHttpHost() }}/tricks/delete-tricks/127"
-                                method="post" id="confirmDeleteTrick">
-                                <input type="hidden" name="token" value="{{ csrf_token('delete') }}" />
-                                <button type="submit" class="btn btn-secondary" id="confirmDeleteTrick">Yes</button>
-                                <form> #}
 
-                                    {# <form action="{{ url('admin_post_delete', { id: post.id }) }}" method="post"
-                                        id="confirmDeleteTrick"> #}
-                                        {# <form
-                                            action="{{ app.request.getSchemeAndHttpHost() }}/tricks/delete-tricks?id=127"
-                                            method="post" id="confirmDeleteTrick">
-                                            {# the argument of csrf_token() is an arbitrary string used to generate the
-                                            token #}
-                                            {# <input type="hidden" name="token"
-                                                value="{{ csrf_token('delete-item') }}" />
-                                            <button type="submit">Delete trick</button>
-                                        </form> #}
+                            <button type="button" class="btn btn-secondary close-modal"
+                                data-bs-dismiss="modal">No</button>
 
-                                        <button type="button" class="btn btn-primary"
-                                            data-bs-dismiss="modal">No</button>
                         </div>
                     </div>
                 </div>
             </div>
+            {# endModal #}
+
         </div>
     </div>
 

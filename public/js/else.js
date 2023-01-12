@@ -1,40 +1,17 @@
 $(document).ready(function () {
-
-    // const myModal = document.getElementById('myModal')
-    // const myInput = document.getElementById('myInput')
-
-    // myModal.addEventListener('shown.bs.modal', () => {
-    //     myInput.focus()
-    // })
-
-    var slug
+    var id
     $('.btndelete').click(function () {
-        slug = $(this).attr('id')
-        console.log(slug); // OK
+        id = $(this).attr('id')
+        $('.' + id).removeClass('displayNone').addClass('displayContents');
     });
 
-    // $('#confirmDeleteTrick').click(function () {
-    //     var pathDeleteTrick = "/tricks/delete-tricks/" + slug  //+ "?ajax=1"
-    //     console.log(pathDeleteTrick); // OK
+    $('.close-modal').click(function () {
+        console.log(id); // OK
+        $('.' + id).removeClass('displayContent').addClass('displayNone');
+    });
 
-    //     jQuery.ajax({
-    //         url: pathDeleteTrick,
-    //         type: "POST",
-    //         data: { slug: slug },
-    //         success: function (data) {
-    //             alert('ok');
-    //         },
-    //         error: function () {
-    //             alert('mal');
-    //         }
-    //     });
-
-});
-
-
-
-
-
-
+    $('#deleteThisTrick').click(function () {
+        $('.' + id).removeClass('displayContent').addClass('displayNone');
+    });
 
 });
