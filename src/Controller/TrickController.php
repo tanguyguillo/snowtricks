@@ -58,7 +58,7 @@ class TrickController extends AbstractController
 
             //delete the trick in BD
             $tricksRepository->remove($trick, true); // OK
-            //and delete pictures // 127 : 39a5ec187ad420e71980e27bca41ca46.png
+            //and delete pictures // 126 : c6104fc721a036627e0449eb1705e384.png
 
             return new JsonResponse("oui", 200);
         } else {

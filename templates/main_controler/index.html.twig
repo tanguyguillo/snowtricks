@@ -86,7 +86,7 @@
                             <button type="button" class="btn-validate btn btn-primary displayNone {{trick.id}} ">
                                 <a data-delete
                                     href="{{ app.request.getSchemeAndHttpHost() }}/tricks/delete-tricks/{{ trick.id }}"
-                                    data-token="{{ csrf_token('delete'~trick.id)}}">Yes {{trick.id}}
+                                    data-token="{{ csrf_token('delete'~trick.id)}}">Yes
                                 </a>
                             </button>
                             {% endfor %}
