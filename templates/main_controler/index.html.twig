@@ -37,7 +37,7 @@
             <div class="col-md-2 col-lg-2 mb-5 item">
                 <div class="mx-auto">
                     <div class="d-flex align-items-center justify-content-center h-100 w-100">
-                        <div class="card">
+                        <div class="card {{trick.id}}">
                             <img class="img-fluid" src="assets/img/tricks/{{ trick.picture }}"
                                 alt="{{ trick.title|striptags}}" />
                             <div class="card-body">
@@ -67,6 +67,7 @@
             </div>
             {% endfor %}
 
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
             {# Modal #}
             <div class="modal fade" id="deleteThisTrick">
                 <div class="modal-dialog" role="document">
@@ -81,46 +82,23 @@
                             <p>Are your sur to want to detete this trick ?</p>
                         </div>
                         <div class="modal-footer">
-
-                            {# {% for trick in tricks %}
-                            <button type="button" class="btn-validate btn btn-primary displayNone {{trick.id}} ">
-                                <a href="{{ app.request.getSchemeAndHttpHost() }}/tricks/delete-tricks/{{ trick.id }}"
-                                    data-delete data-token="{{ csrf_token('delete'~trick.id)}}">Yes {{trick.id}}
-                                </a>
-                            </button>
-                            {% endfor %} #}
-
                             {% for trick in tricks %}
                             <button type="button" class="btn-validate btn btn-primary displayNone {{trick.id}} ">
-                                <form
-                                    action="{{ app.request.getSchemeAndHttpHost() }}/tricks/delete-tricks/{{ trick.id }}"
-                                    method="POST" data-confirmation="true">
-                                    {# <input type="hidden" name="_method" value="DELETE"> #}
-                                    <input type="hidden" name="token" value="{{ csrf_token('delete') }}" />
-                                    <button type="submit" class="btn btn-primary">
-                                        Yes {{ trick.id }}
-                                    </button>
-                                </form>
+                                <a data-delete
+                                    href="{{ app.request.getSchemeAndHttpHost() }}/tricks/delete-tricks/{{ trick.id }}"
+                                    data-token="{{ csrf_token('delete'~trick.id)}}">Yes {{trick.id}}
+                                </a>
                             </button>
                             {% endfor %}
-
-                            {# <form action="{{ app.request.getSchemeAndHttpHost() }}/tricks/delete-tricks/127"
-                                method="post" data-confirmation="true">
-                                <input type="hidden" name="_method" value="DELETE">
-                                <input type="hidden" name="token" value="{{ csrf_token('delete') }}" />
-                                <button type="submit" class="dropdown-item text-danger">
-                                    <i class="tio-delete-outlined dropdown-item-icon text-danger"></i> Yes
-                                </button>
-                            </form> #}
-
                             <button type="button" class="btn btn-secondary close-modal"
                                 data-bs-dismiss="modal">No</button>
 
-                        </div>
+                        </div>{# end modal-footer #}
                     </div>
                 </div>
             </div>
             {# endModal #}
+            {% endif %}
 
         </div>
     </div>

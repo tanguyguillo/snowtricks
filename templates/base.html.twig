@@ -216,21 +216,22 @@
     <!-- jQuery 1.9.1  -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
+    <!-- jQuery v3.6.3-->
+    <script src="{{ app.request.getSchemeAndHttpHost() }}/js/jQuery.js"></script>
     <!-- Core theme JS-->
     <script src="{{ app.request.getSchemeAndHttpHost() }}/js/scripts.js"></script>
-    {% endblock %}
 
     <!-- loadMore.-->
     <script src="{{ app.request.getSchemeAndHttpHost() }}/js/loadMore.js"></script>
 
     <script src="{{ app.request.getSchemeAndHttpHost() }}/js/else.js"></script>
 
-    <script src="{{ app.request.getSchemeAndHttpHost() }}/js/links.js"></script>
-
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
+
+    {% endblock %}
 </body>
 
 </html>

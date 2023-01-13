@@ -50,29 +50,19 @@ class TrickController extends AbstractController
      * function delete trick
      *
      */
-    #[Route('/delete-tricks/{id}', name: 'app_tricks_delete', methods: ['POST'])]
-    public function delete(Request $request, Tricks $trick, TricksRepository $tricksRepository): Response
+    #[Route('/delete-tricks/{id}', name: 'app_tricks_delete', methods: ['DELETE'])]
+    public function delete(Request $request, Tricks $trick, TricksRepository $tricksRepository)
     {
-        /// we get data from json
-        //$data = json_decode($request->getContent(), true);
+        $submittedToken = $request->request->get('_token');
+        if ($this->isCsrfTokenValid('delete' . $trick->getId(), $submittedToken)) {
 
-        //dd($_POST);
-        //         array:1 [▼
-        //   "token" => "aaaad018109ff88b0e7c0920fa2f.G8yWKhdFstIFBQ2IKBLcVX-wDyVR6yqPv2axbxg8oJw.TLz7eGMWx4tTXX_tRniOMzbpO2ApuXL9iindWntS2bFapN1obXL3m090OQ"
+            //delete the trick in BD
+            $tricksRepository->remove($trick, true); // OK
+            //and delete pictures // 127 : 39a5ec187ad420e71980e27bca41ca46.png
 
-
-        // we check the token
-        if (!$this->isCsrfTokenValid('delete', $request->request->get('token'))) {
-            // if ($this->isCsrfTokenValid('delete' . $trick->getId(), $data['_token'])) {
-
-            dd('bien');
-
-            //$tricksRepository->remove($trick, true);
-
-            // return new JsonResponse(['succes' => 1]);
+            return new JsonResponse("oui", 200);
         } else {
-            //return new JsonResponse(['error' => 'Token Invalide'], 400);
-            dd('mal');
+            return new JsonResponse("non ", 500);
         }
     }
 }
