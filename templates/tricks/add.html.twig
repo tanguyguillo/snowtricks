@@ -1,9 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{# {% if not is_granted('IS_AUTHENTICATED_REMEMBERED')  %}
-
-{% endif %} #}
-
 {% block title %}Snowtricks - add a trick{% endblock %}
 
 {% block main %}
@@ -24,48 +20,57 @@
                 <p class="help-block">Example block-level help text here.</p>
             </div> #}
 
-                {{ form_start(formAddTrick) }}
+            {{ form_start(formAddTrick) }}
 
-                <div class="form-group">
-                    {{ form_row(formAddTrick.picture, {
-                        label: 'Add a main picture',
-                        type : "file",
-                        attr : {'class': 'form-control'},
-                        }) }}
-                    </div>
+            <div class="form-group">
+                {{ form_row(formAddTrick.picture, {
+                label: 'Add a main picture',
+                type : "file",
+                attr : {'class': 'form-control'},
+                }) }}
+            </div>
 
-                        <br>
+            <br>
 
-                    {{ form_row(formAddTrick.title, {
-                    label: 'Trick name',
-                    attr : {'class': 'form-control'}
-                    }) }}
+            {{ form_row(formAddTrick.title, {
+            label: 'Trick name',
+            attr : {'class': 'form-control'}
+            }) }}
 
-                    <br>
+            <br>
 
-                    {# in fact field content #}
-                    {{ form_row(formAddTrick.content, {
-                        label: 'Description',
-                        attr : {'class': 'form-control'}
-                    }) }}
+            {# in fact field content #}
+            {{ form_row(formAddTrick.content, {
+            label: 'Description',
+            attr : {'class': 'form-control'}
+            }) }}
 
-                    <br>
+            <br>
 
-                    {{ form_row(formAddTrick.category, {
-                        label: 'Groupe',
-                        attr : {'class': 'form-control'}
-                    }) }}
+            {{ form_row(formAddTrick.category, {
+            label: 'Groupe',
+            attr : {'class': 'form-control'}
+            }) }}
 
-                <br>
+            <br>
 
-                <br><br>
+            <br><br>
 
-                <button class="w-50 btn btn-lg btn-info" type="submit">Add this trick</button>
+            <button class="w-50 btn btn-lg btn-info" type="submit">Add this trick</button>
 
-                {{ form_end(formAddTrick) }}
+            {{ form_end(formAddTrick) }}
 
-                <br> 
-                <br>
+            <br>
+            <br>
+
+            <button type="button" class="bw-50 btn btn-lg btn-info">
+                <a href="{{ app.request.getSchemeAndHttpHost() }}/tricks/test/124">test
+                </a>
+            </button>
+
+            <br>
+            <br><br>
+            <br>
 
         </div>
     </div>

@@ -18,7 +18,6 @@ $(document).ready(function () {
 
     // go to controler
     $("a[data-delete]").on("click", function (e) {
-        //console.log(this.dataset.token); // OK
         e.preventDefault();
         $.ajax({
             type: "DELETE",
@@ -37,26 +36,5 @@ $(document).ready(function () {
         });
     });
 
-    // $("a[data-delete]").on("click", function (e) {
-    //     e.preventDefault();
-    //     fetch(link.getAttribute("href"), {
-    //         method: "DELETE",
-    //         headers: {
-    //             "X-requested-with": "XMLHttpRequest",
-    //             "Content-type": "application/json",
-    //         },
-    //         body: JSON.stringify({ _token: this.dataset.token }),
-    //     })
-    //         .then((response) => response.json())
-    //         .then((data) => {
-    //             if (data.success) {
-    //                 console.log(data.success);
-    //                 //$(".modal-confirm").remove();
-    //             } else {
-    //                 console.log(data.error);
-    //             }
-    //         })
-    //         .catch((e) => console.log(e));
-    // });
 
 });
