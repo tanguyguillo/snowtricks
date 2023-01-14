@@ -13,7 +13,7 @@ use Symfony\Component\String\Slugger\AsciiSlugger;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TricksRepository::class)]
-#[UniqueEntity(fields: ['title'], message: "There's already a trick name like this one!")] 
+#[UniqueEntity(fields: ['title'], message: "There's already a trick name like this one!")]
 class Tricks
 {
     #[ORM\Id]
@@ -21,13 +21,13 @@ class Tricks
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255, unique: true)] 
+    #[ORM\Column(length: 255, unique: true)]
     #[Assert\Length(
         min: 4,
         max: 50,
         minMessage: 'Your trick title must be at least {{ limit }} characters long',
         maxMessage: 'Your trick title cannot be longer than {{ limit }} characters',
-        )]
+    )]
     private ?string $title = null;
 
 
@@ -76,7 +76,7 @@ class Tricks
         $this->slugger = new AsciiSlugger();
 
         $this->setPicture("main-picture.jpg");
-        $this->setDescription("use field content for description");
+        $this->setDescription("O");
     }
 
     // public function __toString()

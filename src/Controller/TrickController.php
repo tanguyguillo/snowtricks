@@ -49,11 +49,12 @@ class TrickController extends AbstractController
         $submittedToken = $request->request->get('_token');
 
         if ($this->isCsrfTokenValid('delete' . $trick->getId(), $submittedToken)) {
-
-            //delete the trick in BD .... todo : and addtionnels images in BD (cascade)
+            // get the physical path
+            $mainPictureWithPath = $this->getParameter('pictues_directory') . '/' . $trick->getPicture();
+            // delete trick from Bd
             $tricksRepository->remove($trick, true); // OK
             // delete on server
-            if ($this->deleteMainPicture($trick->getId())) {
+            if ($this->deleteMainPicture($mainPictureWithPath)) {
                 return new JsonResponse("oui", 200);
             } else {
                 return new JsonResponse("non : delete picture ", 500);
@@ -63,18 +64,17 @@ class TrickController extends AbstractController
         }
     }
 
-
     /**
      *  function to delete the main picture in trick
      *
-     * @param [type] $id
+     * @param [type] $mainPictureWithPath
      * @param TricksRepository $tricksRepository
      * 
      */
-    public function deleteMainPicture($id, TricksRepository $tricksRepository)
+    public function deleteMainPicture($mainPictureWithPath)
     {
-        $trick = $tricksRepository->findOneBy(['id' => $id]);
-        $mainPictureWithPath = $this->getParameter('pictues_directory') . '/' . $trick->getPicture();
+        // $trick = $tricksRepository->findOneBy(['id' => $id]);
+        // $mainPictureWithPath = $this->getParameter('pictues_directory') . '/' . $trick->getPicture();
         //check if ok
         if (file_exists($mainPictureWithPath)) {
             unlink($mainPictureWithPath);
