@@ -36,5 +36,14 @@ $(document).ready(function () {
         });
     });
 
+    // $().alert()	//Makes an alert listen for click events on descendant elements which have the data - dismiss="alert" attribute. (Not necessary when using the data - api’s auto - initialization.)
+    // $().alert('close')
+
+    $('.close').click(function () {
+        console.log("1");
+        // id = $(this).attr('id')
+        // $('.' + id).removeClass('displayNone').addClass('displayContents');
+    });
+
 
 });

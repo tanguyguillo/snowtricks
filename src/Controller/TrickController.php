@@ -65,17 +65,15 @@ class TrickController extends AbstractController
     }
 
     /**
+    /**
      *  function to delete the main picture in trick
      *
-     * @param [type] $mainPictureWithPath
+     * @param [type] $mainPictureWithPath string (path of picture to delete on server)
      * @param TricksRepository $tricksRepository
-     * 
+     * @return bool
      */
-    public function deleteMainPicture($mainPictureWithPath)
+    private function deleteMainPicture($mainPictureWithPath)
     {
-        // $trick = $tricksRepository->findOneBy(['id' => $id]);
-        // $mainPictureWithPath = $this->getParameter('pictues_directory') . '/' . $trick->getPicture();
-        //check if ok
         if (file_exists($mainPictureWithPath)) {
             unlink($mainPictureWithPath);
             return 1;
@@ -83,7 +81,6 @@ class TrickController extends AbstractController
             return 0;
         }
     }
-
 
     /**
      * function and route for testing

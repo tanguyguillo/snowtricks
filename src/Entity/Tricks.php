@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Entity\User;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 use App\Repository\TricksRepository;
@@ -29,8 +31,6 @@ class Tricks
         maxMessage: 'Your trick title cannot be longer than {{ limit }} characters',
     )]
     private ?string $title = null;
-
-
 
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
@@ -61,13 +61,14 @@ class Tricks
     #[ORM\Column(length: 255)]
     #[Assert\File(
         maxSize: '3M',
-        // extensions: ['png', 'jpg'],
-        // extensionsMessage: 'Please upload a valid picture file',
     )]
     private ?string $picture = null;
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $modified_at = null;
+
+    #[ORM\OneToMany(mappedBy: 'tricks', targetEntity: Pictures::class, orphanRemoval: true)]
+    private Collection $additionnalTrick;
 
     public function __construct()
     {
@@ -77,12 +78,8 @@ class Tricks
 
         $this->setPicture("main-picture.jpg");
         $this->setDescription("O");
+        $this->additionnalTrick = new ArrayCollection();
     }
-
-    // public function __toString()
-    // {
-    //     return $this->name;
-    // }
 
     public function getId(): ?int
     {
@@ -201,6 +198,36 @@ class Tricks
     public function setModifiedAt(?\DateTimeImmutable $modified_at): self
     {
         $this->modified_at = $modified_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Pictures>
+     */
+    public function getAdditionnalTrick(): Collection
+    {
+        return $this->additionnalTrick;
+    }
+
+    public function addAdditionnalTrick(Pictures $additionnalTrick): self
+    {
+        if (!$this->additionnalTrick->contains($additionnalTrick)) {
+            $this->additionnalTrick->add($additionnalTrick);
+            $additionnalTrick->setTricks($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAdditionnalTrick(Pictures $additionnalTrick): self
+    {
+        if ($this->additionnalTrick->removeElement($additionnalTrick)) {
+            // set the owning side to null (unless already changed)
+            if ($additionnalTrick->getTricks() === $this) {
+                $additionnalTrick->setTricks(null);
+            }
+        }
 
         return $this;
     }
