@@ -7,6 +7,7 @@ use App\Entity\Pictures;
 
 use App\Repository\UserRepository;
 use App\Repository\TricksRepository;
+use App\Repository\PicturesRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
@@ -56,7 +57,7 @@ class TrickController extends AbstractController
             // delete trick from Bd
             $tricksRepository->remove($trick, true); // OK
             // delete on server
-            if ($this->deleteMainPicture($mainPictureWithPath)) {
+            if ($this->deletePicture($mainPictureWithPath)) {
                 return new JsonResponse("oui", 200);
             } else {
                 return new JsonResponse("non : delete picture ", 500);
@@ -73,15 +74,52 @@ class TrickController extends AbstractController
      * @param TricksRepository $tricksRepository
      * @return bool
      */
-    private function deleteMainPicture($mainPictureWithPath)
+    #[Route('/delete-additionalPicture/{id}', name: 'app_additionalPicture_delete', methods: ['DELETE'])]
+    private function deleteMainPicture(Request $request, Pictures $pictures, PicturesRepository $picturesRepository)
     {
-        if (file_exists($mainPictureWithPath)) {
-            unlink($mainPictureWithPath);
+        $submittedToken = $request->request->get('_token');
+
+        if ($this->isCsrfTokenValid('delete' . $pictures->getId(), $submittedToken)) {
+            // get the physical path
+            $additionalPictureWithPath = $this->getParameter('pictues_directory') . '/' . $pictures->getPicure();
+            // delete trick from Bd
+            $picturesRepository->remove($pictures, true); // OK
+            // delete on server
+            if ($this->deletePicture($additionalPictureWithPath)) {
+                return new JsonResponse("oui", 200);
+            } else {
+                return new JsonResponse("non : delete picture ", 500);
+            }
+        } else {
+            return new JsonResponse("non ", 500);
+        }
+    }
+
+    /**
+     *  function to delete the main picture in trick or additional pictures
+     *
+     * @param [type] $PictureWithPath string (path of picture to delete on server)
+     * @return bool
+     */
+    private function deletePicture($PictureWithPath)
+    {
+        if (file_exists($PictureWithPath)) {
+            unlink($PictureWithPath);
             return 1;
         } else {
             return 0;
         }
     }
+
+    // private function deleteAdditinalPicture($mainPictureWithPath)
+    // {
+    //     if (file_exists($mainPictureWithPath)) {
+    //         unlink($mainPictureWithPath);
+    //         return 1;
+    //     } else {
+    //         return 0;
+    //     }
+    // }
 
     /**
      * function edit
@@ -148,6 +186,8 @@ class TrickController extends AbstractController
             'formAddTrick' =>  $formAddTrick->createView(),
         ]);
     }
+
+
 
 
     /**
