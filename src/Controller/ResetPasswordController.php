@@ -139,7 +139,6 @@ class ResetPasswordController extends AbstractController
      */
     private function processSendingPasswordResetEmail(string $emailFormData, MailerInterface $mailer, TranslatorInterface $translator): RedirectResponse
     {
- 
         // in fact here it's from username
         $userNameFormData = $emailFormData;
 
@@ -147,7 +146,6 @@ class ResetPasswordController extends AbstractController
             'username' => $userNameFormData,
         ]);
 
-     
         // Do not reveal whether a user account was found or not.
         if (!$user) {
             return $this->redirectToRoute('app_check_email');
@@ -176,8 +174,7 @@ class ResetPasswordController extends AbstractController
             ->htmlTemplate('reset_password/email.html.twig')
             ->context([
                 'resetToken' => $resetToken,
-            ])
-        ;
+            ]);
 
         $mailer->send($email);
 

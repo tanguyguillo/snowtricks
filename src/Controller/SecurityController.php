@@ -7,12 +7,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Bundle\SecurityBundle\Security;
-
 use App\Controller\LoginLinkHandlerInterface;
 use App\Controller\UserRepository;
 use App\Controller\Request;
-
-
 
 /**
  * class SecurityController

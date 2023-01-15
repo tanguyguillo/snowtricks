@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Tricks;
+use App\Entity\Pictures;
+
 use App\Repository\UserRepository;
 use App\Repository\TricksRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,18 +13,18 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-
-use function PHPUnit\Framework\returnSelf;;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 /**
  * class TrickController
+ * the create method is in UseController : addTricks
  * 
  */
 #[Route('/tricks', name: 'tricks_')]
 class TrickController extends AbstractController
 {
     /**
-     * function details
+     * function details (read)
      */
     #[Route('/details/{slug}', name: 'details')]
     #[Route('/details/modifications/{slug}', name: 'modifications')]
@@ -82,6 +84,73 @@ class TrickController extends AbstractController
     }
 
     /**
+     * function edit
+     */
+    #[Route('/{id}/edit', name: 'app_tricks_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Tricks $tricks, TricksRepository $tricksRepository, SluggerInterface $slugger): Response
+    {
+        // $form = $this->createForm(TricksType::class, $trick);
+        // $form->handleRequest($request);
+
+        $formAddTrick = $this->createForm(TricksType::class, $tricks);
+        $formAddTrick->handleRequest($request);
+
+        if ($formAddTrick->isSubmitted() && $formAddTrick->isValid()) {
+
+            $pictureFile =  $formAddTrick->get('picture')->getData();
+
+            if ($pictureFile) {
+                $originalFilename = $pictureFile;
+
+                // may have multiple additionnals pictures
+                $additionnalPictures = $formAddTrick->get('pictures')->getData();
+                foreach ($additionnalPictures as $additionnalPicture) {
+                    $file  = md5(uniqid()) . '.' . $additionnalPicture->guessExtension();
+                    $additionnalPicture->move(
+                        $this->getParameter('pictues_directory'),
+                        $file
+                    );
+                    // in db 
+                    $img = new Pictures();
+                    $img->setPicure($file);
+                    $tricks->addAdditionnalTrick($img);
+                }
+
+                $safeFilename = $slugger->slug($originalFilename);  // not used
+                $newFilename = md5(uniqid()) . '.' . $originalFilename->guessExtension();
+                $tricks->setPicture($newFilename);
+                try {
+                    $pictureFile->move(
+                        $this->getParameter('pictues_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                    //soit redirigé sur la page du formulaire en cas d'erreur, en précisant le(s) type(s) d'erreurs ;
+
+                    $message = $this->addFlash('error', 'error type:' . $e); // or in twig
+
+                    return $this->render('tricks/add.html.twig', [
+                        'formAddTrick' =>  $formAddTrick->createView(),
+                        'message' => $message
+                    ]);
+                }
+                $tricks->setPicture($newFilename);
+            }
+
+            $tricksRepository->save($tricks, true);
+
+            // return $this->redirectToRoute('app_tricks_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        // this route is used for read update dans
+        return $this->render('tricks/add.html.twig', [
+            'formAddTrick' =>  $formAddTrick->createView(),
+        ]);
+    }
+
+
+    /**
      * function and route for testing
      * warning the route are "additionnal with the class"
      *
@@ -103,6 +172,6 @@ class TrickController extends AbstractController
             var_dump('pas ok');
         }
 
-        dd(ghghghgh);
+        dd('test');
     }
 }

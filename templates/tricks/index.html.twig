@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tricks index{% endblock %}
+
+{% block body %}
+    <h1>Tricks index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Slug</th>
+                <th>Content</th>
+                <th>Created_at</th>
+                <th>Active</th>
+                <th>Description</th>
+                <th>Picture</th>
+                <th>Modified_at</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for trick in tricks %}
+            <tr>
+                <td>{{ trick.id }}</td>
+                <td>{{ trick.title }}</td>
+                <td>{{ trick.slug }}</td>
+                <td>{{ trick.content }}</td>
+                <td>{{ trick.createdAt ? trick.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ trick.active ? 'Yes' : 'No' }}</td>
+                <td>{{ trick.description }}</td>
+                <td>{{ trick.picture }}</td>
+                <td>{{ trick.modifiedAt ? trick.modifiedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_tricks_show', {'id': trick.id}) }}">show</a>
+                    <a href="{{ path('app_tricks_edit', {'id': trick.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_tricks_new') }}">Create new</a>
+{% endblock %}
