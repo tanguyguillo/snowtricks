@@ -48,6 +48,18 @@ class TricksType extends AbstractType
                     'label' => false,
                     'data_class' => null,
                 ]
+            )
+            ->add(
+                'pictures',
+                FileType::class,
+                [
+                    'attr' => ['accept' => "image/*",],
+                    'label' => false,
+                    'multiple' => true,
+                    'mapped' => false,
+                    'required' => false
+                ]
+
             );
     }
 
