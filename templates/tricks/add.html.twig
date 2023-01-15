@@ -54,6 +54,11 @@
 
             <br>
 
+            {{ form_row(formAddTrick.pictures, {
+            label: 'Additional pictures',
+            attr : {'class': 'form-control'}
+            }) }}
+
             <br><br>
 
             <button class="w-50 btn btn-lg btn-info" type="submit">Add this trick</button>
@@ -64,6 +69,10 @@
             <br>
 
             <button type="button" class="bw-50 btn btn-lg btn-info">
+
+                {# test 1 <a href="{{ app.request.getSchemeAndHttpHost() }}/tricks/test/124">test
+                </a> #}
+
                 <a href="{{ app.request.getSchemeAndHttpHost() }}/tricks/test/124">test
                 </a>
             </button>
