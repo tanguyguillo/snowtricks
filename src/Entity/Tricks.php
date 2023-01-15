@@ -11,6 +11,7 @@ use App\Repository\TricksRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+
 use Symfony\Component\String\Slugger\AsciiSlugger;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -67,7 +68,7 @@ class Tricks
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $modified_at = null;
 
-    #[ORM\OneToMany(mappedBy: 'tricks', targetEntity: Pictures::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'tricks', targetEntity: Pictures::class, cascade: ["all"], orphanRemoval: true)]
     private Collection $additionnalTrick;
 
     public function __construct()

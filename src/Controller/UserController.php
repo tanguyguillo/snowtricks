@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Pictures;
 use App\Entity\Tricks;
 use App\Entity\User;
 
@@ -47,6 +48,21 @@ class UserController extends AbstractController
 
             if ($pictureFile) {
                 $originalFilename = $pictureFile;
+
+                // may have multiple additionnals pictures
+                $additionnalPictures = $formAddTrick->get('pictures')->getData();
+                foreach ($additionnalPictures as $additionnalPicture) {
+                    $file  = md5(uniqid()) . '.' . $additionnalPicture->guessExtension();
+                    $additionnalPicture->move(
+                        $this->getParameter('pictues_directory'),
+                        $file
+                    );
+                    // in db 
+                    $img = new Pictures();
+                    $img->setPicure($file);
+                    $tricks->addAdditionnalTrick($img);
+                }
+
                 $safeFilename = $slugger->slug($originalFilename);  // not used
                 $newFilename = md5(uniqid()) . '.' . $originalFilename->guessExtension();
                 $tricks->setPicture($newFilename);

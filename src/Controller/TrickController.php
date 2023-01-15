@@ -65,7 +65,6 @@ class TrickController extends AbstractController
     }
 
     /**
-
      *  function to delete the main picture in trick
      *
      * @param [type] $mainPictureWithPath string (path of picture to delete on server)
