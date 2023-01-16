@@ -47,34 +47,28 @@ class TrickController extends AbstractController
     }
 
     /**
-     * function delete trick for homePage in Ajax
+     * function delete trick for homePage with Ajax
      *
      */
     #[Route('/delete-tricks/{id}', name: 'app_tricks_delete', methods: ['DELETE'])]
-    public function delete(Request $request, Tricks $trick, TricksRepository $tricksRepository)
+    public function delete(Request $request, Tricks $trick, TricksRepository $tricksRepository, PicturesRepository $picturesRepository,)
     {
         $submittedToken = $request->request->get('_token');
 
         if ($this->isCsrfTokenValid('delete' . $trick->getId(), $submittedToken)) {
 
+            $trickId = $trick->getId();
+            // 1 delete additionnal picture from server
+            // $additionnalPictures = $picturesRepository->findBy(['tricks' => $trickId]);
 
-            // first delete additionnals pictures on the server
-            // get the list of additional pictures for a trick
-            // $additionnalPictures = $pictures->getPicure();
-            // foreach ($additionnalPictures as $additionnalPicture) {
+            //try to delete additionnal picture if exist
+            // $this->deleteAdditionnalPicture($trickId);  issue
 
-            //     // $file  = md5(uniqid()) . '.' . $additionnalPicture->guessExtension();
-            //     // $additionnalPicture->move(
-            //     //     $tricksRepository->remove($trick, true)
-            //     // );
-            // }
-
-
-            // get the physical path
+            // get the physical path of the main picture
             $mainPictureWithPath = $this->getParameter('pictues_directory') . '/' . $trick->getPicture();
-            // delete trick from Bd
+            // 2 - delete trick from Bd
             $tricksRepository->remove($trick, true); // OK
-            // delete on server
+            // 3 - delete Main picture on server
             if ($this->deleteMainPicture($mainPictureWithPath)) {
                 return new JsonResponse("oui", 200);
             } else {
@@ -118,9 +112,6 @@ class TrickController extends AbstractController
     #[Route('/{id}/edit', name: 'app_tricks_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Tricks $tricks, TricksRepository $tricksRepository, SluggerInterface $slugger): Response
     {
-        // $form = $this->createForm(TricksType::class, $trick);
-        // $form->handleRequest($request);
-
         $formAddTrick = $this->createForm(TricksType::class, $tricks);
         $formAddTrick->handleRequest($request);
 
@@ -131,19 +122,19 @@ class TrickController extends AbstractController
             if ($pictureFile) {
                 $originalFilename = $pictureFile;
 
-                // may have multiple additionnals pictures
-                $additionnalPictures = $formAddTrick->get('pictures')->getData();
-                foreach ($additionnalPictures as $additionnalPicture) {
-                    $file  = md5(uniqid()) . '.' . $additionnalPicture->guessExtension();
-                    $additionnalPicture->move(
-                        $this->getParameter('pictues_directory'),
-                        $file
-                    );
-                    // in db 
-                    $img = new Pictures();
-                    $img->setPicure($file);
-                    $tricks->addAdditionnalTrick($img);
-                }
+                // // may have multiple additionnals pictures
+                // $additionnalPictures = $formAddTrick->get('pictures')->getData();
+                // foreach ($additionnalPictures as $additionnalPicture) {
+                //     $file  = md5(uniqid()) . '.' . $additionnalPicture->guessExtension();
+                //     $additionnalPicture->move(
+                //         $this->getParameter('pictues_directory'),
+                //         $file
+                //     );
+                //     // in db 
+                //     $img = new Pictures();
+                //     $img->setPicure($file);
+                //     $tricks->addAdditionnalTrick($img);
+                // }
 
                 $safeFilename = $slugger->slug($originalFilename);  // not used
                 $newFilename = md5(uniqid()) . '.' . $originalFilename->guessExtension();
@@ -178,16 +169,13 @@ class TrickController extends AbstractController
         ]);
     }
 
-
-
-
     /**
      * function and route for testing
      * warning the route are "additionnal with the class"
-     *
+     * #[Route('/test/{argument}', name: 'app_tricks_test',)]
      */
-    #[Route('/test/{argument}', name: 'app_tricks_test',)]
-    public function test($argument, TricksRepository $tricksRepository): Response
+
+    public function test1($argument, TricksRepository $tricksRepository): Response
     {
         //and  delete Mainpicture // 125 : e14c2c5acb6440d8a2aa89fdd187893d.png"  and after todo else pictures
         $id = $argument;
@@ -204,5 +192,44 @@ class TrickController extends AbstractController
         }
 
         dd('test');
+    }
+
+    /**
+     * deleteAdditionnalPicture : Delete additional picture from the server
+     * 
+     *  #[Route('/test/{argument}', name: 'app_tricks_test',)]
+     */
+    #[Route('/test/{argument}', name: 'app_tricks_test',)]
+    public function test()
+    {
+        $this->deleteAdditionnalPicture(152);
+    }
+
+    public function deleteAdditionnalPicture($argument, TricksRepository $tricksRepository, PicturesRepository $picturesRepository)
+    {
+        // get the id of the trick
+        $trickId = $argument; // $trickId = $trick->getId();
+        // $trickId = 151;
+        // if this trick exist
+        if ($tricksRepository->find($trickId) != null) {
+            // get additional pictures list
+            $additionnalPictures = [];
+            $additionnalPictures = $picturesRepository->findBy(['tricks' => $trickId]);
+            // if there is additionnal picture
+            if ($additionnalPictures != []) {
+                // may have multiple additionnals pictures
+                foreach ($additionnalPictures as $additionnalPicture) {
+                    $file = $additionnalPicture->getPicure();
+                    // get the physical path
+                    $additionalPictureWithPath = $this->getParameter('pictues_directory') . '/' .  $file;
+                    // delete trick from server
+                    if (file_exists($additionalPictureWithPath = $this->getParameter('pictues_directory') . '/' .  $file)) {
+                        unlink($additionalPictureWithPath = $this->getParameter('pictues_directory') . '/' .  $file);
+                    }
+                } // end for each
+            } else {
+                // not additionnelpicture to drop
+            }
+        }
     }
 }
