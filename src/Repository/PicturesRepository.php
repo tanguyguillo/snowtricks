@@ -39,6 +39,23 @@ class PicturesRepository extends ServiceEntityRepository
         }
     }
 
+
+    // /**
+    //  * @return Pictures[] Returns an array of Pictures objects
+    //  */
+    // public function findById($value): array
+    // {
+    //     return $this->createQueryBuilder('p')
+    //         ->andWhere('p.exampleField = :val')
+    //         ->setParameter('val', $value)
+    //         ->orderBy('p.id', 'ASC')
+    //         ->setMaxResults(10)
+    //         ->getQuery()
+    //         ->getResult();
+    // }
+
+
+
     /**
      * @return Pictures[] Returns an array of Pictures objects
      */

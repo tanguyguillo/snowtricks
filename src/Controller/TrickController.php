@@ -24,6 +24,21 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 #[Route('/tricks', name: 'tricks_')]
 class TrickController extends AbstractController
 {
+    public $picturesRepository;
+    public $tricksRepository;
+
+    /**
+     *  function __construct / injection 
+     *
+     * @param PicturesRepository $picturesRepository, TricksRepository $tricksRepository
+     */
+    public function __construct(PicturesRepository $picturesRepository, TricksRepository $tricksRepository)
+    {
+        // $this->mediaRepository = $mediaRepository;
+        $this->picturesRepository = $picturesRepository;
+        $this->tricksRepository = $tricksRepository;
+    }
+
     /**
      * function details (read) 
      */
@@ -59,10 +74,7 @@ class TrickController extends AbstractController
 
             $trickId = $trick->getId();
             // 1 delete additionnal picture from server
-            // $additionnalPictures = $picturesRepository->findBy(['tricks' => $trickId]);
-
-            //try to delete additionnal picture if exist
-            // $this->deleteAdditionnalPicture($trickId);  issue
+            $this->deleteAdditionnalPicture($trickId);
 
             // get the physical path of the main picture
             $mainPictureWithPath = $this->getParameter('pictues_directory') . '/' . $trick->getPicture();
@@ -177,21 +189,21 @@ class TrickController extends AbstractController
 
     public function test1($argument, TricksRepository $tricksRepository): Response
     {
-        //and  delete Mainpicture // 125 : e14c2c5acb6440d8a2aa89fdd187893d.png"  and after todo else pictures
-        $id = $argument;
-        $trick = $tricksRepository->findOneBy(['id' => $id]);
-        // $mainPicture = $trick->getPicture();
+        // //and  delete Mainpicture // 125 : e14c2c5acb6440d8a2aa89fdd187893d.png"  and after todo else pictures
+        // $id = $argument;
+        // $trick = $tricksRepository->findOneBy(['id' => $id]);
+        // // $mainPicture = $trick->getPicture();
 
-        $mainPictureWithPath = $this->getParameter('pictues_directory') . '/' . $trick->getPicture();
-        //check if ok
-        if (file_exists($mainPictureWithPath)) {
-            unlink($mainPictureWithPath);
-            var_dump('ok');
-        } else {
-            var_dump('pas ok');
-        }
+        // $mainPictureWithPath = $this->getParameter('pictues_directory') . '/' . $trick->getPicture();
+        // //check if ok
+        // if (file_exists($mainPictureWithPath)) {
+        //     unlink($mainPictureWithPath);
+        //     var_dump('ok');
+        // } else {
+        //     var_dump('pas ok');
+        // }
 
-        dd('test');
+        // dd('test');
     }
 
     /**
@@ -202,19 +214,25 @@ class TrickController extends AbstractController
     #[Route('/test/{argument}', name: 'app_tricks_test',)]
     public function test()
     {
-        $this->deleteAdditionnalPicture(152);
+        //$this->deleteAdditionnalPicture(153);
     }
 
-    public function deleteAdditionnalPicture($argument, TricksRepository $tricksRepository, PicturesRepository $picturesRepository)
+
+    /**
+     * function deleteAdditionnalPicture
+     *
+     * @param [type] $argument (trick id)
+     * @return void
+     */
+    public function deleteAdditionnalPicture($argument)
     {
         // get the id of the trick
         $trickId = $argument; // $trickId = $trick->getId();
-        // $trickId = 151;
         // if this trick exist
-        if ($tricksRepository->find($trickId) != null) {
+        if ($this->tricksRepository->find($trickId) != null) {
             // get additional pictures list
             $additionnalPictures = [];
-            $additionnalPictures = $picturesRepository->findBy(['tricks' => $trickId]);
+            $additionnalPictures = $this->picturesRepository->findBy(['tricks' => $trickId]);
             // if there is additionnal picture
             if ($additionnalPictures != []) {
                 // may have multiple additionnals pictures
