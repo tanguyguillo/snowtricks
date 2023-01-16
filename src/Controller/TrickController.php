@@ -7,6 +7,7 @@ use App\Entity\Pictures;
 
 use App\Repository\UserRepository;
 use App\Repository\TricksRepository;
+use App\Repository\PicturesRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,21 +25,25 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class TrickController extends AbstractController
 {
     /**
-     * function details (read)
+     * function details (read) 
      */
     #[Route('/details/{slug}', name: 'details')]
     #[Route('/details/modifications/{slug}', name: 'modifications')]
-    public function details($slug, TricksRepository $tricksRepository, UserRepository $userRepository): Response
+    public function details($slug, TricksRepository $tricksRepository, UserRepository $userRepository, Tricks $tricks, PicturesRepository $picturesRepository): Response
     {
         $trick = $tricksRepository->findOneBy(['slug' => $slug]);
-
-        $AuthorId = $trick->getUser();
-        $Author = $userRepository->findOneBy(['id' => $AuthorId]);
 
         if (!$trick) {
             throw new NotFoundHttpException("No trick found");
         }
-        return $this->render('tricks/details.html.twig', compact('trick', 'Author'));
+
+        $AuthorId = $trick->getUser();
+        $Author = $userRepository->findOneBy(['id' => $AuthorId]);
+
+        $trickId = $trick->getId();
+        $additionnalPictures = $picturesRepository->findBy(['tricks' => $trickId]);
+
+        return $this->render('tricks/details.html.twig', compact('trick', 'Author', 'additionnalPictures'));
     }
 
     /**

@@ -37,12 +37,6 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
 
     <span class="badge bg-primary">Snowtricks - {{ routeTitre }} </span>
 
-    {# <button type="button" class="btn btn-lg btn-danger" data-bs-toggle="popover" data-bs-title="Popover title"
-        data-bs-content="And here's some amazing content. It's very engaging. Right?">
-
-        Click to toggle popover</button> #}
-
-
     <div class="row justify-content-center" id="#tricks">
         <div class="col-lg-12">
             <div class="modifications">
@@ -90,26 +84,39 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                 {####### additionnals pictures #########}
                 <div class="row justify-content-center">
 
-                    <!-- tricks Items-->
-                    <div class="col-sm-2">
+                    {% for additionnalPicture in additionnalPictures %}
+
+                    {#
+                    <pre>
+                    {{ additionnalPicture.picure }}
+                    </pre> #}
+
+                    <!-- additionnalPictures Items-->
+                    <div class="col-md-2 col-lg-2 mb-5 item">
                         <div class="mx-auto">
                             <div class="d-flex align-items-center justify-content-center h-100 w-100">
-                                <div class="card image-popup-vertical-fit">
-                                    <img class="img-fluid zoom"
-                                        src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/main-picture.jpg"
-                                        alt="Additionnal picture {{ trick.title|striptags}} 1" />
-
+                                <div class="card {{additionnalPicture.id}}">
+                                    <img class="img-fluid"
+                                        src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/{{ additionnalPicture.picure }}"
+                                        alt="additional picture of {{ trick.title|striptags}}" />
+                                    {######### Only if connected : delete and update... and route=
+                                    tricks_modifications"###########}
                                     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and
                                     app.request.attributes.get('_route') == "tricks_modifications" %}
                                     <div class="card-body">
-                                        {# Only if connected #}
                                         <span>
-                                            <a href="#tricksDelete" class="float-center ml-1">
+                                            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;</span>
+                                            <a href="{{ app.request.getSchemeAndHttpHost() }}/tricks/details/modifications/{{additionnalPicture.id }}"
+                                                } class="float-center ml-1">
+                                                <i class="bi bi-pencil-fill iconTricks">
+                                                </i>
+                                            </a>
+                                            <a href="#tricksDelete" class="float-right ml-1">
                                                 <i class="bi bi-trash-fill iconTricks"></i>
                                             </a>
-                                            <a href="/tricks/modification/{{ trick.slug }}" class="float-center ml-1">
-                                                <i class="bi bi-pencil-fill iconTricks"></i>
-                                            </a>
+
+
+
                                         </span>
                                     </div>
                                     {% endif %}
@@ -118,10 +125,9 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                             </div>
                         </div>
                     </div>
-
+                    {% endfor %}
                     <br>
-
-                    {####### additionnal video #########}
+                    {####### additionnal video exemple #########}
                     <div class="col-sm-2">
                         <div class="mx-auto">
                             <div class="d-flex align-items-center justify-content-center h-100 w-100">
@@ -156,11 +162,16 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                 <div class="card-body">
                     <ul class="list-inline">
                         <li class="list-inline-item">
-                            created by : {{ Author.username }}
+                            Created by : {{ Author.username }}
                         </li class="list-inline-item"> |
                         <li class="list-inline-item">
-                            created at : {{ trick.createdAt|date('d-m-Y') }} {#(<small>updated : </small>) #}
+                            Created at : {{ trick.createdAt|date('d-m-Y') }}
                         </li> |
+
+                        <li class="list-inline-item">
+                            Updated at : {{ trick.createdAt|date('d-m-Y') }}
+                        </li> |
+
                         <li class="list-inline-item">
                             Groupe : {{ trick.category }}
 
