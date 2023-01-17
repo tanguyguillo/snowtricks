@@ -48,7 +48,7 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
 
                         <div class="form-group pencilMainPictureAction displayNone">
                             {{ form_row(formUpdateTrick.picture, {
-                            label: 'Change a main picture',
+                            label: 'Change the main picture',
                             type : "file",
                             attr : {'class': 'form-control'},
                             }) }}
@@ -119,7 +119,9 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                                     app.request.attributes.get('_route') == "tricks_modifications" %}
                                     <div class="card-body">
                                         <span>
+                                            {#
                                             <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;</span>
+                                            #}
                                             <a href="{{ app.request.getSchemeAndHttpHost() }}/tricks/details/modifications/{{additionnalPicture.id }}"
                                                 } class="float-center ml-1">
                                                 <i class="bi bi-pencil-fill iconTricks">
@@ -129,15 +131,6 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                                                 <i class="bi bi-trash-fill iconTricks"></i>
                                             </a>
                                         </span>
-                                    </div>
-
-                                    <br>
-                                    {# additionnal picture here #}
-                                    <div class="form-group">
-                                        {{ form_row(formUpdateTrick.picture, {
-                                        label: 'Additional pictures',
-                                        attr : {'class': 'form-control'}
-                                        }) }}
                                     </div>
                                     {% endif %}
 
@@ -177,6 +170,19 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                     </div>
 
                 </div>
+
+                {# additionnal picture here #}
+                <div class="container text-center">
+                    <div class="row">
+                        <div class="form-group">
+                            {{ form_row(formUpdateTrick.pictures, {
+                            label: 'Add more additionnal pictues',
+                            attr : {'class': 'form-control'}
+                            }) }}
+                        </div>
+                    </div>
+                </div>
+
 
                 {####### information #########}
                 <div class="card-body">
@@ -236,18 +242,22 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                         {% endif %}
                     </div>
 
-
-                    <div class="col-4">
+                    <div class="col-2 justify-content-end">
                         {##### Button delete #######}
-                        <br>
                         {{ include('tricks/tricks_delete_form.html.twig') }}
                     </div>
-                    <div class="col-4">
-                        <br>
+                    <div class="col-2 justify-content-end">
                         <button class=" btn btn-info" type="submit">save</button>
                     </div>
                 </div>
             </div>
+
+
+            <br>
+            <br>
+            <br>
+            <br>
+
 
             {{ form_end(formUpdateTrick) }}
 
