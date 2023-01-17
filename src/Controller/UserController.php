@@ -4,9 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Pictures;
 use App\Entity\Tricks;
-use App\Entity\User;
-
-use  App\Repository\TricksRepository;
 
 use App\Form\TricksType;
 

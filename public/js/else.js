@@ -45,5 +45,21 @@ $(document).ready(function () {
         // $('.' + id).removeClass('displayNone').addClass('displayContents');
     });
 
+    /// alerte... to see... don't work
+    $('.alert').click(function () {
+        $('.alert-dismissible' + id).addClass('displayNone');
+    });
+
+    // form main picture
+    $('.pencilMainPicture').click(function () {
+        //console.log("pencilMainPicture");
+        $('.pencilMainPictureAction').removeClass('displayNone')
+    });
+
+    //pencilTitleAction
+    $('.pencilTitleAction').click(function () {
+        console.log("pencilTitleAction");
+        $('.titleAction').removeClass('displayNone')
+    });
 
 });

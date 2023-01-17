@@ -15,7 +15,7 @@ use Doctrine\DBAL\Types\Types;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
-#[UniqueEntity(fields: ['username'], message: 'There is already an account with this username')] 
+#[UniqueEntity(fields: ['username'], message: 'There is already an account with this username')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -29,7 +29,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         minMessage: 'Your first name must be at least {{ limit }} characters long',
         maxMessage: 'Your first name cannot be longer than {{ limit }} characters',
     )]
-    #[ORM\Column(length: 180, unique: true)] 
+    #[ORM\Column(length: 180, unique: true)]
     private ?string $username = null;
 
     #[ORM\Column(length: 180, unique: true)]
@@ -61,7 +61,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->addRole('ROLE_USER');
         $this->setAvatar("avatar-252×230.png");
         $this->tricks = new ArrayCollection();
-        $this->comments = new ArrayCollection();
+        // $this->comments = new ArrayCollection();
     }
 
     public function __toString()
@@ -216,7 +216,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $trick->setUser(null);
             }
         }
-
         return $this;
     }
 }

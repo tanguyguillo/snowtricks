@@ -12,11 +12,6 @@
 {% set routeTitre = 'modifications' %}
 {% endif %}
 
-{# {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.request.attributes.get('_route') == "tricks_modifications" %}
-{% set routeTitre = 'modifications' %}
-{% endif %} #}
-
-
 {# titre #}
 {% block title %}
 Snowtricks - {{ routeTitre }} - {{ trick.title }}
@@ -45,34 +40,56 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                     {# main picture icone modification#}
                     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.request.attributes.get('_route') ==
                     "tricks_modifications" %}
+
+                    {{ form_start(formUpdateTrick) }}
+
+                    {# main picture tools#}
                     <span>
+
+                        <div class="form-group pencilMainPictureAction displayNone">
+                            {{ form_row(formUpdateTrick.picture, {
+                            label: 'Change a main picture',
+                            type : "file",
+                            attr : {'class': 'form-control'},
+                            }) }}
+                        </div>
+
                         <a href="#tricksDelete" class="float-right ml-1">
                             <i class="bi bi-trash-fill iconTricks"></i>
                         </a>
-                        {# <a href="/tricks/modifications/{{ trick.slug }}" class="float-right ml-1" alt="update trick">
-                            #}
-                            <a href="#" class="float-right ml-1" alt="update trick">
-                                <i class="bi bi-pencil-fill iconTricks"></i>
-                            </a>
+
+                        <a href="#" class="float-right ml-1" alt="update trick">
+                            <i class="bi bi-pencil-fill iconTricks pencilMainPicture"></i>
+                        </a>
                     </span>
                     {% endif %}
+
                     {# main picture #}
                     <img class="bd-placeholder-img bd-placeholder-img-lg img-fluid " width="100%" height="150"
                         src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/{{ trick.picture }}"
                         alt="{{ trick.title }}">
 
                     <div class="caption post-content">
+
                         <h1>{{ trick.title }}
-                            {# for instance.... #}
-                            {# <a href="#tricksDelete" class="float-right ml-1">
-                                <i class="bi bi-trash-fill iconTricks"></i>
-                            </a> #}
                             {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.request.attributes.get('_route') ==
                             "tricks_modifications" %}
-                            <a href="/tricks/modification/{{ trick.slug }}" class="float-right ml-1">
-                                <i class="bi bi-pencil-fill iconTricks"></i>
+
+                            <a href="#" class="float-right ml-1">
+                                <i class="bi bi-pencil-fill pencilTitleAction iconTricks"></i>
                             </a>
-                            {% endif %}
+
+                            <div class="form-group titleAction displayNone">
+                                <br>
+                                {{ form_row(formUpdateTrick.title, {
+                                label: 'Update the trick title',
+                                attr : {'class': 'form-control smallForForm'}
+                                }) }}
+                            </div>
+
+                            {# <a href="/tricks/modification/{{ trick.slug }}" class="float-right ml-1"> #}
+
+                                {% endif %}
                         </h1>
                     </div>
                 </div>
@@ -111,10 +128,16 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                                             <a href="#tricksDelete" class="float-right ml-1">
                                                 <i class="bi bi-trash-fill iconTricks"></i>
                                             </a>
-
-
-
                                         </span>
+                                    </div>
+
+                                    <br>
+                                    {# additionnal picture here #}
+                                    <div class="form-group">
+                                        {{ form_row(formUpdateTrick.picture, {
+                                        label: 'Additional pictures',
+                                        attr : {'class': 'form-control'}
+                                        }) }}
                                     </div>
                                     {% endif %}
 
@@ -179,34 +202,55 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                     </ul>
                 </div>
 
-                {######### description ##########}
+                {######### description content ##########}
                 <div class="text-left content text-white">
+                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and
+                    app.request.attributes.get('_route') == "tricks_modifications" %}
+                    <div class="form-group">
+                        {# in fact field content #}
+                        {{ form_row(formUpdateTrick.content, {
+                        label: 'Modify the description of this trick',
+                        attr : {'class': 'form-control'}
+                        }) }}
+                    </div>
+                    {% else %}
                     {{ trick.content }}
+                    {% endif %}
                 </div>
-
             </div>
 
             {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.request.attributes.get('_route') ==
             "tricks_modifications" %}
             {######### buttons and groupe ##########}
-            <br>
             <div class="container text-center">
                 <div class="row">
-                    <div class="col">
-                        Groupe
+                    <div class="col-4">
+                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and
+                        app.request.attributes.get('_route') == "tricks_modifications" %}
+                        {{ form_row(formUpdateTrick.category, {
+                        label: 'Groups',
+                        attr : {'class': 'form-control'}
+                        }) }}
+                        {% else %}
+                        {# {{ trick.category }} #}
+                        {% endif %}
                     </div>
-                    <div class="col">
-                        &nbsp;
-                    </div>
-                    <div class="col">
+
+
+                    <div class="col-4">
                         {##### Button delete #######}
+                        <br>
                         {{ include('tricks/tricks_delete_form.html.twig') }}
                     </div>
-                    <div class="col">
+                    <div class="col-4">
+                        <br>
                         <button class=" btn btn-info" type="submit">save</button>
                     </div>
                 </div>
             </div>
+
+            {{ form_end(formUpdateTrick) }}
+
             {% endif %}
 
         </div>

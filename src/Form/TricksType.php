@@ -59,7 +59,6 @@ class TricksType extends AbstractType
                     'mapped' => false,
                     'required' => false
                 ]
-
             );
     }
 
