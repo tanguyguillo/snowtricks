@@ -54,7 +54,6 @@
                                     <a href="{{ app.request.getSchemeAndHttpHost() }}/tricks/details/modifications/{{ trick.slug }}"
                                         } class="float-right ml-1">
                                         <i class="bi bi-pencil-fill iconTricks">
-                                            {# small arrow #}
                                             <small><i class="bi bi-arrow-right-short"></i></small>
                                         </i>
                                     </a>
@@ -86,7 +85,7 @@
                             <button type="button" class="btn-validate btn btn-primary displayNone {{trick.id}} ">
                                 <a data-delete
                                     href="{{ app.request.getSchemeAndHttpHost() }}/tricks/delete-tricks/{{ trick.id }}"
-                                    data-token="{{ csrf_token('delete'~trick.id)}}">Yes {{trick.id}}
+                                    data-token="{{ csrf_token('delete'~trick.id)}}">Yes {#{{trick.id}} #}
                                 </a>
                             </button>
                             {% endfor %}

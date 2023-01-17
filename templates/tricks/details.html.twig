@@ -199,7 +199,8 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                         &nbsp;
                     </div>
                     <div class="col">
-                        <button class=" btn btn-danger" id="delete" type="submit">delete</button>
+                        {##### Button delete #######}
+                        {{ include('tricks/tricks_delete_form.html.twig') }}
                     </div>
                     <div class="col">
                         <button class=" btn btn-info" type="submit">save</button>

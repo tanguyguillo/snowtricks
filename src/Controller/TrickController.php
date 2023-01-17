@@ -92,6 +92,32 @@ class TrickController extends AbstractController
     }
 
     /**
+     * function deleteFromDetail
+     */
+    #[Route('/delete-tricks_from_detail/{id}', name: 'app_tricks_delete_from_detail', methods: ['Post'])]
+    public function deleteFromDetail(Request $request, Tricks $trick, TricksRepository $tricksRepository, PicturesRepository $picturesRepository,)
+    {
+        $submittedToken = $request->request->get('_token');
+        if ($this->isCsrfTokenValid('delete' . $trick->getId(), $submittedToken)) {
+            $trickId = $trick->getId();
+            // 1 delete additionnal picture from server
+            $this->deleteAdditionnalPicture($trickId);
+            // get the physical path of the main picture
+            $mainPictureWithPath = $this->getParameter('pictues_directory') . '/' . $trick->getPicture();
+            // 2 - delete trick from Bd
+            $tricksRepository->remove($trick, true); // OK
+            // 3 - delete Main picture on server
+            if ($this->deleteMainPicture($mainPictureWithPath)) {
+                $this->addFlash('success', 'Your trick have been deleted.');
+            } else {
+                $this->addFlash('error', 'Something goes wrong.');
+            }
+            // go back home
+            return $this->redirectToRoute('app_home');
+        }
+    }
+
+    /**
      *  function to delete the main picture in trick
      *
      * @param [type] $mainPictureWithPath string (path of picture to delete on server)
@@ -107,16 +133,6 @@ class TrickController extends AbstractController
             return 0;
         }
     }
-
-    // private function deleteMainPicture($mainPictureWithPath)
-    // {
-    //     if (file_exists($mainPictureWithPath)) {
-    //         unlink($mainPictureWithPath);
-    //         return 1;
-    //     } else {
-    //         return 0;
-    //     }
-    // }
 
     /**
      * function edit
@@ -216,7 +232,6 @@ class TrickController extends AbstractController
     {
         //$this->deleteAdditionnalPicture(153);
     }
-
 
     /**
      * function deleteAdditionnalPicture

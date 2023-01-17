@@ -144,7 +144,6 @@
     {% else %}
     {% set ifOfOrNot = 'position-fixed' %}
     {% endif %}
-
     {############## footer ##############}
     {% block footer %}
     <footer class="copyright py-4 text-white {{ ifOfOrNot }}">
@@ -155,6 +154,7 @@
                 {############## Copyright or home ##############}
                 <div class="col align-self-start">
                     <ul class="list-inline-item">
+
                         <li class="list-inline-item menuBottom  bottom-0">
                             <a href="{{ app.request.getSchemeAndHttpHost() }}/">
                                 <button class="btn btn-menu-down"><i class="fa fa-home">
@@ -166,10 +166,11 @@
                                 Copyright&copy; {{ "now"|date("Y") }}
                             </span>
                         </li>
+
                         <div class="col">
                         </div>
-                    </ul>
 
+                    </ul>
                 </div>
 
                 <div class="col">
