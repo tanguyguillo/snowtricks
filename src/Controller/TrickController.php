@@ -17,6 +17,11 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 use App\Form\TricksType;
 
+use App\Entity\Pictures;
+
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+
 /**
  * class TrickController
  * the create method is in UseController : addTricks
@@ -227,8 +232,77 @@ class TrickController extends AbstractController
         }
     }
 
+    /**
+     * function addTricks
+     * 
+     * @return void
+     */
+    #[Route('/add', name: 'app_user_tricks_add')]
+    public function addTricks(Request $request, ManagerRegistry $doctrine, SluggerInterface $slugger): Response
+    {
+        $tricks =  new Tricks();
+        $formAddTrick = $this->createForm(TricksType::class, $tricks);
+        $formAddTrick->handleRequest($request);
 
+        if ($formAddTrick->isSubmitted() && $formAddTrick->isValid()) {
+            $pictureFile =  $formAddTrick->get('picture')->getData();
 
+            if ($pictureFile) {
+                $originalFilename = $pictureFile;
+
+                // may have multiple additionnals pictures
+                $additionnalPictures = $formAddTrick->get('pictures')->getData();
+                foreach ($additionnalPictures as $additionnalPicture) {
+                    $file  = md5(uniqid()) . '.' . $additionnalPicture->guessExtension();
+                    $additionnalPicture->move(
+                        $this->getParameter('pictues_directory'),
+                        $file
+                    );
+                    // in db 
+                    $img = new Pictures();
+                    $img->setPicure($file);
+                    $tricks->addAdditionnalTrick($img);
+                }
+
+                $safeFilename = $slugger->slug($originalFilename);  // not used
+                $newFilename = md5(uniqid()) . '.' . $originalFilename->guessExtension();
+                $tricks->setPicture($newFilename);
+                try {
+                    $pictureFile->move(
+                        $this->getParameter('pictues_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                    //soit redirigé sur la page du formulaire en cas d'erreur, en précisant le(s) type(s) d'erreurs ;
+
+                    $message = $this->addFlash('error', 'error type:' . $e); // or in twig
+
+                    return $this->render('tricks/add.html.twig', [
+                        'formAddTrick' =>  $formAddTrick->createView(),
+                        'message' => $message
+                    ]);
+                }
+                $tricks->setPicture($newFilename);
+            }
+
+            //    $txt = $formAddTrick->get('content')->getData();  to see later     
+
+            $tricks->setUser($this->getUser());
+
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($tricks);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Your trick have been added.');
+
+            return $this->redirectToRoute('app_home');
+        } //end form
+
+        return $this->render('tricks/add.html.twig', [
+            'formAddTrick' =>  $formAddTrick->createView(),
+        ]);
+    }
 
 
     /**   *********************************************************************************

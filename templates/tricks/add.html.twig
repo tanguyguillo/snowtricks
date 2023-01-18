@@ -14,17 +14,11 @@
             <h2 class="tricks-modal-title text-secondary mb-0 text-center">Add a trick</h2>
             <br><br>
 
-            {# <div class="form-group">
-                <label for="exampleInputFile">File input</label>
-                <input type="file" id="exampleInputFile">
-                <p class="help-block">Example block-level help text here.</p>
-            </div> #}
-
             {{ form_start(formAddTrick) }}
 
             <div class="form-group">
                 {{ form_row(formAddTrick.picture, {
-                label: 'Add a main picture',
+                label: 'Add the main picture',
                 type : "file",
                 attr : {'class': 'form-control'},
                 }) }}
@@ -39,7 +33,7 @@
 
             <br>
 
-            {# in fact field content #}
+            {# in fact field dscription/content #}
             {{ form_row(formAddTrick.content, {
             label: 'Description',
             attr : {'class': 'form-control'}
@@ -53,7 +47,7 @@
             }) }}
 
             <br>
-            {# additionnal picture here #}
+            {# additionnal picture #}
             {{ form_row(formAddTrick.pictures, {
             label: 'Additional pictures',
             attr : {'class': 'form-control'}
@@ -68,14 +62,14 @@
             <br>
             <br>
 
-            <button type="button" class="bw-50 btn btn-lg btn-info">
+            {# <button type="button" class="bw-50 btn btn-lg btn-info">
 
                 {# test 1 <a href="{{ app.request.getSchemeAndHttpHost() }}/tricks/test/124">test
                 </a> #}
 
-                <a href="{{ app.request.getSchemeAndHttpHost() }}/tricks/test/124">test
+                {# <a href="{{ app.request.getSchemeAndHttpHost() }}/tricks/test/124">test
                 </a>
-            </button>
+            </button> #}
 
             <br>
             <br><br>
