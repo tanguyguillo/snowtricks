@@ -1,14 +1,18 @@
-# Projet P6 of openclassrooms.com : 
+# Snowtricks
+
+
+
+# Projet P6 of openclassrooms.com : create web site with symfony
 
 OPENCLASSROOMS project P6 for DEV PHP/SYMFONY certificate
 
 ## Context
 
-Create a community website With Symfony (snowtricks)
+Create a website with symfony for Jimmy Sweat :  Snowtricks
 
 ## Stack
 
- Symfony 5.4.12
+ Symfony 6.2
  PHP 8.08
  Maria DB
  Composer
@@ -24,14 +28,26 @@ Create a community website With Symfony (snowtricks)
 
 How to use it ?
 
-not yet
+1) 
+2) 
+3) 
+4) 
+5) 
+6) that's it
 
 ## how to test
 
-You can see an onLine version to this URL:
+You can see an onLine version to this URL (web site in english):
 
-not yet
+<https://snowtricks.omegawebprod.com//>
 
+admin's role:
+
+Every registred user is his own admin
+
+user's role:
+
+Make your own (email validation)
 
 ## IDE
 
@@ -40,3 +56,4 @@ Visual Studio Code
 ## Creator
 
 François marie Tanguy Guillo
+

@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Snowtricks - error 404{% endblock %}
+
+{% block main %}
+<br><br><br>
+<div class="container text-center">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <h2 class="tricks-modal-title text-secondary mb-0 text-center">Oooops, page not found</h2>
+            <br><br>
+                {# https://symfony.com/doc/current/controller/error_pages.html #}
+            {# in dev : http://127.0.0.1:8000/_error/404 #}
+            {# In case you need them, the TwigErrorRenderer passes some information to the error template via the
+            status_code and status_text variables that store the HTTP status code and message respectively. #}
+
+            The requested page couldn't be located (error 404). <br>
+            Checkout for any URL misspelling or <a href="{{ path('app_home') }}">return to the homepage</a>.
+        </div>
+    </div>
+</div>
+
+{% endblock %}

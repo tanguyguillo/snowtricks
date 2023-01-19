@@ -1,0 +1,270 @@
+{% extends 'base.html.twig' %}
+
+{% set route = '' %}
+{% set routeTitre = '' %}
+{% set route = app.request.attributes.get('_route') %}
+
+{% if route == 'tricks_details' %}
+{% set routeTitre = 'Trick details' %}
+{% endif %}
+
+{% if route == 'tricks_modifications' %}
+{% set routeTitre = 'modifications' %}
+{% endif %}
+
+{# titre #}
+{% block title %}
+Snowtricks - {{ routeTitre }} - {{ trick.title }}
+{% endblock %}
+
+{% block main %}
+<br><br><br>
+<div class="container text-center">
+    <br>
+    <br>
+    <br>
+
+    {#
+    <pre>
+        {{ app.request.attributes.get('_route') }}
+        {{ route }}
+    </pre> #}
+
+    <span class="badge bg-primary">Snowtricks - {{ routeTitre }} </span>
+
+    <div class="row justify-content-center" id="#tricks">
+        <div class="col-lg-12">
+            <div class="modifications">
+                <div class="rounded shadow p-3 mb-5 bg-white">
+
+                    {# main picture icone modification#}
+                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.request.attributes.get('_route') ==
+                    "tricks_modifications" %}
+
+                    {{ form_start(formUpdateTrick) }}
+
+                    {# main picture tools#}
+                    <span>
+                        {# {{ trick.picture }} #}
+                        <div class="form-group pencilMainPictureAction displayNone">
+                            {{ form_row(formUpdateTrick.picture, {
+                            label: 'Change the main picture',
+                            type : "file",
+                            attr : {'class': 'form-control'},
+                            }) }}
+                        </div>
+
+                        <a href="#tricksDelete" class="float-right ml-1">
+                            <i class="bi bi-trash-fill iconTricks"></i>
+                        </a>
+
+                        <a href="#" class="float-right ml-1" alt="update trick">
+                            <i class="bi bi-pencil-fill iconTricks pencilMainPicture"></i>
+                        </a>
+                    </span>
+                    {% endif %}
+
+                    {# main picture #}
+                    <img class="bd-placeholder-img bd-placeholder-img-lg img-fluid " width="100%" height="150"
+                        src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/{{ trick.picture }}"
+                        alt="{{ trick.title }}">
+
+                    <div class="caption post-content">
+
+                        <h1>{{ trick.title }}
+                            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.request.attributes.get('_route') ==
+                            "tricks_modifications" %}
+
+                            <a href="#title-trick" class="float-right ml-1">
+                                <i class="bi bi-pencil-fill pencilTitleAction iconTricks"></i>
+                            </a>
+                            <span id="title-trick"></span>
+                            <div class="form-group titleAction displayNone">
+                                <br>
+                                {{ form_row(formUpdateTrick.title, {
+                                label: 'Update the trick title',
+                                attr : {'class': 'form-control smallForForm'}
+                                }) }}
+                            </div>
+                            {% endif %}
+                        </h1>
+                    </div>
+                </div>
+
+                {####### additionnals pictures #########}
+                <div class="row justify-content-center">
+
+                    {% for additionnalPicture in additionnalPictures %}
+                    <!-- additionnalPictures Items-->
+                    <div class="col-md-2 col-lg-2 mb-5 item">
+                        <div class="mx-auto">
+                            <div class="d-flex align-items-center justify-content-center h-100 w-100">
+                                <div class="card {{additionnalPicture.id}}">
+                                    <img class="img-fluid"
+                                        src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/{{ additionnalPicture.picure }}"
+                                        alt="additional picture of {{ trick.title|striptags}}" />
+                                    {######### Only if connected : delete and update... and route=
+                                    tricks_modifications"###########}
+                                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and
+                                    app.request.attributes.get('_route') == "tricks_modifications" %}
+                                    <div class="card-body">
+                                        <span>
+                                            {#
+                                            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;</span>
+                                            #}
+                                            <a href="{{ app.request.getSchemeAndHttpHost() }}/tricks/details/modifications/{{additionnalPicture.id }}"
+                                                } class="float-center ml-1">
+                                                <i class="bi bi-pencil-fill iconTricks">
+                                                </i>
+                                            </a>
+                                            <a href="#tricksDelete" class="float-right ml-1">
+                                                <i class="bi bi-trash-fill iconTricks"></i>
+                                            </a>
+                                        </span>
+                                    </div>
+                                    {% endif %}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <br>
+                    {####### additionnal video exemple #########}
+                    <div class="col-sm-2">
+                        <div class="mx-auto">
+                            <div class="d-flex align-items-center justify-content-center h-100 w-100">
+                                <div class="card image-popup-vertical-fit">
+                                    <img class="img-fluid zoom"
+                                        src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/main-video.png"
+                                        alt="Additionnal video {{ trick.title|striptags}} 1" />
+
+                                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and
+                                    app.request.attributes.get('_route') == "tricks_modifications" %}
+                                    <div class="card-body">
+                                        {# Only if connected #}
+                                        <span>
+                                            <a href="#tricksDelete" class="float-center ml-1">
+                                                <i class="bi bi-trash-fill iconTricks"></i>
+                                            </a>
+                                            <a href="/tricks/modification/{{ trick.slug }}" class="float-center ml-1">
+                                                <i class="bi bi-pencil-fill iconTricks"></i>
+                                            </a>
+                                        </span>
+                                    </div>
+                                    {% endif %}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                {# additionnal picture #}
+                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and
+                app.request.attributes.get('_route') == "tricks_modifications" %}
+                <div class="container text-center">
+                    <div class="row">
+                        <div class="form-group">
+                            {{ form_row(formUpdateTrick.pictures, {
+                            label: 'Add more additionnal pictures',
+                            attr : {'class': 'form-control'}
+                            }) }}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                {####### information #########}
+                <div class="card-body">
+                    <ul class="list-inline">
+                        <li class="list-inline-item">
+                            Created by : {{ Author.username }}
+                        </li class="list-inline-item"> |
+                        <li class="list-inline-item">
+                            Created at : {{ trick.createdAt|date('d-m-Y') }}
+                        </li> |
+
+                        <li class="list-inline-item">
+                            Updated at : {{ trick.createdAt|date('d-m-Y') }}
+                        </li> |
+
+                        <li class="list-inline-item">
+                            Groupe : {{ trick.category }}
+
+                            {# </li> | #}
+                        {# <li class="list-inline-item">
+                            <a href="#comments-block">13 commentaires</a>
+                        </li> #}
+                    </ul>
+                </div>
+
+                {######### description content ##########}
+                <div class="text-left content text-white">
+                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and
+                    app.request.attributes.get('_route') == "tricks_modifications" %}
+                    <div class="form-group">
+                        {# in fact field content #}
+                        {{ form_row(formUpdateTrick.content, {
+                        label: 'Modify the description of this trick',
+                        attr : {'class': 'form-control'}
+                        }) }}
+                    </div>
+                    {% else %}
+                    {{ trick.content }}
+                    {% endif %}
+                </div>
+            </div>
+
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.request.attributes.get('_route') ==
+            "tricks_modifications" %}
+            {######### buttons and groupe ##########}
+            <div class="container text-center">
+                <div class="row">
+                    <div class="col-4">
+                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and
+                        app.request.attributes.get('_route') == "tricks_modifications" %}
+                        {{ form_row(formUpdateTrick.category, {
+                        label: 'Groups',
+                        attr : {'class': 'form-control'}
+                        }) }}
+                        {% endif %}
+                    </div>
+
+                    <div class="col-2 float-right ml-1">
+                        {##### Button delete #######}
+                        {{ include('tricks/tricks_delete_form.html.twig') }}
+                    </div>
+                    {##### Button save #######}
+                    <div class="col-2 float-right ml-1">
+                        <button class=" btn btn-info" type="submit">save</button>
+                        {# <button class="btn">{{ button_label|default('Save') }}</button> #}
+                    </div>
+                </div>
+            </div>
+
+
+            <br>
+            <br>
+            <br>
+            <br>
+
+
+            {{ form_end(formUpdateTrick) }}
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    <!-- tricks Zoom do a hite flash on loading-->
+    <div id="overlay"></div>
+
+
+    <br>
+    <br>
+    <br>
+    <br>
+    {% endblock %}

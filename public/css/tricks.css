@@ -1,0 +1,509 @@
+header {
+  /* min-height: 1110px; */
+  /* min-width: 900px !important; */
+  max-height: 800;
+  overflow: hidden;
+}
+
+/*make staying the section on the bottom of the page*/
+section.copyright {
+  z-index: 2;
+  /* position: fixed; */
+  padding: 25px 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.scroll-to-tricks {
+  margin-bottom: 50px;
+}
+
+.footer-below {
+  z-index: 10;
+}
+
+#navbarResponsive>ul>li.separator {
+  color: white;
+}
+
+.white {
+  color: white;
+}
+
+.home-background {
+  background-repeat: no-repeat;
+  background-position-x: center;
+  width: auto;
+  height: auto;
+  background-image: url("../assets/background/yann-allegre-8FG9tt8qZ-8-unsplash.png") !important;
+  background-color: white;
+  background-size: cover;
+}
+
+.border {
+  padding: 30px;
+}
+
+.btn-secondary {
+  color: #fff;
+  background-color: red;
+  border-color: red;
+}
+
+.btn-secondary:hover {
+  color: #fff;
+  background-color: #00aaaf;
+  border-color: #009da2;
+}
+
+.displayNone {
+  display: none;
+}
+
+.pink {
+  color: #e83e8c;
+}
+
+span.trickName {
+  color: #e83e8c;
+}
+
+/* for register and forgot password  */
+#signin>div>div>div>div>div>div>form>a {
+  /*  color: #1f2d41; */
+  color: #e83e8c;
+  text-decoration: underline;
+}
+
+/* for register and forgot password  */
+div.readyAccount a {
+  /*  color: #1f2d41; */
+  color: #e83e8c;
+  text-decoration: underline;
+}
+
+/* link card */
+div>div>div>div>a {
+  color: #1f2d41;
+  text-decoration: underline;
+  background-color: transparent;
+}
+
+/* to place slogan */
+div.placement {
+  vertical-align: text-top;
+}
+
+h1#slogan {
+  margin-left: auto;
+  margin-right: auto;
+  width: 10em
+}
+
+.font-size30 {
+  font-size: 30px;
+}
+
+.arrow-up {
+  position: absolute;
+  right: 1%;
+}
+
+.positionArrow {
+  text-align: top !important;
+}
+
+#absolute {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
+}
+
+.visually-hidden {
+  visibility: hidden;
+}
+
+div.col-md-2 {
+  min-width: 225px !important;
+  align-items: center;
+  justify-content: center;
+}
+
+/* only 5 column */
+div.col-md-2.col-lg-2.mb-5 {
+  margin: 1px;
+}
+
+footer {
+  z-index: 2;
+  /* position: fixed; */
+  padding: 25px 150;
+  bottom: 0;
+  width: 100%;
+}
+
+.container .row {
+  margin-top: 10px;
+  margin-bottom: 2px;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+/******************/
+ul .footerDown {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+li .footerDown {
+  margin-left: 2px;
+  float: left;
+  /*pour IE*/
+}
+
+ul li a footerDown {
+  display: block;
+  float: left;
+  width: 100px;
+  background-color: #6495ED;
+  color: black;
+  text-decoration: none;
+  text-align: center;
+  padding: 5px;
+  border: 2px solid;
+  /*pour avoir un effet "outset" avec IE :*/
+  border-color: #DCDCDC #696969 #696969 #DCDCDC;
+}
+
+ul li a:hover .footerDown {
+  background-color: #D3D3D3;
+  border-color: #696969 #DCDCDC #DCDCDC #696969;
+}
+
+.logoTop {
+  height: 70px;
+}
+
+*,
+::after,
+::before {
+  box-sizing: border-box;
+}
+
+/* go down */
+.chevron-down {
+  color: #1f2d41;
+  position: absolute;
+  right: 1%;
+  bottom: 3%;
+  padding: 25px 150;
+}
+
+.slogan {
+  height: 70vh;
+  /* Relative to 100% of the height of the viewport**/
+  text-align: center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-transform: uppercase;
+  color: black;
+}
+
+.separator {
+  display: none;
+}
+
+/* *********** @media (max-width: 992px **************** */
+@media (max-width: 992px) {
+
+  /* hidden top menu on smalls screens */
+  section.menuTop {
+    visibility: hidden;
+  }
+
+  /* copyright hidden on smalls screens */
+  .footer-below {
+    visibility: hidden;
+  }
+
+  .menuBottom {
+    visibility: visible;
+  }
+
+  .fa {
+    color: white;
+  }
+}
+
+/* ************ End @media (max-width: 992px *************** */
+
+@media (min-width: 992px) {
+  .footer-below {
+    visibility: visible !important;
+  }
+}
+
+.list-element .content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.8s cubic-bezier(0.75, 0, 0.85, 1);
+}
+
+/* #loadmore {
+    margin: 15px auto 0px;
+    display: table;
+    border: none;
+    padding: 5px 10px;
+    font-size: 18px;
+    cursor: pointer;
+    color: rgb(84, 187, 98);
+    border-radius: 2px;
+    background-color: #ffffff;
+    border: solid 1px green;
+} */
+
+.list .list-element:nth-child(1) {
+  display: block;
+}
+
+.list .list-element:nth-child(2) {
+  display: block;
+}
+
+/***************************/
+
+/* copyright */
+.footer-below {
+  visibility: hidden;
+}
+
+.menuBottom {
+  visibility: visible;
+}
+
+ul {
+  list-style-type: none;
+}
+
+li {
+  color: rgb(245, 238, 238);
+}
+
+.danger {
+  color: rgb(255, 0, 30);
+  background-color: rgb(240, 141, 152);
+  border-color: rgb(240, 141, 152);
+}
+
+.success {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+
+.alert {
+  position: relative;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  z-index: 289;
+
+}
+
+.texteAreaHight {
+  height: 150px
+}
+
+/* error message */
+div>form>div>ul>li {
+  color: #e83e8c;
+}
+
+.modification {
+  border-color: #e83e8c;
+}
+
+.mini {
+  width: 15px;
+  height: 150px;
+}
+
+.smallPicture {
+  width: 150px;
+  height: 150px;
+}
+
+.post-content {
+  background: none repeat scroll 0 0 #FFFFFF;
+  opacity: 0.5;
+  margin: -54px 20px 12px;
+  position: relative;
+}
+
+div.card {
+  min-width: 90px;
+  min-height: 50px;
+  margin: 2px;
+}
+
+.btn-menu-down {
+  font-size: 30px;
+  color: #fff;
+}
+
+/* #page-top>footer {
+  max-height: 80px;
+} */
+
+i {
+  color: #009da2;
+}
+
+.bottom-0->end-0 {
+  text-align: right;
+}
+
+.content {
+  overflow: scroll;
+  border: #e83e8c 1px solid;
+  height: auto;
+  max-height: 300px;
+  padding: 20px;
+  margin: 30px;
+}
+
+.footer-below {}
+
+/** in fact fooyer **/
+/* .copyright{
+  height :40px;
+} */
+
+/* .ul->list-inline-item{
+ text-align: right;
+} */
+
+/* #page-top > section.page-section.tricks > div.d-flex.align-items-center.justify-content-center.h-100.w-100 > div > a > i */
+.bi-plus-circle-fill {
+  color: #fff;
+}
+
+.bi-arrow-up-circle-fill {
+  color: #fff;
+}
+
+/********  modal ************/
+.modal-content {
+  border: none;
+  box-shadow: inset 1px 1px rgb(255 255 255 / 20%), inset -1px -1px rgb(255 255 255 / 10%), 1px 3px 24px -1px rgb(0 0 0 / 15%);
+  background-color: transparent;
+  background-image: linear-gradient(125deg, rgba(255, 255, 255, .3), rgba(255, 255, 255, .2) 70%);
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+}
+
+h5.modal-title {
+  color: #fff;
+}
+
+div>div>div.modal-body>p {
+  color: #fff;
+  /* border-bottom: var(--bs-modal-header-border-width) solid */
+}
+
+div>div>div.modal-footer>button.btn.btn-primary {
+  background-color: #e83e8c !important;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.badge {
+  background-color: #e83e8c !important;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+div>div>div.modal-footer>button.btn.btn-secondary {
+  background-color: rgba(255, 255, 255, 0.4);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+div.modal-header {
+  color: #fff;
+  border-bottom: var(--bs-modal-header-border-width) solid
+}
+
+div.modal-body {
+  color: #fff;
+  border-bottom: var(--bs-modal-header-border-width) solid
+}
+
+/******** End modal ************/
+
+/******** Single image lightbox ************/
+img {
+  height: 100px;
+}
+
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(249, 246, 246, 0.9) none 100% / contain no-repeat;
+  z-index: 800;
+  visibility: hidden;
+  opacity: 0.5;
+}
+
+#overlay.open {
+  visibility: visible;
+  /* cursor: zoom-out; */
+  cursor: pointer;
+  opacity: 1;
+  border-radius: 0.5rem !important;
+}
+
+.zoom {
+  cursor: zoom-in;
+}
+
+#overlay:after {
+  /* X button icon */
+  content: "\2715";
+  position: absolute;
+  color: rgb(6, 6, 6);
+  top: 10px;
+  right: 20px;
+  font-size: 2em;
+}
+
+/******** End Single image lightbox ************/
+
+.displayNone {
+  display: none;
+}
+
+.displayCntents {
+  display: contents;
+}
+
+.btn-danger {
+  margin-top: 30px;
+  text-align: right;
+}
+
+.btn-info {
+  margin-top: 30px;
+}
+
+label {
+  color: white;
+}

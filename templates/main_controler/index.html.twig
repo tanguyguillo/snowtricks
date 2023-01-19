@@ -1,0 +1,115 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Snowtricks{% endblock %}
+
+{% block visualCentral %}
+<header class="masthead text-white text-center home-background">
+    <div class="container">
+        <div class="slogan">
+            <h1>Share yours tricks</h1>
+            <H2class="pre-wrap masthead-subheading font-weight-light mb-0">Push your limits and share incredible
+                experiences
+                friends. </h2>
+        </div>
+
+        <!-- go down to the tricks -->
+        <div>
+            <a class="d-block text-center text-white rounded positionArrow" href="#tricks">
+                <i class=" bi bi-arrow-down-circle-fill fa-3x chevron-down"></i>
+                <br>
+                <br>
+            </a>
+        </div>
+</header>
+{% endblock %}
+
+{% block main%}
+<div id="tricks">
+    <br>
+</div>
+<section class="page-section tricks">
+    <div class="container">
+
+        <!-- tricks Grid Items -->
+        <div class="row justify-content-center items">
+            {% for trick in tricks %}
+            <!-- tricks Items-->
+            <div class="col-md-2 col-lg-2 mb-5 item">
+                <div class="mx-auto">
+                    <div class="d-flex align-items-center justify-content-center h-100 w-100">
+                        <div class="card {{trick.id}}">
+                            <img class="img-fluid" src="assets/img/tricks/{{ trick.picture }}"
+                                alt="{{ trick.title|striptags}}" />
+                            <div class="card-body">
+                                <a href="tricks/details/{{ trick.slug }}" class="link-primary">{{
+                                    trick.title|striptags}}</a>
+                                {######### Only if connected : delete and update ###########}
+                                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                                <span>
+                                    <a class="portfolio-link float-right ml-1 btndelete" data-bs-toggle="modal"
+                                        href="#deleteThisTrick" id="{{trick.id}}">
+
+                                        <i class="bi bi-trash-fill iconTricks"></i>
+                                    </a>
+                                    <a href="{{ app.request.getSchemeAndHttpHost() }}/tricks/details/modifications/{{ trick.slug }}"
+                                        } class="float-right ml-1">
+                                        <i class="bi bi-pencil-fill iconTricks">
+                                            <small><i class="bi bi-arrow-right-short"></i></small>
+                                        </i>
+                                    </a>
+                                </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            {# Modal #}
+            <div class="modal fade" id="deleteThisTrick">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Delete this trick</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"></span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are your sur to want to detete this trick ?</p>
+                        </div>
+                        <div class="modal-footer">
+                            {% for trick in tricks %}
+                            <button type="button" class="btn-validate btn btn-primary displayNone {{trick.id}} ">
+                                <a data-delete
+                                    href="{{ app.request.getSchemeAndHttpHost() }}/tricks/delete-tricks/{{ trick.id }}"
+                                    data-token="{{ csrf_token('delete'~trick.id)}}">Yes {#{{trick.id}} #}
+                                </a>
+                            </button>
+                            {% endfor %}
+                            <button type="button" class="btn btn-secondary close-modal"
+                                data-bs-dismiss="modal">No</button>
+
+                        </div>{# end modal-footer #}
+                    </div>
+                </div>
+            </div>
+            {# endModal #}
+            {% endif %}
+
+        </div>
+    </div>
+
+    <div class="d-flex align-items-center justify-content-center h-100 w-100">
+        <a class="arrow-up" href="#tricks">
+            <i class=" bi bi-arrow-up-circle-fill fa-3x"></i>
+        </a>
+        <div class="row justify-content-center m-3 buttonToogle" style="display: none;">
+            <a href="javascript:;" class="showMore"><i class="bi bi-plus-circle-fill fa-3x"></i></a>
+        </div>
+    </div>
+
+</section>
+{% endblock %}

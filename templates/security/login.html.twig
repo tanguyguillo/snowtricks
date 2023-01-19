@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Snowtricks - login{% endblock %}
+
+{% block main %}
+<br><br><br>
+<div class="container text-center">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <br>
+            <br>
+            <br>
+            <br>
+            <h2 class="tricks-modal-title text-secondary mb-0 text-center">Login</h2>
+            <br><br>
+            <div class="form-floating border">
+
+                <form method="post">
+                    {% if error %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
+
+                    {% if app.user %}
+                    <div class="mb-3">
+                        You are logged in as {{ app.user.userIdentifier }}, <a
+                            href="{{ path('app_logout') }}">Logout</a>
+                    </div>
+                    {% endif %}
+
+                    {% for message in app.flashes('success') %}
+                    <div class="alert success" role="alert">{{ message }}</div>
+                    {% endfor %}
+
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="username" value="{{ last_username }}" name="username" id="inputUsername"
+                            class="form-control" autocomplete="username" required autofocus>
+                    </div>
+
+                    <div class="mb-3"><label for="password" class="form-label required">Password</label>
+                        <input type="password" name="password" id="inputPassword" class="form-control"
+                            autocomplete="current-password" required>
+                    </div>
+                    
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                    <p>
+                        <br>
+                        <a href="{{ path('app_forgot_password_request') }}">forgot password ?</a>
+                        <br>
+                    </p>
+
+                    <button class="w-50 btn btn-lg btn-info" type="submit">login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
