@@ -94,7 +94,7 @@ class TrickController extends AbstractController
     }
 
     /**
-     * function deleteFromDetail
+     * function deleteFromDetail (button delete)
      */
     #[Route('/delete-tricks_from_detail/{id}', name: 'app_tricks_delete_from_detail', methods: ['Post'])]
     public function deleteFromDetail(Request $request, Tricks $trick, TricksRepository $tricksRepository)
@@ -142,7 +142,7 @@ class TrickController extends AbstractController
     #[Route('/{id}/edit', name: 'app_tricks_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Tricks $tricks, TricksRepository $tricksRepository, SluggerInterface $slugger): Response
     {
-        $formAddTrick = $this->createForm(TricksType::class, $tricks);
+        $formAddTrick = $this->createForm(UpdateType::class, $tricks);
         $formAddTrick->handleRequest($request);
 
         if ($formAddTrick->isSubmitted() && $formAddTrick->isValid()) {
