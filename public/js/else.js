@@ -36,8 +36,10 @@ $(document).ready(function () {
         });
     });
 
-    // $().alert()	//Makes an alert listen for click events on descendant elements which have the data - dismiss="alert" attribute. (Not necessary when using the data - api’s auto - initialization.)
-    // $().alert('close')
+    // close message
+    $('.close').click(function () {
+        $(".alert").alert('close')
+    });
 
     $('.close').click(function () {
         console.log("1");
