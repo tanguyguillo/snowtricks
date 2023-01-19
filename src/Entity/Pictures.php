@@ -18,7 +18,7 @@ class Pictures
     private ?Tricks $tricks = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $picure = null;
+    private ?string $picture = null;
 
     public function getId(): ?int
     {
@@ -37,14 +37,14 @@ class Pictures
         return $this;
     }
 
-    public function getPicure(): ?string
+    public function getpicture(): ?string
     {
-        return $this->picure;
+        return $this->picture;
     }
 
-    public function setPicure(string $picure): self
+    public function setpicture(string $picture): self
     {
-        $this->picure = $picure;
+        $this->picture = $picture;
 
         return $this;
     }

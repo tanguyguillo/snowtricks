@@ -162,7 +162,7 @@ class TrickController extends AbstractController
                 //     );
                 //     // in db 
                 //     $img = new Pictures();
-                //     $img->setPicure($file);
+                //     $img->setpicture($file);
                 //     $tricks->addAdditionnalTrick($img);
                 // }
 
@@ -218,7 +218,7 @@ class TrickController extends AbstractController
             if ($additionnalPictures != []) {
                 // may have multiple additionnals pictures
                 foreach ($additionnalPictures as $additionnalPicture) {
-                    $file = $additionnalPicture->getPicure();
+                    $file = $additionnalPicture->getpicture();
                     // get the physical path
                     $additionalPictureWithPath = $this->getParameter('pictues_directory') . '/' .  $file;
                     // delete trick from server
@@ -260,7 +260,7 @@ class TrickController extends AbstractController
                     );
                     // in db 
                     $img = new Pictures();
-                    $img->setPicure($file);
+                    $img->setpicture($file);
                     $tricks->addAdditionnalTrick($img);
                 }
 
