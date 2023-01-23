@@ -41,16 +41,16 @@ $(document).ready(function () {
         $(".alert").alert('close')
     });
 
-    $('.close').click(function () {
-        console.log("1");
-        // id = $(this).attr('id')
-        // $('.' + id).removeClass('displayNone').addClass('displayContents');
-    });
+    // $('.close').click(function () {
+    //     console.log("1");
+    //     // id = $(this).attr('id')
+    //     // $('.' + id).removeClass('displayNone').addClass('displayContents');
+    // });
 
-    /// alerte... to see... don't work
-    $('.alert').click(function () {
-        $('.alert-dismissible' + id).addClass('displayNone');
-    });
+    // /// alerte... to see... don't work
+    // $('.alert').click(function () {
+    //     $('.alert-dismissible' + id).addClass('displayNone');
+    // });
 
     // form main picture
     $('.pencilMainPicture').click(function () {
