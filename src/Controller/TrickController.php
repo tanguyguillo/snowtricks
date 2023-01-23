@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 use App\Form\TricksType;
+use App\Form\UpdateType;
 
 use App\Entity\Pictures;
 
@@ -45,7 +46,7 @@ class TrickController extends AbstractController
     }
 
     /**
-     * function details (read) 1)
+     * function details
      */
     #[Route('/details/{slug}', name: 'details')]
     #[Route('/details/modifications/{slug}', name: 'modifications')]
@@ -60,14 +61,17 @@ class TrickController extends AbstractController
         $trickId = $trick->getId();
         $additionnalPictures = $picturesRepository->findBy(['tricks' => $trickId]);
 
-        $formUpdateTrick = $this->createForm(TricksType::class, $tricks);
+        $formUpdateTrick = $this->createForm(UpdateType::class, $tricks);
         $formUpdateTrick->handleRequest($request);
+
+
+
 
         return $this->render('tricks/details.html.twig', compact('trick', 'Author', 'additionnalPictures', 'formUpdateTrick'));
     }
 
     /**
-     * function delete trick for homePage with Ajax 2)
+     * function delete trick for homePage with Ajax
      *
      */
     #[Route('/delete-tricks/{id}', name: 'app_tricks_delete', methods: ['DELETE'])]
@@ -137,11 +141,14 @@ class TrickController extends AbstractController
     }
 
     /**
-     * function edit
+     * function edit  tricks_app_tricks_edit
      */
-    #[Route('/{id}/edit', name: 'app_tricks_edit', methods: ['GET', 'POST'])]
+    #[Route('/triks/edit/{id}', name: 'app_tricks_edit', methods: ['POST'])]
     public function edit(Request $request, Tricks $tricks, TricksRepository $tricksRepository, SluggerInterface $slugger): Response
     {
+
+        dd('555555');
+
         $formAddTrick = $this->createForm(UpdateType::class, $tricks);
         $formAddTrick->handleRequest($request);
 
@@ -297,46 +304,10 @@ class TrickController extends AbstractController
             $this->addFlash('success', 'Your trick have been added.');
 
             return $this->redirectToRoute('app_home');
-        } //end form
+        }
 
         return $this->render('tricks/add.html.twig', [
             'formAddTrick' =>  $formAddTrick->createView(),
         ]);
-    }
-
-
-    /**   *********************************************************************************
-     * function and route for testing
-     * warning the route are "additionnal with the class"
-     * #[Route('/test/{argument}', name: 'app_tricks_test',)]
-     */
-    public function test1($argument, TricksRepository $tricksRepository)
-    {
-        // //and  delete Mainpicture // 125 : e14c2c5acb6440d8a2aa89fdd187893d.png"  and after todo else pictures
-        // $id = $argument;
-        // $trick = $tricksRepository->findOneBy(['id' => $id]);
-        // // $mainPicture = $trick->getPicture();
-
-        // $mainPictureWithPath = $this->getParameter('pictues_directory') . '/' . $trick->getPicture();
-        // //check if ok
-        // if (file_exists($mainPictureWithPath)) {
-        //     unlink($mainPictureWithPath);
-        //     var_dump('ok');
-        // } else {
-        //     var_dump('pas ok');
-        // }
-
-        // dd('test');
-    }
-
-    /**
-     * deleteAdditionnalPicture : Delete additional picture from the server
-     * 
-     *  #[Route('/test/{argument}', name: 'app_tricks_test',)]
-     */
-    //#[Route('/test/{argument}', name: 'app_tricks_test',)]
-    public function test()
-    {
-        //$this->deleteAdditionnalPicture(153);
     }
 }

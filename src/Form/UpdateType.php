@@ -57,6 +57,7 @@ class UpdateType extends AbstractType
                     'label' => false,
                     'multiple' => true,
                     'mapped' => false,
+                    'required' => false
                 ]
             );
     }

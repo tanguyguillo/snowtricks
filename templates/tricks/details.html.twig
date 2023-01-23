@@ -41,54 +41,67 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.request.attributes.get('_route') ==
                     "tricks_modifications" %}
 
+                    {# {{ form_start(formUpdateTrick, {'action': path('tricks/details/modifications/edit/'~{{ trick.id
+                    }}
+                    ),
+                    'method': 'POST'}~ {{ trick.id }}
+                    )}} #}
+
+                    {# #[Route('/details/modifications/edit/{id}', name: 'app_tricks_edit', methods: ['POST'])] #}
+
                     {{ form_start(formUpdateTrick) }}
+                    <form method="post" action="{{ path('tricks_app_tricks_edit', {'id': trick.id}) }}">
 
-                    {# main picture tools#}
-                    <span>
-                        {# {{ trick.picture }} #}
-                        <div class="form-group pencilMainPictureAction displayNone">
-                            {{ form_row(formUpdateTrick.picture, {
-                            label: 'Change the main picture',
-                            type : "file",
-                            attr : {'class': 'form-control'},
-                            }) }}
-                        </div>
 
-                        <a href="#tricksDelete" class="float-right ml-1">
-                            <i class="bi bi-trash-fill iconTricks"></i>
-                        </a>
+                        {# {{ form_start(formUpdateTrick) }} #}
 
-                        <a href="#" class="float-right ml-1" alt="update trick">
-                            <i class="bi bi-pencil-fill iconTricks pencilMainPicture"></i>
-                        </a>
-                    </span>
-                    {% endif %}
-
-                    {# main picture #}
-                    <img class="bd-placeholder-img bd-placeholder-img-lg img-fluid " width="100%" height="150"
-                        src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/{{ trick.picture }}"
-                        alt="{{ trick.title }}">
-
-                    <div class="caption post-content">
-
-                        <h1>{{ trick.title }}
-                            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.request.attributes.get('_route') ==
-                            "tricks_modifications" %}
-
-                            <a href="#title-trick" class="float-right ml-1">
-                                <i class="bi bi-pencil-fill pencilTitleAction iconTricks"></i>
-                            </a>
-                            <span id="title-trick"></span>
-                            <div class="form-group titleAction displayNone">
-                                <br>
-                                {{ form_row(formUpdateTrick.title, {
-                                label: 'Update the trick title',
-                                attr : {'class': 'form-control smallForForm'}
+                        {# main picture tools #}
+                        <span>
+                            {# {{ trick.picture }} #}
+                            <div class="form-group pencilMainPictureAction displayNone">
+                                {{ form_row(formUpdateTrick.picture, {
+                                label: 'Change the main picture',
+                                type : "file",
+                                attr : {'class': 'form-control'},
                                 }) }}
                             </div>
-                            {% endif %}
-                        </h1>
-                    </div>
+
+                            <a href="#tricksDelete" class="float-right ml-1">
+                                <i class="bi bi-trash-fill iconTricks"></i>
+                            </a>
+
+                            <a href="#" class="float-right ml-1" alt="update trick">
+                                <i class="bi bi-pencil-fill iconTricks pencilMainPicture"></i>
+                            </a>
+                        </span>
+                        {% endif %}
+
+                        {# main picture #}
+                        <img class="bd-placeholder-img bd-placeholder-img-lg img-fluid " width="100%" height="150"
+                            src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/{{ trick.picture }}"
+                            alt="{{ trick.title }}">
+
+                        <div class="caption post-content">
+
+                            <h1>{{ trick.title }}
+                                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.request.attributes.get('_route')
+                                ==
+                                "tricks_modifications" %}
+
+                                <a href="#title-trick" class="float-right ml-1">
+                                    <i class="bi bi-pencil-fill pencilTitleAction iconTricks"></i>
+                                </a>
+                                <span id="title-trick"></span>
+                                <div class="form-group titleAction displayNone">
+                                    <br>
+                                    {{ form_row(formUpdateTrick.title, {
+                                    label: 'Update the trick title',
+                                    attr : {'class': 'form-control smallForForm'}
+                                    }) }}
+                                </div>
+                                {% endif %}
+                            </h1>
+                        </div>
                 </div>
 
                 {####### additionnals pictures #########}
@@ -239,7 +252,6 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                     {##### Button save #######}
                     <div class="col-2 float-right ml-1">
                         <button class=" btn btn-info" type="submit">save</button>
-                        {# <button class="btn">{{ button_label|default('Save') }}</button> #}
                     </div>
                 </div>
             </div>

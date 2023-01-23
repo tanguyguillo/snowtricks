@@ -217,14 +217,10 @@
     </footer>
     {% endblock %}
 
-
     {% block javascripts %}
-
     {# <!-- jQuery 1.9.1  -->#}
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
-    <!-- jQuery v3.6.3-
-    <script src="{{ app.request.getSchemeAndHttpHost() }}/js/jQuery.js"></script> -->
     <!-- Core theme JS-->
     <script src="{{ app.request.getSchemeAndHttpHost() }}/js/scripts.js"></script>
 
@@ -239,8 +235,6 @@
         crossorigin="anonymous"></script>
 
     <script src="{{ app.request.getSchemeAndHttpHost() }}/js/jqBootstrapValidation.js"></script>
-
-
     {% endblock %}
 </body>
 

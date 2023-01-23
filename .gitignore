@@ -18,4 +18,9 @@
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+
+###> mac ###
 .DS_Store
+###< mac ###
+
+/public/assets/img/tricks/
