@@ -60,14 +60,40 @@ class TrickController extends AbstractController
         $Author = $userRepository->findOneBy(['id' => $AuthorId]);
         $trickId = $trick->getId();
         $additionnalPictures = $picturesRepository->findBy(['tricks' => $trickId]);
+        $Image = $tricks->getPicture();
 
-        $formUpdateTrick = $this->createForm(UpdateType::class, $tricks);
+        // $form = $formFactory->createBuilder()
+        //     ->add('task', TextType::class)
+        //     ->add('dueDate', DateType::class)
+        //     ->getForm();
+
+        $formUpdateTrick = $this->createForm(Updatetype::class, $trick);
         $formUpdateTrick->handleRequest($request);
 
 
+        // $formUpdateTrick = $this->createForm(Updatetype::class, $tricks);
+        // $formUpdateTrick->handleRequest($formUpdateTrick);
+
+        // $formUpdateTrick->slugger =  $slug;
+        // $formUpdateTrick->modified_at = new \DateTime('now');
+
+        //$submittedToken = $request->request->get('_token');
+        if ($formUpdateTrick->isSubmitted() && $formUpdateTrick->isValid()) {
+
+            var_dump('$formUpdateTrick->isSubmitted: ' . $formUpdateTrick->isSubmitted());
+            var_dump('$formUpdateTrick->isValid(): ' . $formUpdateTrick->isValid());
 
 
-        return $this->render('tricks/details.html.twig', compact('trick', 'Author', 'additionnalPictures', 'formUpdateTrick'));
+            // $formUpdateTrick->getData(); holds the submitted values
+            // but, the original `$trick` variable has also been updated
+            $data = $formUpdateTrick->getData();
+            var_dump($data);
+
+            dd('passage $formUpdateTrick');
+            // ... perform some action, such as saving the task to the database
+            return $this->redirectToRoute('app_home');
+        }
+        return $this->render('tricks/details.html.twig', compact('trick', 'Author', 'additionnalPictures', 'formUpdateTrick', 'Image'));
     }
 
     /**
@@ -108,10 +134,12 @@ class TrickController extends AbstractController
             $trickId = $trick->getId();
             // 1 delete additionnal picture from server
             $this->deleteAdditionnalPicture($trickId);
-            // get the physical path of the main picture
+
             $mainPictureWithPath = $this->getParameter('pictues_directory') . '/' . $trick->getPicture();
+
             // 2 - delete trick from Bd
             $tricksRepository->remove($trick, true); // OK
+
             // 3 - delete Main picture on server
             if ($this->deleteMainPicture($mainPictureWithPath)) {
                 $this->addFlash('success', 'Your trick have been deleted.');
@@ -252,6 +280,7 @@ class TrickController extends AbstractController
         $formAddTrick->handleRequest($request);
 
         if ($formAddTrick->isSubmitted() && $formAddTrick->isValid()) {
+
             $pictureFile =  $formAddTrick->get('picture')->getData();
 
             if ($pictureFile) {

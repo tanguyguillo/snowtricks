@@ -8,14 +8,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Validator\Constraints\Length;
-
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-
 use App\Entity\Category;
 
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
 /**
- * class TricksType
+ * class UpdateType  // ->add('save', SubmitType::class, ['attr' => ['class' => 'save']])
  *
  */
 class UpdateType extends AbstractType
@@ -29,6 +28,7 @@ class UpdateType extends AbstractType
                 [
                     'attr' => [
                         'class' => 'form-control',
+                        'required' => false
                     ]
                 ]
             )
@@ -37,7 +37,8 @@ class UpdateType extends AbstractType
                 'category',
                 EntityType::class,
                 [
-                    'class' => Category::class
+                    'class' => Category::class,
+                    'required' => false
                 ]
             )
             ->add(
@@ -60,17 +61,5 @@ class UpdateType extends AbstractType
                     'required' => false
                 ]
             );
-    }
-
-    /**
-     *  function configureOptions
-     *
-     * @param OptionsResolver $resolver
-     * @return void
-     */
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        // 'data_class' => TricksType::class,
-        $resolver->setDefaults([]);
     }
 }

@@ -8,16 +8,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-
 use App\Entity\Category;
 
 /**
  * class TricksType
  *
  */
-class TricksType extends AbstractType
+class UpdateType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -62,7 +60,7 @@ class TricksType extends AbstractType
     }
 
     /**
-     *  function configureOptions
+     *  function configureOptions             'data_class' => Tricks::class,
      *
      * @param OptionsResolver $resolver
      * @return void

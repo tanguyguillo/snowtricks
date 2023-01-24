@@ -36,6 +36,11 @@ $(document).ready(function () {
         });
     });
 
+    $('.updateTrick').click(function () {
+        console.log('pass update'); // OK
+    });
+
+
     // close message
     $('.close').click(function () {
         $(".alert").alert('close')
@@ -63,5 +68,7 @@ $(document).ready(function () {
         console.log("pencilTitleAction");
         $('.titleAction').removeClass('displayNone')
     });
+
+
 
 });

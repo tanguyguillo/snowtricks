@@ -507,3 +507,23 @@ img {
 label {
   color: white;
 }
+
+div.rounded.shadow.p-3.mb-5.bg-white>form>div>h1>div {
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: none;
+  color: rgb(10, 10, 10);
+}
+
+.div .form-group {
+  color: rgb(10, 10, 10);
+
+}
+
+.form-label {
+  color: rgb(10, 10, 10);
+}
+
+#tricks_update_picture {
+  color: rgb(10, 10, 10);
+}
