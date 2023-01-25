@@ -44,188 +44,7 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                     {# {{ form_start(formUpdateTrick, {'attr': {'novalidate': 'novalidate'}}) }} #}
 
                     {{ form_start(formUpdateTrick) }}
-                    <span>
-                        {# {{ trick.picture }} pencilMainPictureAction displayNone#}
-                        <div class="form-group PictueAction displayNone">
-                            {{ form_row(formUpdateTrick.picture, {
-                            label: 'Change the main picture',
-                            type : "file",
-                            attr : {'class': 'form-control'},
-                            require : false,
-                            }) }}
-                        </div>
 
-                        <a href="#tricksDelete" class="float-right ml-1">
-                            <i class="bi bi-trash-fill iconTricks"></i>
-                        </a>
-
-                        <a href="#" class="float-right ml-1" alt="update trick">
-                            <i class="bi bi-pencil-fill iconTricks pencilMainPicture"></i>
-                        </a>
-                    </span>
-                    {% endif %}
-
-                    <img class="bd-placeholder-img bd-placeholder-img-lg img-fluid " width="100%" height="150"
-                        src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/{{ trick.picture }}"
-                        alt="{{ trick.title }}">
-
-                    <div class="caption post-content">
-
-                        <h1>{{ trick.title }}
-                            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.request.attributes.get('_route')
-                            ==
-                            "tricks_modifications" %}
-
-                            <a href="#title-trick" class="float-right ml-1">
-                                <i class="bi bi-pencil-fill pencilTitleAction iconTricks"></i>
-                            </a>
-                            <span id="title-trick"></span>
-
-                            {# titleAction displayNone #}
-                            <div class="form-group ">
-                                <br><br>
-                                {{ form_row(formUpdateTrick.title, {
-                                label: 'Update this trick name',
-                                attr : {'class': 'form-control smallForForm'}
-                                }) }}
-                            </div>
-
-                            {% endif %}
-                        </h1>
-                    </div>
-                </div>
-
-                {####### additionnals pictures #########}
-                <div class="row justify-content-center">
-
-                    {% for additionnalPicture in additionnalPictures %}
-                    <!-- additionnalPictures Items-->
-                    <div class="col-md-2 col-lg-2 mb-5 item">
-                        <div class="mx-auto">
-                            <div class="d-flex align-items-center justify-content-center h-100 w-100">
-                                <div class="card {{additionnalPicture.id}}">
-                                    <img class="img-fluid"
-                                        src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/{{ additionnalPicture.picture }}"
-                                        alt="additional picture of {{ trick.title|striptags}}" />
-                                    {######### Only if connected : delete and update... and route=
-                                    tricks_modifications"###########}
-                                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and
-                                    app.request.attributes.get('_route') == "tricks_modifications" %}
-                                    <div class="card-body">
-                                        <span>
-                                            {#
-                                            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;</span>
-                                            #}
-                                            <a href="{{ app.request.getSchemeAndHttpHost() }}/tricks/details/modifications/{{additionnalPicture.id }}"
-                                                } class="float-center ml-1">
-                                                <i class="bi bi-pencil-fill iconTricks">
-                                                </i>
-                                            </a>
-                                            <a href="#tricksDelete" class="float-right ml-1">
-                                                <i class="bi bi-trash-fill iconTricks"></i>
-                                            </a>
-                                        </span>
-                                    </div>
-                                    {% endif %}
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                    <br>
-                    {####### additionnal video exemple #########}
-                    <div class="col-sm-2">
-                        <div class="mx-auto">
-                            <div class="d-flex align-items-center justify-content-center h-100 w-100">
-                                <div class="card image-popup-vertical-fit">
-                                    <img class="img-fluid zoom"
-                                        src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/main-video.png"
-                                        alt="Additionnal video {{ trick.title|striptags}} 1" />
-
-                                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and
-                                    app.request.attributes.get('_route') == "tricks_modifications" %}
-                                    <div class="card-body">
-                                        {# Only if connected #}
-                                        <span>
-                                            <a href="#tricksDelete" class="float-center ml-1">
-                                                <i class="bi bi-trash-fill iconTricks"></i>
-                                            </a>
-                                            <a href="/tricks/modification/{{ trick.slug }}" class="float-center ml-1">
-                                                <i class="bi bi-pencil-fill iconTricks"></i>
-                                            </a>
-                                        </span>
-                                    </div>
-                                    {% endif %}
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                {# additionnal picture #}
-                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and
-                app.request.attributes.get('_route') == "tricks_modifications" %}
-
-                <div class="container text-center">
-                    <div class="row">
-                        <div class="form-group">
-                            {{ form_row(formUpdateTrick.pictures, {
-                            label: 'Add more additionnal pictures',
-                            attr : {'class': 'form-control'}
-                            }) }}
-                        </div>
-                    </div>
-                </div>
-                {# <div class="form-group">
-                    {{ form_row(formUpdateTrick.modified_at, {
-                    label: 'Modifief at',
-                    type :"hidden",
-                    attr : {'class': 'form-control'}
-                    }) }}
-                </div> #}
-
-                {% endif %}
-
-                {####### information #########}
-
-                {# <input type="hidden" name="modified_at" value="{{ " now"|date("m/d/Y") }}"> #}
-
-                <div class="card-body">
-                    <ul class="list-inline">
-                        <li class="list-inline-item">
-                            Created by : {{ Author.username }}
-                        </li class="list-inline-item"> |
-                        <li class="list-inline-item">
-                            Created at : {{ trick.createdAt|date('d-m-Y') }}
-                        </li> |
-
-                        <li class="list-inline-item">
-                            Updated at : {{ trick.createdAt|date('d-m-Y') }}
-                        </li> |
-
-                        <li class="list-inline-item">
-                            Groupe : {{ trick.category }}
-
-                        </li>
-
-                        {# <li class="list-inline-item">
-                            <a href="#comments-block">13 commentaires</a>
-                        </li> #}
-
-                    </ul>
-                </div>
-
-
-
-                <div class="text-left content text-white">
-
-                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and
-                    app.request.attributes.get('_route') == "tricks_modifications" %}
-
-                    <input type="hidden" name="_token" value="{{ csrf_token('update' ~ trick.id) }}">
 
                     <div>
                         {{ form_row(formUpdateTrick.content, {
@@ -233,35 +52,14 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                         attr : {'class': 'form-control'}
                         }) }}
                     </div>
-                    {% else %}
-                    {{ trick.content }}
-                    {% endif %}
-                </div>
-
-                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.request.attributes.get('_route') ==
-                "tricks_modifications" %}
-
-
-                <input type="hidden" name="modified_at" value="{{ csrf_token('update' ~ trick.id) }}">
-
-                <div class="container text-center">
-                    <div class="row">
-                        <div class="col-4">
-                            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and
-                            app.request.attributes.get('_route') == "tricks_modifications" %}
-                            {{ form_row(formUpdateTrick.category, {
-                            label: 'Groups',
-                            attr : {'class': 'form-control'}
-                            }) }}
-                            {% endif %}
-                        </div>
-                    </div>
 
                     <div class="col-2 float-right ml-1">
 
                         <button class="btn btn-info updateTrick" type="submit">Save</button>
 
-                        {{ include('tricks/_form.html.twig', {'button_label': 'Update'}) }}
+                        {# {{ include('tricks/_form.html.twig', {'button_label': 'Update'}) }} #}
+
+                        {# {{ form_row(form.submit, { 'label': 'Submit me' }) }} #}
 
                     </div>
 
@@ -287,18 +85,46 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
             <br>
             <br>
 
-
-
             {% endif %}
 
         </div>
 
     </div>
 
+    {# comments #}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="comments">
+                    <div class="avatar-commentcol-lg-2">
+                        <img src="assets/img/avatars/avatar-252×230.png" height="100px" />
+                    </div>
+                    <div class="comment-text col-lg-10">
+                        <p>Verni domesticus quam animi filius suspensus ut quae potuit magistro
+                            discerpti turbela
+                            translationem timore egerat futurorum quondam imbres emendabat referente
+                            quam rettulimus
+                            crebriores angorem diu diu timore referente crebriores Constantinopolim
+                            suspensus emendabat
+                            timore supra Herculanus auctique diu diu egerat emendabat.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+
 
     <div id="overlay"></div>
 
-
+    <br>
+    <br>
+    <br>
+    <br>
     <br>
     <br>
     <br>

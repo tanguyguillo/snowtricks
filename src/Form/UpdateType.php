@@ -22,45 +22,46 @@ class UpdateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add(
-                'title',
-                TextType::class,
-                [
-                    'attr' => [
-                        'class' => 'form-control',
-                        'required' => false
-                    ]
-                ]
-            )
+            // ->add(
+            //     'title',
+            //     TextType::class,
+            //     [
+            //         'attr' => [
+            //             'class' => 'form-control',
+            //             'required' => false
+            //         ]
+            //     ]
+            // )
             // ->add('modified_at', DateType::class)
             ->add('content', TextareaType::class)
-            ->add(
-                'category',
-                EntityType::class,
-                [
-                    'class' => Category::class,
-                    'required' => false
-                ]
-            )
-            ->add(
-                'picture',
-                FileType::class,
-                [
-                    'attr' => ['accept' => "image/*",],
-                    'label' => false,
-                    'data_class' => null,
-                ]
-            )
-            ->add(
-                'pictures',
-                FileType::class,
-                [
-                    'attr' => ['accept' => "image/*",],
-                    'label' => false,
-                    'multiple' => true,
-                    'mapped' => false,
-                    'required' => false
-                ]
-            );
+            // ->add(
+            //     'category',
+            //     EntityType::class,
+            //     [
+            //         'class' => Category::class,
+            //         'required' => false
+            //     ]
+            // )
+            // ->add(
+            //     'picture',
+            //     FileType::class,
+            //     [
+            //         'attr' => ['accept' => "image/*",],
+            //         'label' => false,
+            //         'data_class' => null,
+            //     ]
+            // )
+            // ->add(
+            //     'pictures',
+            //     FileType::class,
+            //     [
+            //         'attr' => ['accept' => "image/*",],
+            //         'label' => false,
+            //         'multiple' => true,
+            //         'mapped' => false,
+            //         'required' => false
+            //     ]
+            // );
+        ;
     }
 }
