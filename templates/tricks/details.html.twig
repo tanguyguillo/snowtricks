@@ -46,7 +46,7 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                     {{ form_start(formUpdateTrick) }}
                     <span>
                         {# {{ trick.picture }} pencilMainPictureAction displayNone#}
-                        <div class="form-group">
+                        <div class="form-group PictueAction displayNone">
                             {{ form_row(formUpdateTrick.picture, {
                             label: 'Change the main picture',
                             type : "file",
@@ -81,7 +81,6 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                             </a>
                             <span id="title-trick"></span>
 
-
                             {# titleAction displayNone #}
                             <div class="form-group ">
                                 <br><br>
@@ -90,8 +89,6 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                                 attr : {'class': 'form-control smallForForm'}
                                 }) }}
                             </div>
-
-
 
                             {% endif %}
                         </h1>
@@ -182,10 +179,20 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                         </div>
                     </div>
                 </div>
+                {# <div class="form-group">
+                    {{ form_row(formUpdateTrick.modified_at, {
+                    label: 'Modifief at',
+                    type :"hidden",
+                    attr : {'class': 'form-control'}
+                    }) }}
+                </div> #}
 
                 {% endif %}
 
                 {####### information #########}
+
+                {# <input type="hidden" name="modified_at" value="{{ " now"|date("m/d/Y") }}"> #}
+
                 <div class="card-body">
                     <ul class="list-inline">
                         <li class="list-inline-item">
@@ -202,20 +209,23 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                         <li class="list-inline-item">
                             Groupe : {{ trick.category }}
 
-                            {# </li> | #}
+                        </li>
+
                         {# <li class="list-inline-item">
                             <a href="#comments-block">13 commentaires</a>
                         </li> #}
+
                     </ul>
                 </div>
 
-                {######### description content ##########}
 
 
                 <div class="text-left content text-white">
 
                     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and
                     app.request.attributes.get('_route') == "tricks_modifications" %}
+
+                    <input type="hidden" name="_token" value="{{ csrf_token('update' ~ trick.id) }}">
 
                     <div>
                         {{ form_row(formUpdateTrick.content, {
@@ -230,7 +240,10 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
 
                 {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.request.attributes.get('_route') ==
                 "tricks_modifications" %}
-                {######### buttons and groupe ##########}
+
+
+                <input type="hidden" name="modified_at" value="{{ csrf_token('update' ~ trick.id) }}">
+
                 <div class="container text-center">
                     <div class="row">
                         <div class="col-4">
@@ -244,13 +257,12 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                         </div>
                     </div>
 
-                    <div class="float-right">
-                        <form method="post"
-                            action="{{ path('tricks_app_tricks_delete_from_detail', {'id': trick.id}) }}"
-                            onsubmit="return confirm('Are you sure you want to save this trick?');">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ trick.id) }}">
-                            <button class="btn btn-danger">save</button>
-                        </form>
+                    <div class="col-2 float-right ml-1">
+
+                        <button class="btn btn-info updateTrick" type="submit">Save</button>
+
+                        {{ include('tricks/_form.html.twig', {'button_label': 'Update'}) }}
+
                     </div>
 
                     {{ form_end(formUpdateTrick) }}
@@ -264,15 +276,8 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                         </form>
                     </div>
 
-                    {##### Button save #######}
-                    <div class="col-2 float-right ml-1">
 
-                        {# <button class="btn btn-info updateTrick" type="submit">Save me</button> #}
 
-                        {# {{ include('tricks/_form.html.twig', {'button_label': 'Update'}) }} #}
-
-                        {# <input type="submit" value="Send Request" /> #}
-                    </div>
                 </div>
             </div>
 
@@ -290,7 +295,7 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
 
     </div>
 
-    <!-- tricks Zoom do a hite flash on loading-->
+
     <div id="overlay"></div>
 
 

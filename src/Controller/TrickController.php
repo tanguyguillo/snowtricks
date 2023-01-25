@@ -62,28 +62,24 @@ class TrickController extends AbstractController
         $additionnalPictures = $picturesRepository->findBy(['tricks' => $trickId]);
         $Image = $tricks->getPicture();
 
-        // $form = $formFactory->createBuilder()
-        //     ->add('task', TextType::class)
-        //     ->add('dueDate', DateType::class)
-        //     ->getForm();
-
         $formUpdateTrick = $this->createForm(Updatetype::class, $trick);
         $formUpdateTrick->handleRequest($request);
+        $submittedToken = $request->request->get('_token');
 
+        // $formUpdateTrick = $trick->setModifiedAt(new \DateTimeImmutable("now"));
+        // $formUpdateTrick->slugger =  $slug;
 
         // $formUpdateTrick = $this->createForm(Updatetype::class, $tricks);
         // $formUpdateTrick->handleRequest($formUpdateTrick);
-
         // $formUpdateTrick->slugger =  $slug;
-        // $formUpdateTrick->modified_at = new \DateTime('now');
+        //$submittedToken = $request->request->get('_token');  // modified_at
 
-        //$submittedToken = $request->request->get('_token');
-        if ($formUpdateTrick->isSubmitted() && $formUpdateTrick->isValid()) {
+        if ($this->isCsrfTokenValid('update' . $trick->getId(), $submittedToken)) {
 
             var_dump('$formUpdateTrick->isSubmitted: ' . $formUpdateTrick->isSubmitted());
             var_dump('$formUpdateTrick->isValid(): ' . $formUpdateTrick->isValid());
 
-
+            // // $formUpdateTrick->modified_at = new \DateTime('now');
             // $formUpdateTrick->getData(); holds the submitted values
             // but, the original `$trick` variable has also been updated
             $data = $formUpdateTrick->getData();
@@ -97,7 +93,7 @@ class TrickController extends AbstractController
     }
 
     /**
-     * function delete trick for homePage with Ajax
+     * function delete trick for homePage with Ajax/JsonResponse
      *
      */
     #[Route('/delete-tricks/{id}', name: 'app_tricks_delete', methods: ['DELETE'])]
@@ -124,7 +120,7 @@ class TrickController extends AbstractController
     }
 
     /**
-     * function deleteFromDetail (button delete)
+     * function deleteFromDetail (button delete from detail page)
      */
     #[Route('/delete-tricks_from_detail/{id}', name: 'app_tricks_delete_from_detail', methods: ['Post'])]
     public function deleteFromDetail(Request $request, Tricks $trick, TricksRepository $tricksRepository)
