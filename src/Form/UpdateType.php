@@ -34,14 +34,14 @@ class UpdateType extends AbstractType
             // )
             // ->add('modified_at', DateType::class)
             ->add('content', TextareaType::class)
-            // ->add(
-            //     'category',
-            //     EntityType::class,
-            //     [
-            //         'class' => Category::class,
-            //         'required' => false
-            //     ]
-            // )
+            ->add(
+                'category',
+                EntityType::class,
+                [
+                    'class' => Category::class,
+                    'required' => false
+                ]
+            )
             // ->add(
             //     'picture',
             //     FileType::class,
