@@ -194,40 +194,13 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
 
                 {# <input type="hidden" name="modified_at" value="{{ " now"|date("m/d/Y") }}"> #}
 
-                <div class="card-body">
-                    <ul class="list-inline">
-                        <li class="list-inline-item">
-                            Created by : {{ Author.username }}
-                        </li class="list-inline-item"> |
-                        <li class="list-inline-item">
-                            Created at : {{ trick.createdAt|date('d-m-Y') }}
-                        </li> |
-
-                        <li class="list-inline-item">
-                            Updated at : {{ trick.createdAt|date('d-m-Y') }}
-                        </li> |
-
-                        <li class="list-inline-item">
-                            Groupe : {{ trick.category }}
-
-                        </li>
-
-                        {# <li class="list-inline-item">
-                            <a href="#comments-block">13 commentaires</a>
-                        </li> #}
-
-                    </ul>
-                </div>
 
 
-
+                {# content #}
                 <div class="text-left content text-white">
-
                     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and
                     app.request.attributes.get('_route') == "tricks_modifications" %}
-
                     <input type="hidden" name="_token" value="{{ csrf_token('update' ~ trick.id) }}">
-
                     <div>
                         {{ form_row(formUpdateTrick.content, {
                         label: 'Modify the description of this trick',

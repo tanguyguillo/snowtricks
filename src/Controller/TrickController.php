@@ -77,24 +77,21 @@ class TrickController extends AbstractController
         $formUpdateTrick = $this->createForm(Updatetype::class, $trick);
         $formUpdateTrick->handleRequest($request);
         $submittedToken = $request->request->get('_token');
-        $date = date('Y-m-d H:i:s');
-
-        //  {{ trick.createdAt ? trick.createdAt|date('Y-m-d H:i:s') : '' }}
-
-        // $formUpdateTrick = $trick->setModifiedAt(new \DateTimeImmutable("now"));
-        // $formUpdateTrick->slugger =  $slug;
-
-        // $formUpdateTrick = $this->createForm(Updatetype::class, $tricks);
-        // $formUpdateTrick->handleRequest($formUpdateTrick);
-        // $formUpdateTrick->slugger =  $slug;
-        //$submittedToken = $request->request->get('_token');  // modified_at
+        $date = date('Y-m-d H:i:s');  // see if needed
 
         // if clicked -- $data = $formUpdateTrick->getData();
         if ($this->isCsrfTokenValid('update' . $trick->getId(), $submittedToken)) {
             // set the update
             $trick->setContent($formUpdateTrick->get('content')->getData()); // OK
-            $trick->setCategory($formUpdateTrick->get('category')->getData()); // OK
-            $trick->setModifiedAt(new \DateTimeImmutable("now"));
+            $trick->setCategory($formUpdateTrick->get('category')->getData()); // OK 
+            $trick->setModifiedAt(new \DateTimeImmutable("now")); // OK
+            $formUpdateTrick->get('title')->getData();
+
+
+            // dd($formUpdateTrick->get('title')->getData());
+            //$trick->setTitle($formUpdateTrick->get('title')->getData()); // OK 
+
+
 
             // dd($formUpdateTrick->get('title')->getData());
 

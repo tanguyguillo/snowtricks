@@ -46,25 +46,18 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                     {{ form_start(formUpdateTrick) }}
 
 
-                    {# <div class="form-group ">
+                    <div class="form-group ">
                         <br><br>
                         {{ form_row(formUpdateTrick.title, {
                         label: 'Update this trick name',
                         attr : {'class': 'form-control smallForForm'}
                         }) }}
-                    </div> #}
-
-                    {# dump{{ trick }} #}
-
-
-                    {# <div>Last update : {{ trick.modified_at }}</div> #}
-
+                    </div>
 
                     {# content #}
                     <div class="text-left content text-white">
                         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and
                         app.request.attributes.get('_route') == "tricks_modifications" %}
-
                         <input type="hidden" name="_token" value="{{ csrf_token('update' ~ trick.id) }}">
                         <div>
                             {{ form_row(formUpdateTrick.content, {
@@ -76,6 +69,29 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                         {{ trick.content }}
                         {% endif %}
                     </div>
+
+                    {# infos #}
+                    <div class="card-body">
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                Created by : {{ Author.username }}
+                            </li class="list-inline-item"> |
+                            <li class="list-inline-item">
+                                Created at : {{ trick.createdAt|date('d-m-Y') }}
+                            </li> |
+                            {% if trick.modifiedAt != null %}
+                            <li class="list-inline-item">
+                                Updated at : {{ trick.modifiedAt|date('d-m-Y') }}
+                            </li> |
+                            {% endif %}
+                            <li class="list-inline-item">
+                                Groupe : {{ trick.category }}
+                            </li>
+                        </ul>
+                    </div>
+
+                    <hr>
+
                     {# group/category #}
                     <div class="container text-center">
                         <div class="row">

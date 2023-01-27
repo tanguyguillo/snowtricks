@@ -6,12 +6,9 @@ use App\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-
 use App\Repository\TricksRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-
-
 use Symfony\Component\String\Slugger\AsciiSlugger;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -79,9 +76,8 @@ class Tricks
         $this->setActive(1);
         $this->setCreatedAt(new \DateTimeImmutable("now"));
         $this->slugger = new AsciiSlugger();
-
         $this->setPicture("main-picture.jpg");
-        $this->setDescription("O");
+        $this->setDescription("O"); // not used for instance
         $this->additionnalTrick = new ArrayCollection();
         $this->comments = new ArrayCollection();
     }
@@ -98,11 +94,13 @@ class Tricks
 
     public function setTitle(string $title): self
     {
-        $titleMin = strtolower($title);
-        $this->setSlug($this->slugger->slug($titleMin));
-
         $title = ucfirst($title);
         $this->title = $title;
+
+        $titleMin = strtolower($title);
+        $this->slugger = new AsciiSlugger();
+        $this->setSlug($this->slugger->slug($titleMin));
+
         return $this;
     }
 

@@ -28,5 +28,9 @@ class AppFixtures extends Fixture
         }
         $manager->flush();
 
+        //    $tag = Tag::create([
+        //     'name' => $faker->text($maxNbChars = 6),
+        //     'slug' => ["fa" =>"test]
+
     }
 }

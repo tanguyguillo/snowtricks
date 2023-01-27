@@ -22,17 +22,16 @@ class UpdateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            // ->add(
-            //     'title',
-            //     TextType::class,
-            //     [
-            //         'attr' => [
-            //             'class' => 'form-control',
-            //             'required' => false
-            //         ]
-            //     ]
-            // )
-            // ->add('modified_at', DateType::class)
+            ->add(
+                'title',
+                TextType::class,
+                [
+                    'attr' => [
+                        'class' => 'form-control',
+                        'required' => false
+                    ]
+                ]
+            )
             ->add('content', TextareaType::class)
             ->add(
                 'category',
