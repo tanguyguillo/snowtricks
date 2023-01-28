@@ -54,13 +54,12 @@ class Tricks
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
-    private $slugger;
-
     #[ORM\Column(length: 255)]
     #[Assert\File(
         maxSize: '3M',
     )]
     private ?string $picture = null;
+    private $slugger;
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $modified_at = null;
@@ -68,7 +67,7 @@ class Tricks
     #[ORM\OneToMany(mappedBy: 'tricks', targetEntity: Pictures::class, cascade: ["all"], orphanRemoval: true)]
     private Collection $additionnalTrick;
 
-    #[ORM\OneToMany(mappedBy: 'relation', targetEntity: Comments::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'relation', targetEntity: Comments::class, cascade: ["all"], orphanRemoval: true)]
     private Collection $comments;
 
     public function __construct()
@@ -77,7 +76,7 @@ class Tricks
         $this->setCreatedAt(new \DateTimeImmutable("now"));
         $this->slugger = new AsciiSlugger();
         $this->setPicture("main-picture.jpg");
-        $this->setDescription("O"); // not used for instance
+        $this->setDescription("X"); // not used for instance
         $this->additionnalTrick = new ArrayCollection();
         $this->comments = new ArrayCollection();
     }
@@ -96,11 +95,9 @@ class Tricks
     {
         $title = ucfirst($title);
         $this->title = $title;
-
         $titleMin = strtolower($title);
         $this->slugger = new AsciiSlugger();
         $this->setSlug($this->slugger->slug($titleMin));
-
         return $this;
     }
 

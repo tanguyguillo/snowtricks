@@ -24,7 +24,7 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
     <br>
     <br>
 
-    {#
+    {# to test
     <pre>
         {{ app.request.attributes.get('_route') }}
         {{ route }}
@@ -37,41 +37,54 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
             <div class="modifications">
                 <div class="rounded shadow p-3 mb-5 bg-white">
 
-                    {# main picture icone modification#}
                     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.request.attributes.get('_route') ==
                     "tricks_modifications" %}
+                    <span>
+                        <a href="#tricksDelete" class="float-right ml-1">
+                            <i class="bi bi-trash-fill iconTricks"></i>
+                        </a>
+                        <a href="#" class="float-right ml-1" alt="update trick">
+                            <i class="bi bi-pencil-fill iconTricks"></i>
+                        </a>
+                    </span>
+                    {% endif %}
 
-                    {# {{ form_start(formUpdateTrick, {'attr': {'novalidate': 'novalidate'}}) }} #}
+                    {# main picture #}
+                    <img class="bd-placeholder-img bd-placeholder-img-lg img-fluid " width="100%" height="150"
+                        src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/{{ trick.picture }}"
+                        alt="{{ trick.title }}">
+
+
+                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.request.attributes.get('_route') ==
+                    "tricks_modifications" %}
 
                     {{ form_start(formUpdateTrick) }}
 
 
-                    <div class="form-group ">
-                        <br><br>
-                        {{ form_row(formUpdateTrick.title, {
-                        label: 'Update this trick name',
-                        attr : {'class': 'form-control smallForForm'}
-                        }) }}
-                    </div>
+                    <div class="card-body">
+                        {# trick name modification modification#}
+                        <div class="container text-center">
+                            <div class="row">
+                                <div class="form-group">
+                                    {{ form_row(formUpdateTrick.title, {
+                                    label: 'Update this trick name',
+                                    attr : {'class': 'form-control smallForForm'}
+                                    }) }}
+                                </div>
+                            </div>
+                        </div>
 
-                    {# content #}
-                    <div class="text-left content text-white">
+                        {# additionnal picture #}
                         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and
                         app.request.attributes.get('_route') == "tricks_modifications" %}
-                        <input type="hidden" name="_token" value="{{ csrf_token('update' ~ trick.id) }}">
-                        <div>
-                            {{ form_row(formUpdateTrick.content, {
-                            label: 'Modify the description of this trick',
-                            attr : {'class': 'form-control'}
-                            }) }}
-                        </div>
-                        {% else %}
-                        {{ trick.content }}
-                        {% endif %}
-                    </div>
 
-                    {# infos #}
-                    <div class="card-body">
+                        {{ form_row(formUpdateTrick.pictures, {
+                        label: 'Add more additionnal pictures',
+                        attr : {'class': 'form-control'}
+                        }) }}
+                        {% endif %}
+
+                        {# infos #}
                         <ul class="list-inline">
                             <li class="list-inline-item">
                                 Created by : {{ Author.username }}
@@ -87,10 +100,22 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                             <li class="list-inline-item">
                                 Groupe : {{ trick.category }}
                             </li>
+                            {# content #}
+                            <li>
+                                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and
+                                app.request.attributes.get('_route') == "tricks_modifications" %}
+                                <input type="hidden" name="_token" value="{{ csrf_token('update' ~ trick.id) }}">
+                                {{ form_row(formUpdateTrick.content, {
+                                label: ' ',
+                                attr : {'class': 'form-control'}
+                                }) }}
+                                {% else %}
+                                {{ trick.content }}
+                                {% endif %}
+                            </li>
                         </ul>
-                    </div>
+                    </div>{# end of <div class="card-body"></div> #}
 
-                    <hr>
 
                     {# group/category #}
                     <div class="container text-center">
@@ -105,16 +130,12 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                                 {% endif %}
                             </div>
                         </div>
+
                         {# submit #}
                         <div class="col-2 float-right ml-1">
                             <button class="btn btn-info updateTrick" type="submit">Save</button>
                         </div>
                         {{ form_end(formUpdateTrick) }}
-
-
-
-
-
 
                         <div class="col-2 float-right ml-1">
                             <form method="post"

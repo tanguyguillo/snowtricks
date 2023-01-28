@@ -22,6 +22,15 @@ class UpdateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            // ->add(
+            //     'picture',
+            //     FileType::class,
+            //     [
+            //         'attr' => ['accept' => "image/*",],
+            //         'label' => 'Modify this main trick picture',
+            //         'data_class' => null,
+            //     ]
+            // )
             ->add(
                 'title',
                 TextType::class,
@@ -50,17 +59,16 @@ class UpdateType extends AbstractType
             //         'data_class' => null,
             //     ]
             // )
-            // ->add(
-            //     'pictures',
-            //     FileType::class,
-            //     [
-            //         'attr' => ['accept' => "image/*",],
-            //         'label' => false,
-            //         'multiple' => true,
-            //         'mapped' => false,
-            //         'required' => false
-            //     ]
-            // );
-        ;
+            ->add(
+                'pictures',
+                FileType::class,
+                [
+                    'attr' => ['accept' => "image/*",],
+                    'label' => false,
+                    'multiple' => true,
+                    'mapped' => false,
+                    'required' => false
+                ]
+            );
     }
 }
