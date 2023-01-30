@@ -61,8 +61,27 @@ class TrickController extends AbstractController
      * function details
      */
     #[Route('/details/{slug}', name: 'details')]
-    #[Route('/details/modifications/{slug}', name: 'modifications')]
     public function details(EntityManagerInterface $entityManager, Request $request, $slug, TricksRepository $tricksRepository, UserRepository $userRepository, Tricks $tricks, PicturesRepository $picturesRepository): Response
+    {
+        $trick = $tricksRepository->findOneBy(['slug' => $slug]);
+        if (!$trick) {
+            throw new NotFoundHttpException("No trick found");
+        }
+        $AuthorId = $trick->getUser();
+        $Author = $userRepository->findOneBy(['id' => $AuthorId]);
+        $trickId = $trick->getId();
+        $additionnalPictures = $picturesRepository->findBy(['tricks' => $trickId]);
+        $Image = $tricks->getPicture();
+        $date = date('Y-m-d H:i:s');
+        return $this->render('tricks/details.html.twig', compact('trick', 'Author', 'additionnalPictures', 'Image', 'date'));
+    }
+
+
+    /**
+     * update
+     */
+    #[Route('/details/modifications/{slug}', name: 'modifications')]
+    public function Update(EntityManagerInterface $entityManager, Request $request, $slug, TricksRepository $tricksRepository, UserRepository $userRepository, Tricks $tricks, PicturesRepository $picturesRepository): Response
     {
         $trick = $tricksRepository->findOneBy(['slug' => $slug]);
         if (!$trick) {
@@ -110,7 +129,7 @@ class TrickController extends AbstractController
 
         // dd($trick);
 
-        return $this->render('tricks/details.html.twig', compact('trick', 'Author', 'additionnalPictures', 'formUpdateTrick', 'Image', 'date'));
+        return $this->render('tricks/update.html.twig', compact('trick', 'Author', 'additionnalPictures', 'formUpdateTrick', 'Image', 'date'));
     }
 
     /**

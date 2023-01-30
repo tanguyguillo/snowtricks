@@ -256,19 +256,6 @@ ul li a:hover .footerDown {
   transition: transform 0.8s cubic-bezier(0.75, 0, 0.85, 1);
 }
 
-/* #loadmore {
-    margin: 15px auto 0px;
-    display: table;
-    border: none;
-    padding: 5px 10px;
-    font-size: 18px;
-    cursor: pointer;
-    color: rgb(84, 187, 98);
-    border-radius: 2px;
-    background-color: #ffffff;
-    border: solid 1px green;
-} */
-
 .list .list-element:nth-child(1) {
   display: block;
 }
@@ -457,7 +444,9 @@ img {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(249, 246, 246, 0.9) none 100% / contain no-repeat;
+  background: rgba(17, 17, 17, 0.5) none 100% / contain no-repeat;
+  background-position: center;
+  margin: auto;
   z-index: 800;
   visibility: hidden;
   opacity: 0.5;
@@ -526,4 +515,85 @@ div.rounded.shadow.p-3.mb-5.bg-white>form>div>h1>div {
 
 #tricks_update_picture {
   color: rgb(10, 10, 10);
+}
+
+.left {
+  width: 920px !important;
+  padding-bottom: 40px;
+  min-height: auto !important;
+  padding-right: 0;
+  float: left;
+}
+
+.left>p:first-of-type {
+  background: #ffd987;
+  font-style: italic;
+  padding: 5px 10px;
+  margin-bottom: 40px;
+}
+
+
+img.mr-3.rounded-circle {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+}
+
+.width300 {
+  width: 450px;
+  height: 50px;
+}
+
+
+
+
+.tip {
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  font-size: 1.2em;
+  position: relative;
+  width: 200px;
+}
+
+.tip:before {
+  position: absolute;
+  top: -14px;
+  left: 98px;
+  display: inline-block;
+  border-right: 14px solid transparent;
+  border-bottom: 14px solid #fff;
+  border-left: 14px solid transparent;
+  border-bottom-color: rgba(0, 0, 0, 0.2);
+  content: '';
+}
+
+.tip:after {
+  position: absolute;
+  top: -12px;
+  left: 99px;
+  display: inline-block;
+  border-right: 12px solid transparent;
+  border-bottom: 12px solid #fff;
+  border-left: 12px solid transparent;
+  content: '';
+}
+
+.tip.left:before {
+  border-top: 14px solid transparent;
+  border-right: 14px solid #fff;
+  border-bottom: 14px solid transparent;
+  border-right-color: rgba(0, 0, 0, 0.2);
+  left: -28px;
+  top: 20px;
+}
+
+.tip.left:after {
+  border-top: 12px solid transparent;
+  border-right: 12px solid #fff;
+  border-bottom: 12px solid transparent;
+  left: -24px;
+  top: 22px;
 }
