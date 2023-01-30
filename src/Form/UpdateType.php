@@ -14,7 +14,7 @@ use App\Entity\Category;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 /**
- * class UpdateType  // ->add('save', SubmitType::class, ['attr' => ['class' => 'save']])
+ * class UpdateType 
  *
  */
 class UpdateType extends AbstractType
@@ -22,15 +22,15 @@ class UpdateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            // ->add(
-            //     'picture',
-            //     FileType::class,
-            //     [
-            //         'attr' => ['accept' => "image/*",],
-            //         'label' => 'Modify this main trick picture',
-            //         'data_class' => null,
-            //     ]
-            // )
+            ->add(
+                'picture',
+                FileType::class,
+                [
+                    'attr' => ['accept' => "image/*",],
+                    'label' => true,
+                    'data_class' => null,
+                ]
+            )
             ->add(
                 'title',
                 TextType::class,

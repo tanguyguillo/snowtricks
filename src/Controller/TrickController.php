@@ -14,18 +14,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\String\Slugger\SluggerInterface;
-
 use App\Form\TricksType;
 use App\Form\UpdateType;
 use App\Form\CommentsType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-
 use App\Entity\Pictures;
 use App\Entity\Comments;
-
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
-
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
@@ -50,15 +46,11 @@ class TrickController extends AbstractController
     {
         $this->picturesRepository = $picturesRepository;
         $this->tricksRepository = $tricksRepository;
-
         $this->em = $em;
-
-        // // In a Command, you *must* call the parent constructor
-        // parent::__construct();
     }
 
     /**
-     * function details
+     * function details (read)
      */
     #[Route('/details/{slug}', name: 'details')]
     public function details(EntityManagerInterface $entityManager, Request $request, $slug, TricksRepository $tricksRepository, UserRepository $userRepository, Tricks $tricks, PicturesRepository $picturesRepository): Response
@@ -75,7 +67,6 @@ class TrickController extends AbstractController
         $date = date('Y-m-d H:i:s');
         return $this->render('tricks/details.html.twig', compact('trick', 'Author', 'additionnalPictures', 'Image', 'date'));
     }
-
 
     /**
      * update
@@ -96,11 +87,8 @@ class TrickController extends AbstractController
         $formUpdateTrick = $this->createForm(Updatetype::class, $trick);
         $formUpdateTrick->handleRequest($request);
         $submittedToken = $request->request->get('_token');
-        $date = date('Y-m-d H:i:s');  // see if needed
 
-        // if clicked -- $data = $formUpdateTrick->getData();
         if ($this->isCsrfTokenValid('update' . $trick->getId(), $submittedToken)) {
-            // set the update
             $trick->setContent($formUpdateTrick->get('content')->getData()); // OK
             $trick->setCategory($formUpdateTrick->get('category')->getData()); // OK 
             $trick->setModifiedAt(new \DateTimeImmutable("now")); // OK
@@ -109,11 +97,7 @@ class TrickController extends AbstractController
 
             // dd($formUpdateTrick->get('title')->getData());
             //$trick->setTitle($formUpdateTrick->get('title')->getData()); // OK 
-
-
-
             // dd($formUpdateTrick->get('title')->getData());
-
             // $trick->setTitle($formUpdateTrick->get('title')->getData()); // OK
 
             $this->em->persist($tricks);
@@ -129,7 +113,7 @@ class TrickController extends AbstractController
 
         // dd($trick);
 
-        return $this->render('tricks/update.html.twig', compact('trick', 'Author', 'additionnalPictures', 'formUpdateTrick', 'Image', 'date'));
+        return $this->render('tricks/update.html.twig', compact('trick', 'Author', 'additionnalPictures', 'formUpdateTrick', 'Image'));
     }
 
     /**
