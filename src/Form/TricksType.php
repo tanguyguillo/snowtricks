@@ -12,6 +12,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 use App\Entity\Category;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 /**
  * class TricksType
@@ -59,6 +60,15 @@ class TricksType extends AbstractType
                     'required' => false
                 ]
             );
+
+        // ->add(
+        //     'additionnalTricks',
+        //     CollectionType::class,
+        //     [
+        //         'entry_type' => Pictures::class,
+        //         'entry_options' => ['label' => false, 'attr' => ['accept' => "image/*",]],
+        //     ]
+        // );
     }
 
     /**

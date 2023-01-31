@@ -94,6 +94,9 @@ class TrickController extends AbstractController
             $trick->setModifiedAt(new \DateTimeImmutable("now"));
             $formUpdateTrick->get('title')->getData();
             $pictureFile =  $formUpdateTrick->get('picture')->getData();
+
+
+
             if ($pictureFile) {
                 $originalFilename = $pictureFile;
                 $newFilename = md5(uniqid()) . '.' . $originalFilename->guessExtension();

@@ -62,7 +62,7 @@ class Tricks
     private $slugger;
 
     #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $modified_at = null;
+    private ?\DateTimeImmutable $modified_at = null; // make migration
 
     #[ORM\OneToMany(mappedBy: 'tricks', targetEntity: Pictures::class, cascade: ["all"], orphanRemoval: true)]
     private Collection $additionnalTrick;
