@@ -89,16 +89,30 @@ class TrickController extends AbstractController
         $submittedToken = $request->request->get('_token');
 
         if ($this->isCsrfTokenValid('update' . $trick->getId(), $submittedToken)) {
-            $trick->setContent($formUpdateTrick->get('content')->getData()); // OK
-            $trick->setCategory($formUpdateTrick->get('category')->getData()); // OK 
-            $trick->setModifiedAt(new \DateTimeImmutable("now")); // OK
+            $trick->setContent($formUpdateTrick->get('content')->getData());
+            $trick->setCategory($formUpdateTrick->get('category')->getData());
+            $trick->setModifiedAt(new \DateTimeImmutable("now"));
             $formUpdateTrick->get('title')->getData();
+            $pictureFile =  $formUpdateTrick->get('picture')->getData();
+            if ($pictureFile) {
+                $originalFilename = $pictureFile;
+                $newFilename = md5(uniqid()) . '.' . $originalFilename->guessExtension();
+                $tricks->setPicture($newFilename);
+            }
+            try {
+                $pictureFile->move(
+                    $this->getParameter('pictues_directory'),
+                    $newFilename
+                );
+            } catch (FileException $e) {
+                // be redirected to the form page in the event of an error, specifying the type(s) of error;
+                $message = $this->addFlash('error', 'error type:' . $e); // or in twig
+                return $this->render('tricks/add.html.twig', [
+                    'formAddTrick' =>  $formUpdateTrick->createView(),
+                    'message' => $message
+                ]);
+            }
 
-
-            // dd($formUpdateTrick->get('title')->getData());
-            //$trick->setTitle($formUpdateTrick->get('title')->getData()); // OK 
-            // dd($formUpdateTrick->get('title')->getData());
-            // $trick->setTitle($formUpdateTrick->get('title')->getData()); // OK
 
             $this->em->persist($tricks);
             $this->em->flush();
@@ -221,6 +235,7 @@ class TrickController extends AbstractController
                 $safeFilename = $slugger->slug($originalFilename);  // not used
                 $newFilename = md5(uniqid()) . '.' . $originalFilename->guessExtension();
                 $tricks->setPicture($newFilename);
+
                 try {
                     $pictureFile->move(
                         $this->getParameter('pictues_directory'),
