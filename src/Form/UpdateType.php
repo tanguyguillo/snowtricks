@@ -11,9 +11,9 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use App\Entity\Category;
 use App\Entity\Pictures;
-
+use App\Entity\Tricks;
+use App\Entity\Picture;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 /**
@@ -32,7 +32,8 @@ class UpdateType extends AbstractType
                     'attr' => ['accept' => "image/*",],
                     'label' => true,
                     'data_class' => null,
-                    // 'required' => false,
+                    'required' => false,
+                    'mapped' => false
                 ]
             )
             ->add(
@@ -64,21 +65,22 @@ class UpdateType extends AbstractType
                     'mapped' => false,
                     'required' => false
                 ]
-            )
-            ->add(
-                'additionnalTrick',
-                CollectionType::class,
-                [
-                    'entry_type' => Pictures::class,
-                    'entry_options' => ['label' => false, 'attr' => ['accept' => "image/*",]],
-                ]
             );
+        // ->add(
+        //     'additionnalTrick',
+        //     CollectionType::class,
+        //     [
+        //         'entry_type' => Pictures::class,
+        //         'entry_options' => ['label' => false, 'attr' => ['accept' => "image/*",]],
+        //         'mapped' => false
+        //     ]
+        // );
     }
 
     // public function configureOptions(OptionsResolver $resolver): void
     // {
     //     $resolver->setDefaults([
-    //         'data_class' => Pictures::class,
+    //         'data_class' => null
     //     ]);
     // }
 }

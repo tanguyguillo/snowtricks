@@ -75,18 +75,38 @@ class TrickController extends AbstractController
     public function Update(EntityManagerInterface $entityManager, Request $request, $slug, TricksRepository $tricksRepository, UserRepository $userRepository, Tricks $tricks, PicturesRepository $picturesRepository): Response
     {
         $trick = $tricksRepository->findOneBy(['slug' => $slug]);
+
         if (!$trick) {
             throw new NotFoundHttpException("No trick found");
         }
+
         $AuthorId = $trick->getUser();
         $Author = $userRepository->findOneBy(['id' => $AuthorId]);
         $trickId = $trick->getId();
         $additionnalPictures = $picturesRepository->findBy(['tricks' => $trickId]);
         $Image = $tricks->getPicture();
-
         $formUpdateTrick = $this->createForm(Updatetype::class, $trick);
+
+        // dd($formUpdateTrick);
+
         $formUpdateTrick->handleRequest($request);
         $submittedToken = $request->request->get('_token');
+
+        // dd($additionnalPictures);
+
+        // $additionnalTrick = new pictures();
+        // $form = $this->createForm(TaskType::class, $task);
+
+        // dummy code - add some example tags to the task
+        // (otherwise, the template will render an empty list of tags)
+        // $tag1 = new Tag();
+        // $tag1->setName('tag1');
+        // $task->getTags()->add($tag1);
+        // $tag2 = new Tag();
+        // $tag2->setName('tag2');
+        // $task->getTags()->add($tag2);
+
+
 
         if ($this->isCsrfTokenValid('update' . $trick->getId(), $submittedToken)) {
             $trick->setContent($formUpdateTrick->get('content')->getData());
@@ -95,25 +115,25 @@ class TrickController extends AbstractController
             $formUpdateTrick->get('title')->getData();
             $pictureFile =  $formUpdateTrick->get('picture')->getData();
 
-
-
-            if ($pictureFile) {
-                $originalFilename = $pictureFile;
-                $newFilename = md5(uniqid()) . '.' . $originalFilename->guessExtension();
-                $tricks->setPicture($newFilename);
-            }
-            try {
-                $pictureFile->move(
-                    $this->getParameter('pictues_directory'),
-                    $newFilename
-                );
-            } catch (FileException $e) {
-                // be redirected to the form page in the event of an error, specifying the type(s) of error;
-                $message = $this->addFlash('error', 'error type:' . $e); // or in twig
-                return $this->render('tricks/add.html.twig', [
-                    'formAddTrick' =>  $formUpdateTrick->createView(),
-                    'message' => $message
-                ]);
+            if (!$pictureFile == null) {
+                if ($pictureFile) {
+                    $originalFilename = $pictureFile;
+                    $newFilename = md5(uniqid()) . '.' . $originalFilename->guessExtension();
+                    $tricks->setPicture($newFilename);
+                }
+                try {
+                    $pictureFile->move(
+                        $this->getParameter('pictures_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // be redirected to the form page in the event of an error, specifying the type(s) of error;
+                    $message = $this->addFlash('error', 'error type:' . $e); // or in twig
+                    return $this->render('tricks/add.html.twig', [
+                        'formAddTrick' =>  $formUpdateTrick->createView(),
+                        'message' => $message
+                    ]);
+                }
             }
 
 
@@ -146,7 +166,7 @@ class TrickController extends AbstractController
             // 1 delete additionnal picture from server
             $this->deleteAdditionnalPicture($trickId);
             // get the physical path of the main picture
-            $mainPictureWithPath = $this->getParameter('pictues_directory') . '/' . $trick->getPicture();
+            $mainPictureWithPath = $this->getParameter('pictures_directory') . '/' . $trick->getPicture();
             // 2 - delete trick from Bd
             $tricksRepository->remove($trick, true); // OK
             // 3 - delete Main picture on server
@@ -171,7 +191,7 @@ class TrickController extends AbstractController
             $trickId = $trick->getId();
             // 1 delete additionnal picture from server
             $this->deleteAdditionnalPicture($trickId);
-            $mainPictureWithPath = $this->getParameter('pictues_directory') . '/' . $trick->getPicture();
+            $mainPictureWithPath = $this->getParameter('pictures_directory') . '/' . $trick->getPicture();
             // 2 - delete trick from Bd
             $tricksRepository->remove($trick, true);
             // 3 - delete Main picture on server
@@ -226,7 +246,7 @@ class TrickController extends AbstractController
                 // foreach ($additionnalPictures as $additionnalPicture) {
                 //     $file  = md5(uniqid()) . '.' . $additionnalPicture->guessExtension();
                 //     $additionnalPicture->move(
-                //         $this->getParameter('pictues_directory'),
+                //         $this->getParameter('pictures_directory'),
                 //         $file
                 //     );
                 //     // in db 
@@ -241,17 +261,17 @@ class TrickController extends AbstractController
 
                 try {
                     $pictureFile->move(
-                        $this->getParameter('pictues_directory'),
+                        $this->getParameter('pictures_directory'),
                         $newFilename
                     );
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
                     //soit redirigé sur la page du formulaire en cas d'erreur, en précisant le(s) type(s) d'erreurs ;
 
-                    $message = $this->addFlash('error', 'error type:' . $e); // or in twig
+                    $message = $this->addFlash('error', 'error type:' . $e);
 
                     return $this->render('tricks/add.html.twig', [
-                        'formAddTrick' =>  $formAddTrick->createView(),
+                        // 'formAddTrick' =>  $formAddTrick->createView(),
                         'message' => $message
                     ]);
                 }
@@ -290,10 +310,10 @@ class TrickController extends AbstractController
                 foreach ($additionnalPictures as $additionnalPicture) {
                     $file = $additionnalPicture->getpicture();
                     // get the physical path
-                    $additionalPictureWithPath = $this->getParameter('pictues_directory') . '/' .  $file;
+                    $additionalPictureWithPath = $this->getParameter('pictures_directory') . '/' .  $file;
                     // delete trick from server
-                    if (file_exists($additionalPictureWithPath = $this->getParameter('pictues_directory') . '/' .  $file)) {
-                        unlink($additionalPictureWithPath = $this->getParameter('pictues_directory') . '/' .  $file);
+                    if (file_exists($additionalPictureWithPath = $this->getParameter('pictures_directory') . '/' .  $file)) {
+                        unlink($additionalPictureWithPath = $this->getParameter('pictures_directory') . '/' .  $file);
                     }
                 } // end for each
             } else {
@@ -326,7 +346,7 @@ class TrickController extends AbstractController
                 foreach ($additionnalPictures as $additionnalPicture) {
                     $file  = md5(uniqid()) . '.' . $additionnalPicture->guessExtension();
                     $additionnalPicture->move(
-                        $this->getParameter('pictues_directory'),
+                        $this->getParameter('pictures_directory'),
                         $file
                     );
                     // in db 
@@ -334,25 +354,26 @@ class TrickController extends AbstractController
                     $img->setpicture($file);
                     $tricks->addAdditionnalTrick($img);
                 }
-
                 $safeFilename = $slugger->slug($originalFilename);  // not used
                 $newFilename = md5(uniqid()) . '.' . $originalFilename->guessExtension();
                 $tricks->setPicture($newFilename);
                 try {
                     $pictureFile->move(
-                        $this->getParameter('pictues_directory'),
+                        $this->getParameter('pictures_directory'),
                         $newFilename
                     );
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
                     //soit redirigé sur la page du formulaire en cas d'erreur, en précisant le(s) type(s) d'erreurs ;
 
-                    $message = $this->addFlash('error', 'error type:' . $e); // or in twig
+                    $message = $this->addFlash('error', 'error type:' . $e);
 
-                    return $this->render('tricks/add.html.twig', [
-                        'formAddTrick' =>  $formAddTrick->createView(),
-                        'message' => $message
-                    ]);
+                    $this->error($message);
+
+                    // return $this->render('tricks/add.html.twig', [
+                    //     'formAddTrick' =>  $formAddTrick->createView(),
+                    //     'message' => $message
+                    // ]);
                 }
                 $tricks->setPicture($newFilename);
             }
@@ -370,6 +391,22 @@ class TrickController extends AbstractController
 
         return $this->render('tricks/add.html.twig', [
             'formAddTrick' =>  $formAddTrick->createView(),
+        ]);
+    }
+
+
+
+    /**
+     * function error
+     * 
+     * @return  Response
+     */
+    #[Route('/error', name: 'app_user_tricks_error')]
+    public function error($message): Response
+    {
+        $messageError = $message;
+        return $this->render('tricks/error.html.twig', [
+            'messageError' =>  $messageError(),
         ]);
     }
 }

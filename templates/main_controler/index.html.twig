@@ -11,8 +11,6 @@
                 experiences
                 friends. </h2>
         </div>
-
-        <!-- go down to the tricks -->
         <div>
             <a class="d-block text-center text-white rounded positionArrow" href="#tricks">
                 <i class=" bi bi-arrow-down-circle-fill fa-3x chevron-down"></i>
@@ -24,16 +22,16 @@
 {% endblock %}
 
 {% block main%}
-<div id="tricks">
+{# <div id="tricks">
     <br>
-</div>
+</div> #}
 <section class="page-section tricks">
     <div class="container">
-
-        <!-- tricks Grid Items -->
         <div class="row justify-content-center items">
             {% for trick in tricks %}
+
             <!-- tricks Items-->
+
             <div class="col-md-2 col-lg-2 mb-5 item">
                 <div class="mx-auto">
                     <div class="d-flex align-items-center justify-content-center h-100 w-100">
@@ -43,7 +41,9 @@
                             <div class="card-body">
                                 <a href="tricks/details/{{ trick.slug }}" class="link-primary">{{
                                     trick.title|striptags}}</a>
+
                                 {######### Only if connected : delete and update ###########}
+
                                 {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                                 <span>
                                     <a class="portfolio-link float-right ml-1 btndelete" data-bs-toggle="modal"
@@ -110,6 +110,5 @@
             <a href="javascript:;" class="showMore"><i class="bi bi-plus-circle-fill fa-3x"></i></a>
         </div>
     </div>
-
 </section>
 {% endblock %}

@@ -365,7 +365,9 @@ i {
 
 .content {
   overflow: scroll;
-  border: #e83e8c 1px solid;
+  /* border: #e83e8c 1px solid; */
+  border: #495057 1px solid;
+  border-radius: 30px;
   height: auto;
   max-height: 300px;
   padding: 20px;
@@ -623,3 +625,8 @@ img.mr-3.rounded-circle {
 .formDisplayNone {
   display: none;
 }
+
+/* .floatRight {
+  clear: left;
+  float: right;
+} */

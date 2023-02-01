@@ -54,11 +54,12 @@ class Tricks
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     #[Assert\File(
         maxSize: '3M',
     )]
-    private ?string $picture = null;
+    private ?string $picture; //= null;
+
     private $slugger;
 
     #[ORM\Column(nullable: true)]
@@ -76,7 +77,7 @@ class Tricks
         $this->setCreatedAt(new \DateTimeImmutable("now"));
         $this->slugger = new AsciiSlugger();
         $this->setPicture("main-picture.jpg");
-        $this->setDescription("X"); // not used for instance
+        $this->setDescription("X"); // not used for instance... so yet X
         $this->additionnalTrick = new ArrayCollection();
         $this->comments = new ArrayCollection();
     }
