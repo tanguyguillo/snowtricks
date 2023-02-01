@@ -8,8 +8,10 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use App\Entity\Category;
+
+
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use App\Entity\Pictures;
 use App\Entity\Tricks;
 use App\Entity\Picture;
@@ -42,7 +44,7 @@ class UpdateType extends AbstractType
                 [
                     'attr' => [
                         'class' => 'form-control',
-                        'required' => false
+
                     ]
                 ]
             )

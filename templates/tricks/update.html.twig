@@ -1,6 +1,4 @@
 {% extends 'base.html.twig' %}
-
-{# titre #}
 {% block title %}
 Snowtricks - mofifications - {{ trick.title }}
 {% endblock %}
@@ -23,9 +21,6 @@ Snowtricks - mofifications - {{ trick.title }}
                         <i class="bi bi-pencil-fill iconTricks"></i>
                     </a>
                     <br>
-
-                    {# main picture #}
-
                     <div class="col-lg-12">
                         <div class="card text-white bg-Light mb-3">
                             <div class="rounded shadow p-3 mb-5 bg-white">
@@ -41,6 +36,10 @@ Snowtricks - mofifications - {{ trick.title }}
 
                             {{ form_start(formUpdateTrick) }}
 
+                            <div class="my-custom-class-for-errors">
+                                {{ form_errors(formUpdateTrick) }}
+                            </div>
+
                             {# trick name modification modification formDisplayNone#}
 
                             <div class="container text-center">
@@ -50,16 +49,33 @@ Snowtricks - mofifications - {{ trick.title }}
                                     type : "file",
                                     attr : {'class': 'form-control'},
                                     }) }}
-                                    <div class="form-group">
-                                        {{ form_row(formUpdateTrick.title, {
-                                        label: "Update this main trick's name",
-                                        attr : {'class': 'form-control smallForForm'}
-                                        }) }}
-                                    </div>
                                 </div>
                                 <br>
                             </div>
                         </div>
+
+                        {# isuue for uniquename #}
+
+
+
+
+
+                        {{ form_row(formUpdateTrick.title, {
+                        label: 'Trick name',
+                        attr : {'class': 'form-control'}
+                        }) }}
+
+                        {# <div class="form-control">
+                            <i class="fa fa-calendar"></i> {{ form_label(form.dueDate) }}
+                            {{ form_widget(form.dueDate) }}
+
+                            <small>{{ form_help(formUpdateTrick.title) }}</small>
+
+                            <div class="form-error">
+                                {{ form_errors(formUpdateTrick.title) }}
+                            </div>
+                        </div> #}
+
 
                         {####### additionnals pictures #########}
 
@@ -103,9 +119,6 @@ Snowtricks - mofifications - {{ trick.title }}
                                 </div>
                             </div>
                             {% endfor %}
-
-                            {####### additionnal video #########}
-
                             <div class="col-sm-2">
                                 <div class="mx-auto">
                                     <div class="d-flex align-items-center justify-content-center h-100 w-100">
@@ -125,22 +138,16 @@ Snowtricks - mofifications - {{ trick.title }}
                                             <i class="bi bi-trash-fill iconTricks"></i>
                                         </a>
                                     </span>
-
                                 </div>
                             </div>
                         </div>
-
                         <div>
                             {{ form_row(formUpdateTrick.pictures, {
                             label: 'Add more additionnal pictures',
                             attr : {'class': 'form-control'}
                             }) }}
                         </div>
-
                         <br>
-
-                        {# infos #}
-
                         <ul class="list-inline">
                             <li class="list-inline-item badge bg-primary">
                                 Created by : {{ Author.username }}
@@ -157,17 +164,12 @@ Snowtricks - mofifications - {{ trick.title }}
                                 Groupe : {{ trick.category }}
                             </li>
                         </ul>
-
                         <input type="hidden" name="_token" value="{{ csrf_token('update' ~ trick.id) }}">
                         {{ form_row(formUpdateTrick.content, {
                         label: ' ',
                         attr : {'class': 'form-control'}
                         }) }}
-
                     </div>
-
-                    {# group/category #}
-
                     <div class="container text-center">
                         <div class="col-4">
                             {{ form_row(formUpdateTrick.category, {
@@ -175,9 +177,6 @@ Snowtricks - mofifications - {{ trick.title }}
                             attr : {'class': 'form-control'}
                             }) }}
                         </div>
-
-                        {# submit #}
-
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <button class="btn btn-info updateTrick" type="submit">Save</button>
                             {{ form_end(formUpdateTrick) }}
@@ -189,7 +188,6 @@ Snowtricks - mofifications - {{ trick.title }}
                             </form>
                         </div>
                     </div>
-
                 </div>
                 <br>
                 <br>

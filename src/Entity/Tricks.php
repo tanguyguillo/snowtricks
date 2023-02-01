@@ -28,7 +28,7 @@ class Tricks
         minMessage: 'Your trick title must be at least {{ limit }} characters long',
         maxMessage: 'Your trick title cannot be longer than {{ limit }} characters',
     )]
-    private ?string $title = null;
+    private ?string $title;  //= null;
 
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
@@ -58,8 +58,7 @@ class Tricks
     #[Assert\File(
         maxSize: '3M',
     )]
-    private ?string $picture; //= null;
-
+    private ?string $picture;
     private $slugger;
 
     #[ORM\Column(nullable: true)]
