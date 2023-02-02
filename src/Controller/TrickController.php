@@ -106,14 +106,17 @@ class TrickController extends AbstractController
         // $tag2->setName('tag2');
         // $task->getTags()->add($tag2);
 
-
-
         if ($this->isCsrfTokenValid('update' . $trick->getId(), $submittedToken)) {
             $trick->setContent($formUpdateTrick->get('content')->getData());
             $trick->setCategory($formUpdateTrick->get('category')->getData());
             $trick->setModifiedAt(new \DateTimeImmutable("now"));
             $formUpdateTrick->get('title')->getData();
             $pictureFile =  $formUpdateTrick->get('picture')->getData();
+
+            // Create an ArrayCollection of the current Tag objects in the database
+            // foreach ($advert->getPhotos() as $photo) {
+            //     $originalPhotos->add($photo);
+            // }
 
             if (!$pictureFile == null) {
                 if ($pictureFile) {
@@ -135,7 +138,6 @@ class TrickController extends AbstractController
                     ]);
                 }
             }
-
 
             $this->em->persist($tricks);
             $this->em->flush();

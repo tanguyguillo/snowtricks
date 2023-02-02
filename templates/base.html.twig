@@ -6,104 +6,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Jimmy Sweat, Community, Tricks, snowboard">
     <meta name="author" content="">
-
     <title>
         {% block preTitle %}{% endblock %}
         {% block title %}Snowtricks{% endblock %}
     </title>
-
     <!--avicon.ico in the root directory -->
     <link rel="apple-touch-icon" href="{{ app.request.getSchemeAndHttpHost() }}/icon.png">
-
     {% block stylesheets %}
-    <!--avicon.ico in the root directory -->
-    <link rel="apple-touch-icon" href="https://snowtricks.omegawebprod.com/icon.png">
-
     <!-- Core theme CSS (includes Bootstrap) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
     <!-- Fonts CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-    <!-- Font Awesome 4 -->
-    {#
-    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css"> #}
-
-    <!-- theme -->
-    {# {% form_theme form 'bootstrap_5_layout.html.twig' %} #}
-    <link rel="stylesheet" href="https://bootswatch.com/5/quartz/bootstrap.min.css" />
-
+    <!-- Font Awesome 4  -->
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://bootswatch.com/5/quartz/bootstrap.min.css">
     <!-- CSS only -->
     <link rel="stylesheet" href="{{ app.request.getSchemeAndHttpHost() }}/css/heading.css">
     <link rel="stylesheet" href="{{ app.request.getSchemeAndHttpHost() }}/css/body.css">
     <link href="{{ app.request.getSchemeAndHttpHost() }}/css/styles.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ app.request.getSchemeAndHttpHost() }}/css/tricks.css">
     {% endblock %}
-
 </head>
 
 <body id="page-top">
-
     {% block menuTop %}
-
     <section class="menuTop">
-        <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
+        <div>
+            <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
+                <a href="{{ app.request.getSchemeAndHttpHost() }}/#page-top">
+                    <img src="{{ app.request.getSchemeAndHttpHost() }}/assets/logo/logo-jimmy-sweat-top.png"
+                        alt="Logo Jimmy Sweat" class="logoTop">
+                </a>
+                <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded"
+                    type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Menu <i
+                        class="fas fa-bars"></i></button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item mx-0 mx-lg-1"><a
+                                class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+                                href="{{ app.request.getSchemeAndHttpHost() }}/#page-top">Home </a>
+                        </li>
+                        <li class="py-3 px-0 px-lg-3 rounded js-scroll-trigger  separator">|</li>
+                        <li class="nav-item mx-0 mx-lg-1"><a
+                                class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+                                href="{{ app.request.getSchemeAndHttpHost() }}/#tricks">Tricks</a>
+                        </li>
+                        {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                        <li class="py-3 px-0 px-lg-3 rounded js-scroll-trigger separator">|</li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
+                                href="{{ app.request.getSchemeAndHttpHost() }}/login">Sign in</a>
+                        </li>
+                        <li class="py-3 px-0 px-lg-3 rounded js-scroll-trigger separator">|</li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
+                                href="{{ app.request.getSchemeAndHttpHost() }}/registration">Sign up</a>
+                            {% endif %}
+                            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                        <li class="py-3 px-0 px-lg-3 rounded js-scroll-trigger separator">|</li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" <a class="link"
+                                href="{{ app.request.getSchemeAndHttpHost() }}/tricks/add">Add Trick</a>
 
-            <a href="{{ app.request.getSchemeAndHttpHost() }}/#page-top">
-                <img src="{{ app.request.getSchemeAndHttpHost() }}/assets/logo/logo-jimmy-sweat-top.png"
-                    alt="Logo Jimmy Sweat" class="logoTop" />
-            </a>
-
-            <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded"
-                type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
-                aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button>
-
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-
-                <ul class="navbar-nav ml-auto">
-
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" <a
-                            href="{{ app.request.getSchemeAndHttpHost() }}/#page-top">Home </a>
-                    </li>
-
-                    <li class="py-3 px-0 px-lg-3 rounded js-scroll-trigger  separator">|</li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" <a
-                            href="{{ app.request.getSchemeAndHttpHost() }}/#tricks">Tricks</a>
-                    </li>
-
-                    <!-- not if connected : login + registration -->
-                    {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                    <li class="py-3 px-0 px-lg-3 rounded js-scroll-trigger separator">|</li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" <a
-                            href="{{ app.request.getSchemeAndHttpHost() }}/login">Sign in</a>
-                    </li>
-
-                    <li class="py-3 px-0 px-lg-3 rounded js-scroll-trigger separator">|</li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" <a
-                            href="{{ app.request.getSchemeAndHttpHost() }}/registration">Sign up</a>
-                        {% endif %}
-
-                        <!-- if connected : log out-->
-                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                    <li class="py-3 px-0 px-lg-3 rounded js-scroll-trigger separator">|</li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" <a class="link"
-                            href="{{ app.request.getSchemeAndHttpHost() }}/tricks/add">Add Trick</a>
-
-                    <li class="py-3 px-0 px-lg-3 rounded js-scroll-trigger separator">|</li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" <a class="link"
-                            href="{{ app.request.getSchemeAndHttpHost() }}/logout">Logout</a>
-                        {% endif %}
-                </ul>
-
-            </div>
-            </div>
-        </nav>
+                        <li class="py-3 px-0 px-lg-3 rounded js-scroll-trigger separator">|</li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" <a class="link"
+                                href="{{ app.request.getSchemeAndHttpHost() }}/logout">Logout</a>
+                            {% endif %}
+                    </ul>
+            </nav>
+        </div>
     </section>
     {% endblock %}
-
-    {########### msg #################}
     {% for message in app.flashes('success') %}
     <div class="alert success alert-dismissible fade show alertAction" role="alert">{{ message }}
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -112,30 +85,18 @@
     {% endfor %}
     {% for message in app.flashes('error') %}
     <div class="alert error alert-dismissible fade show" role="alert">{{ message }}
-        {# <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span> #}
     </div>
     {% endfor %}
-
     {% block visualCentral %}
     {% endblock %}
-
-    {% block begincContainer %}
+    {% block beginContainer %}
     {% endblock %}
-
-    {% block main%}
+    {% block main %}
     {% endblock %}
-
     {% block modal %}
-
     {% endblock %}
-
     {% block endContainer %}
-    </div>
-    </div>
-    </section> {# end main area #}
     {% endblock %}
-
     {############## footer not fixed for home page only ##############}
     {% set current_path = app.request.get('_route') %}
     {% set ifOfOrNot = '' %}
@@ -216,24 +177,14 @@
 
     </footer>
     {% endblock %}
-
     {% block javascripts %}
-    {# <!-- jQuery 1.9.1  -->#}
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-
-    <!-- Core theme JS-->
     <script src="{{ app.request.getSchemeAndHttpHost() }}/js/scripts.js"></script>
-
-    <!-- loadMore.-->
     <script src="{{ app.request.getSchemeAndHttpHost() }}/js/loadMore.js"></script>
-
     <script src="{{ app.request.getSchemeAndHttpHost() }}/js/else.js"></script>
-
-    <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
-
     <script src="{{ app.request.getSchemeAndHttpHost() }}/js/jqBootstrapValidation.js"></script>
     {% endblock %}
 </body>

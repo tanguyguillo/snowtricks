@@ -44,7 +44,6 @@ class UpdateType extends AbstractType
                 [
                     'attr' => [
                         'class' => 'form-control',
-
                     ]
                 ]
             )
