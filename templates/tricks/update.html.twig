@@ -50,119 +50,134 @@ SnowTricks - modifications - {{ trick.title }}
                                     attr : {'class': 'form-control'},
                                     }) }}
                                 </div>
-                                <br>
+                                <div class="form-group"></div>
+                                {{ form_row(formUpdateTrick.title, {
+                                label: 'Trick name',
+                                attr : {'class': 'form-control'}
+                                }) }}
                             </div>
                         </div>
-
-                        {{ form_row(formUpdateTrick.title, {
-                        label: 'Trick name',
-                        attr : {'class': 'form-control'}
-                        }) }}
-
-                        {# <div class="form-control">
-                            <i class="fa fa-calendar"></i> {{ form_label(form.dueDate) }}
-                            {{ form_widget(form.dueDate) }}
-
-                            <small>{{ form_help(formUpdateTrick.title) }}</small>
-
-                            <div class="form-error">
-                                {{ form_errors(formUpdateTrick.title) }}
-                            </div>
-                        </div> #}
+                    </div>
 
 
-                        {####### additionals pictures #########}
 
-                        <div class="row justify-content-center">
-                            {% for additionalPicture in additionalPictures %}
-                            <div class="col-md-2 col-lg-2 mb-5 item">
-                                <div class="mx-auto">
-                                    <div class="d-flex align-items-center justify-content-center h-100 w-100">
-                                        <div class="card {{additionalPicture.id}}">
-                                            <img class="img-fluid"
-                                                src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/{{ additionalPicture.picture }}"
-                                                alt="additional picture of {{ trick.title|striptags}}" />
-                                        </div>
+                    {# <div class="form-control">
+                        <i class="fa fa-calendar"></i> {{ form_label(form.dueDate) }}
+                        {{ form_widget(form.dueDate) }}
+
+                        <small>{{ form_help(formUpdateTrick.title) }}</small>
+
+                        <div class="form-error">
+                            {{ form_errors(formUpdateTrick.title) }}
+                        </div>
+                    </div> #}
+
+
+                    {####### additionals pictures #########}
+                    <br>
+                    <div class="row justify-content-center">
+                        {% for additionalPicture in additionalPictures %}
+                        <div class="col-md-2 col-lg-2 mb-5 item">
+                            <div class="mx-auto">
+                                <div class="d-flex align-items-center justify-content-center h-100 w-100">
+                                    <div class="card {{additionalPicture.id}}">
+                                        <img class="img-fluid"
+                                            src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/{{ additionalPicture.picture }}"
+                                            alt="additional picture of {{ trick.title|striptags}}" />
                                     </div>
-
-                                    <span>
-
-                                        {# <div>
-                                            {{ form_row(formUpdateTrick.additionalTrick, {
-                                            label: 'Add more additional pictures',
-                                            attr : {'class': 'form-control'}
-                                            }) }}
-                                        </div> #}
-
-                                        {# <div class="col-4">
-                                            {{ form_row(formUpdateTrick.additionalTrick, {
-                                            label: 'Groups',
-                                            attr : {'class': 'form-control'}
-                                            }) }}
-                                        </div> #}
-
-
-                                        <a href="/tricks/modification/{{ trick.slug }}" class="float-center ml-1">
-                                            <i class="bi bi-pencil-fill iconTricks"></i>
-                                        </a>
-                                        <a href="#tricksDelete" class="float-center ml-1">
-                                            <i class="bi bi-trash-fill iconTricks"></i>
-                                        </a>
-                                    </span>
                                 </div>
+                                <span>
+                                    {# <a href="/tricks/modification/{{ trick.slug }}" class="float-center ml-1">
+                                        <i class="bi bi-pencil-fill iconTricks"></i>
+                                    </a> #}
+
+                                    <form action="#">
+                                        <p class="file">
+                                            <input type="file" name="file" id="file" />
+                                            <label for="file">Upload your image</label>
+                                        </p>
+                                    </form>
+
+                                    <a href="#additionalPictureModify" class="float-center ml-1"
+                                        id="{{ additionalPicture.id }}">
+                                        <i class=" bi bi-pencil-fill iconTricks"></i>
+                                    </a>
+
+                                    <a href="#additionalPictureDelete" class="float-center ml-1"
+                                        id="{{ additionalPicture.id }}">
+                                        <i class=" bi bi-trash-fill iconTricks"></i>
+                                    </a>
+
+                                    {# <small>
+                                        <form action="" method="Post" class="form-group form-additionalPicture">
+                                            <label for="ModifyAdditionalPicture {{ additionalPicture.id }}">Choose a
+                                                new
+                                                picture</label>
+                                            <input type="file" id="{{ additionalPicture.id }}"
+                                                name="additional picture of {{ trick.title|striptags}}"
+                                                accept="image/png, image/jpeg">
+
+                                            <div class="form-additionalPicture">
+                                                <button class="btn btn-info form-additionalPicture"
+                                                    type="submit">OK</button>
+                                            </div>
+                                        </form>
+                                    </small> #}
+                                </span>
                             </div>
-                            {% endfor %}
-                            <div class="col-sm-2">
-                                <div class="mx-auto">
-                                    <div class="d-flex align-items-center justify-content-center h-100 w-100">
-                                        <div class="card image-popup-vertical-fit">
-                                            <img class="img-fluid zoom"
-                                                src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/main-video.png"
-                                                alt="additional video {{ trick.title|striptags}} 1" />
-                                        </div>
+                        </div>
+                        {% endfor %}
+                        <div class="col-sm-2">
+                            <div class="mx-auto">
+                                <div class="d-flex align-items-center justify-content-center h-100 w-100">
+                                    <div class="card image-popup-vertical-fit">
+                                        <img class="img-fluid zoom"
+                                            src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/main-video.png"
+                                            alt="additional video {{ trick.title|striptags}} 1" />
                                     </div>
-                                    <span>
-                                        <div>
-                                        </div>
-                                        <a href="/tricks/modification/{{ trick.slug }}" class="float-center ml-1">
-                                            <i class="bi bi-pencil-fill iconTricks"></i>
-                                        </a>
-                                        <a href="#tricksDelete" class="float-center ml-1">
-                                            <i class="bi bi-trash-fill iconTricks"></i>
-                                        </a>
-                                    </span>
                                 </div>
+                                <span>
+                                    <div>
+                                    </div>
+                                    <a href="/tricks/modification/{{ trick.slug }}" class="float-center ml-1">
+                                        <i class="bi bi-pencil-fill iconTricks"></i>
+                                    </a>
+                                    <a href="#tricksDelete" class="float-center ml-1">
+                                        <i class="bi bi-trash-fill iconTricks"></i>
+                                    </a>
+                                </span>
                             </div>
                         </div>
-                        <div>
-                            {{ form_row(formUpdateTrick.pictures, {
-                            label: 'Add more additional pictures',
-                            attr : {'class': 'form-control'}
-                            }) }}
-                        </div>
-                        <br>
-                        <ul class="list-inline">
-                            <li class="list-inline-item badge bg-primary">
-                                Created by : {{ Author.username }}
-                            </li class="list-inline-item"> |
-                            <li class="list-inline-item badge bg-primary">
-                                Created at : {{ trick.createdAt|date('d-m-Y') }}
-                            </li> |
-                            {% if trick.modifiedAt != null %}
-                            <li class="list-inline-item badge bg-primary">
-                                Updated at : {{ trick.modifiedAt|date('d-m-Y') }}
-                            </li> |
-                            {% endif %}
-                            <li class="list-inline-item badge bg-primary">
-                                Groupe : {{ trick.category }}
-                            </li>
-                        </ul>
-                        <input type="hidden" name="_token" value="{{ csrf_token('update' ~ trick.id) }}">
-                        {{ form_row(formUpdateTrick.content, {
-                        label: ' ',
+                    </div>
+                    <div>
+                        {{ form_row(formUpdateTrick.pictures, {
+                        label: 'Add more additional pictures',
                         attr : {'class': 'form-control'}
                         }) }}
                     </div>
+                    <br>
+                    <ul class="list-inline">
+                        <li class="list-inline-item badge bg-primary">
+                            Created by : {{ Author.username }}
+                        </li class="list-inline-item"> |
+                        <li class="list-inline-item badge bg-primary">
+                            Created at : {{ trick.createdAt|date('d-m-Y') }}
+                        </li> |
+                        {% if trick.modifiedAt != null %}
+                        <li class="list-inline-item badge bg-primary">
+                            Updated at : {{ trick.modifiedAt|date('d-m-Y') }}
+                        </li> |
+                        {% endif %}
+                        <li class="list-inline-item badge bg-primary">
+                            Groupe : {{ trick.category }}
+                        </li>
+                    </ul>
+                    <input type="hidden" name="_token" value="{{ csrf_token('update' ~ trick.id) }}">
+                    <br>
+                    {{ form_row(formUpdateTrick.content, {
+                    label: 'Comments',
+                    attr : {'class': 'form-control'}
+                    }) }}
                     <div class="container text-center">
                         <div class="col-4">
                             {{ form_row(formUpdateTrick.category, {

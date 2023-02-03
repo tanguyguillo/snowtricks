@@ -245,6 +245,10 @@ ul li a:hover .footerDown {
   }
 }
 
+.form-additionalPicture {
+  text
+}
+
 /* ************ End @media (max-width: 992px *************** */
 
 @media (min-width: 992px) {
@@ -514,6 +518,14 @@ div.rounded.shadow.p-3.mb-5.bg-white>form>div>h1>div {
   color: rgb(10, 10, 10);
 }
 
+element.style {
+  height: 50px;
+}
+
+textarea.form-control {
+  height: 200px;
+}
+
 .div .form-group {
   color: rgb(10, 10, 10);
 
@@ -642,4 +654,47 @@ img.mr-3.rounded-circle {
   margin-right: 50px;
   text-align: center;
   font-size: 30px;
+}
+
+/* login page */
+form>div.mb-3>label {
+  color: white;
+}
+
+form>p.label a {
+  color: white;
+}
+
+form>p:nth-child(5)>a {
+  color: white;
+}
+
+/*view-source:https: //www.creativejuiz.fr/blog/doc/custom-input-file-full-css3-flat-ui.html*/
+
+.file {
+  position: relative;
+}
+
+.file label {
+  background: #39D2B4;
+  padding: 5px 20px;
+  color: #fff;
+  font-weight: bold;
+  font-size: .9em;
+  transition: all .4s;
+}
+
+.file input {
+  position: absolute;
+  display: inline-block;
+  left: 0;
+  top: 0;
+  opacity: 0.01;
+  cursor: pointer;
+}
+
+.file input:hover+label,
+.file input:focus+label {
+  background: #34495E;
+  color: #39D2B4;
 }
