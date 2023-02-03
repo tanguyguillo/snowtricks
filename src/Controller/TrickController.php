@@ -87,24 +87,9 @@ class TrickController extends AbstractController
         $Image = $tricks->getPicture();
         $formUpdateTrick = $this->createForm(Updatetype::class, $trick);
 
-        // dd($formUpdateTrick);
-
         $formUpdateTrick->handleRequest($request);
         $submittedToken = $request->request->get('_token');
 
-        // dd($additionnalPictures);
-
-        // $additionnalTrick = new pictures();
-        // $form = $this->createForm(TaskType::class, $task);
-
-        // dummy code - add some example tags to the task
-        // (otherwise, the template will render an empty list of tags)
-        // $tag1 = new Tag();
-        // $tag1->setName('tag1');
-        // $task->getTags()->add($tag1);
-        // $tag2 = new Tag();
-        // $tag2->setName('tag2');
-        // $task->getTags()->add($tag2);
 
         if ($this->isCsrfTokenValid('update' . $trick->getId(), $submittedToken)) {
             $trick->setContent($formUpdateTrick->get('content')->getData());
@@ -112,11 +97,12 @@ class TrickController extends AbstractController
             $trick->setModifiedAt(new \DateTimeImmutable("now"));
             $formUpdateTrick->get('title')->getData();
             $pictureFile =  $formUpdateTrick->get('picture')->getData();
+            // may have multiple more pictures
+            $morePictures = $formUpdateTrick->get('pictures')->getData(); // array
 
-            // Create an ArrayCollection of the current Tag objects in the database
-            // foreach ($advert->getPhotos() as $photo) {
-            //     $originalPhotos->add($photo);
-            // }
+            if ($morePictures != []) {
+                $this->addAdditionnalPicture($additionnalPictures, $tricks);
+            }
 
             if (!$pictureFile == null) {
                 if ($pictureFile) {
@@ -183,7 +169,7 @@ class TrickController extends AbstractController
     }
 
     /**
-     * function deleteFromDetail (button delete from detail page)
+     * function deleteFromDetail (button delete all trick from modification page)
      */
     #[Route('/delete-tricks_from_detail/{id}', name: 'app_tricks_delete_from_detail', methods: ['Post'])]
     public function deleteFromDetail(Request $request, Tricks $trick, TricksRepository $tricksRepository)
@@ -222,73 +208,6 @@ class TrickController extends AbstractController
         } else {
             return 0;
         }
-    }
-
-    /**
-     * function edit  tricks_app_tricks_edit
-     */
-    #[Route('/triks/edit/{id}', name: 'app_tricks_edit', methods: ['POST'])]
-    public function edit(Request $request, Tricks $tricks, TricksRepository $tricksRepository, SluggerInterface $slugger): Response
-    {
-
-        dd('555555');
-
-        $formAddTrick = $this->createForm(UpdateType::class, $tricks);
-        $formAddTrick->handleRequest($request);
-
-        if ($formAddTrick->isSubmitted() && $formAddTrick->isValid()) {
-
-            $pictureFile =  $formAddTrick->get('picture')->getData();
-
-            if ($pictureFile) {
-                $originalFilename = $pictureFile;
-
-                // // may have multiple additionnals pictures
-                // $additionnalPictures = $formAddTrick->get('pictures')->getData();
-                // foreach ($additionnalPictures as $additionnalPicture) {
-                //     $file  = md5(uniqid()) . '.' . $additionnalPicture->guessExtension();
-                //     $additionnalPicture->move(
-                //         $this->getParameter('pictures_directory'),
-                //         $file
-                //     );
-                //     // in db 
-                //     $img = new Pictures();
-                //     $img->setpicture($file);
-                //     $tricks->addAdditionnalTrick($img);
-                // }
-
-                $safeFilename = $slugger->slug($originalFilename);  // not used
-                $newFilename = md5(uniqid()) . '.' . $originalFilename->guessExtension();
-                $tricks->setPicture($newFilename);
-
-                try {
-                    $pictureFile->move(
-                        $this->getParameter('pictures_directory'),
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
-                    //soit redirigé sur la page du formulaire en cas d'erreur, en précisant le(s) type(s) d'erreurs ;
-
-                    $message = $this->addFlash('error', 'error type:' . $e);
-
-                    return $this->render('tricks/add.html.twig', [
-                        // 'formAddTrick' =>  $formAddTrick->createView(),
-                        'message' => $message
-                    ]);
-                }
-                $tricks->setPicture($newFilename);
-            }
-
-            $tricksRepository->save($tricks, true);
-
-            // return $this->redirectToRoute('app_tricks_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        // this route is used for read update dans
-        return $this->render('tricks/add.html.twig', [
-            'formAddTrick' =>  $formAddTrick->createView(),
-        ]);
     }
 
     /**
@@ -343,19 +262,10 @@ class TrickController extends AbstractController
             if ($pictureFile) {
                 $originalFilename = $pictureFile;
 
-                // may have multiple additionnals pictures
+                // may have multiple more pictures
                 $additionnalPictures = $formAddTrick->get('pictures')->getData();
-                foreach ($additionnalPictures as $additionnalPicture) {
-                    $file  = md5(uniqid()) . '.' . $additionnalPicture->guessExtension();
-                    $additionnalPicture->move(
-                        $this->getParameter('pictures_directory'),
-                        $file
-                    );
-                    // in db 
-                    $img = new Pictures();
-                    $img->setpicture($file);
-                    $tricks->addAdditionnalTrick($img);
-                }
+                $this->addAdditionnalPicture($additionnalPictures, $tricks);
+
                 $safeFilename = $slugger->slug($originalFilename);  // not used
                 $newFilename = md5(uniqid()) . '.' . $originalFilename->guessExtension();
                 $tricks->setPicture($newFilename);
@@ -365,38 +275,47 @@ class TrickController extends AbstractController
                         $newFilename
                     );
                 } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
-                    //soit redirigé sur la page du formulaire en cas d'erreur, en précisant le(s) type(s) d'erreurs ;
-
+                    // handle exception if something happens during file upload
+                    //be redirected to the form page in the event of an error, specifying the type(s) of error;
                     $message = $this->addFlash('error', 'error type:' . $e);
-
-                    $this->error($message);
-
-                    // return $this->render('tricks/add.html.twig', [
-                    //     'formAddTrick' =>  $formAddTrick->createView(),
-                    //     'message' => $message
-                    // ]);
+                    return $this->render('tricks/add.html.twig', [
+                        'formAddTrick' =>  $formAddTrick->createView(),
+                        'message' => $message
+                    ]);
                 }
                 $tricks->setPicture($newFilename);
             }
-
             $tricks->setUser($this->getUser());
-
             $entityManager = $doctrine->getManager();
             $entityManager->persist($tricks);
             $entityManager->flush();
-
             $this->addFlash('success', 'Your trick have been added.');
-
             return $this->redirectToRoute('app_home');
         }
-
         return $this->render('tricks/add.html.twig', [
             'formAddTrick' =>  $formAddTrick->createView(),
         ]);
     }
 
-
+    /**
+     * function to add additionnal picture
+     *
+     * @return void
+     */
+    private function addAdditionnalPicture($additionnalPictures, $tricks)
+    {
+        foreach ($additionnalPictures as $additionnalPicture) {
+            $file  = md5(uniqid()) . '.' . $additionnalPicture->guessExtension();
+            $additionnalPicture->move(
+                $this->getParameter('pictures_directory'),
+                $file
+            );
+            // in db 
+            $img = new Pictures();
+            $img->setpicture($file);
+            $tricks->addAdditionnalTrick($img);
+        }
+    }
 
     /**
      * function error

@@ -54,12 +54,6 @@ Snowtricks - mofifications - {{ trick.title }}
                             </div>
                         </div>
 
-                        {# isuue for uniquename #}
-
-
-
-
-
                         {{ form_row(formUpdateTrick.title, {
                         label: 'Trick name',
                         attr : {'class': 'form-control'}
@@ -78,7 +72,6 @@ Snowtricks - mofifications - {{ trick.title }}
 
 
                         {####### additionnals pictures #########}
-
 
                         <div class="row justify-content-center">
                             {% for additionnalPicture in additionnalPictures %}
@@ -189,10 +182,14 @@ Snowtricks - mofifications - {{ trick.title }}
                         </div>
                     </div>
                 </div>
-                <br>
-                <br>
-                <div id="overlay"></div>
-                <br>
-                <br>
-                <br>
-                {% endblock %}
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<div id="overlay"></div>
+<br>
+<br>
+<br>
+{% endblock %}
