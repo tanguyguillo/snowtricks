@@ -37,14 +37,15 @@
                             class="form-control" autocomplete="username" required autofocus>
                     </div>
 
-                    <div class="mb-3"><label for="password" class="form-label required">Password</label>
+                    <div class="mb-3">
+                        <label for="password" class="form-label  required">Password</label>
                         <input type="password" name="password" id="inputPassword" class="form-control"
                             autocomplete="current-password" required>
                     </div>
 
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-                    <p>
+                    <p class="label">
                         <br>
                         <a href="{{ path('app_register') }}">Register</a>
                     </p>

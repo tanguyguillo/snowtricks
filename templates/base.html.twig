@@ -107,73 +107,52 @@
     {% endif %}
     {############## footer ##############}
     {% block footer %}
-    <footer class="copyright py-4 text-white {{ ifOfOrNot }}">
+    <footer class="copyright  text-white {{ ifOfOrNot }}">
 
         {# <div class="container"> #}
             <div class="row align-items-start">
 
                 {############## Copyright or home ##############}
-                <div class="col align-self-start">
-                    <ul class="list-inline-item">
 
-                        <li class="list-inline-item menuBottom  bottom-0">
-                            <a href="{{ app.request.getSchemeAndHttpHost() }}/">
-                                <button class="btn btn-menu-down"><i class="fa fa-home">
-                            </a></i></button>
-                        </li>
+                <div class="flex-container">
 
-                        <li class="list-inline-item copyright">
-                            <span class="footer-below">
-                                Copyright &copy; {{ "now"|date("Y") }}
-                            </span>
-                        </li>
+                    <span class="footer-below">
+                        Copyright &copy; {{ "now"|date("Y") }}
+                    </span>
 
-                        <div class="col">
-                        </div>
 
-                    </ul>
-                </div>
-
-                <div class="col">
-                    <ul class="list-inline-item">
-                        {############## not if connected : login + registration ##############}
+                    <div><a href="{{ app.request.getSchemeAndHttpHost() }}/">
+                            <button class="btn btn-menu-down white"><i class="fa fa-home">
+                        </a></i></button>
+                    </div>
+                    <div>
+                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                        <a href="{{ app.request.getSchemeAndHttpHost() }}/tricks/add">
+                            <button class="btn btn-menu-down"><i class="fa fa-bookmark"></i></button>
+                        </a>
+                        {% endif %}
+                    </div>
+                    <div>
                         {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                        <li class="list-inline-item menuBottom">
-                        </li>
-
-                        <li class="list-inline-item menuBottom tar">
-                            <a href="{{ app.request.getSchemeAndHttpHost() }}/login">
-                                <button class="btn btn-menu-down"><i class="fa fa-sign-in"
-                                        aria-hidden="true"></i></button>
-                            </a>
-                        </li>
-                        <li class="list-inline-item menuBottom tar">
-
-                            <a href="{{ app.request.getSchemeAndHttpHost() }}/registration">
-                                <button class="btn btn-menu-down"><i class="fa fa-user-plus"></i></button>
-                            </a>
+                        <a href="{{ app.request.getSchemeAndHttpHost() }}/login">
+                            <button class="btn btn-menu-down"><i class="fa fa-sign-in" aria-hidden="true"></i></button>
+                        </a>
+                        <a href="{{ app.request.getSchemeAndHttpHost() }}/registration">
+                            <button class="btn btn-menu-down"><i class="fa fa-user-plus"></i></button>
+                        </a>
                         </li>
                         {% endif %}
 
-                        <!-- if connected -->
                         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                        <li class="list-inline-item menuBottom">
-                            <a href="{{ app.request.getSchemeAndHttpHost() }}/tricks/add">
-                                <button class="btn btn-menu-down"><i class="fa fa-bookmark"></i></button>
-                            </a>
-                        </li>
-
-                        <li class="list-inline-item menuBottom">
-                            <a href="{{ app.request.getSchemeAndHttpHost() }}/logout">
-                                <button class="btn btn-menu-down"><i class="fa fa-sign-out"></i></button>
-                        </li>
-                    </ul>
+                        <a href="{{ app.request.getSchemeAndHttpHost() }}/logout">
+                            <button class="btn btn-menu-down"><i class="fa fa-sign-out"></i></button>
+                        </a>
+                        {% endif %}
+                    </div>
                 </div>
-            </div>
-            {#
-        </div> end container #}
 
-        {% endif %}
+            </div>
+
 
     </footer>
     {% endblock %}
