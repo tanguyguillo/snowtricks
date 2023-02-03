@@ -62,10 +62,10 @@ class TrickController extends AbstractController
         $AuthorId = $trick->getUser();
         $Author = $userRepository->findOneBy(['id' => $AuthorId]);
         $trickId = $trick->getId();
-        $additionnalPictures = $picturesRepository->findBy(['tricks' => $trickId]);
+        $additionalPictures = $picturesRepository->findBy(['tricks' => $trickId]);
         $Image = $tricks->getPicture();
         $date = date('Y-m-d H:i:s');
-        return $this->render('tricks/details.html.twig', compact('trick', 'Author', 'additionnalPictures', 'Image', 'date'));
+        return $this->render('tricks/details.html.twig', compact('trick', 'Author', 'additionalPictures', 'Image', 'date'));
     }
 
     /**
@@ -83,13 +83,12 @@ class TrickController extends AbstractController
         $AuthorId = $trick->getUser();
         $Author = $userRepository->findOneBy(['id' => $AuthorId]);
         $trickId = $trick->getId();
-        $additionnalPictures = $picturesRepository->findBy(['tricks' => $trickId]);
+        $additionalPictures = $picturesRepository->findBy(['tricks' => $trickId]);
         $Image = $tricks->getPicture();
-        $formUpdateTrick = $this->createForm(Updatetype::class, $trick);
+        $formUpdateTrick = $this->createForm(UpdateType::class, $trick);
 
         $formUpdateTrick->handleRequest($request);
         $submittedToken = $request->request->get('_token');
-
 
         if ($this->isCsrfTokenValid('update' . $trick->getId(), $submittedToken)) {
             $trick->setContent($formUpdateTrick->get('content')->getData());
@@ -101,7 +100,7 @@ class TrickController extends AbstractController
             $morePictures = $formUpdateTrick->get('pictures')->getData(); // array
 
             if ($morePictures != []) {
-                $this->addAdditionnalPicture($additionnalPictures, $tricks);
+                $this->addAdditionalPicture($morePictures, $tricks);
             }
 
             if (!$pictureFile == null) {
@@ -138,7 +137,7 @@ class TrickController extends AbstractController
 
         // dd($trick);
 
-        return $this->render('tricks/update.html.twig', compact('trick', 'Author', 'additionnalPictures', 'formUpdateTrick', 'Image'));
+        return $this->render('tricks/update.html.twig', compact('trick', 'Author', 'additionalPictures', 'formUpdateTrick', 'Image'));
     }
 
     /**
@@ -151,8 +150,8 @@ class TrickController extends AbstractController
         $submittedToken = $request->request->get('_token');
         if ($this->isCsrfTokenValid('delete' . $trick->getId(), $submittedToken)) {
             $trickId = $trick->getId();
-            // 1 delete additionnal picture from server
-            $this->deleteAdditionnalPicture($trickId);
+            // 1 delete additional picture from server
+            $this->deleteAdditionalPicture($trickId);
             // get the physical path of the main picture
             $mainPictureWithPath = $this->getParameter('pictures_directory') . '/' . $trick->getPicture();
             // 2 - delete trick from Bd
@@ -177,8 +176,8 @@ class TrickController extends AbstractController
         $submittedToken = $request->request->get('_token');
         if ($this->isCsrfTokenValid('delete' . $trick->getId(), $submittedToken)) {
             $trickId = $trick->getId();
-            // 1 delete additionnal picture from server
-            $this->deleteAdditionnalPicture($trickId);
+            // 1 delete additional picture from server
+            $this->deleteAdditionalPicture($trickId);
             $mainPictureWithPath = $this->getParameter('pictures_directory') . '/' . $trick->getPicture();
             // 2 - delete trick from Bd
             $tricksRepository->remove($trick, true);
@@ -211,25 +210,25 @@ class TrickController extends AbstractController
     }
 
     /**
-     * function deleteAdditionnalPicture
+     * function deleteAdditionalPicture
      *
      * @param [type] $argument (trick id)
      * @return void
      */
-    public function deleteAdditionnalPicture($argument)
+    public function deleteAdditionalPicture($argument)
     {
         // get the id of the trick
         $trickId = $argument; // $trickId = $trick->getId();
         // if this trick exist
         if ($this->tricksRepository->find($trickId) != null) {
             // get additional pictures list
-            $additionnalPictures = [];
-            $additionnalPictures = $this->picturesRepository->findBy(['tricks' => $trickId]);
-            // if there is additionnal picture
-            if ($additionnalPictures != []) {
-                // may have multiple additionnals pictures
-                foreach ($additionnalPictures as $additionnalPicture) {
-                    $file = $additionnalPicture->getpicture();
+            $additionalPictures = [];
+            $additionalPictures = $this->picturesRepository->findBy(['tricks' => $trickId]);
+            // if there is additional picture
+            if ($additionalPictures != []) {
+                // may have multiple additionals pictures
+                foreach ($additionalPictures as $additionalPicture) {
+                    $file = $additionalPicture->getPicture();
                     // get the physical path
                     $additionalPictureWithPath = $this->getParameter('pictures_directory') . '/' .  $file;
                     // delete trick from server
@@ -238,7 +237,7 @@ class TrickController extends AbstractController
                     }
                 } // end for each
             } else {
-                // not additionnelpicture to drop
+                // not additionalPicture to drop
             }
         }
     }
@@ -263,8 +262,8 @@ class TrickController extends AbstractController
                 $originalFilename = $pictureFile;
 
                 // may have multiple more pictures
-                $additionnalPictures = $formAddTrick->get('pictures')->getData();
-                $this->addAdditionnalPicture($additionnalPictures, $tricks);
+                $additionalPictures = $formAddTrick->get('pictures')->getData();
+                $this->addAdditionalPicture($additionalPictures, $tricks);
 
                 $safeFilename = $slugger->slug($originalFilename);  // not used
                 $newFilename = md5(uniqid()) . '.' . $originalFilename->guessExtension();
@@ -298,22 +297,22 @@ class TrickController extends AbstractController
     }
 
     /**
-     * function to add additionnal picture
+     * function to add additional picture
      *
      * @return void
      */
-    private function addAdditionnalPicture($additionnalPictures, $tricks)
+    private function addAdditionalPicture($additionalPictures, $tricks)
     {
-        foreach ($additionnalPictures as $additionnalPicture) {
-            $file  = md5(uniqid()) . '.' . $additionnalPicture->guessExtension();
-            $additionnalPicture->move(
+        foreach ($additionalPictures as $additionalPicture) {
+            $file  = md5(uniqid()) . '.' . $additionalPicture->guessExtension();
+            $additionalPicture->move(
                 $this->getParameter('pictures_directory'),
                 $file
             );
             // in db 
             $img = new Pictures();
-            $img->setpicture($file);
-            $tricks->addAdditionnalTrick($img);
+            $img->setPicture($file);
+            $tricks->addAdditionalTrick($img);
         }
     }
 

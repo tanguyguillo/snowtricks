@@ -134,14 +134,14 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                     </div>
                     {% endfor %}
                     <br>
-                    {####### additionnal video exemple #########}
+                    {####### additional video exemple #########}
                     <div class="col-sm-2">
                         <div class="mx-auto">
                             <div class="d-flex align-items-center justify-content-center h-100 w-100">
                                 <div class="card image-popup-vertical-fit">
                                     <img class="img-fluid zoom"
                                         src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/main-video.png"
-                                        alt="Additionnal video {{ trick.title|striptags}} 1" />
+                                        alt="additional video {{ trick.title|striptags}} 1" />
 
                                     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and
                                     app.request.attributes.get('_route') == "tricks_modifications" %}
@@ -165,7 +165,7 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
 
                 </div>
 
-                {# additionnal picture #}
+                {# additional picture #}
                 {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and
                 app.request.attributes.get('_route') == "tricks_modifications" %}
 
@@ -173,7 +173,7 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                     <div class="row">
                         <div class="form-group">
                             {{ form_row(formUpdateTrick.pictures, {
-                            label: 'Add more additionnal pictures',
+                            label: 'Add more additional pictures',
                             attr : {'class': 'form-control'}
                             }) }}
                         </div>

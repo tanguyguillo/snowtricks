@@ -68,7 +68,7 @@ class UpdateType extends AbstractType
                 ]
             );
         // ->add(
-        //     'additionnalTrick',
+        //     'additionalTrick',
         //     CollectionType::class,
         //     [
         //         'entry_type' => Pictures::class,

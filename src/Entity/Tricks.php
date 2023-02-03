@@ -65,7 +65,7 @@ class Tricks
     private ?\DateTimeImmutable $modified_at = null; // make migration
 
     #[ORM\OneToMany(mappedBy: 'tricks', targetEntity: Pictures::class, cascade: ["all"], orphanRemoval: true)]
-    private Collection $additionnalTrick;
+    private Collection $additionalTrick;
 
     #[ORM\OneToMany(mappedBy: 'relation', targetEntity: Comments::class, cascade: ["all"], orphanRemoval: true)]
     private Collection $comments;
@@ -77,7 +77,7 @@ class Tricks
         $this->slugger = new AsciiSlugger();
         $this->setPicture("main-picture.jpg");
         $this->setDescription("X"); // not used for instance... so yet X
-        $this->additionnalTrick = new ArrayCollection();
+        $this->additionalTrick = new ArrayCollection();
         $this->comments = new ArrayCollection();
     }
 
@@ -205,24 +205,24 @@ class Tricks
     /**
      * @return Collection<int, Pictures>
      */
-    public function getAdditionnalTrick(): Collection
+    public function getadditionalTrick(): Collection
     {
-        return $this->additionnalTrick;
+        return $this->additionalTrick;
     }
 
-    public function addAdditionnalTrick(Pictures $additionnalTrick): self
+    public function addAdditionalTrick(Pictures $additionnalTrick): self
     {
-        if (!$this->additionnalTrick->contains($additionnalTrick)) {
-            $this->additionnalTrick->add($additionnalTrick);
+        if (!$this->additionalTrick->contains($additionnalTrick)) {
+            $this->additionalTrick->add($additionnalTrick);
             $additionnalTrick->setTricks($this);
         }
 
         return $this;
     }
 
-    public function removeAdditionnalTrick(Pictures $additionnalTrick): self
+    public function removeAdditionalTrick(Pictures $additionnalTrick): self
     {
-        if ($this->additionnalTrick->removeElement($additionnalTrick)) {
+        if ($this->additionalTrick->removeElement($additionnalTrick)) {
             // set the owning side to null (unless already changed)
             if ($additionnalTrick->getTricks() === $this) {
                 $additionnalTrick->setTricks(null);
