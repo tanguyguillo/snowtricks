@@ -1,5 +1,6 @@
 $(document).ready(function () {
     var id
+    var idPicture
 
     $('.btndelete').click(function () {
         console.log("1");
@@ -44,19 +45,19 @@ $(document).ready(function () {
 
     // go to controller delete additional picture
     $("a[data-additional-delete]").on("click", function (e) {
-        console.log(2);
+        console.log('data-additional-delete"');
         e.preventDefault();
-        // $.ajax({
-        //     type: "DELETE",
-        //     url: "/tricks/delete-additional-picture/" + id,
-        //     data: { "_token": this.dataset.token },
-        //     success: function (response) {
-        //         console.log(response);
-        //     },
-        //     error: function (error) {
-        //         console.log(error);
-        //     },
-        // });
+        $.ajax({
+            type: "DELETE",
+            url: "/tricks/delete-additional-picture/" + idPicture,
+            data: { "_token": this.dataset.token },
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (error) {
+                console.log(error);
+            },
+        });
     });
 
 

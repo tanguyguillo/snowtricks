@@ -3,30 +3,6 @@
     * Copyright 2013-2020 Start Bootstrap
     * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-freelancer/blob/master/LICENSE)
     */
-
-// document.querySelector("html").classList.add('js');
-
-// var fileInput = document.querySelector(".input-file"),
-//     button = document.querySelector(".input-file-trigger"),
-//     the_return = document.querySelector(".file-return");
-
-// button.addEventListener("keydown", function (event) {
-//     if (event.keyCode == 13 || event.keyCode == 32) {
-//         console.log("1");
-//         fileInput.focus();
-//     }
-// });
-// button.addEventListener("click", function (event) {
-//     fileInput.focus();
-//     console.log("1");
-//     return false;
-// });
-// fileInput.addEventListener("change", function (event) {
-//     console.log("1");
-//     the_return.innerHTML = this.value;
-// });
-
-
 (function ($) {
     "use strict"; // Start of use strict
 
@@ -67,17 +43,6 @@
             .one('click', function () { $(this).removeClass('open'); });
     });
 
-    // Activate scrollspy to add active class to navbar items on scroll
-    // $('body').scrollSpy({
-    //     target: '#mainNav',
-    //     offset: 80
-    // });
-
-    // var scrollSpy = new bootstrap.ScrollSpy(document.body, {
-    //     target: '#mainNav',
-    //     offset: 80
-    // })
-
     // Collapse Navbar  // not used....
     var navbarCollapse = function () {
         if ($("#mainNav").offset().top > 100) {
@@ -88,6 +53,7 @@
     };
     // Collapse now if page is not at top
     navbarCollapse();
+    
     // Collapse the navbar when page is scrolled
     $(window).scroll(navbarCollapse);
 

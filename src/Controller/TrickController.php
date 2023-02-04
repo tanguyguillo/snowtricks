@@ -245,33 +245,33 @@ class TrickController extends AbstractController
     /**
      * function to delete one additional picture by picture id from update screen
      *
-     * @param [type] $argument
+     * @param [type] $argument   
      * @return void
-     *  #[Route('/delete-tricks/{id}', name: 'app_tricks_delete', methods: ['DELETE'])]
-     *public function delete(Request $request, Tricks $trick, TricksRepository $tricksRepository)
      */
     #[Route('/delete-additional-picture/{pictureId}', name: 'app_additional_picture_delete', methods: ['DELETE'])]
-    public function deleteOneAdditionalPicture($pictureId, Request $request, Pictures $pictures)
+    public function deleteOneAdditionalPicture($pictureId)
     {
 
-        dd("pass");
 
-        // $additionalPictures = [];
-        // $additionalPictures = $this->picturesRepository->findBy(['tricks' => $trickId]);
-        // if there is additional picture
-        // if ($additionalPictures != []) {
-        //     // may have multiple additionals pictures
-        //     foreach ($additionalPictures as $additionalPicture) {
-        //         $file = $additionalPicture->getPicture();
-        //         // get the physical path
-        //         $additionalPictureWithPath = $this->getParameter('pictures_directory') . '/' .  $file;
-        //         // delete trick from server
-        //         if (file_exists($additionalPictureWithPath = $this->getParameter('pictures_directory') . '/' .  $file)) {
-        //             unlink($additionalPictureWithPath = $this->getParameter('pictures_directory') . '/' .  $file);
-        //         }
-        //     } // end for each
+        // $submittedToken = $request->request->get('_token');
+        // if ($this->isCsrfTokenValid('delete' . $pictureId, $submittedToken)) {
+
+        // 1 delete additional picture from server
+        //$this->deleteAdditionalPicture($trickId);
+        // get the physical path of the main picture
+        //$mainPictureWithPath = $this->getParameter('pictures_directory') . '/' . $trick->getPicture();
+        // 2 - delete trick from Bd
+        // $tricksRepository->remove($trick, true); // OK
+        // 3 - delete Main picture on server
+        $x = 1;
+
+        if ($x == 1) {
+            return new JsonResponse("oui : delete additional picture", 200);
+        } else {
+            return new JsonResponse("non : delete additional picture ", 500);
+        }
         // } else {
-        //     // not additionalPicture to drop
+        //     return new JsonResponse("non ", 500);
         // }
     }
 

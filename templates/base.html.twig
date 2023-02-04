@@ -104,55 +104,41 @@
     {% else %}
     {% set ifOfOrNot = 'position-fixed' %}
     {% endif %}
-    {############## footer ##############}
     {% block footer %}
     <footer class="copyright  text-white {{ ifOfOrNot }}">
-
-        {# <div class="container"> #}
-            <div class="row align-items-start">
-
-                {############## Copyright or home ##############}
-
-                <div class="flex-container">
-
-                    <span class="footer-below">
-                        Copyright &copy; {{ "now"|date("Y") }}
-                    </span>
-
-
-                    <div><a href="{{ app.request.getSchemeAndHttpHost() }}/">
-                            <button class="btn btn-menu-down white"><i class="fa fa-home">
-                        </a></i></button>
-                    </div>
-                    <div>
-                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                        <a href="{{ app.request.getSchemeAndHttpHost() }}/tricks/add">
-                            <button class="btn btn-menu-down"><i class="fa fa-bookmark"></i></button>
-                        </a>
-                        {% endif %}
-                    </div>
-                    <div>
-                        {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                        <a href="{{ app.request.getSchemeAndHttpHost() }}/login">
-                            <button class="btn btn-menu-down"><i class="fa fa-sign-in" aria-hidden="true"></i></button>
-                        </a>
-                        <a href="{{ app.request.getSchemeAndHttpHost() }}/registration">
-                            <button class="btn btn-menu-down"><i class="fa fa-user-plus"></i></button>
-                        </a>
-                        </li>
-                        {% endif %}
-
-                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                        <a href="{{ app.request.getSchemeAndHttpHost() }}/logout">
-                            <button class="btn btn-menu-down"><i class="fa fa-sign-out"></i></button>
-                        </a>
-                        {% endif %}
-                    </div>
+        <div class="row align-items-start">
+            <div class="flex-container">
+                <span class="footer-below">
+                    Copyright &copy; {{ "now"|date("Y") }}
+                </span>
+                <div><a href="{{ app.request.getSchemeAndHttpHost() }}/">
+                        <button class="btn btn-menu-down white"><i class="fa fa-home">
+                    </a></i></button>
                 </div>
-
+                <div>
+                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                    <a href="{{ app.request.getSchemeAndHttpHost() }}/tricks/add">
+                        <button class="btn btn-menu-down"><i class="fa fa-bookmark"></i></button>
+                    </a>
+                    {% endif %}
+                </div>
+                <div>
+                    {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                    <a href="{{ app.request.getSchemeAndHttpHost() }}/login">
+                        <button class="btn btn-menu-down"><i class="fa fa-sign-in"></i></button>
+                    </a>
+                    <a href="{{ app.request.getSchemeAndHttpHost() }}/registration">
+                        <button class="btn btn-menu-down"><i class="fa fa-user-plus"></i></button>
+                    </a>
+                    {% endif %}
+                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                    <a href="{{ app.request.getSchemeAndHttpHost() }}/logout">
+                        <button class="btn btn-menu-down"><i class="fa fa-sign-out"></i></button>
+                    </a>
+                    {% endif %}
+                </div>
             </div>
-
-
+        </div>
     </footer>
     {% endblock %}
     {% block javascripts %}
