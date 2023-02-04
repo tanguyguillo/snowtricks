@@ -218,6 +218,12 @@ ul li a:hover .footerDown {
   display: none;
 }
 
+@media (min-width: 992px) {
+  .footer-below {
+    visibility: visible !important;
+  }
+}
+
 /* *********** @media (max-width: 992px **************** */
 @media (max-width: 992px) {
 
@@ -245,17 +251,7 @@ ul li a:hover .footerDown {
   }
 }
 
-.form-additionalPicture {
-  text
-}
-
-/* ************ End @media (max-width: 992px *************** */
-
-@media (min-width: 992px) {
-  .footer-below {
-    visibility: visible !important;
-  }
-}
+.form-additionalPicture {}
 
 .list-element .content {
   position: relative;
@@ -669,7 +665,7 @@ form>p:nth-child(5)>a {
   color: white;
 }
 
-/*view-source:https: //www.creativejuiz.fr/blog/doc/custom-input-file-full-css3-flat-ui.html*/
+/*view-source:https: //www.creativejuiz.fr/blog/doc/custom-input-file-full-css3-flat-ui.html
 
 .file {
   position: relative;

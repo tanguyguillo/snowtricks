@@ -59,8 +59,6 @@ SnowTricks - modifications - {{ trick.title }}
                         </div>
                     </div>
 
-
-
                     {# <div class="form-control">
                         <i class="fa fa-calendar"></i> {{ form_label(form.dueDate) }}
                         {{ form_widget(form.dueDate) }}
@@ -78,7 +76,9 @@ SnowTricks - modifications - {{ trick.title }}
                     <div class="row justify-content-center">
                         {% for additionalPicture in additionalPictures %}
                         <div class="col-md-2 col-lg-2 mb-5 item">
-                            <div class="mx-auto">
+
+                            <div class="mx-auto general{{ additionalPicture.id }}">
+
                                 <div class="d-flex align-items-center justify-content-center h-100 w-100">
                                     <div class="card {{additionalPicture.id}}">
                                         <img class="img-fluid"
@@ -91,38 +91,26 @@ SnowTricks - modifications - {{ trick.title }}
                                         <i class="bi bi-pencil-fill iconTricks"></i>
                                     </a> #}
 
-                                    <form action="#">
+                                    {# <form action="#">
                                         <p class="file">
                                             <input type="file" name="file" id="file" />
                                             <label for="file">Upload your image</label>
                                         </p>
-                                    </form>
+                                    </form> #}
 
-                                    <a href="#additionalPictureModify" class="float-center ml-1"
+                                    <a href="#additionalPictureModify"
+                                        class="float-center ml-1 additionalPictureModify{{ additionalPicture.id }}"
                                         id="{{ additionalPicture.id }}">
                                         <i class=" bi bi-pencil-fill iconTricks"></i>
                                     </a>
 
-                                    <a href="#additionalPictureDelete" class="float-center ml-1"
-                                        id="{{ additionalPicture.id }}">
-                                        <i class=" bi bi-trash-fill iconTricks"></i>
+                                    <a data-additional-delete
+                                        href="{{ app.request.getSchemeAndHttpHost() }}/tricks/delete-additional-picture/{{ additionalPicture.id }}"
+                                        class="float-center ml-1 btnAdditionalDelete" id="{{ additionalPicture.id }}"
+                                        data-token="{{ csrf_token('delete'~additionalPicture.id )}}">
+                                        <i class="bi bi-trash-fill iconTricks"></i>
                                     </a>
 
-                                    {# <small>
-                                        <form action="" method="Post" class="form-group form-additionalPicture">
-                                            <label for="ModifyAdditionalPicture {{ additionalPicture.id }}">Choose a
-                                                new
-                                                picture</label>
-                                            <input type="file" id="{{ additionalPicture.id }}"
-                                                name="additional picture of {{ trick.title|striptags}}"
-                                                accept="image/png, image/jpeg">
-
-                                            <div class="form-additionalPicture">
-                                                <button class="btn btn-info form-additionalPicture"
-                                                    type="submit">OK</button>
-                                            </div>
-                                        </form>
-                                    </small> #}
                                 </span>
                             </div>
                         </div>

@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %}Snowtricks{% endblock %}
+{% block title %}SnowTricks{% endblock %}
 {% block visualCentral %}
 <header class="masthead text-white text-center home-background">
     <div class="container">
@@ -64,14 +64,14 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <p>Are your sur to want to detete this trick ?</p>
+                            <p>Are your sur to want to delete this trick ?</p>
                         </div>
                         <div class="modal-footer">
                             {% for trick in tricks %}
                             <button type="button" class="btn-validate btn btn-primary displayNone {{trick.id}} ">
                                 <a data-delete
                                     href="{{ app.request.getSchemeAndHttpHost() }}/tricks/delete-tricks/{{ trick.id }}"
-                                    data-token="{{ csrf_token('delete'~trick.id)}}">Yes {#{{trick.id}} #}
+                                    data-token="{{ csrf_token('delete'~trick.id)}}">Yes
                                 </a>
                             </button>
                             {% endfor %}
