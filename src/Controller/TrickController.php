@@ -34,6 +34,7 @@ class TrickController extends AbstractController
 {
     public $picturesRepository;
     public $tricksRepository;
+    // private  $pictures;
     private $em;
 
     /**
@@ -46,6 +47,8 @@ class TrickController extends AbstractController
         $this->picturesRepository = $picturesRepository;
         $this->tricksRepository = $tricksRepository;
         $this->em = $em;
+
+        // $pictures = $this->pictures;
     }
 
     /**
@@ -154,7 +157,7 @@ class TrickController extends AbstractController
             // 2 - delete trick from Bd
             $tricksRepository->remove($trick, true); // OK
             // 3 - delete Main picture on server
-            if ($this->deleteMainPicture($mainPictureWithPath)) {
+            if ($this->deletePicture($mainPictureWithPath)) {
                 return new JsonResponse("oui", 200);
             } else {
                 return new JsonResponse("non : delete picture ", 500);
@@ -179,7 +182,7 @@ class TrickController extends AbstractController
             // 2 - delete trick from Bd
             $tricksRepository->remove($trick, true);
             // 3 - delete Main picture on server
-            if ($this->deleteMainPicture($mainPictureWithPath)) {
+            if ($this->deletePicture($mainPictureWithPath)) {
                 $this->addFlash('success', 'Your trick have been deleted.');
             } else {
                 $this->addFlash('error', 'Something goes wrong.');
@@ -190,16 +193,16 @@ class TrickController extends AbstractController
     }
 
     /**
-     *  function to delete the main picture in trick
+     *  function to delete the  picture in trick on server
      *
-     * @param [type] $mainPictureWithPath string (path of picture to delete on server)
-     * @param TricksRepository $tricksRepository
+     * @param [type]  string (path of picture to delete on server) 
+     * 
      * @return bool
      */
-    private function deleteMainPicture($mainPictureWithPath)
+    private function deletePicture($PictureWithPath)
     {
-        if (file_exists($mainPictureWithPath)) {
-            unlink($mainPictureWithPath);
+        if (file_exists($PictureWithPath)) {
+            unlink($PictureWithPath);
             return 1;
         } else {
             return 0;
@@ -223,7 +226,7 @@ class TrickController extends AbstractController
             $additionalPictures = $this->picturesRepository->findBy(['tricks' => $trickId]);
             // if there is additional picture
             if ($additionalPictures != []) {
-                // may have multiple additionals pictures
+                // may have multiple pictures
                 foreach ($additionalPictures as $additionalPicture) {
                     $file = $additionalPicture->getPicture();
                     // get the physical path
@@ -248,39 +251,26 @@ class TrickController extends AbstractController
      * @return void
      */
     #[Route('/delete-additional-picture/{pictureId}', name: 'app_additional_picture_delete', methods: ['DELETE'])]
-    public function deleteOneAdditionalPicture($pictureId, Request $request, picturesRepository $picturesRepository)
+    public function deleteOneAdditionalPicture($pictureId, Request $request, picturesRepository $picturesRepository, Pictures $pictures)
     {
-        $x = 0;
         $submittedToken = $request->request->get('_token');
         if ($this->isCsrfTokenValid('delete' . $pictureId, $submittedToken)) {
+            $additionalPicture = $this->picturesRepository->find(array('id' => $pictureId)); // find : return an object 
+            $file =  $additionalPicture->getPicture();
+            // 1 get the physical path
+            $additionalPictureWithPath = $this->getParameter('pictures_directory') . '/' .  $file;
+            // 2 delete picture from server
+            if ($this->deletePicture($additionalPictureWithPath)) {
+                // 3 - delete from db
+                $picturesRepository->removeElement($pictureId, true);
 
-            $additionalPicture = $this->picturesRepository->findBy(['id' => $pictureId]);
-
-            //$file = $this->$additionalPicture->getPicture();
-
-            //     // get the physical path
-            //     $additionalPictureWithPath = $this->getParameter('pictures_directory') . '/' .  $file;
-            //     // delete trick from server
-            //     if (file_exists($additionalPictureWithPath = $this->getParameter('pictures_directory') . '/' .  $file)) {
-            //         unlink($additionalPictureWithPath = $this->getParameter('pictures_directory') . '/' .  $file);
-            //     }
-            //     // delete from db, deleteMainPicture work too for additional picture
-            //     if ($this->deleteMainPicture($additionalPictureWithPath)) {
-            //         return new JsonResponse("oui : additionalPicture", 200);
-            //     } else {
-            //         return new JsonResponse("non : delete picture ", 500);
-            //     }
-            // } else {
-            //     return new JsonResponse("non ", 500);
-            // }
-
-            $x = 1;
-        }
-
-        if ($x == 1) {
-            return new JsonResponse("oui : delete additional picture", 200);
-        } else {
-            return new JsonResponse("non : delete additional picture ", 500);
+                // unset($this->picturesRepository[$pictureId]);
+                return new JsonResponse("oui : additionalPicture", 200);
+                //$this->addFlash('success', 'Your additional picture have been deleted.');
+            } else {
+                return new JsonResponse("non ", 500);
+                // $this->addFlash('error', 'Something goes wrong.');
+            }
         }
     }
 
@@ -374,22 +364,30 @@ class TrickController extends AbstractController
     }
 
     /**
-     * just to test tricks/test/87 
-
+     * just to test http://127.0.0.1:8000/tricks/test/124  for example/testing
      */
     #[Route('/test/{pictureId}', name: 'app_test')]
-    public function test(int $pictureId, Request $request, PicturesRepository $picturesRepository, Pictures $Pictures)
+    public function test(int $pictureId, Request $request, PicturesRepository $picturesRepository)
     {
-        $additionalPicture = $this->picturesRepository->find(array('id' => $pictureId)); // find return an object 
+        // $submittedToken = $request->request->get('_token');
+        // if ($this->isCsrfTokenValid('delete' . $pictureId, $submittedToken)) {
+        $additionalPicture = $this->picturesRepository->find(array('id' => $pictureId)); // find : return an object 
         $file =  $additionalPicture->getPicture();
-        dd($file);
         // 1 get the physical path
         $additionalPictureWithPath = $this->getParameter('pictures_directory') . '/' .  $file;
+
         // 2 delete picture from server
-        if (file_exists($additionalPictureWithPath = $this->getParameter('pictures_directory') . '/' .  $file)) {
-            unlink($additionalPictureWithPath = $this->getParameter('pictures_directory') . '/' .  $file);
+        if ($this->deletePicture($additionalPictureWithPath)) {
+            // 3 - delete from db
+            unset($this->picturesRepository[$pictureId]); //ont work
+
+            return new JsonResponse("oui : additionalPicture", 200);
+            //$this->addFlash('success', 'Your additional picture have been deleted.');
+        } else {
+            return new JsonResponse("non ", 500);
+            // $this->addFlash('error', 'Something goes wrong.');
         }
-        // 3 - delete  from Bd
-        // $picturesRepository->remove($Pictures; true);
+        // }
+
     }
 }
