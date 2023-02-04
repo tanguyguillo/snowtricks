@@ -39,7 +39,6 @@ class PicturesRepository extends ServiceEntityRepository
         }
     }
 
-
     // /**
     //  * @return Pictures[] Returns an array of Pictures objects
     //  */
@@ -53,8 +52,6 @@ class PicturesRepository extends ServiceEntityRepository
     //         ->getQuery()
     //         ->getResult();
     // }
-
-
 
     /**
      * @return Pictures[] Returns an array of Pictures objects

@@ -34,7 +34,6 @@ class TrickController extends AbstractController
 {
     public $picturesRepository;
     public $tricksRepository;
-
     private $em;
 
     /**
@@ -75,11 +74,9 @@ class TrickController extends AbstractController
     public function Update(EntityManagerInterface $entityManager, Request $request, $slug, TricksRepository $tricksRepository, UserRepository $userRepository, Tricks $tricks, PicturesRepository $picturesRepository): Response
     {
         $trick = $tricksRepository->findOneBy(['slug' => $slug]);
-
         if (!$trick) {
             throw new NotFoundHttpException("No trick found");
         }
-
         $AuthorId = $trick->getUser();
         $Author = $userRepository->findOneBy(['id' => $AuthorId]);
         $trickId = $trick->getId();
@@ -245,38 +242,47 @@ class TrickController extends AbstractController
     /**
      * function to delete one additional picture by picture id from update screen
      *
-     * @param [type] $argument   
+     * @param [type] $argument   $pictureId, Request $request, Pictures $pictures
+     * 
+     * 
      * @return void
      */
     #[Route('/delete-additional-picture/{pictureId}', name: 'app_additional_picture_delete', methods: ['DELETE'])]
-    public function deleteOneAdditionalPicture($pictureId)
+    public function deleteOneAdditionalPicture($pictureId, Request $request, picturesRepository $picturesRepository)
     {
+        $x = 0;
+        $submittedToken = $request->request->get('_token');
+        if ($this->isCsrfTokenValid('delete' . $pictureId, $submittedToken)) {
 
+            $additionalPicture = $this->picturesRepository->findBy(['id' => $pictureId]);
 
-        // $submittedToken = $request->request->get('_token');
-        // if ($this->isCsrfTokenValid('delete' . $pictureId, $submittedToken)) {
+            //$file = $this->$additionalPicture->getPicture();
 
-        // 1 delete additional picture from server
-        //$this->deleteAdditionalPicture($trickId);
-        // get the physical path of the main picture
-        //$mainPictureWithPath = $this->getParameter('pictures_directory') . '/' . $trick->getPicture();
-        // 2 - delete trick from Bd
-        // $tricksRepository->remove($trick, true); // OK
-        // 3 - delete Main picture on server
-        $x = 1;
+            //     // get the physical path
+            //     $additionalPictureWithPath = $this->getParameter('pictures_directory') . '/' .  $file;
+            //     // delete trick from server
+            //     if (file_exists($additionalPictureWithPath = $this->getParameter('pictures_directory') . '/' .  $file)) {
+            //         unlink($additionalPictureWithPath = $this->getParameter('pictures_directory') . '/' .  $file);
+            //     }
+            //     // delete from db, deleteMainPicture work too for additional picture
+            //     if ($this->deleteMainPicture($additionalPictureWithPath)) {
+            //         return new JsonResponse("oui : additionalPicture", 200);
+            //     } else {
+            //         return new JsonResponse("non : delete picture ", 500);
+            //     }
+            // } else {
+            //     return new JsonResponse("non ", 500);
+            // }
+
+            $x = 1;
+        }
 
         if ($x == 1) {
             return new JsonResponse("oui : delete additional picture", 200);
         } else {
             return new JsonResponse("non : delete additional picture ", 500);
         }
-        // } else {
-        //     return new JsonResponse("non ", 500);
-        // }
     }
-
-
-
 
 
     /**
@@ -365,5 +371,25 @@ class TrickController extends AbstractController
         return $this->render('tricks/error.html.twig', [
             'messageError' =>  $messageError(),
         ]);
+    }
+
+    /**
+     * just to test tricks/test/87 
+
+     */
+    #[Route('/test/{pictureId}', name: 'app_test')]
+    public function test(int $pictureId, Request $request, PicturesRepository $picturesRepository, Pictures $Pictures)
+    {
+        $additionalPicture = $this->picturesRepository->find(array('id' => $pictureId)); // find return an object 
+        $file =  $additionalPicture->getPicture();
+        dd($file);
+        // 1 get the physical path
+        $additionalPictureWithPath = $this->getParameter('pictures_directory') . '/' .  $file;
+        // 2 delete picture from server
+        if (file_exists($additionalPictureWithPath = $this->getParameter('pictures_directory') . '/' .  $file)) {
+            unlink($additionalPictureWithPath = $this->getParameter('pictures_directory') . '/' .  $file);
+        }
+        // 3 - delete  from Bd
+        // $picturesRepository->remove($Pictures; true);
     }
 }
