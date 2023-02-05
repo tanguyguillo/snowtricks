@@ -39,6 +39,7 @@ security:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/tricks/add, roles: ROLE_USER }
         - { path: ^/tricks/details/modifications, roles: ROLE_USER }
+        - { path: ^/delete-additional-picture, roles: ROLE_USER }
 
 when@test:
     security:

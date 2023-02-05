@@ -45,7 +45,7 @@ $(document).ready(function () {
 
     // go to controller delete additional picture
     $("a[data-additional-delete]").on("click", function (e) {
-        console.log('data-additional-delete"');
+        console.log('passage data-additional-delete"');
         e.preventDefault();
         $.ajax({
             type: "DELETE",

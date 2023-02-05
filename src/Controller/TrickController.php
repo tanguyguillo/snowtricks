@@ -141,7 +141,8 @@ class TrickController extends AbstractController
     }
 
     /**
-     * function delete trick for homePage with Ajax/JsonResponse
+     * function delete 
+     * trick for homePage with Ajax/JsonResponse
      *
      */
     #[Route('/delete-tricks/{id}', name: 'app_tricks_delete', methods: ['DELETE'])]
@@ -168,7 +169,8 @@ class TrickController extends AbstractController
     }
 
     /**
-     * function deleteFromDetail (button delete all trick from modification page)
+     * function deleteFromDetail 
+     * (button delete all trick from modification page)
      */
     #[Route('/delete-tricks_from_detail/{id}', name: 'app_tricks_delete_from_detail', methods: ['Post'])]
     public function deleteFromDetail(Request $request, Tricks $trick, TricksRepository $tricksRepository)
@@ -193,7 +195,8 @@ class TrickController extends AbstractController
     }
 
     /**
-     *  function to delete the  picture in trick on server
+     *  function to delete 
+     * the  adding picture in trick on server
      *
      * @param [type]  string (path of picture to delete on server) 
      * 
@@ -210,7 +213,7 @@ class TrickController extends AbstractController
     }
 
     /**
-     * function deleteAdditionalPicture
+     * function delete Additional Picture
      *
      * @param [type] $argument (trick id)
      * @return void
@@ -268,7 +271,7 @@ class TrickController extends AbstractController
                 return new JsonResponse("oui : additionalPicture", 200);
                 //$this->addFlash('success', 'Your additional picture have been deleted.');
             } else {
-                return new JsonResponse("non ", 500);
+                return new JsonResponse("non bbbb", 500);
                 // $this->addFlash('error', 'Something goes wrong.');
             }
         }
@@ -364,30 +367,39 @@ class TrickController extends AbstractController
     }
 
     /**
-     * just to test http://127.0.0.1:8000/tricks/test/124  for example/testing
+     * just to test http://127.0.0.1:8000/tricks/test/92  for example/testing
      */
     #[Route('/test/{pictureId}', name: 'app_test')]
     public function test(int $pictureId, Request $request, PicturesRepository $picturesRepository)
     {
         // $submittedToken = $request->request->get('_token');
         // if ($this->isCsrfTokenValid('delete' . $pictureId, $submittedToken)) {
-        $additionalPicture = $this->picturesRepository->find(array('id' => $pictureId)); // find : return an object 
-        $file =  $additionalPicture->getPicture();
+        // $additionalPicture = $this->picturesRepository->find(array('id' => $pictureId)); // find : return an object 
+
+        $additionalPicture = $this->picturesRepository->findOneById($pictureId);
+        $file  = $additionalPicture->getPicture();
+
         // 1 get the physical path
         $additionalPictureWithPath = $this->getParameter('pictures_directory') . '/' .  $file;
 
-        // 2 delete picture from server
+        // 2 delete picture from server // yes have been found and deleted
         if ($this->deletePicture($additionalPictureWithPath)) {
-            // 3 - delete from db
-            unset($this->picturesRepository[$pictureId]); //ont work
 
-            return new JsonResponse("oui : additionalPicture", 200);
+            // 3 - delete additional picture from BD from db
+            //$this->deleteSinglePicture($pictureId);
+
+            return new JsonResponse("oui : additionalPictureDeleted", 200);
             //$this->addFlash('success', 'Your additional picture have been deleted.');
         } else {
             return new JsonResponse("non ", 500);
             // $this->addFlash('error', 'Something goes wrong.');
         }
-        // }
-
     }
+
+    // public function deleteSinglePicture(Pictures  $pictureId)
+    // {
+    //     $pictureId->setFieldData(null);
+    //     $this->em->remove($pictureId);
+    //     // $this->em->flush();
+    // }
 }

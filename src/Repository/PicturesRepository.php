@@ -39,6 +39,30 @@ class PicturesRepository extends ServiceEntityRepository
         }
     }
 
+    public function removePicture(Pictures $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->remove($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    /**
+     * function to get data by id
+     *
+     * @param [type] $value  -> id 
+     * @return Pictures|null
+     */
+    public function findOneById(int $value): ?Pictures
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     // /**
     //  * @return Pictures[] Returns an array of Pictures objects
     //  */
@@ -65,14 +89,5 @@ class PicturesRepository extends ServiceEntityRepository
             ->setMaxResults(10)
             ->getQuery()
             ->getResult();
-    }
-
-    public function findOneBySomeField($value): ?Pictures
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult();
     }
 }

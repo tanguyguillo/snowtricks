@@ -39,15 +39,28 @@ class Pictures
         return $this;
     }
 
-    public function getpicture(): ?string
+    public function getPicture(): ?string
     {
         return $this->picture;
     }
 
-    public function setpicture(string $picture): self
+    public function setPicture(string $picture): self
     {
         $this->picture = $picture;
 
         return $this;
     }
+
+    // public function removeAdditionalPicture(Pictures $Pictures): self
+    // {
+    //     if ($this->additionalTrick->removeElement($additionalTrick)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($additionalTrick->getTricks() === $this) {
+    //             $additionalTrick->setTricks(null);
+    //         }
+    //     }
+
+    //     return $this;
+    // }
+
 }

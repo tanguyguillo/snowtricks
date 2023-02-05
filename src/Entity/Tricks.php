@@ -205,27 +205,27 @@ class Tricks
     /**
      * @return Collection<int, Pictures>
      */
-    public function getadditionalTrick(): Collection
+    public function getAdditionalTrick(): Collection
     {
         return $this->additionalTrick;
     }
 
-    public function addAdditionalTrick(Pictures $additionnalTrick): self
+    public function addAdditionalTrick(Pictures $additionalTrick): self
     {
-        if (!$this->additionalTrick->contains($additionnalTrick)) {
-            $this->additionalTrick->add($additionnalTrick);
-            $additionnalTrick->setTricks($this);
+        if (!$this->additionalTrick->contains($additionalTrick)) {
+            $this->additionalTrick->add($additionalTrick);
+            $additionalTrick->setTricks($this);
         }
 
         return $this;
     }
 
-    public function removeAdditionalTrick(Pictures $additionnalTrick): self
+    public function removeAdditionalTrick(Pictures $additionalTrick): self
     {
-        if ($this->additionalTrick->removeElement($additionnalTrick)) {
+        if ($this->additionalTrick->removeElement($additionalTrick)) {
             // set the owning side to null (unless already changed)
-            if ($additionnalTrick->getTricks() === $this) {
-                $additionnalTrick->setTricks(null);
+            if ($additionalTrick->getTricks() === $this) {
+                $additionalTrick->setTricks(null);
             }
         }
 
