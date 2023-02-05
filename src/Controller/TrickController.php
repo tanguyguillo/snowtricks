@@ -386,7 +386,8 @@ class TrickController extends AbstractController
         if ($this->deletePicture($additionalPictureWithPath)) {
 
             // 3 - delete additional picture from BD from db
-            //$this->deleteSinglePicture($pictureId);
+            $this->em->remove($additionalPicture); // working
+            $this->em->flush();
 
             return new JsonResponse("oui : additionalPictureDeleted", 200);
             //$this->addFlash('success', 'Your additional picture have been deleted.');
