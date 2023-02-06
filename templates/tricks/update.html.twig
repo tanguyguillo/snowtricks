@@ -174,7 +174,7 @@ SnowTricks - modifications - {{ trick.title }}
                             }) }}
                         </div>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <button class="btn btn-info updateTrick" type="submit">Save</button>
+                            <button type="submit" class="btn btn-info updateTrick">Save</button>
                             {{ form_end(formUpdateTrick) }}
                             <form method="post"
                                 action="{{ path('tricks_app_tricks_delete_from_detail', {'id': trick.id}) }}"
@@ -183,6 +183,11 @@ SnowTricks - modifications - {{ trick.title }}
                                 <button class="btn btn-danger">Delete</button>
                             </form>
                         </div>
+                        {# <div class="col posfctText">
+                            <button type="submit" class="btn btn-info mb-2"><a class="white"
+                                    href="{{ path('app_home') }}">Back to
+                                    list</a></button>
+                        </div> #}
                     </div>
                 </div>
             </div>

@@ -28,7 +28,7 @@ Snowtricks - Trick detail - {{ trick.title }}
                     </div>
                 </div>
 
-                {####### additionals pictures #########}
+                {####### more pictures #########}
 
                 <div class="row justify-content-center">
                     {% for additionalPicture in additionalPictures %}
@@ -89,13 +89,15 @@ Snowtricks - Trick detail - {{ trick.title }}
                         </li>
                     </ul>
                 </div>
-
             </div>
         </div>
+        {# <div class="col posfctText">
+            <button type="submit" class="btn btn-info mb-2"><a class="white" href="{{ path('app_home') }}">Back to
+                    list</a></button>
+        </div> #}
+
     </div>
-
     <hr>
-
     {# comments #}
     <form>
         <div class="media">
@@ -110,6 +112,7 @@ Snowtricks - Trick detail - {{ trick.title }}
                             <div class="col posfctText">
                                 <button type="submit" class="btn btn-info mb-2">Leave a comment</button>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -158,6 +161,7 @@ Snowtricks - Trick detail - {{ trick.title }}
             </div>
         </div>
     </div>
+
 </div>
 
 <br>

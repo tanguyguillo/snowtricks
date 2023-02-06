@@ -3,7 +3,6 @@ $(document).ready(function () {
     var idPicture
 
     $('.btndelete').click(function () {
-        console.log("1");
         id = $(this).attr('id')
         $('.' + id).removeClass('displayNone').addClass('displayContents');
     });
@@ -32,24 +31,22 @@ $(document).ready(function () {
             error: function (error) {
                 console.log(error);
                 $('#deleteThisTrick').modal('toggle');
-
             },
         });
     });
 
     $('.btnAdditionalDelete').click(function () {
-        console.log("1");
         idPicture = $(this).attr('id')
         $('.general' + idPicture).addClass('displayNone');  // visual + pencil + trash
     });
 
-    // go to controller delete additional picture
+    // go to controller delete additional picture 
     $("a[data-additional-delete]").on("click", function (e) {
         console.log('passage data-additional-delete"');
         e.preventDefault();
         $.ajax({
             type: "DELETE",
-            url: "/tricks/delete-additional-picture/" + idPicture,
+            url: "/tricks/delete-picture/" + idPicture,
             data: { "_token": this.dataset.token },
             success: function (response) {
                 console.log(response);
@@ -60,17 +57,14 @@ $(document).ready(function () {
         });
     });
 
-
     $('.updateTrick').click(function () {
         console.log('pass update'); // OK
     });
-
 
     // close message
     $('.close').click(function () {
         $(".alert").alert('close')
     });
-
 
     // form main picture
     $('.pencilMainPicture').click(function () {

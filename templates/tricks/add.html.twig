@@ -45,13 +45,11 @@
 
             {{ form_start(formAddTrick) }}
 
-            <div class="form-group">
-                {{ form_row(formAddTrick.picture, {
-                label: 'Add the main picture',
-                type : "file",
-                attr : {'class': 'form-label'},
-                }) }}
-            </div>
+            {{ form_row(formAddTrick.picture, {
+            label: 'Add the main picture',
+            type : "file",
+            attr : {'class': 'form-control'},
+            }) }}
 
             <br>
 
@@ -88,13 +86,14 @@
             {{ form_end(formAddTrick) }}
 
             <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
         </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
     </div>
+</div>
 </div>
 </div>
 <br>

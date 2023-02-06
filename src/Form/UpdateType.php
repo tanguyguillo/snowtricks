@@ -67,21 +67,5 @@ class UpdateType extends AbstractType
                     'required' => false
                 ]
             );
-        // ->add(
-        //     'additionalTrick',
-        //     CollectionType::class,
-        //     [
-        //         'entry_type' => Pictures::class,
-        //         'entry_options' => ['label' => false, 'attr' => ['accept' => "image/*",]],
-        //         'mapped' => false
-        //     ]
-        // );
     }
-
-    // public function configureOptions(OptionsResolver $resolver): void
-    // {
-    //     $resolver->setDefaults([
-    //         'data_class' => null
-    //     ]);
-    // }
 }

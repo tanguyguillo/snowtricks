@@ -51,7 +51,7 @@ class PicturesRepository extends ServiceEntityRepository
     /**
      * function to get data by id
      *
-     * @param [type] $value  -> id 
+     * @param [int] $value (id )
      * @return Pictures|null
      */
     public function findOneById(int $value): ?Pictures

@@ -47,8 +47,6 @@ class TrickController extends AbstractController
         $this->picturesRepository = $picturesRepository;
         $this->tricksRepository = $tricksRepository;
         $this->em = $em;
-
-        // $pictures = $this->pictures;
     }
 
     /**
@@ -71,7 +69,7 @@ class TrickController extends AbstractController
     }
 
     /**
-     * update
+     * Function update (write)
      */
     #[Route('/details/modifications/{slug}', name: 'modifications')]
     public function Update(EntityManagerInterface $entityManager, Request $request, $slug, TricksRepository $tricksRepository, UserRepository $userRepository, Tricks $tricks, PicturesRepository $picturesRepository): Response
@@ -148,6 +146,9 @@ class TrickController extends AbstractController
     #[Route('/delete-tricks/{id}', name: 'app_tricks_delete', methods: ['DELETE'])]
     public function delete(Request $request, Tricks $trick, TricksRepository $tricksRepository)
     {
+
+        return new JsonResponse("oui1", 200);
+
         $submittedToken = $request->request->get('_token');
         if ($this->isCsrfTokenValid('delete' . $trick->getId(), $submittedToken)) {
             $trickId = $trick->getId();
@@ -194,26 +195,9 @@ class TrickController extends AbstractController
         }
     }
 
-    /**
-     *  function to delete 
-     * the  adding picture in trick on server
-     *
-     * @param [type]  string (path of picture to delete on server) 
-     * 
-     * @return bool
-     */
-    private function deletePicture($PictureWithPath)
-    {
-        if (file_exists($PictureWithPath)) {
-            unlink($PictureWithPath);
-            return 1;
-        } else {
-            return 0;
-        }
-    }
 
     /**
-     * function delete Additional Picture
+     * function delete Additional from Entity PicturesPicture
      *
      * @param [type] $argument (trick id)
      * @return void
@@ -250,33 +234,31 @@ class TrickController extends AbstractController
      *
      * @param [type] $argument   $pictureId, Request $request, Pictures $pictures
      * 
-     * 
+     * http://127.0.0.1:8000/tricks/delete-additional-picture/93 5
      * @return void
      */
-    #[Route('/delete-additional-picture/{pictureId}', name: 'app_additional_picture_delete', methods: ['DELETE'])]
+    #[Route('/delete-picture/{pictureId}', name: 'app_delete_picture', methods: ['DELETE'])]
     public function deleteOneAdditionalPicture($pictureId, Request $request, picturesRepository $picturesRepository, Pictures $pictures)
     {
         $submittedToken = $request->request->get('_token');
         if ($this->isCsrfTokenValid('delete' . $pictureId, $submittedToken)) {
-            $additionalPicture = $this->picturesRepository->find(array('id' => $pictureId)); // find : return an object 
+            $additionalPicture = $this->picturesRepository->find(array('id' => $pictureId)); // find : return an object used also in remove
             $file =  $additionalPicture->getPicture();
             // 1 get the physical path
             $additionalPictureWithPath = $this->getParameter('pictures_directory') . '/' .  $file;
             // 2 delete picture from server
             if ($this->deletePicture($additionalPictureWithPath)) {
-                // 3 - delete from db
-                $picturesRepository->removeElement($pictureId, true);
-
-                // unset($this->picturesRepository[$pictureId]);
-                return new JsonResponse("oui : additionalPicture", 200);
+                // 3 - delete additional picture from BD from db
+                $this->em->remove($additionalPicture);
+                $this->em->flush();
+                return new JsonResponse("oui : additionalPictureDeleted", 200);
                 //$this->addFlash('success', 'Your additional picture have been deleted.');
             } else {
-                return new JsonResponse("non bbbb", 500);
+                return new JsonResponse("non ", 500);
                 // $this->addFlash('error', 'Something goes wrong.');
             }
         }
     }
-
 
     /**
      * function addTricks
@@ -367,15 +349,11 @@ class TrickController extends AbstractController
     }
 
     /**
-     * just to test http://127.0.0.1:8000/tricks/test/92  for example/testing
+     * just to test http://127.0.0.1:8000/tricks/test/93  for example/testing
      */
     #[Route('/test/{pictureId}', name: 'app_test')]
     public function test(int $pictureId, Request $request, PicturesRepository $picturesRepository)
     {
-        // $submittedToken = $request->request->get('_token');
-        // if ($this->isCsrfTokenValid('delete' . $pictureId, $submittedToken)) {
-        // $additionalPicture = $this->picturesRepository->find(array('id' => $pictureId)); // find : return an object 
-
         $additionalPicture = $this->picturesRepository->findOneById($pictureId);
         $file  = $additionalPicture->getPicture();
 
@@ -386,7 +364,7 @@ class TrickController extends AbstractController
         if ($this->deletePicture($additionalPictureWithPath)) {
 
             // 3 - delete additional picture from BD from db
-            $this->em->remove($additionalPicture); // working
+            $this->em->remove($additionalPicture);
             $this->em->flush();
 
             return new JsonResponse("oui : additionalPictureDeleted", 200);
@@ -397,10 +375,23 @@ class TrickController extends AbstractController
         }
     }
 
-    // public function deleteSinglePicture(Pictures  $pictureId)
-    // {
-    //     $pictureId->setFieldData(null);
-    //     $this->em->remove($pictureId);
-    //     // $this->em->flush();
-    // }
+    /********************* function shared ****************************/
+
+    /**
+     *  function to delete 
+     * the  adding picture in trick on server
+     *
+     * @param [type]  string (path of picture to delete on server) 
+     * 
+     * @return bool
+     */
+    private function deletePicture($PictureWithPath)
+    {
+        if (file_exists($PictureWithPath)) {
+            unlink($PictureWithPath);
+            return 1;
+        } else {
+            return 0;
+        }
+    }
 }
