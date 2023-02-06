@@ -3,12 +3,12 @@ $(document).ready(function () {
     var idPicture
 
     $('.btndelete').click(function () {
+        console.log('yes-modal')
         id = $(this).attr('id')
         $('.' + id).removeClass('displayNone').addClass('displayContents');
     });
-
     $('.close-modal').click(function () {
-        console.log(id); // OK
+        console.log('close-modal')
         $('.' + id).removeClass('displayContent').addClass('displayNone');
     });
 
@@ -16,8 +16,10 @@ $(document).ready(function () {
         $('.' + id).removeClass('displayContent').addClass('displayNone');
     });
 
-    // go to controller main page
+    //  main page delete ajax
     $("a[data-delete]").on("click", function (e) {
+        console.log(id)
+        console.log('ajax data-delete')
         e.preventDefault();
         $.ajax({
             type: "DELETE",
@@ -26,7 +28,7 @@ $(document).ready(function () {
             success: function (response) {
                 console.log(response);
                 $('#deleteThisTrick').modal('toggle');
-                $('.' + id).addClass('displayNone');
+                $('.mainid' + id).addClass('displayNone');
             },
             error: function (error) {
                 console.log(error);
@@ -42,18 +44,15 @@ $(document).ready(function () {
 
     //go to controller delete additional picture : error 500 
     $("a[data-additional-delete]").on("click", function (e) {
-        console.log('passage data-additional-delete"');
         e.preventDefault();
         $.ajax({
             type: "DELETE",
             url: "/tricks/delete-picture/" + idPicture,
             data: { "_token": this.dataset.token },
             success: function (response) {
-                console.log(response);
                 alert("Your picture have been deleted");
             },
             error: function (error) {
-                console.log(error);
                 alert("Your picture didn't have been deleted, try again");
             },
         });

@@ -146,9 +146,6 @@ class TrickController extends AbstractController
     #[Route('/delete-tricks/{id}', name: 'app_tricks_delete', methods: ['DELETE'])]
     public function delete(Request $request, Tricks $trick, TricksRepository $tricksRepository)
     {
-
-        return new JsonResponse("oui1", 200);
-
         $submittedToken = $request->request->get('_token');
         if ($this->isCsrfTokenValid('delete' . $trick->getId(), $submittedToken)) {
             $trickId = $trick->getId();
@@ -241,8 +238,11 @@ class TrickController extends AbstractController
     public function deleteOneAdditionalPicture(int $pictureId, Request $request)
     {
         $submittedToken = $request->request->get('_token');
+
         if ($this->isCsrfTokenValid('delete' . $pictureId, $submittedToken)) {
+
             $additionalPicture = $this->picturesRepository->find(array('id' => $pictureId)); // find : return an object used also in remove
+
             $file =  $additionalPicture->getPicture();
             // 1 get the physical path
             $additionalPictureWithPath = $this->getParameter('pictures_directory') . '/' .  $file;
@@ -257,6 +257,8 @@ class TrickController extends AbstractController
             }
         }
     }
+
+
 
     /**
      * function addTricks
