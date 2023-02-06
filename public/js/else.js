@@ -40,7 +40,7 @@ $(document).ready(function () {
         $('.general' + idPicture).addClass('displayNone');  // visual + pencil + trash
     });
 
-    // go to controller delete additional picture 
+    //go to controller delete additional picture : error 500 
     $("a[data-additional-delete]").on("click", function (e) {
         console.log('passage data-additional-delete"');
         e.preventDefault();
@@ -50,9 +50,11 @@ $(document).ready(function () {
             data: { "_token": this.dataset.token },
             success: function (response) {
                 console.log(response);
+                alert("Your picture have been deleted");
             },
             error: function (error) {
                 console.log(error);
+                alert("Your picture didn't have been deleted, try again");
             },
         });
     });

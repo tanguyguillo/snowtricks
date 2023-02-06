@@ -234,11 +234,11 @@ class TrickController extends AbstractController
      *
      * @param [type] $argument   $pictureId, Request $request, Pictures $pictures
      * 
-     * http://127.0.0.1:8000/tricks/delete-additional-picture/93 5
+     * http://127.0.0.1:8000/tricks/delete-additional-picture/93 ... 
      * @return void
      */
     #[Route('/delete-picture/{pictureId}', name: 'app_delete_picture', methods: ['DELETE'])]
-    public function deleteOneAdditionalPicture($pictureId, Request $request, picturesRepository $picturesRepository, Pictures $pictures)
+    public function deleteOneAdditionalPicture(int $pictureId, Request $request)
     {
         $submittedToken = $request->request->get('_token');
         if ($this->isCsrfTokenValid('delete' . $pictureId, $submittedToken)) {
@@ -252,10 +252,8 @@ class TrickController extends AbstractController
                 $this->em->remove($additionalPicture);
                 $this->em->flush();
                 return new JsonResponse("oui : additionalPictureDeleted", 200);
-                //$this->addFlash('success', 'Your additional picture have been deleted.');
             } else {
                 return new JsonResponse("non ", 500);
-                // $this->addFlash('error', 'Something goes wrong.');
             }
         }
     }
@@ -349,9 +347,9 @@ class TrickController extends AbstractController
     }
 
     /**
-     * just to test http://127.0.0.1:8000/tricks/test/93  for example/testing
+     * just to test http://127.0.0.1:8000/tricks/test/133 for example/testing
      */
-    #[Route('/test/{pictureId}', name: 'app_test')]
+    #[Route('/test/{pictureId}', name: 'app_delete_individual_picture')]
     public function test(int $pictureId, Request $request, PicturesRepository $picturesRepository)
     {
         $additionalPicture = $this->picturesRepository->findOneById($pictureId);

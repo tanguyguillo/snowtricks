@@ -14,9 +14,14 @@ section.copyright {
   width: 100%;
 }
 
+select {
+  min-width: 100px;
+}
+
 .scroll-to-tricks {
   margin-bottom: 50px;
 }
+
 
 .footer-below {
   z-index: 10;
@@ -151,7 +156,6 @@ footer {
   margin-right: 2px;
 }
 
-/******************/
 ul .footerDown {
   padding: 0;
   margin: 0;
@@ -227,14 +231,21 @@ ul li a:hover .footerDown {
 /* *********** @media (max-width: 992px **************** */
 @media (max-width: 992px) {
 
-  /* hidden top menu on smalls screens */
+  h1>span.grey {
+    font-size: medium;
+  }
 
+  /* hidden top menu on smalls screens */
   .menuTop {
     display: none !important;
   }
 
-  section.menuTop {
+  /* section.menuTop {
     display: none;
+  } */
+
+  img.logoTop {
+    display: visible;
   }
 
   /* copyright hidden on smalls screens */
@@ -340,7 +351,8 @@ div>form>div>ul>li {
 .post-content {
   background: none repeat scroll 0 0 #FFFFFF;
   opacity: 0.5;
-  margin: -54px 20px 12px;
+  margin-top: 2%;
+  /* margin: -54px 20px 12px; */
   position: relative;
 }
 
@@ -661,6 +673,8 @@ form>p.label a {
 form>p:nth-child(5)>a {
   color: white;
 }
+
+
 
 /*view-source:https: //www.creativejuiz.fr/blog/doc/custom-input-file-full-css3-flat-ui.html
 

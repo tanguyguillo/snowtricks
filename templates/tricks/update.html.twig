@@ -27,7 +27,8 @@ SnowTricks - modifications - {{ trick.title }}
                                 <img class="bd-placeholder-img bd-placeholder-img-lg img-fluid " width="100%"
                                     height="150"
                                     src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/{{ trick.picture }}"
-                                    alt="{{ trick.title }}">
+                                    {# alt="{{ trick.category }} . ':' . {{ trick.title }}"> #}
+                                alt="{{ trick.title }}">
                                 <div class="caption post-content">
                                     <h1><span class="grey">{{ trick.title }}</span>
                                     </h1>
