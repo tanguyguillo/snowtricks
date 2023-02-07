@@ -53,7 +53,7 @@
     };
     // Collapse now if page is not at top
     navbarCollapse();
-    
+
     // Collapse the navbar when page is scrolled
     $(window).scroll(navbarCollapse);
 
@@ -67,8 +67,5 @@
             $(this).removeClass("floating-label-form-group-with-focus");
         });
     });
-
-
-
 
 })(jQuery); // End of use strict

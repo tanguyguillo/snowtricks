@@ -92,7 +92,7 @@ class TrickController extends AbstractController
             $trick->setContent($formUpdateTrick->get('content')->getData());
             $trick->setCategory($formUpdateTrick->get('category')->getData());
             $trick->setModifiedAt(new \DateTimeImmutable("now"));
-            // $formUpdateTrick->get('title')->getData();
+            $formUpdateTrick->get('title')->getData();
             $pictureFile =  $formUpdateTrick->get('picture')->getData();
             // may have multiple more pictures
             $morePictures = $formUpdateTrick->get('pictures')->getData(); // array
@@ -122,7 +122,6 @@ class TrickController extends AbstractController
                 }
             }
 
-            $trick->setModifiedAt(new \DateTimeImmutable("now"));
             $this->em->persist($tricks);
             $this->em->flush();
 
@@ -147,6 +146,9 @@ class TrickController extends AbstractController
     #[Route('/delete-tricks/{id}', name: 'app_tricks_delete', methods: ['DELETE'])]
     public function delete(Request $request, Tricks $trick, TricksRepository $tricksRepository)
     {
+
+        return new JsonResponse("oui1", 200);
+
         $submittedToken = $request->request->get('_token');
         if ($this->isCsrfTokenValid('delete' . $trick->getId(), $submittedToken)) {
             $trickId = $trick->getId();
@@ -193,6 +195,7 @@ class TrickController extends AbstractController
         }
     }
 
+
     /**
      * function delete Additional from Entity PicturesPicture
      *
@@ -238,11 +241,8 @@ class TrickController extends AbstractController
     public function deleteOneAdditionalPicture(int $pictureId, Request $request)
     {
         $submittedToken = $request->request->get('_token');
-
         if ($this->isCsrfTokenValid('delete' . $pictureId, $submittedToken)) {
-
             $additionalPicture = $this->picturesRepository->find(array('id' => $pictureId)); // find : return an object used also in remove
-
             $file =  $additionalPicture->getPicture();
             // 1 get the physical path
             $additionalPictureWithPath = $this->getParameter('pictures_directory') . '/' .  $file;

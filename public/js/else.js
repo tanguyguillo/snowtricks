@@ -2,19 +2,24 @@ $(document).ready(function () {
     var id
     var idPicture
 
+    // when we clic on delete
     $('.btndelete').click(function () {
         id = $(this).attr('id')
-        $('.' + id).removeClass('displayNone').addClass('displayContents');
+        console.log("8");
+        //button yes
+        $('.tricks-' + id).removeClass('displayNone').addClass('displayContents');
     });
 
     $('.close-modal').click(function () {
         console.log(id); // OK
-        $('.' + id).removeClass('displayContent').addClass('displayNone');
+        console.log("7");
+        // $('.' + id).removeClass('displayContent').addClass('displayNone');
     });
 
-    $('#deleteThisTrick').click(function () {
-        $('.' + id).removeClass('displayContent').addClass('displayNone');
-    });
+    // $('#deleteThisTrick').click(function () {
+    //     console.log("6");
+    //     // $('.' + id).removeClass('displayContent').addClass('displayNone');
+    // });
 
     // go to controller main page
     $("a[data-delete]").on("click", function (e) {
@@ -26,21 +31,25 @@ $(document).ready(function () {
             success: function (response) {
                 console.log(response);
                 $('#deleteThisTrick').modal('toggle');
+                //hide the modal button
+                $('.tricks-' + id).removeClass('displayContents').addClass('displayNone');
                 $('.' + id).addClass('displayNone');
             },
             error: function (error) {
                 console.log(error);
+                //hide the modal button
                 $('#deleteThisTrick').modal('toggle');
             },
         });
     });
 
     $('.btnAdditionalDelete').click(function () {
+        console.log("5");
         idPicture = $(this).attr('id')
         $('.general' + idPicture).addClass('displayNone');  // visual + pencil + trash
     });
 
-    //go to controller delete additional picture : error 500 
+    //go to controller delete additional picture : 
     $("a[data-additional-delete]").on("click", function (e) {
         console.log('passage data-additional-delete"');
         e.preventDefault();
@@ -60,17 +69,19 @@ $(document).ready(function () {
     });
 
     $('.updateTrick').click(function () {
+        console.log("4");
         console.log('pass update'); // OK
     });
 
     // close message
     $('.close').click(function () {
+        console.log("3");
         $(".alert").alert('close')
     });
 
     // form main picture
     $('.pencilMainPicture').click(function () {
-        //console.log("pencilMainPicture");
+        console.log("2");
         $('.pencilMainPictureAction').removeClass('displayNone')
     });
 
