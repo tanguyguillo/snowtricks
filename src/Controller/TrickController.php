@@ -258,6 +258,8 @@ class TrickController extends AbstractController
         }
     }
 
+
+
     /**
      * function addTricks
      * 

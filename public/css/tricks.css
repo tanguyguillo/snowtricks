@@ -240,6 +240,10 @@ ul li a:hover .footerDown {
     display: none !important;
   }
 
+  /* section.menuTop {
+    display: none;
+  } */
+
   img.logoTop {
     display: visible;
   }
@@ -420,7 +424,7 @@ div>div>div.modal-body>p {
   /* border-bottom: var(--bs-modal-header-border-width) solid */
 }
 
-div>div>div.modal-footer>button.btn.btn-primary {
+div.modal-footer>button.btn.btn.btn-primary {
   background-color: #e83e8c !important;
   border-color: rgba(255, 255, 255, 0.4);
 }
@@ -430,7 +434,7 @@ div>div>div.modal-footer>button.btn.btn-primary {
   border-color: rgba(255, 255, 255, 0.4);
 }
 
-div>div>div.modal-footer>button.btn.btn-secondary {
+div.modal-footer>button.btn.btn-secondary {
   background-color: rgba(255, 255, 255, 0.4);
   border-color: rgba(255, 255, 255, 0.4);
 }
@@ -670,6 +674,11 @@ form>p:nth-child(5)>a {
   color: white;
 }
 
+/* #deleteThisTrick>div>div>div.modal-footer>button.btn-validate.btn.btn-secondary {
+  color: #fff;
+  background-color: red;
+  border-color: red;
+} */
 
 
 /*view-source:https: //www.creativejuiz.fr/blog/doc/custom-input-file-full-css3-flat-ui.html
