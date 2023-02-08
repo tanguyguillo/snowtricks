@@ -2,7 +2,7 @@ $(document).ready(function () {
     var id
     var idPicture
 
-    // when we clic on delete
+    // when we clicK on delete
     $('.btndelete').click(function () {
         console.log('yes-modal')
         id = $(this).attr('id')
@@ -11,18 +11,17 @@ $(document).ready(function () {
         $('.tricks-' + id).removeClass('displayNone').addClass('displayContents');
     });
     $('.close-modal').click(function () {
-        console.log(id); // OK
-        $('.' + id).removeClass('displayContent').addClass('displayNone');
+        console.log("close"); // OK
     });
 
     // $('#deleteThisTrick').click(function () {
     //     console.log("6");
-    //     // $('.' + id).removeClass('displayContent').addClass('displayNone');
+    //     $('.' + id).removeClass('displayContent').addClass('displayNone');
     // });
 
     //  main page delete ajax
     $("a[data-delete]").on("click", function (e) {
-        console.log(id)
+        console.log('pass' + id)
         console.log('ajax data-delete')
         e.preventDefault();
         $.ajax({
@@ -51,6 +50,13 @@ $(document).ready(function () {
     //go to controller delete additional picture : 
     $("a[data-additional-delete]").on("click", function (e) {
         e.preventDefault();
+
+        // var token = this.getAttribute("data-token");
+
+        $("body").append(
+            '<div class="modal-confirm"><div><p>Etes-vous sur de vouloir supprimer cet article ?</p><div><button class="yes btn-validate">oui</button><button class="no btn-back">non</button></div></div></div>'
+        );
+
         $.ajax({
             type: "DELETE",
             url: "/tricks/delete-picture/" + idPicture,
