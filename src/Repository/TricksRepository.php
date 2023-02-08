@@ -39,6 +39,21 @@ class TricksRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * function to get data by id
+     *
+     * @param [int] $value (id )
+     * @return Tricks|null
+     */
+    public function findOneById(int $value): ?Tricks
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     //    /**
     //     * @return Tricks[] Returns an array of Tricks objects
     //     */

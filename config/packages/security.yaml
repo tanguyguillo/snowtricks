@@ -40,6 +40,7 @@ security:
         - { path: ^/tricks/add, roles: ROLE_USER }
         - { path: ^/tricks/details/modifications, roles: ROLE_USER }
         - { path: ^/delete-additional-picture, roles: ROLE_USER }
+        - { path: ^/app_user_delete_main_only, roles: ROLE_USER }
 
 when@test:
     security:

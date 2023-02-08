@@ -1,4 +1,6 @@
 {% extends 'base.html.twig' %}
+
+{# {{ app.request.getSchemeAndHttpHost()}} #}
 {% block title %}
 SnowTricks - modifications - {{ trick.title }}
 {% endblock %}
@@ -14,12 +16,19 @@ SnowTricks - modifications - {{ trick.title }}
         <div class="col-lg-12">
             <div class="modifications">
                 <div class="rounded shadow p-3 mb-5 bg-white">
-                    <a href="#mainPictureDelete" class="float-right ml-1 mainPictureDelete" id="_{{ trick.id }}">
+
+                    <a data-main-delete
+                        href="{{ app.request.getSchemeAndHttpHost() }}/tricks/delete-main-picture-only/{{ trick.id }}"
+                        class="float-right ml-1 mainPictureDelete" id="-{{trick.id }}"
+                        data-token="{{ csrf_token('delete'~trick.id)}}">
                         <i class="bi bi-trash-fill iconTricks"></i>
                     </a>
+
+
                     <a href="#" class="float-right ml-1" alt="update trick">
                         <i class="bi bi-pencil-fill iconTricks"></i>
                     </a>
+
                     <br>
                     <div class="col-lg-12">
                         <div class="card text-white bg-Light mb-3">

@@ -26,7 +26,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * class TrickController
- * the create method is in UseController : addTricks
+ *
  * 
  */
 #[Route('/tricks', name: 'tricks_')]
@@ -34,18 +34,19 @@ class TrickController extends AbstractController
 {
     public $picturesRepository;
     public $tricksRepository;
-    // private  $pictures;
+    // public $tricks;
     private $em;
 
     /**
      *  function __construct 
      *
-     * @param PicturesRepository $picturesRepository, TricksRepository $tricksRepository
+     * @param PicturesRepository $picturesRepository, TricksRepository $tricksRepository, EntityManagerInterface $em, Tricks $tricks
      */
     public function __construct(PicturesRepository $picturesRepository, TricksRepository $tricksRepository, EntityManagerInterface $em)
     {
         $this->picturesRepository = $picturesRepository;
         $this->tricksRepository = $tricksRepository;
+        // $this->tricks = $tricks;
         $this->em = $em;
     }
 
@@ -231,6 +232,7 @@ class TrickController extends AbstractController
      *
      * @param [type] $argument   $pictureId, Request $request, Pictures $pictures
      * 
+     * 
      * http://127.0.0.1:8000/tricks/delete-additional-picture/93 ... 
      * @return void
      */
@@ -257,9 +259,6 @@ class TrickController extends AbstractController
             }
         }
     }
-
-
-
     /**
      * function addTricks
      * 
@@ -335,6 +334,31 @@ class TrickController extends AbstractController
     }
 
     /**
+     * function deleteMainPictureOnly : delete only main picture on detail page
+     *  http://127.0.0.1:8000/tricks/delete-main-picture-only/224   
+     *   tricks_app_user_delete_main_only       DELETE   ANY      ANY    /tricks/delete-main-picture-only/{trickId}  
+     */
+    #[Route('/delete-main-picture-only/{trickId}', name: 'app_delete_main_only', methods: ['DELETE'])]
+    public function deleteMainPictureOnly(int $trickId, Request $request)
+    {
+        $submittedToken = $request->request->get('_token');
+        if ($this->isCsrfTokenValid('delete' . $trickId, $submittedToken)) {
+            $trick = $this->tricksRepository->findOneById($trickId);
+            $file  = $trick->getPicture();
+            // 1 get the physical path
+            $PictureWithPath = $this->getParameter('pictures_directory') . '/' .  $file;
+            // 2 delete picture from server // yes have been found and deleted
+            //$tricks->setPicture() = "empty.png";
+            // $tricks->setPicture('empty.png');
+            if ($this->deletePicture($PictureWithPath)) {
+                return new JsonResponse("oui : additionalPictureDeleted", 200);
+            } else {
+                return new JsonResponse("non ", 500);
+            }
+        }
+    }
+
+    /**
      * function error
      * 
      * @return  Response
@@ -375,7 +399,27 @@ class TrickController extends AbstractController
         }
     }
 
-    /********************* function shared ****************************/
+    /**
+     * just to test http://127.0.0.1:8000/tricks/test2/223 for example/testing  , Tricks $tricks
+     */
+    #[Route('/test2/{trickId}', name: 'app_test2')]
+    public function test2(int $trickId, Request $request, TricksRepository $tricksRepository)
+    {
+        $trick = $this->tricksRepository->findOneById($trickId);
+        $file  = $trick->getPicture();
+        // // 1 get the physical path
+        // $PictureWithPath = $this->getParameter('pictures_directory') . '/' .  $file;
+        // // 2 delete picture from server // yes have been found and deleted
+        // //  $tricks->setPicture() = "empty.png";
+        // // $tricks->setPicture('empty.png');
+        // if ($this->deletePicture($PictureWithPath)) {
+        //     return new JsonResponse("oui : additionalPictureDeleted", 200);
+        // } else {
+        //     return new JsonResponse("non ", 500);
+        // }
+    }
+
+    /********************* functions shared ****************************/
 
     /**
      *  function to delete 

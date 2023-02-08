@@ -1,6 +1,6 @@
 $(document).ready(function () {
-    var id
-    var idPicture
+    let id
+    let idPicture
 
     // when we clicK on delete
     $('.btndelete').click(function () {
@@ -51,12 +51,6 @@ $(document).ready(function () {
     $("a[data-additional-delete]").on("click", function (e) {
         e.preventDefault();
 
-        // var token = this.getAttribute("data-token");
-
-        $("body").append(
-            '<div class="modal-confirm"><div><p>Etes-vous sur de vouloir supprimer cet article ?</p><div><button class="yes btn-validate">oui</button><button class="no btn-back">non</button></div></div></div>'
-        );
-
         $.ajax({
             type: "DELETE",
             url: "/tricks/delete-picture/" + idPicture,
@@ -91,6 +85,26 @@ $(document).ready(function () {
     $('.pencilTitleAction').click(function () {
         console.log("pencilTitleAction");
         $('.titleAction').removeClass('displayNone')
+    });
+
+    //delete main picture on detail page
+    $("a[data-main-delete]").on("click", function (e) {
+        console.log("passage data-main-delete")
+        e.preventDefault();
+
+        id = $(this).attr('id')
+        id = id.substring(1);
+        $.ajax({
+            type: "DELETE",
+            url: "/tricks/delete-main-picture-only/" + id,
+            data: { "_token": this.dataset.token },
+            success: function (response) {
+                alert("Your picture have been deleted");
+            },
+            error: function (error) {
+                alert("Your picture didn't have been deleted, try again");
+            },
+        });
     });
 
 
