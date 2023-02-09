@@ -4,17 +4,27 @@ $(document).ready(function () {
 
     //picture X
     const img = document.createElement('img')
-    img.src = "assets/img/background/empty.png"
+    // img.src = "assets/img/background/empty.png"
+
+    // fonctionnal
+    // $('.collapseMain').click(function () {
+    //     console.log('click collapseMain')
+    //     var anchor = $(this).attr("href");
+    //     $("html, body").animate({
+    //         scrollTop: $(anchor).offset().top
+    //     }, "slow");
+    // });
+
 
 
     // when we clicK on delete
     $('.btndelete').click(function () {
         console.log('yes-modal')
         id = $(this).attr('id')
-        console.log("8");
         //button yes
         $('.tricks-' + id).removeClass('displayNone').addClass('displayContents');
     });
+
     $('.close-modal').click(function () {
         console.log("close"); // OK
     });

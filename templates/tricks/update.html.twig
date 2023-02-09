@@ -25,7 +25,8 @@ SnowTricks - modifications - {{ trick.title }}
                     </a>
 
 
-                    <a data-bs-toggle="collapse" href="#collapseMain" class="float-right ml-1" alt="update trick">
+                    <a data-bs-toggle="collapse" href="#collapseMain" class="float-right ml-1 collapseMain"
+                        alt="update trick">
                         <i class="bi bi-pencil-fill iconTricks"></i>
                     </a>
 
@@ -37,8 +38,6 @@ SnowTricks - modifications - {{ trick.title }}
                                     height="150"
                                     src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/{{ trick.picture }}"
                                     alt="Category : {{trick.category}} - trick : {{trick.title }}">
-
-                                {# <span id="collapseMain"></span> #}
 
 
                                 <div class="caption post-content">

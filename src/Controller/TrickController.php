@@ -344,18 +344,37 @@ class TrickController extends AbstractController
         $submittedToken = $request->request->get('_token');
         if ($this->isCsrfTokenValid('delete' . $trickId, $submittedToken)) {
             $trick = $this->tricksRepository->findOneById($trickId);
-            $file  = $trick->getPicture();
+            $file  = htmlentities($trick->getPicture());
             // 1 get the physical path
             $PictureWithPath = $this->getParameter('pictures_directory') . '/' .  $file;
             // 2 delete picture from server // yes have been found and deleted
             //$tricks->setPicture() = "empty.png";
-            // $tricks->setPicture('empty.png');
+
+            $this->setEmpty("empty.png", $trickId);
+
             if ($this->deletePicture($PictureWithPath)) {
                 return new JsonResponse("oui : additionalPictureDeleted", 200);
             } else {
                 return new JsonResponse("non ", 500);
             }
         }
+    }
+
+    /**
+     *  function set picture empty for main picture
+     *
+     * @param string $fileName
+     * @param [type] $trickId
+     * @return void
+     */
+    private function setEmpty(string $fileName, $trickId)
+    {
+        $trick = $this->tricksRepository->findOneById($trickId);
+        $trick->setPicture($fileName);
+
+        // $entityManager = $doctrine->getManager();
+        // $entityManager->persist($tricks);
+        // $entityManager->flush();
     }
 
     /**
