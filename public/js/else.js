@@ -2,6 +2,11 @@ $(document).ready(function () {
     let id
     let idPicture
 
+    //picture X
+    const img = document.createElement('img')
+    img.src = "assets/img/background/empty.png"
+
+
     // when we clicK on delete
     $('.btndelete').click(function () {
         console.log('yes-modal')
@@ -90,7 +95,6 @@ $(document).ready(function () {
     $("a[data-main-delete]").on("click", function (e) {
         console.log("passage data-main-delete")
         e.preventDefault();
-
         id = $(this).attr('id')
         id = id.substring(1);
         $.ajax({
@@ -98,13 +102,17 @@ $(document).ready(function () {
             url: "/tricks/delete-main-picture-only/" + id,
             data: { "_token": this.dataset.token },
             success: function (response) {
+                // document.getElementById('embedPicture').appendChild(img)
                 alert("Your picture have been deleted");
+                void window.location.reload()
             },
             error: function (error) {
                 alert("Your picture didn't have been deleted, try again");
             },
         });
     });
+
+
 
 
 
