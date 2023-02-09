@@ -68,15 +68,19 @@
                         </div>
                         <div class="modal-footer">
                             {% for trick in tricks %}
-                            <button type="button" class="btn-validate btn btn-primary displayNone tricks-{{trick.id}} ">
-                                <a data-delete
-                                    href="{{ app.request.getSchemeAndHttpHost() }}/tricks/delete-tricks/{{ trick.id }}"
-                                    data-token="{{ csrf_token('delete'~trick.id)}}">Yes
-                                </a>
-                            </button>
+                            <span class="displayNone tricks-{{ trick.id }}">
+                                <button type=" button" class="btn-validate btn btn-secondary  ">
+                                    <a data-delete
+                                        href="{{ app.request.getSchemeAndHttpHost() }}/tricks/delete-tricks/{{ trick.id }}"
+                                        data-token="{{ csrf_token('delete'~trick.id)}}">Yes
+                                    </a>
+                                </button>
+                            </span>
                             {% endfor %}
-                            <button type="button" class="btn btn-secondary close-modal"
-                                data-bs-dismiss="modal">No</button>
+                            <span>
+                                <button type="button" class="btn btNo btn-info close-modal "
+                                    data-bs-dismiss="modal">No</button>
+                            </span>
                         </div>
                     </div>
                 </div>

@@ -50,7 +50,6 @@ $(document).ready(function () {
     //go to controller delete additional picture : 
     $("a[data-additional-delete]").on("click", function (e) {
         e.preventDefault();
-
         $.ajax({
             type: "DELETE",
             url: "/tricks/delete-picture/" + idPicture,

@@ -31,8 +31,8 @@
 
 <body id="page-top">
     {% block menuTop %}
-    {# <section class="menuTop"> #}
-        <div>
+    <section class="menuTop"> <!--do nor remove -->
+        {# <div> #}
             <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
                 <a href="{{ app.request.getSchemeAndHttpHost() }}/#page-top">
                     <img src="{{ app.request.getSchemeAndHttpHost() }}/assets/logo/logo-jimmy-sweat-top.png"
@@ -73,9 +73,9 @@
                             {% endif %}
                     </ul>
             </nav>
-        </div>
-        {#
-    </section> #}
+            {#
+        </div> #}
+    </section>
     {% endblock %}
     {% for message in app.flashes('success') %}
     <div class="alert success alert-dismissible fade show alertAction" role="alert">{{ message }}

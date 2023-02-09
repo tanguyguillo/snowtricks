@@ -449,6 +449,13 @@ div.modal-body {
   border-bottom: var(--bs-modal-header-border-width) solid
 }
 
+/*align bt no in modal*/
+.btNo {
+  margin-left: 20px;
+  margin-bottom: 30px;
+
+}
+
 /******** End modal ************/
 
 /******** Single image lightbox ************/
@@ -673,6 +680,8 @@ form>p.label a {
 form>p:nth-child(5)>a {
   color: white;
 }
+
+
 
 /* #deleteThisTrick>div>div>div.modal-footer>button.btn-validate.btn.btn-secondary {
   color: #fff;
