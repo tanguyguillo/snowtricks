@@ -29,11 +29,6 @@ $(document).ready(function () {
         console.log("close"); // OK
     });
 
-    // $('#deleteThisTrick').click(function () {
-    //     console.log("6");
-    //     $('.' + id).removeClass('displayContent').addClass('displayNone');
-    // });
-
     //  main page delete ajax
     $("a[data-delete]").on("click", function (e) {
         console.log('pass' + id)
@@ -47,6 +42,10 @@ $(document).ready(function () {
                 console.log(response);
                 $('#deleteThisTrick').modal('toggle');
                 $('.' + id).addClass('displayNone');
+
+                // var visual = "<img src=\"assets/img/tricks/.jpg\empty.png />";
+                // $(visual).replaceAll(".empty");
+
             },
             error: function (error) {
                 console.log(error);
@@ -55,6 +54,26 @@ $(document).ready(function () {
             },
         });
     });
+
+    // $.fn.missingImg = function (options) {
+    //     var config = {
+    //         'source': 'assets/img/tricks/empty.png',
+    //         'alt': 'Image not found'
+    //     };
+    //     if (options) { $.extend(config, options); }
+    //     $(this).each(function () {
+    //         var $this = $(this),
+    //             oImg = this, // original DOM element
+    //             testImg = new Image(); // new DOM element
+
+    //         $(testImg).error(function () {
+    //             $this.attr({ src: config.source, alt: config.alt });
+    //         });
+
+    //         testImg.src = oImg.src; // Reload image
+    //     });
+
+
 
     $('.btnAdditionalDelete').click(function () {
         console.log("5");
@@ -122,7 +141,10 @@ $(document).ready(function () {
         });
     });
 
-
+    // $('#deleteThisTrick').click(function () {
+    //     console.log("6");
+    //     $('.' + id).removeClass('displayContent').addClass('displayNone');
+    // });
 
 
 

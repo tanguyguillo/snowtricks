@@ -350,9 +350,13 @@ class TrickController extends AbstractController
             // 2 delete picture from server // yes have been found and deleted
             //$tricks->setPicture() = "empty.png";
 
-            $this->setEmpty("empty.png", $trickId);
-
             if ($this->deletePicture($PictureWithPath)) {
+
+                // $this->setEmpty("empty.png", $trickId);
+                // $entityManager = $doctrine->getManager();
+                // $entityManager->persist($tricks);
+                // $entityManager->flush();
+
                 return new JsonResponse("oui : additionalPictureDeleted", 200);
             } else {
                 return new JsonResponse("non ", 500);
@@ -371,10 +375,6 @@ class TrickController extends AbstractController
     {
         $trick = $this->tricksRepository->findOneById($trickId);
         $trick->setPicture($fileName);
-
-        // $entityManager = $doctrine->getManager();
-        // $entityManager->persist($tricks);
-        // $entityManager->flush();
     }
 
     /**
@@ -411,7 +411,6 @@ class TrickController extends AbstractController
             $this->em->flush();
 
             return new JsonResponse("oui : additionalPictureDeleted", 200);
-            //$this->addFlash('success', 'Your additional picture have been deleted.');
         } else {
             return new JsonResponse("non ", 500);
             // $this->addFlash('error', 'Something goes wrong.');
