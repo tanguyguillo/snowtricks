@@ -437,6 +437,17 @@ class TrickController extends AbstractController
         // }
     }
 
+
+    /**
+     *  <form method="post" action="{{ path('tricks_app_individual', {'pictureId': additionalPicture.id}) }}
+     * Function update (write)
+     */
+    #[Route('/individual/{pictureId}', name: 'app_individual')]
+    public function individual(int $pictureIdd, Request $request, TricksRepository $tricksRepository)
+    {
+        dd(test);
+    }
+
     /********************* functions shared ****************************/
 
     /**

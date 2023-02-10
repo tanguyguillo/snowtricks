@@ -1,6 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{# {{ app.request.getSchemeAndHttpHost()}} #}
+{# {{ app.request.getSchemeAndHttpHost()}} path('app_home') #}
+{# {% set path = {{ app.request.getSchemeAndHttpHost()}} %}
+{{ path }} #}
+
 {% block title %}
 SnowTricks - modifications - {{ trick.title }}
 {% endblock %}
@@ -22,8 +25,6 @@ SnowTricks - modifications - {{ trick.title }}
                     <div class="my-custom-class-for-errors">
                         {{ form_errors(formUpdateTrick) }}
                     </div>
-
-                    {# trick name modification modification formDisplayNone#}
 
                     <div class="card container text-center collapse" id="collapseMain">
                         <br>
@@ -77,18 +78,6 @@ SnowTricks - modifications - {{ trick.title }}
                         </div>
                     </div>
 
-                    {# <div class="form-control">
-                        <i class="fa fa-calendar"></i> {{ form_label(form.dueDate) }}
-                        {{ form_widget(form.dueDate) }}
-
-                        <small>{{ form_help(formUpdateTrick.title) }}</small>
-
-                        <div class="form-error">
-                            {{ form_errors(formUpdateTrick.title) }}
-                        </div>
-                    </div> #}
-
-
                     {####### more pictures #########}
                     <br>
 
@@ -100,42 +89,43 @@ SnowTricks - modifications - {{ trick.title }}
                                 id="additionalPictures_{{additionalPicture.id}}">
                                 <br>
 
+                                {# {{ form_start() }}
+                                <form name="upload" method="POST" action="/tricks/individual/" {{ additionalPicture.id}}
+                                    enctype="multipart/form-data">
+                                    <input type="hidden" name="additionalPicture"
+                                        value="additionalPicture_{{additionalPicture.id }}">
+                                    <input type="file" name="file" id="file" />
+                                    <button class="btn">OK</button>
+                                </form>
+                                {{ form_end() }} #}
+
+
                                 <div class="form-group">
-                                    {# form_start()
-                                    {{ form_row(formUpdateTrick.addAdditionalPicture, {
-                                    label: 'Change additional picture',
-                                    attr : {'class': 'form-control'}
-                                    }) }}
-                                    {{ form_end() }} #}
-
-                                    {# <div class="input-group mb-3">
-                                        <input type="file" class="form-control" id="inputGroupFile02">
-                                        <label class="input-group-text" for="inputGroupFile02">Upload</label>
-                                    </div> #}
-
-                                    {# <form name="upload" method="POST" action="upload.php"
+                                    <form name="upload" method="POST"
+                                        action="/tricks/individual/{{additionalPicture.id }}"
                                         enctype="multipart/form-data">
-                                        <span class="input-group-text" id="inputGroup-sizing-sm">Small</span>
-                                        <input type="file" name="file" id="file" />
-                                        <input type="submit" value="OK" />
-                                    </form> #}
-
-                                    {# <form action="#">
-                                        <p class="file">
+                                        <span class="input-group-text" id="inputGroup-sizing-sm">
+                                            <input type="hidden" name="_token"
+                                                value="{{ csrf_token('updateAdditionalPicture' ~ additionalPicture.id) }}">
+                                            <input type="hidden" name="additionalPicture"
+                                                value="additionalPicture_{{additionalPicture.id }}">
                                             <input type="file" name="file" id="file" />
-                                            <label for="file"></label>
-                                        </p>
-                                    </form> #}
-
-                                    {# {{ form_row(formUpdateTrick.pictures, {
-                                    label: "Change this additional picture",
-                                    type : "file",
-                                    attr : {'class': 'form-control'},
-                                    }) }} #}
-
+                                            <input type="submit" value="OK" />
+                                        </span>
+                                    </form>
                                 </div>
-                            </div>
 
+
+
+                                {# {{ form_widget(formUpdateTrick.addAdditionalPicture) }} #}
+
+                                {# {{ form_row(formUpdateTrick.addAdditionalPicture, {
+                                label: 'Add more additional pictures',
+                                attr : {'class': 'form-control'}
+                                }) }} #}
+
+
+                            </div>
 
                             <div class="mx-auto general{{ additionalPicture.id }}">
                                 <div class="d-flex align-items-center justify-content-center h-100 w-100">
@@ -232,11 +222,11 @@ SnowTricks - modifications - {{ trick.title }}
                                 <button class="btn btn-danger">Delete</button>
                             </form>
                         </div>
-                        {# <div class="col posfctText">
+                        <div class="col posfctText">
                             <button type="submit" class="btn btn-info mb-2"><a class="white"
                                     href="{{ path('app_home') }}">Back to
                                     list</a></button>
-                        </div> #}
+                        </div>
                     </div>
                 </div>
             </div>

@@ -681,43 +681,25 @@ form>p:nth-child(5)>a {
   color: white;
 }
 
-
-
-/* #deleteThisTrick>div>div>div.modal-footer>button.btn-validate.btn.btn-secondary {
+input[type=submit] {
   color: #fff;
-  background-color: red;
-  border-color: red;
-} */
-
-
-/*view-source:https: //www.creativejuiz.fr/blog/doc/custom-input-file-full-css3-flat-ui.html
-
-.file {
-  position: relative;
+  background: #009da2;
 }
 
+/* input[type=submit]:hover {
+  background: #02e1e9
+} */
 
-.file input {
-  position: absolute;
-  display: inline-block;
-  left: 0;
-  top: 0;
-  opacity: 0.01;
+/* input#file {
+  background: #009da2;
+} */
+
+input#file-upload-button {
+  background: #009da2;
   cursor: pointer;
 }
 
-.file label {
-  background: #39D2B4;
-  padding: 5px 20px;
+input#update_picture {
   color: #fff;
-  font-weight: bold;
-  font-size: .9em;
-  transition: all .4s;
-}
-
-
-.file input:hover+label,
-.file input:focus+label {
-  background: #34495E;
-  color: #39D2B4;
+  background: #009da2;
 }
