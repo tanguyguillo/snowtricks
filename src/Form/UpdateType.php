@@ -66,6 +66,25 @@ class UpdateType extends AbstractType
                     'mapped' => false,
                     'required' => false
                 ]
+            )
+            ->add(
+                'addAdditionalPicture',
+                FileType::class,
+                [
+                    'attr' => ['accept' => "image/*",],
+                    'label' => true,
+                    'data_class' => null,
+                    'required' => false,
+                    'mapped' => false
+                ]
             );
+        // ->add(
+        //     'addAdditionalTrick',
+        //     CollectionType::class,
+        //     [
+        //         'entry_type' => Pictures::class,
+        //         'entry_options' => ['label' => false, 'attr' => ['accept' => "image/*",]],
+        //     ]
+        // );
     }
 }

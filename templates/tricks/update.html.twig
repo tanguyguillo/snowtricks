@@ -17,6 +17,32 @@ SnowTricks - modifications - {{ trick.title }}
             <div class="modifications">
                 <div class="rounded shadow p-3 mb-5 bg-white">
 
+                    {{ form_start(formUpdateTrick) }}
+
+                    <div class="my-custom-class-for-errors">
+                        {{ form_errors(formUpdateTrick) }}
+                    </div>
+
+                    {# trick name modification modification formDisplayNone#}
+
+                    <div class="card container text-center collapse" id="collapseMain">
+                        <br>
+                        <div class="form-group">
+                            {{ form_row(formUpdateTrick.picture, {
+                            label: "Change this main picture's trick",
+                            type : "file",
+                            attr : {'class': 'form-control'},
+                            }) }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_row(formUpdateTrick.title, {
+                            label: 'Change this Trick name',
+                            attr : {'class': 'form-control'}
+                            }) }}
+                        </div>
+                    </div>
+
                     <a data-main-delete
                         href="{{ app.request.getSchemeAndHttpHost() }}/tricks/delete-main-picture-only/{{ trick.id }}"
                         class="float-right ml-1 mainPictureDelete" id="-{{trick.id }}"
@@ -47,31 +73,7 @@ SnowTricks - modifications - {{ trick.title }}
 
                             </div>
 
-                            {{ form_start(formUpdateTrick) }}
 
-                            <div class="my-custom-class-for-errors">
-                                {{ form_errors(formUpdateTrick) }}
-                            </div>
-
-                            {# trick name modification modification formDisplayNone#}
-
-                            <div class="card container text-center collapse" id="collapseMain">
-                                <br>
-                                <div class="form-group">
-                                    {{ form_row(formUpdateTrick.picture, {
-                                    label: "Change this main picture's trick",
-                                    type : "file",
-                                    attr : {'class': 'form-control'},
-                                    }) }}
-                                </div>
-
-                                <div class="form-group">
-                                    {{ form_row(formUpdateTrick.title, {
-                                    label: 'Change this Trick name',
-                                    attr : {'class': 'form-control'}
-                                    }) }}
-                                </div>
-                            </div>
                         </div>
                     </div>
 
@@ -89,9 +91,52 @@ SnowTricks - modifications - {{ trick.title }}
 
                     {####### more pictures #########}
                     <br>
+
                     <div class="row justify-content-center">
                         {% for additionalPicture in additionalPictures %}
                         <div class="col-md-2 col-lg-2 mb-5 item">
+
+                            <div class="card container text-center collapse" {# collapse #}
+                                id="additionalPictures_{{additionalPicture.id}}">
+                                <br>
+
+                                <div class="form-group">
+                                    {# form_start()
+                                    {{ form_row(formUpdateTrick.addAdditionalPicture, {
+                                    label: 'Change additional picture',
+                                    attr : {'class': 'form-control'}
+                                    }) }}
+                                    {{ form_end() }} #}
+
+                                    {# <div class="input-group mb-3">
+                                        <input type="file" class="form-control" id="inputGroupFile02">
+                                        <label class="input-group-text" for="inputGroupFile02">Upload</label>
+                                    </div> #}
+
+                                    {# <form name="upload" method="POST" action="upload.php"
+                                        enctype="multipart/form-data">
+                                        <span class="input-group-text" id="inputGroup-sizing-sm">Small</span>
+                                        <input type="file" name="file" id="file" />
+                                        <input type="submit" value="OK" />
+                                    </form> #}
+
+                                    {# <form action="#">
+                                        <p class="file">
+                                            <input type="file" name="file" id="file" />
+                                            <label for="file"></label>
+                                        </p>
+                                    </form> #}
+
+                                    {# {{ form_row(formUpdateTrick.pictures, {
+                                    label: "Change this additional picture",
+                                    type : "file",
+                                    attr : {'class': 'form-control'},
+                                    }) }} #}
+
+                                </div>
+                            </div>
+
+
                             <div class="mx-auto general{{ additionalPicture.id }}">
                                 <div class="d-flex align-items-center justify-content-center h-100 w-100">
                                     <div class="card {{additionalPicture.id}}">
@@ -101,18 +146,8 @@ SnowTricks - modifications - {{ trick.title }}
                                     </div>
                                 </div>
                                 <span>
-                                    {# <a href="/tricks/modification/{{ trick.slug }}" class="float-center ml-1">
-                                        <i class="bi bi-pencil-fill iconTricks"></i>
-                                    </a> #}
 
-                                    {# <form action="#">
-                                        <p class="file">
-                                            <input type="file" name="file" id="file" />
-                                            <label for="file">Upload your image</label>
-                                        </p>
-                                    </form> #}
-
-                                    <a href="#additionalPictureModify"
+                                    <a data-bs-toggle="collapse" href="#additionalPictures_{{additionalPicture.id}}"
                                         class="float-center ml-1 additionalPictureModify{{ additionalPicture.id }}"
                                         id="{{ additionalPicture.id }}">
                                         <i class=" bi bi-pencil-fill iconTricks"></i>

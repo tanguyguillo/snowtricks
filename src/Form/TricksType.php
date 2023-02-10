@@ -60,15 +60,6 @@ class TricksType extends AbstractType
                     'required' => false
                 ]
             );
-
-        // ->add(
-        //     'additionnalTricks',
-        //     CollectionType::class,
-        //     [
-        //         'entry_type' => Pictures::class,
-        //         'entry_options' => ['label' => false, 'attr' => ['accept' => "image/*",]],
-        //     ]
-        // );
     }
 
     /**
