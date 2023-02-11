@@ -443,9 +443,9 @@ class TrickController extends AbstractController
      * Function update (write)
      */
     #[Route('/individual/{pictureId}', name: 'app_individual')]
-    public function individual(int $pictureIdd, Request $request, TricksRepository $tricksRepository)
+    public function individual(int $pictureId, Request $request, TricksRepository $tricksRepository)
     {
-        dd(test);
+        dd('test');
     }
 
     /********************* functions shared ****************************/

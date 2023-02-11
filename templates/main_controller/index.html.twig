@@ -53,7 +53,7 @@
             </div>
             {% endfor %}
             {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-            {# Modal #}
+
             <div class="modal fade" id="deleteThisTrick">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -68,8 +68,12 @@
                         </div>
                         <div class="modal-footer">
                             {% for trick in tricks %}
+
+                            {# <button type="submit" class="btn btn-primary">Save changes</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> #}
+
                             <span class="displayNone tricks-{{ trick.id }}">
-                                <button type=" button" class="btn-validate btn btn-secondary  ">
+                                <button type="submit" class="btn btn-primary">
                                     <a data-delete
                                         href="{{ app.request.getSchemeAndHttpHost() }}/tricks/delete-tricks/{{ trick.id }}"
                                         data-token="{{ csrf_token('delete'~trick.id)}}">Yes

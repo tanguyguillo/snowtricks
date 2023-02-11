@@ -66,18 +66,40 @@ class UpdateType extends AbstractType
                     'mapped' => false,
                     'required' => false
                 ]
-            )
-            ->add(
-                'addAdditionalPicture',
-                FileType::class,
-                [
-                    'attr' => ['accept' => "image/*",],
-                    'label' => true,
-                    'data_class' => null,
-                    'required' => false,
-                    'mapped' => false
-                ]
             );
+        // ->add(
+        //     'pictures',
+        //     FileType::class,
+        //     [
+        //         'attr' => ['accept' => "image/*",],
+        //         'label' => false,
+        //         'multiple' => false,
+        //         'allow_update' => true,
+        //         'mapped' => false,
+        //         'required' => false
+        //     ]
+        // );
+
+        // ->add('pictures', CollectionType::class, [
+        //     'entry_type' => TextType::class,
+        //     'allow_add' => true,
+        //     'required' => false,
+        //     'attr' => ['accept' => "image/*",],
+        //     'prototype' => true,
+        //     'prototype_data' => 'New Tag Placeholder',
+        // ]);
+        // ->add(
+        //     'addAdditionalPicture',
+        //     FileType::class,
+        //     [
+        //         'entry_type' => Pictures::class,
+        //         'attr' => ['accept' => "image/*",],
+        //         'label' => true,
+        //         'data_class' => null,
+        //         'required' => false,
+        //         'mapped' => false
+        //     ]
+        // );  
         // ->add(
         //     'addAdditionalTrick',
         //     CollectionType::class,
