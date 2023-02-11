@@ -67,11 +67,8 @@
                             <p>Are your sur to want to delete this trick ?</p>
                         </div>
                         <div class="modal-footer">
+
                             {% for trick in tricks %}
-
-                            {# <button type="submit" class="btn btn-primary">Save changes</button>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> #}
-
                             <span class="displayNone tricks-{{ trick.id }}">
                                 <button type="submit" class="btn btn-primary">
                                     <a data-delete
@@ -81,6 +78,7 @@
                                 </button>
                             </span>
                             {% endfor %}
+
                             <span>
                                 <button type="button" class="btn btNo btn-info close-modal "
                                     data-bs-dismiss="modal">No</button>

@@ -2,6 +2,21 @@ $(document).ready(function () {
     let id
     let idPicture
 
+    $(function () {
+        $('a[data-confirm]').click(function (ev) {
+            var href = $(this).attr('href');
+
+            if (!$('#dataConfirmModal').length) {
+                $('body').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h3 id="dataConfirmLabel">Merci de confirmer</h3></div><div class="modal-body"></div><div class="modal-footer"><button class="btn" data-dismiss="modal" aria-hidden="true">Non</button><a class="btn btn-danger" id="dataConfirmOK">Oui</a></div></div></div></div>');
+            }
+            $('#dataConfirmModal').find('.modal-body').text($(this).attr('data-confirm'));
+            $('#dataConfirmOK').attr('href', href);
+            $('#dataConfirmModal').modal({ show: true });
+
+            return false;
+        });
+    });
+
     //picture X
     const img = document.createElement('img')
     // img.src = "assets/img/background/empty.png"
@@ -78,17 +93,22 @@ $(document).ready(function () {
     $('.btnAdditionalDelete').click(function () {
         console.log("5");
         idPicture = $(this).attr('id')
-        $('.general' + idPicture).addClass('displayNone');  // visual + pencil + trash
     });
 
     //go to controller delete additional picture : 
     $("a[data-additional-delete]").on("click", function (e) {
         e.preventDefault();
+
+        // $("body").append(
+        //     '<div class="modal-confirm"><div><p>Etes-vous sur de vouloir supprimer cet article ?</p><div><button class="yes btn-validate">oui</button><button class="no btn-back">non</button></div></div></div>'
+        // );
+
         $.ajax({
             type: "DELETE",
             url: "/tricks/delete-picture/" + idPicture,
             data: { "_token": this.dataset.token },
             success: function (response) {
+                $('.general' + idPicture).addClass('displayNone');
                 alert("Your picture have been deleted");
             },
             error: function (error) {
@@ -140,14 +160,5 @@ $(document).ready(function () {
             },
         });
     });
-
-    // $('#deleteThisTrick').click(function () {
-    //     console.log("6");
-    //     $('.' + id).removeClass('displayContent').addClass('displayNone');
-    // });
-
-
-
-
 
 });

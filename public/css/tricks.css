@@ -18,6 +18,11 @@ select {
   min-width: 100px;
 }
 
+button.float-center.ml-1.additionalPictureModify.btWhite {
+  background-color: white;
+  border: white;
+}
+
 .scroll-to-tricks {
   margin-bottom: 50px;
 }
@@ -686,6 +691,7 @@ input[type=submit] {
   background: #009da2;
 }
 
+/* span.tricks-240.displayContents>button */
 /* input[type=submit]:hover {
   background: #02e1e9
 } */
@@ -700,6 +706,11 @@ input#file-upload-button {
 }
 
 input#update_picture {
+  color: #fff;
+  background: #009da2;
+}
+
+input#deleteTrick {
   color: #fff;
   background: #009da2;
 }

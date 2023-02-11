@@ -73,20 +73,22 @@
                             {% endif %}
                     </ul>
             </nav>
-            {#
-        </div> #}
+
     </section>
     {% endblock %}
+
     {% for message in app.flashes('success') %}
     <div class="alert success alert-dismissible fade show alertAction" role="alert">{{ message }}
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span></button>
     </div>
     {% endfor %}
+
     {% for message in app.flashes('error') %}
     <div class="alert error alert-dismissible fade show" role="alert">{{ message }}
     </div>
     {% endfor %}
+
     {% block visualCentral %}
     {% endblock %}
     {% block beginContainer %}
@@ -146,7 +148,7 @@
         </div>
     </footer>
     {% endblock %}
-    {% block javascripts %}
+    {% block javaScripts %}
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="{{ app.request.getSchemeAndHttpHost() }}/js/scripts.js"></script>
     <script src="{{ app.request.getSchemeAndHttpHost() }}/js/loadMore.js"></script>

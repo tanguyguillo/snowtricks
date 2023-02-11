@@ -418,6 +418,39 @@ class TrickController extends AbstractController
     }
 
     /**
+     *  
+     * Function update individual picture (write)
+     */
+    #[Route('/individual/{pictureId}', name: 'app_individual')]
+    public function individual(int $pictureId, Request $request, TricksRepository $tricksRepository)
+    {
+
+        dd("ggg");
+
+        $submittedToken = $request->request->get('_token');
+        if ($this->isCsrfTokenValid('updateAdditionalPicture' . $pictureId, $submittedToken)) {
+
+            // $additionalPicture = $this->picturesRepository->findOneById($pictureId);
+            // $file  = $additionalPicture->getPicture();
+
+            // $additionalPictureWithPath = $this->getParameter('pictures_directory') . '/' .  $file;
+
+
+            // if ($this->deletePicture($additionalPictureWithPath)) {
+
+            //     $this->em->remove($additionalPicture);
+            //     $this->em->flush();
+
+            //     return new JsonResponse("oui : additionalPictureDeleted", 200);
+            // } else {
+            //     return new JsonResponse("non ", 500);
+
+
+        }
+    }
+
+
+    /**
      * just to test http://127.0.0.1:8000/tricks/test2/223 for example/testing  , Tricks $tricks
      */
     #[Route('/test2/{trickId}', name: 'app_test2')]
@@ -438,15 +471,7 @@ class TrickController extends AbstractController
     }
 
 
-    /**
-     *  <form method="post" action="{{ path('tricks_app_individual', {'pictureId': additionalPicture.id}) }}
-     * Function update (write)
-     */
-    #[Route('/individual/{pictureId}', name: 'app_individual')]
-    public function individual(int $pictureId, Request $request, TricksRepository $tricksRepository)
-    {
-        dd('test');
-    }
+
 
     /********************* functions shared ****************************/
 
