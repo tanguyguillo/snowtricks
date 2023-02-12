@@ -197,9 +197,10 @@ SnowTricks - modifications - {{ trick.title }}
                                             <span class="input-group-text" id="">
                                                 <input type="hidden" name="_token"
                                                     value="{{ csrf_token('updateAdditionalPicture' ~ additionalPicture.id) }}">
-                                                <input type="hidden" name="MAX_FILE_SIZE" value="20000"
-                                                    value="additionalPicture_{{additionalPicture.id }}">
-                                                <input type="file" name="file" id="file" } class="-form-control">
+                                                <input type="hidden" name="MAX_FILE_SIZE" value="20000">
+                                                <input type="file" name="picture{{ additionalPicture.id }}"
+                                                    id="picture{{additionalPicture.id}}" accept="image/png, image/jpeg"
+                                                    class="_form-control">
                                             </span>
                                         </div>
                                         <div class="modal-footer">
@@ -222,7 +223,6 @@ SnowTricks - modifications - {{ trick.title }}
                                 <button class="w-50 btn btn-lg btn-info" type="submit">OK</button>
 
                                 {{ form_end(formIndividualPicture) }} #}
-
 
                             </div>
                         </div>

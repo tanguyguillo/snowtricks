@@ -427,17 +427,35 @@ class TrickController extends AbstractController
     public function individual(int $pictureId, Request $request, TricksRepository $tricksRepository)
     {
         $submittedToken = $request->request->get('_token');
-
-        dd('test');
-
         if ($this->isCsrfTokenValid('updateAdditionalPicture' . $pictureId, $submittedToken)) {
+            //$oPicture = ($request); // object
+            // dd($oPicture);
+            // $oPicture->bindRequest($request);
+            // $data = $form->getValues();
+            //$test = $request->request->get('file'); :null
+            //dd($request->request->get('file_-_' . $pictureId)); : null
+            //$test = $this->getRequest()->request->all(); : Attempted to call an undefined method named "getRequest" of class "App\Controller\TrickController".
 
-            // $additionalPicture = ($request->files);
-            // $file  = md5(uniqid()) . '.' . $additionalPicture->guessExtension();
+            $test = $request->request->all();
+            $originalFilename = ($_FILES['picture' . $pictureId]['name']); // OK
 
-            // //$pictureFile =  $request->get('picture')->getData();
+            $newName = md5(uniqid()) . '.' . $originalFilename; // OK
 
-            // dd($additionalPicture);
+            $pictureFile =  $request->request->get('picture' . $pictureId);
+
+            dd($pictureFile);
+
+            // //1- import new picture
+
+
+            // $pictureFile =  $formAddTrick->get('picture')->getData();
+
+
+            // $file  = md5(uniqid()) . '.' . $originalFilename->guessExtension();
+
+            // // //$pictureFile =  $request->get('picture')->getData();
+
+            // dd($file);   //. $originalFilename->guessExtension();
 
 
             //1- import new picture
