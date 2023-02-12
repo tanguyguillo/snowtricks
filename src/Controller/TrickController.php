@@ -24,6 +24,8 @@ use App\Form\CommentsType;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
 
+use Symfony\Component\HttpFoundation\FileBag;
+
 /**
  * class TrickController
  *
@@ -73,7 +75,7 @@ class TrickController extends AbstractController
      * Function update (write)
      */
     #[Route('/details/modifications/{slug}', name: 'modifications')]
-    public function Update(EntityManagerInterface $entityManager, Request $request, $slug, TricksRepository $tricksRepository, UserRepository $userRepository,  Tricks $tricks, PicturesRepository $picturesRepository): Response
+    public function Update(EntityManagerInterface $entityManager, Request $request, $slug, TricksRepository $tricksRepository, UserRepository $userRepository,  Tricks $tricks, PicturesRepository $picturesRepository, Pictures $pictures): Response
     {
         $trick = $tricksRepository->findOneBy(['slug' => $slug]);
         if (!$trick) {
@@ -88,7 +90,7 @@ class TrickController extends AbstractController
         $formUpdateTrick->handleRequest($request);
         $submittedToken = $request->request->get('_token');
 
-        // $formIndividualPicture = $this->createForm(picturesType::class, $pictures);
+        $formIndividualPicture = $this->createForm(picturesType::class, $pictures);
 
         if ($this->isCsrfTokenValid('update' . $trick->getId(), $submittedToken)) {
             $trick->setContent($formUpdateTrick->get('content')->getData());
@@ -138,7 +140,7 @@ class TrickController extends AbstractController
 
         // dd($trick);
 
-        return $this->render('tricks/update.html.twig', compact('trick', 'Author', 'additionalPictures', 'formUpdateTrick', 'Image'));
+        return $this->render('tricks/update.html.twig', compact('trick', 'Author', 'additionalPictures', 'formUpdateTrick', 'Image', 'formIndividualPicture'));
     }
 
     /**
@@ -231,10 +233,10 @@ class TrickController extends AbstractController
     /**
      * function to delete one additional picture by picture id from update screen
      *
-     * @param [type] $argument   $pictureId, Request $request, Pictures $pictures
+     * @param [type]  $pictureId
      * 
      * 
-     * http://127.0.0.1:8000/tricks/delete-additional-picture/93 ... 
+     *
      * @return void
      */
     #[Route('/delete-picture/{pictureId}', name: 'app_delete_picture', methods: ['DELETE'])]
@@ -337,7 +339,6 @@ class TrickController extends AbstractController
     /**
      * function deleteMainPictureOnly : delete only main picture on detail page
      *  http://127.0.0.1:8000/tricks/delete-main-picture-only/224   
-     *   tricks_app_user_delete_main_only       DELETE   ANY      ANY    /tricks/delete-main-picture-only/{trickId}  
      */
     #[Route('/delete-main-picture-only/{trickId}', name: 'app_delete_main_only', methods: ['DELETE'])]
     public function deleteMainPictureOnly(int $trickId, Request $request)
@@ -425,18 +426,42 @@ class TrickController extends AbstractController
     #[Route('/individual/{pictureId}', name: 'app_individual')]
     public function individual(int $pictureId, Request $request, TricksRepository $tricksRepository)
     {
-
-
         $submittedToken = $request->request->get('_token');
+
+        dd('test');
+
         if ($this->isCsrfTokenValid('updateAdditionalPicture' . $pictureId, $submittedToken)) {
 
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                //array(1) { ["file"]=> array(6) { ["name"]=> string(14) "front-flip.png" ["full_path"]=> string(14) "front-flip.png" ["type"]=> string(0) "" ["tmp_name"]=> string(0) "" ["error"]=> int(2) ["size"]=> int(0) } }
-                var_dump($_FILES);
-                // if (is_uploaded_file($_FILES['file']['tmp_name'])) {
-                // }
-            }
-            dd("strp3");
+            // $additionalPicture = ($request->files);
+            // $file  = md5(uniqid()) . '.' . $additionalPicture->guessExtension();
+
+            // //$pictureFile =  $request->get('picture')->getData();
+
+            // dd($additionalPicture);
+
+
+            //1- import new picture
+            //$file  = md5(uniqid()) . '.' . $additionalPicture->guessExtension();
+            // $additionalPicture->move(
+            //     $this->getParameter('pictures_directory'),
+            //     $file
+            // );
+
+            // if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            //     $additionalPicture = ($_FILES['file']['name']);
+            //     // $this->addAdditionalPicture($file, $tricks); ????
+
+            //     // 1- import new picture
+            //     // $file  = md5(uniqid()) . '.' . $additionalPicture->guessExtension();
+            //     // $additionalPicture->move(
+            //     //     $this->getParameter('pictures_directory'),
+            //     //     $file
+            //     // );
+            // }
+            dd($file);
+
+
+
             // $additionalPicture = $this->picturesRepository->findOneById($pictureId);
             // $file  = $additionalPicture->getPicture();
 

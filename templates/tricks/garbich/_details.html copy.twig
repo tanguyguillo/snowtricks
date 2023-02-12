@@ -14,7 +14,7 @@
 
 {# titre #}
 {% block title %}
-Snowtricks - {{ routeTitre }} - {{ trick.title }}
+SnowTricks - {{ routeTitre }} - {{ trick.title }}
 {% endblock %}
 
 {% block main %}
@@ -95,17 +95,17 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                     </div>
                 </div>
 
-                {####### additionnals pictures #########}
+                {####### additionals pictures #########}
                 <div class="row justify-content-center">
 
-                    {% for additionnalPicture in additionnalPictures %}
-                    <!-- additionnalPictures Items-->
+                    {% for additionalPicture in additionalPictures %}
+                    <!-- additionalPictures Items-->
                     <div class="col-md-2 col-lg-2 mb-5 item">
                         <div class="mx-auto">
                             <div class="d-flex align-items-center justify-content-center h-100 w-100">
                                 <div class="card {{additionnalPicture.id}}">
                                     <img class="img-fluid"
-                                        src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/{{ additionnalPicture.picture }}"
+                                        src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/{{ additionalPicture.picture }}"
                                         alt="additional picture of {{ trick.title|striptags}}" />
                                     {######### Only if connected : delete and update... and route=
                                     tricks_modifications"###########}
@@ -113,10 +113,7 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                                     app.request.attributes.get('_route') == "tricks_modifications" %}
                                     <div class="card-body">
                                         <span>
-                                            {#
-                                            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;</span>
-                                            #}
-                                            <a href="{{ app.request.getSchemeAndHttpHost() }}/tricks/details/modifications/{{additionnalPicture.id }}"
+                                            <a href="{{ app.request.getSchemeAndHttpHost() }}/tricks/details/modifications/{{additionalPicture.id }}"
                                                 } class="float-center ml-1">
                                                 <i class="bi bi-pencil-fill iconTricks">
                                                 </i>
@@ -134,7 +131,7 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                     </div>
                     {% endfor %}
                     <br>
-                    {####### additional video exemple #########}
+                    {####### additional video example #########}
                     <div class="col-sm-2">
                         <div class="mx-auto">
                             <div class="d-flex align-items-center justify-content-center h-100 w-100">
@@ -178,24 +175,10 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                         </div>
                     </div>
                 </div>
-
-                {# <div class="form-group">
-                    {{ form_row(formUpdateTrick.ModifiedAt, {
-                    label: 'Modified at',
-                    type :"hidden",
-                    attr : {'class': 'form-control'}
-                    }) }}
-                </div> #}
-
                 {% endif %}
 
                 {####### information #########}
 
-                {# <input type="hidden" name="modified_at" value="{{ " now"|date("m/d/Y") }}"> #}
-
-
-
-                {# content #}
                 <div class="text-left content text-white">
                     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and
                     app.request.attributes.get('_route') == "tricks_modifications" %}
@@ -214,7 +197,6 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                 {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.request.attributes.get('_route') ==
                 "tricks_modifications" %}
 
-
                 <input type="hidden" name="modified_at" value="{{ csrf_token('update' ~ trick.id) }}">
 
                 <div class="container text-center">
@@ -231,13 +213,7 @@ Snowtricks - {{ routeTitre }} - {{ trick.title }}
                     </div>
 
                     <div class="col-2 float-right ml-1">
-
                         <button class="btn btn-info updateTrick" type="submit">Save</button>
-
-                        {# {{ include('tricks/_form.html.twig', {'button_label': 'Update'}) }} #}
-
-                        {# {{ form_row(form.submit, { 'label': 'Submit me' }) }} #}
-
                     </div>
 
                     {{ form_end(formUpdateTrick) }}

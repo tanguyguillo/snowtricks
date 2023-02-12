@@ -30,7 +30,7 @@
                             <img class="img-fluid" src="assets/img/tricks/{{ trick.picture }}"
                                 alt="{{ trick.title|striptags}}">
                             <div class="card-body mainid{{trick.id}}">
-                                <a href="tricks/details/{{ trick.slug }}" class="link-primary">{{
+                                <a href="tricks/details/{{ trick.slug|slug }}" class="link-primary">{{
                                     trick.title|striptags}}</a>
                                 {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                                 <span>
@@ -38,7 +38,7 @@
                                         href="#deleteThisTrick" id="{{trick.id}}">
                                         <i class="bi bi-trash-fill iconTricks"></i>
                                     </a>
-                                    <a href="{{ app.request.getSchemeAndHttpHost() }}/tricks/details/modifications/{{ trick.slug }}"
+                                    <a href="{{ app.request.getSchemeAndHttpHost() }}/tricks/details/modifications/{{ trick.slug|slug }}"
                                         } class="float-right ml-1">
                                         <i class="bi bi-pencil-fill iconTricks">
                                             <small><i class="bi bi-arrow-right-short"></i></small>
@@ -78,11 +78,6 @@
                                 </button>
                             </span>
                             {% endfor %}
-
-                            {# <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Save this change</button>
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            </div> #}
 
                             <span>
                                 <button type="button" class="btn btNo btn-info close-modal"
