@@ -3,7 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Tricks;
-
+use App\Entity\Pictures;
+use App\Entity\Comments;
 use App\Repository\UserRepository;
 use App\Repository\TricksRepository;
 use App\Repository\PicturesRepository;
@@ -14,14 +15,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use App\Form\TricksType;
 use App\Form\UpdateType;
+use App\Form\PicturesType;
 use App\Form\CommentsType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use App\Entity\Pictures;
-use App\Entity\Comments;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
@@ -73,7 +73,7 @@ class TrickController extends AbstractController
      * Function update (write)
      */
     #[Route('/details/modifications/{slug}', name: 'modifications')]
-    public function Update(EntityManagerInterface $entityManager, Request $request, $slug, TricksRepository $tricksRepository, UserRepository $userRepository, Tricks $tricks, PicturesRepository $picturesRepository): Response
+    public function Update(EntityManagerInterface $entityManager, Request $request, $slug, TricksRepository $tricksRepository, UserRepository $userRepository,  Tricks $tricks, PicturesRepository $picturesRepository): Response
     {
         $trick = $tricksRepository->findOneBy(['slug' => $slug]);
         if (!$trick) {
@@ -85,9 +85,10 @@ class TrickController extends AbstractController
         $additionalPictures = $picturesRepository->findBy(['tricks' => $trickId]);
         $Image = $tricks->getPicture();
         $formUpdateTrick = $this->createForm(UpdateType::class, $trick);
-
         $formUpdateTrick->handleRequest($request);
         $submittedToken = $request->request->get('_token');
+
+        // $formIndividualPicture = $this->createForm(picturesType::class, $pictures);
 
         if ($this->isCsrfTokenValid('update' . $trick->getId(), $submittedToken)) {
             $trick->setContent($formUpdateTrick->get('content')->getData());
@@ -425,11 +426,17 @@ class TrickController extends AbstractController
     public function individual(int $pictureId, Request $request, TricksRepository $tricksRepository)
     {
 
-        dd("ggg");
 
         $submittedToken = $request->request->get('_token');
         if ($this->isCsrfTokenValid('updateAdditionalPicture' . $pictureId, $submittedToken)) {
 
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                //array(1) { ["file"]=> array(6) { ["name"]=> string(14) "front-flip.png" ["full_path"]=> string(14) "front-flip.png" ["type"]=> string(0) "" ["tmp_name"]=> string(0) "" ["error"]=> int(2) ["size"]=> int(0) } }
+                var_dump($_FILES);
+                // if (is_uploaded_file($_FILES['file']['tmp_name'])) {
+                // }
+            }
+            dd("strp3");
             // $additionalPicture = $this->picturesRepository->findOneById($pictureId);
             // $file  = $additionalPicture->getPicture();
 

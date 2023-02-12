@@ -5,8 +5,6 @@ namespace App\Entity;
 use App\Repository\PicturesRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-
-
 #[ORM\Entity(repositoryClass: PicturesRepository::class)]
 class Pictures
 {
@@ -17,7 +15,7 @@ class Pictures
 
     #[ORM\ManyToOne(inversedBy: 'additionnalTrick')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Tricks $tricks = null;
+    public ?Tricks $tricks = null;
 
     #[ORM\Column(length: 255)]
     private ?string $picture = null;
@@ -50,17 +48,4 @@ class Pictures
 
         return $this;
     }
-
-    // public function removeAdditionalPicture(Pictures $Pictures): self
-    // {
-    //     if ($this->additionalTrick->removeElement($additionalTrick)) {
-    //         // set the owning side to null (unless already changed)
-    //         if ($additionalTrick->getTricks() === $this) {
-    //             $additionalTrick->setTricks(null);
-    //         }
-    //     }
-
-    //     return $this;
-    // }
-
 }
