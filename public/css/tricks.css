@@ -23,10 +23,14 @@ button.float-center.ml-1.additionalPictureModify.btWhite {
   border: white;
 }
 
+a data-delte:hover {
+  color red !important;
+
+}
+
 .scroll-to-tricks {
   margin-bottom: 50px;
 }
-
 
 .footer-below {
   z-index: 10;
@@ -454,11 +458,9 @@ div.modal-body {
   border-bottom: var(--bs-modal-header-border-width) solid
 }
 
-/*align bt no in modal*/
+/* align bt no in modal */
 .btNo {
-  margin-left: 20px;
-  margin-bottom: 30px;
-
+  padding-left: 20px;
 }
 
 /******** End modal ************/
@@ -691,21 +693,17 @@ input[type=submit] {
   background: #009da2;
 }
 
-/* span.tricks-240.displayContents>button */
-/* input[type=submit]:hover {
-  background: #02e1e9
-} */
-
-/* input#file {
-  background: #009da2;
-} */
-
 input#file-upload-button {
   background: #009da2;
   cursor: pointer;
 }
 
 input#update_picture {
+  color: #fff;
+  background: #009da2;
+}
+
+input#deleteTrick {
   color: #fff;
   background: #009da2;
 }

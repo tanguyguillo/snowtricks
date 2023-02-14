@@ -70,7 +70,7 @@
 
                             {% for trick in tricks %}
                             <span class="displayNone tricks-{{ trick.id }}">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-danger">
                                     <a data-delete
                                         href="{{ app.request.getSchemeAndHttpHost() }}/tricks/delete-tricks/{{ trick.id }}"
                                         data-token="{{ csrf_token('delete'~trick.id)}}">Yes
