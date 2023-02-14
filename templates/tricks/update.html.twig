@@ -74,7 +74,6 @@ SnowTricks - modifications - {{ trick.title }}
 
                     {####### more pictures #########}
                     <br>
-
                     <div class="row justify-content-center">
                         {% for additionalPicture in additionalPictures %}
                         <div class="col-md-2 col-lg-2 mb-5 item">
@@ -89,10 +88,12 @@ SnowTricks - modifications - {{ trick.title }}
                                 </div>
 
                                 <span>
-                                    <button type="button" class="float-center ml-1 additionalPictureModify btWhite"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#additionalPictures_{{additionalPicture.id}}">
-                                        <i class=" bi bi-pencil-fill iconTricks"></i>
+
+                                    <button type="button" class="float-center ml-1 additionalPictureModify btWhite" <a
+                                        data-bs-toggle="collapse" href="#collapseIndividual"
+                                        class="float-right ml-1 collapseIndividual" alt="update trick">
+                                        <i class="bi bi-pencil-fill iconTricks"></i>
+                                        </a>
                                     </button>
 
                                     <a data-additional-delete
@@ -107,6 +108,8 @@ SnowTricks - modifications - {{ trick.title }}
                             </div>
                         </div>
                         {% endfor %}
+
+                        {# video #}
                         <div class="col-sm-2">
                             <div class="mx-auto">
                                 <div class="d-flex align-items-center justify-content-center h-100 w-100">
@@ -128,13 +131,21 @@ SnowTricks - modifications - {{ trick.title }}
                                 </span>
                             </div>
                         </div>
-                    </div>
-                    <div>
-                        {{ form_row(formUpdateTrick.pictures, {
-                        label: 'Add more additional pictures',
-                        attr : {'class': 'form-control'}
-                        }) }}
-                    </div>
+
+                        {# mode additional picture #}
+                        <div class="card container text-center collapse" id="collapseIndividual">
+                            <br>
+                            <div class="form-group">
+                                {{ form_row(formUpdateTrick.pictures, {
+                                label: 'Add more additional pictures',
+                                attr : {'class': 'form-control'}
+                                }) }}
+                            </div>
+                        </div>
+
+
+                    </div> {####### end of more pictures and Movie#########}
+
                     <br>
                     <ul class="list-inline">
                         <li class="list-inline-item badge bg-primary">
@@ -175,59 +186,6 @@ SnowTricks - modifications - {{ trick.title }}
                                 <button class="btn btn-danger">Delete</button>
                             </form>
                         </div>
-
-                        {% for additionalPicture in additionalPictures %}
-
-                        <div class="modal fade" id="additionalPictures_{{additionalPicture.id}}" tabindex="-1"
-                            aria-labelledby="additionalPictures_{{additionalPicture.id}}" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-
-                                <form name="upload" method="POST" action="/tricks/individual/{{additionalPicture.id }}"
-                                    enctype="multipart/form-data">
-
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">Change this picture ?</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close">
-                                                <span aria-hidden="true"></span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <span class="input-group-text" id="">
-                                                <input type="hidden" name="_token"
-                                                    value="{{ csrf_token('updateAdditionalPicture' ~ additionalPicture.id) }}">
-                                                <input type="hidden" name="MAX_FILE_SIZE" value="20000">
-                                                <input type="file" name="picture{{ additionalPicture.id }}"
-                                                    id="picture{{additionalPicture.id}}" accept="image/png, image/jpeg"
-                                                    class="_form-control">
-                                            </span>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="submit" class="btn btn-primary">Save this change</button>
-                                            <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">Close</button>
-                                        </div>
-                                    </div>
-                                </form>
-
-                                {# {{ form_start(formIndividualPicture) }}
-
-
-                                {{ form_row(formIndividualPicture.picture, {
-                                label: "Change this picture",
-                                type : "file",
-                                attr : {'class': 'form-control'},
-                                }) }}
-
-                                <button class="w-50 btn btn-lg btn-info" type="submit">OK</button>
-
-                                {{ form_end(formIndividualPicture) }} #}
-
-                            </div>
-                        </div>
-                        {% endfor %}
-
                     </div>
                 </div>
             </div>

@@ -14,22 +14,14 @@ class PicturesType extends AbstractType
     {
         $builder
             ->add(
-                'picture',
+                'pictures',
                 FileType::class,
                 [
-                    'label' => '',
+                    'attr' => ['accept' => "image/*",],
+                    'label' => false,
+                    'multiple' => true,
                     'mapped' => false,
-                    'required' => false,
-                    'constraints' => [
-                        new File([
-                            'maxSize' => '2024k',
-                            'mimeTypes' => [
-                                'image/png',
-                                'image/jpg',
-                            ],
-                            'mimeTypesMessage' => 'Please upload a valid Picture file',
-                        ])
-                    ]
+                    'required' => false
                 ]
             );
     }
