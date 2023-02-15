@@ -69,14 +69,9 @@ class TrickController extends AbstractController
         $Image = $tricks->getPicture();
         $date = date('Y-m-d H:i:s');
 
-        /////// Comments
         $comments = new Comments;
         $formComment = $this->createForm(CommentsType::class, $comments);
         $formComment->handleRequest($request);
-        // // $commentForm = $commentForm->createView(); // 
-
-
-
 
         return $this->render('tricks/details.html.twig', compact('trick', 'Author', 'additionalPictures', 'Image', 'date', 'formComment'));  // 
     }

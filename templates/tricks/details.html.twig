@@ -113,7 +113,10 @@ Snowtricks - Trick detail - {{ trick.title }}
                             <button type="submit" class="btn btn-info mb-2">Leave a comment</button>
                         </div>
 
-                        {# {{ form_start(commentForm) }}
+                        {{ form_start(formComment) }}
+
+                        {{ form_end(formComment) }}
+
                         {# ->add('User')
                         ->add('rgpd')
                         ->add('created_at')
