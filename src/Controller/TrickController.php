@@ -68,7 +68,17 @@ class TrickController extends AbstractController
         $additionalPictures = $picturesRepository->findBy(['tricks' => $trickId]);
         $Image = $tricks->getPicture();
         $date = date('Y-m-d H:i:s');
-        return $this->render('tricks/details.html.twig', compact('trick', 'Author', 'additionalPictures', 'Image', 'date'));
+
+        /////// Comments
+        $comments = new Comments;
+        $formComment = $this->createForm(CommentsType::class, $comments);
+        $formComment->handleRequest($request);
+        // // $commentForm = $commentForm->createView(); // 
+
+
+
+
+        return $this->render('tricks/details.html.twig', compact('trick', 'Author', 'additionalPictures', 'Image', 'date', 'formComment'));  // 
     }
 
     /**
@@ -90,7 +100,7 @@ class TrickController extends AbstractController
         $formUpdateTrick->handleRequest($request);
         $submittedToken = $request->request->get('_token');
 
-        $formIndividualPicture = $this->createForm(picturesType::class, $pictures);
+
 
         if ($this->isCsrfTokenValid('update' . $trick->getId(), $submittedToken)) {
             $trick->setContent($formUpdateTrick->get('content')->getData());
@@ -134,13 +144,7 @@ class TrickController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
-        // $comment = new Comments;
-        // $commentForm = $this->createForm(CommentsType::class, $comment);
-        // $commentForm->handleRequest($request);
-
-        // dd($trick);
-
-        return $this->render('tricks/update.html.twig', compact('trick', 'Author', 'additionalPictures', 'formUpdateTrick', 'Image', 'formIndividualPicture'));
+        return $this->render('tricks/update.html.twig', compact('trick', 'Author', 'additionalPictures', 'formUpdateTrick', 'Image'));
     }
 
     /**
