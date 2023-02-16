@@ -23,19 +23,20 @@ class Comments
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
 
-    #[ORM\Column]
-    private ?bool $rgpd = null;
-
     #[ORM\ManyToOne(inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Tricks $relation = null;
 
-    #[ORM\ManyToOne(inversedBy: 'replies')]
-    private ?comments $parent = null;
-
     #[ORM\ManyToOne(inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $User = null;
+
+
+    public function __construct()
+    {
+        $this->setActive(1);
+        $this->setCreatedAt(new \DateTimeImmutable("now"));
+    }
 
     public function getId(): ?int
     {
@@ -78,18 +79,6 @@ class Comments
         return $this;
     }
 
-    public function isRgpd(): ?bool
-    {
-        return $this->rgpd;
-    }
-
-    public function setRgpd(bool $rgpd): self
-    {
-        $this->rgpd = $rgpd;
-
-        return $this;
-    }
-
     public function getRelation(): ?Tricks
     {
         return $this->relation;
@@ -102,17 +91,6 @@ class Comments
         return $this;
     }
 
-    public function getParent(): ?comments
-    {
-        return $this->parent;
-    }
-
-    public function setParent(?comments $parent): self
-    {
-        $this->parent = $parent;
-
-        return $this;
-    }
 
     public function getUser(): ?User
     {

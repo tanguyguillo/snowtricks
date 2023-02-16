@@ -44,6 +44,7 @@ a data-delte:hover {
   color: white;
 }
 
+
 .home-background {
   background-repeat: no-repeat;
   background-position-x: center;
@@ -639,7 +640,7 @@ img.mr-3.rounded-circle {
   height: 40px;
 }
 
-.posfctText {
+.posFctText {
   margin-top: -20px
 }
 

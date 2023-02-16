@@ -13,13 +13,7 @@ class CommentsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('User')
-            // ->add('rgpd')
-            ->add('created_at')
             ->add('content');
-        // ->add('relation');
-        // ->add('parentid, Hiddentype::class', ['mapped => false'])
-        //->add('save', SubmitType::class, array('label' => 'Post comment'));
     }
 
     public function configureOptions(OptionsResolver $resolver): void

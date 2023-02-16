@@ -56,7 +56,7 @@ class TrickController extends AbstractController
      * function details (read)
      */
     #[Route('/details/{slug}', name: 'details')]
-    public function details(EntityManagerInterface $entityManager, Request $request, $slug, TricksRepository $tricksRepository, UserRepository $userRepository, Tricks $tricks, PicturesRepository $picturesRepository): Response
+    public function details(ManagerRegistry $doctrine, EntityManagerInterface $entityManager, Request $request, $slug, TricksRepository $tricksRepository, UserRepository $userRepository, Tricks $tricks, PicturesRepository $picturesRepository): Response
     {
         $trick = $tricksRepository->findOneBy(['slug' => $slug]);
         if (!$trick) {
@@ -72,6 +72,18 @@ class TrickController extends AbstractController
         $comments = new Comments;
         $formComment = $this->createForm(CommentsType::class, $comments);
         $formComment->handleRequest($request);
+
+        $submittedToken = $request->request->get('_token');
+        if ($this->isCsrfTokenValid('comment-item', $submittedToken)) {
+            $comments->setContent($formComment->get('content')->getData());
+            $comments->setRelation($trick);
+            $comments->setUser($AuthorId);
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($comments);
+            $entityManager->flush();
+            $this->addFlash('success', 'Your Comment have been added.');
+            // return $this->redirectToRoute('app_home');
+        }
 
         return $this->render('tricks/details.html.twig', compact('trick', 'Author', 'additionalPictures', 'Image', 'date', 'formComment'));  // 
     }
@@ -94,8 +106,6 @@ class TrickController extends AbstractController
         $formUpdateTrick = $this->createForm(UpdateType::class, $trick);
         $formUpdateTrick->handleRequest($request);
         $submittedToken = $request->request->get('_token');
-
-
 
         if ($this->isCsrfTokenValid('update' . $trick->getId(), $submittedToken)) {
             $trick->setContent($formUpdateTrick->get('content')->getData());
@@ -349,15 +359,10 @@ class TrickController extends AbstractController
             // 1 get the physical path
             $PictureWithPath = $this->getParameter('pictures_directory') . '/' .  $file;
             // 2 delete picture from server // yes have been found and deleted
+
             //$tricks->setPicture() = "empty.png";
 
             if ($this->deletePicture($PictureWithPath)) {
-
-                // $this->setEmpty("empty.png", $trickId);
-                // $entityManager = $doctrine->getManager();
-                // $entityManager->persist($tricks);
-                // $entityManager->flush();
-
                 return new JsonResponse("oui : additionalPictureDeleted", 200);
             } else {
                 return new JsonResponse("non ", 500);
