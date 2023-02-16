@@ -98,6 +98,7 @@ SnowTricks - Trick detail - {{ trick.title }}
 
     {# comments #}
 
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
     <div class="media">
         <div class="media-body">
             <div class="row text-left  text-white">
@@ -125,19 +126,13 @@ SnowTricks - Trick detail - {{ trick.title }}
                         </div>
 
                         {{ form_end(formComment) }}
-
-
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
-
-
     <hr>
+    {% endif %}
 
     {# currentComments #}
 
@@ -150,7 +145,7 @@ SnowTricks - Trick detail - {{ trick.title }}
                 <div class="row text-left contentGrey text-white">
                     <div class="col-8 d-flex">
                         <h5>Maria Smantha</h5>
-                        <span>- add the {{ currentComment.created_at|date("m/d/Y") }} </span>
+                        <span> - created at : {{ currentComment.createdAt|date('d-m-Y') }}} </span>
                     </div>
                     <div class="col-8 d-flex">
                         {{ currentComment.content }}
@@ -161,31 +156,13 @@ SnowTricks - Trick detail - {{ trick.title }}
         {% endfor %}
     </div>
 
-    {# <div class="row justify-content-center">
-        {% for additionalPicture in additionalPictures %}
-        <div class="col-md-2 col-lg-2 mb-5 item">
-            <div class="mx-auto">
-                <div class="d-flex align-items-center justify-content-center h-100 w-100">
-                    <div class="card {{additionalPicture.id}}">
-                        <img class="img-fluid"
-                            src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/{{ additionalPicture.picture }}"
-                            alt="additional picture of {{ trick.title|striptags}}" />
-                    </div>
-                </div>
-            </div>
-        </div>
-        {% endfor %} #}
-
-
-
-    </div>
+</div>
 </div>
 
 <br>
 <br>
 <br>
 <br>
-
 
 <!-- tricks Zoom -->
 <div id="overlay" class="zoom"></div>

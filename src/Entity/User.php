@@ -56,6 +56,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'User', targetEntity: Comments::class, orphanRemoval: true)]
     private Collection $comments;
 
+    #[Assert\Length(
+        min: 3,
+        max: 255,
+        minMessage: 'Your first name must be at least {{ limit }} characters long',
+        maxMessage: 'Your first name cannot be longer than {{ limit }} characters',
+    )]
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $FirstName = null;
+
+    #[Assert\Length(
+        min: 3,
+        max: 255,
+        minMessage: 'Your first name must be at least {{ limit }} characters long',
+        maxMessage: 'Your first name cannot be longer than {{ limit }} characters',
+    )]
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $LastName = null;
+
     /**
      * initialisation function
      */
@@ -83,6 +101,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->username;
     }
 
+    /**
+     * UserName here is a kins of trick name
+     *
+     * @param string $username
+     * @return self
+     */
     function setUserName(string $username): self
     {
         $this->username = $username;
@@ -248,6 +272,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $comment->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->FirstName;
+    }
+
+    public function setSurName(?string $FirstName): self
+    {
+        $this->FirstName = $FirstName;
+
+        return $this;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->LastName;
+    }
+
+    public function setLastName(?string $LastName): self
+    {
+        $this->LastName = $LastName;
 
         return $this;
     }

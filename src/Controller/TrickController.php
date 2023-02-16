@@ -17,15 +17,12 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use App\Form\TricksType;
 use App\Form\UpdateType;
 use App\Form\PicturesType;
 use App\Form\CommentsType;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
-
-use Symfony\Component\HttpFoundation\FileBag;
 
 /**
  * class TrickController
@@ -65,8 +62,8 @@ class TrickController extends AbstractController
         if (!$trick) {
             throw new NotFoundHttpException("No trick found");
         }
-        $AuthorId = $trick->getUser();
-        $Author = $userRepository->findOneBy(['id' => $AuthorId]);
+        $authorId = $trick->getUser();
+        $author = $userRepository->findOneBy(['id' => $authorId]);
         $trickId = $trick->getId();
         $additionalPictures = $picturesRepository->findBy(['tricks' => $trickId]);
         $Image = $tricks->getPicture();
@@ -76,24 +73,20 @@ class TrickController extends AbstractController
         $formComment = $this->createForm(CommentsType::class, $comments);
         $formComment->handleRequest($request);
 
-        $submittedToken = $request->request->get('_token');
-        if ($this->isCsrfTokenValid('comment-item', $submittedToken)) {
-            $comments->setContent($formComment->get('content')->getData());
-            $comments->setRelation($trick);
-            $comments->setUser($AuthorId);
-            $entityManager = $doctrine->getManager();
-            $entityManager->persist($comments);
-            $entityManager->flush();
-            $this->addFlash('success', 'Your Comment have been added.');
+        if ($formComment->isSubmitted() && $formComment->isValid()) {
+            $submittedToken = $request->request->get('_token');
+            if ($this->isCsrfTokenValid('comment-item', $submittedToken)) {
+                $comments->setContent($formComment->get('content')->getData());
+                $comments->setRelation($trick);
+                $comments->setUser($authorId);
+                $entityManager = $doctrine->getManager();
+                $entityManager->persist($comments);
+                $entityManager->flush();
+                $this->addFlash('success', 'Your Comment have been added.');
+            }
         }
-
-        // all the comments for a trick
         $currentComments = $this->commentsRepository->findByRelation($trickId);
-
-        // dd($currentComments);
-
-
-        return $this->render('tricks/details.html.twig', compact('trick', 'Author', 'additionalPictures', 'Image', 'date', 'formComment', 'currentComments'));  // 
+        return $this->render('tricks/details.html.twig', compact('trick', 'Author', 'additionalPictures', 'Image', 'date', 'formComment', 'currentComments', 'authorId'));  // 
     }
 
     /**
@@ -119,9 +112,8 @@ class TrickController extends AbstractController
             $trick->setContent($formUpdateTrick->get('content')->getData());
             $trick->setCategory($formUpdateTrick->get('category')->getData());
             $trick->setModifiedAt(new \DateTimeImmutable("now"));
-            // $formUpdateTrick->get('title')->getData();
             $pictureFile =  $formUpdateTrick->get('picture')->getData();
-            // may have multiple more pictures
+            // replace pictures
             $morePictures = $formUpdateTrick->get('pictures')->getData(); // array
 
             if ($morePictures != []) {
@@ -187,6 +179,8 @@ class TrickController extends AbstractController
             return new JsonResponse("non ", 500);
         }
     }
+
+    /*************** deleting *******************/
 
     /**
      * function deleteFromDetail 
@@ -257,7 +251,6 @@ class TrickController extends AbstractController
     public function deleteOneAdditionalPicture(int $pictureId, Request $request)
     {
         $submittedToken = $request->request->get('_token');
-
         if ($this->isCsrfTokenValid('delete' . $pictureId, $submittedToken)) {
 
             $additionalPicture = $this->picturesRepository->find(array('id' => $pictureId)); // find : return an object used also in remove
@@ -276,7 +269,35 @@ class TrickController extends AbstractController
             }
         }
     }
+
     /**
+     * function deleteMainPictureOnly : delete only main picture on detail page
+     *  http://127.0.0.1:8000/tricks/delete-main-picture-only/224   
+     */
+    #[Route('/delete-main-picture-only/{trickId}', name: 'app_delete_main_only', methods: ['DELETE'])]
+    public function deleteMainPictureOnly(int $trickId, Request $request)
+    {
+        $submittedToken = $request->request->get('_token');
+        if ($this->isCsrfTokenValid('delete' . $trickId, $submittedToken)) {
+            $trick = $this->tricksRepository->findOneById($trickId);
+            $file  = htmlentities($trick->getPicture());
+            // 1 get the physical path
+            $PictureWithPath = $this->getParameter('pictures_directory') . '/' .  $file;
+            // 2 delete picture from server // yes have been found and deleted
+
+            //$tricks->setPicture() = "empty.png";
+
+            if ($this->deletePicture($PictureWithPath)) {
+                return new JsonResponse("oui : additionalPictureDeleted", 200);
+            } else {
+                return new JsonResponse("non ", 500);
+            }
+        }
+    }
+
+    /*************** end deleting *******************/
+
+    /*
      * function addTricks
      * 
      * @return void
@@ -350,32 +371,7 @@ class TrickController extends AbstractController
         }
     }
 
-    /**
-     * function deleteMainPictureOnly : delete only main picture on detail page
-     *  http://127.0.0.1:8000/tricks/delete-main-picture-only/224   
-     */
-    #[Route('/delete-main-picture-only/{trickId}', name: 'app_delete_main_only', methods: ['DELETE'])]
-    public function deleteMainPictureOnly(int $trickId, Request $request)
-    {
-        $submittedToken = $request->request->get('_token');
-        if ($this->isCsrfTokenValid('delete' . $trickId, $submittedToken)) {
-            $trick = $this->tricksRepository->findOneById($trickId);
-            $file  = htmlentities($trick->getPicture());
-            // 1 get the physical path
-            $PictureWithPath = $this->getParameter('pictures_directory') . '/' .  $file;
-            // 2 delete picture from server // yes have been found and deleted
-
-            //$tricks->setPicture() = "empty.png";
-
-            if ($this->deletePicture($PictureWithPath)) {
-                return new JsonResponse("oui : additionalPictureDeleted", 200);
-            } else {
-                return new JsonResponse("non ", 500);
-            }
-        }
-    }
-
-    /**
+    /************************************************
      *  function set picture empty for main picture
      *
      * @param string $fileName
@@ -402,41 +398,32 @@ class TrickController extends AbstractController
         ]);
     }
 
-    /**
-     * just to test http://127.0.0.1:8000/tricks/test/133 for example/testing
-     */
-    #[Route('/test/{pictureId}', name: 'app_delete_individual_picture')]
-    public function test(int $pictureId, Request $request, PicturesRepository $picturesRepository)
-    {
-        $additionalPicture = $this->picturesRepository->findOneById($pictureId);
-        $file  = $additionalPicture->getPicture();
+    // #[Route('/individual/{pictureId}', name: 'app_individual')]
+    // public function individual(int $pictureId, Request $request, TricksRepository $tricksRepository)
+    // {
+    //     $submittedToken = $request->request->get('_token');
+    //     if ($this->isCsrfTokenValid('updateAdditionalPicture' . $pictureId, $submittedToken)) {
 
-        // 1 get the physical path
-        $additionalPictureWithPath = $this->getParameter('pictures_directory') . '/' .  $file;
 
-        // 2 delete picture from server // yes have been found and deleted
-        if ($this->deletePicture($additionalPictureWithPath)) {
 
-            // 3 - delete additional picture from BD from db
-            $this->em->remove($additionalPicture);
-            $this->em->flush();
-
-            return new JsonResponse("oui : additionalPictureDeleted", 200);
-        } else {
-            return new JsonResponse("non ", 500);
-            // $this->addFlash('error', 'Something goes wrong.');
-        }
-    }
+    //     }
+    // }
 
     /**
      *  
      * Function update individual picture (write)
      */
-    #[Route('/individual/{pictureId}', name: 'app_individual')]
-    public function individual(int $pictureId, Request $request, TricksRepository $tricksRepository)
+    #[Route('/memberName/{pictureId}', name: 'app_memberName')]
+    public function firstAndLastName(int $pictureId, Request $request, TricksRepository $tricksRepository)
     {
+
+
+
+
         $submittedToken = $request->request->get('_token');
-        if ($this->isCsrfTokenValid('updateAdditionalPicture' . $pictureId, $submittedToken)) {
+        if ($this->isCsrfTokenValid('FirstAnd-itemLastName' . $pictureId, $submittedToken)) {
+
+            dd('rrrrr');
             //$oPicture = ($request); // object
             // dd($oPicture);
             // $oPicture->bindRequest($request);
@@ -485,7 +472,7 @@ class TrickController extends AbstractController
             //     //     $file
             //     // );
             // }
-            dd($file);
+
 
 
 
@@ -507,30 +494,6 @@ class TrickController extends AbstractController
 
         }
     }
-
-
-    /**
-     * just to test http://127.0.0.1:8000/tricks/test2/223 for example/testing  , Tricks $tricks
-     */
-    #[Route('/test2/{trickId}', name: 'app_test2')]
-    public function test2(int $trickId, Request $request, TricksRepository $tricksRepository)
-    {
-        $trick = $this->tricksRepository->findOneById($trickId);
-        $file  = $trick->getPicture();
-        // // 1 get the physical path
-        // $PictureWithPath = $this->getParameter('pictures_directory') . '/' .  $file;
-        // // 2 delete picture from server // yes have been found and deleted
-        // //  $tricks->setPicture() = "empty.png";
-        // // $tricks->setPicture('empty.png');
-        // if ($this->deletePicture($PictureWithPath)) {
-        //     return new JsonResponse("oui : additionalPictureDeleted", 200);
-        // } else {
-        //     return new JsonResponse("non ", 500);
-        // }
-    }
-
-
-
 
     /********************* functions shared ****************************/
 

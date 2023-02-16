@@ -70,6 +70,12 @@ class Tricks
     #[ORM\OneToMany(mappedBy: 'relation', targetEntity: Comments::class, cascade: ["all"], orphanRemoval: true)]
     private Collection $comments;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $FirstName = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $LastName = null;
+
     public function __construct()
     {
         $this->setActive(1);
@@ -258,6 +264,30 @@ class Tricks
                 $comment->setRelation(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->FirstName;
+    }
+
+    public function setFirstName(?string $FirstName): self
+    {
+        $this->FirstName = $FirstName;
+
+        return $this;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->LastName;
+    }
+
+    public function setLastName(?string $LastName): self
+    {
+        $this->LastName = $LastName;
 
         return $this;
     }
