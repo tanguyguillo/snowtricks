@@ -105,7 +105,6 @@ SnowTricks - Trick detail - {{ trick.title }}
                     <div class="row">
                         <div class="col">
 
-
                             {{ form_start(formComment) }}
                             <div class="my-custom-class-for-errors">
                                 {{ form_errors(formComment) }}
@@ -127,34 +126,23 @@ SnowTricks - Trick detail - {{ trick.title }}
 
                         {{ form_end(formComment) }}
 
+
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    </form>
+
+
+
+
     <hr>
-    <div class="margCom">
-        <div class="media">
-            <img class="mr-3 rounded-circle" alt=""
-                src=" {{ app.request.getSchemeAndHttpHost()}}/assets/img/avatars/avatar-252×230.png" /></a>
-            <div class="media-body">
-                <div class="row text-left contentGrey text-white">
-                    <div class="col-8 d-flex">
-                        <h5>Maria Smantha</h5>
-                        <span>- 2 hours ago</span>
-                    </div>
-                    Verni domesticus quam animi filius suspensus ut quae potuit magistro
-                    discerpti turbela
-                    translationem timore egerat futurorum quondam imbres emendabat referente
-                    quam rettulimus
-                    crebriores angorem diu diu timore referente crebriores Constantinopolim
-                    suspensus emendabat
-                    timore supra Herculanus auctique diu diu egerat emendabat
-                </div>
-            </div>
-        </div>
 
+    {# currentComments #}
+
+    <div class="margCom">
+        {% for currentComment in currentComments %}
         <div class="media">
             <img class="mr-3 rounded-circle" alt=""
                 src=" {{ app.request.getSchemeAndHttpHost()}}/assets/img/avatars/avatar-252×230.png" /></a>
@@ -162,20 +150,35 @@ SnowTricks - Trick detail - {{ trick.title }}
                 <div class="row text-left contentGrey text-white">
                     <div class="col-8 d-flex">
                         <h5>Maria Smantha</h5>
-                        <span>- 2 hours ago</span>
+                        <span>- add the {{ currentComment.created_at|date("m/d/Y") }} </span>
                     </div>
-                    Verni domesticus quam animi filius suspensus ut quae potuit magistro
-                    discerpti turbela
-                    translationem timore egerat futurorum quondam imbres emendabat referente
-                    quam rettulimus
-                    crebriores angorem diu diu timore referente crebriores Constantinopolim
-                    suspensus emendabat
-                    timore supra Herculanus auctique diu diu egerat emendabat
+                    <div class="col-8 d-flex">
+                        {{ currentComment.content }}
+                    </div>
                 </div>
             </div>
         </div>
+        {% endfor %}
     </div>
 
+    {# <div class="row justify-content-center">
+        {% for additionalPicture in additionalPictures %}
+        <div class="col-md-2 col-lg-2 mb-5 item">
+            <div class="mx-auto">
+                <div class="d-flex align-items-center justify-content-center h-100 w-100">
+                    <div class="card {{additionalPicture.id}}">
+                        <img class="img-fluid"
+                            src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/{{ additionalPicture.picture }}"
+                            alt="additional picture of {{ trick.title|striptags}}" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %} #}
+
+
+
+    </div>
 </div>
 
 <br>

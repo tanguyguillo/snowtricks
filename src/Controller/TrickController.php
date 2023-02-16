@@ -8,6 +8,7 @@ use App\Entity\Comments;
 use App\Repository\UserRepository;
 use App\Repository\TricksRepository;
 use App\Repository\PicturesRepository;
+use App\Repository\CommentsRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
@@ -36,6 +37,7 @@ class TrickController extends AbstractController
 {
     public $picturesRepository;
     public $tricksRepository;
+    public $commentsRepository;
     // public $tricks;
     private $em;
 
@@ -44,11 +46,12 @@ class TrickController extends AbstractController
      *
      * @param PicturesRepository $picturesRepository, TricksRepository $tricksRepository, EntityManagerInterface $em, Tricks $tricks
      */
-    public function __construct(PicturesRepository $picturesRepository, TricksRepository $tricksRepository, EntityManagerInterface $em)
+    public function __construct(PicturesRepository $picturesRepository, TricksRepository $tricksRepository, EntityManagerInterface $em, CommentsRepository $commentsRepository)
     {
         $this->picturesRepository = $picturesRepository;
         $this->tricksRepository = $tricksRepository;
-        // $this->tricks = $tricks;
+        $this->commentsRepository = $commentsRepository;
+        // $this->tricks = $tricks;  
         $this->em = $em;
     }
 
@@ -82,10 +85,15 @@ class TrickController extends AbstractController
             $entityManager->persist($comments);
             $entityManager->flush();
             $this->addFlash('success', 'Your Comment have been added.');
-            // return $this->redirectToRoute('app_home');
         }
 
-        return $this->render('tricks/details.html.twig', compact('trick', 'Author', 'additionalPictures', 'Image', 'date', 'formComment'));  // 
+        // all the comments for a trick
+        $currentComments = $this->commentsRepository->findByRelation($trickId);
+
+        // dd($currentComments);
+
+
+        return $this->render('tricks/details.html.twig', compact('trick', 'Author', 'additionalPictures', 'Image', 'date', 'formComment', 'currentComments'));  // 
     }
 
     /**
@@ -243,9 +251,6 @@ class TrickController extends AbstractController
      * function to delete one additional picture by picture id from update screen
      *
      * @param [type]  $pictureId
-     * 
-     * 
-     *
      * @return void
      */
     #[Route('/delete-picture/{pictureId}', name: 'app_delete_picture', methods: ['DELETE'])]
