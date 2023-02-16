@@ -56,7 +56,7 @@ class TrickController extends AbstractController
      * function details (read)
      */
     #[Route('/details/{slug}', name: 'details')]
-    public function details(ManagerRegistry $doctrine, EntityManagerInterface $entityManager, Request $request, $slug, TricksRepository $tricksRepository, UserRepository $userRepository, Tricks $tricks, PicturesRepository $picturesRepository): Response
+    public function details(ManagerRegistry $doctrine, EntityManagerInterface $entityManager, Request $request, $slug, TricksRepository $tricksRepository, UserRepository $userRepository, Tricks $tricks, PicturesRepository $picturesRepository, CommentsRepository $CommentsRepository): Response
     {
         $trick = $tricksRepository->findOneBy(['slug' => $slug]);
         if (!$trick) {
@@ -72,9 +72,12 @@ class TrickController extends AbstractController
         $comments = new Comments;
         $formComment = $this->createForm(CommentsType::class, $comments);
         $formComment->handleRequest($request);
+        // 'tricks' => $TricksRepository->findBy(['active' => true], ['created_at' => 'asc'])
 
         if ($formComment->isSubmitted() && $formComment->isValid()) {
+
             $submittedToken = $request->request->get('_token');
+
             if ($this->isCsrfTokenValid('comment-item', $submittedToken)) {
                 $comments->setContent($formComment->get('content')->getData());
                 $comments->setRelation($trick);
@@ -85,8 +88,10 @@ class TrickController extends AbstractController
                 $this->addFlash('success', 'Your Comment have been added.');
             }
         }
-        $currentComments = $this->commentsRepository->findByRelation($trickId);
-        return $this->render('tricks/details.html.twig', compact('trick', 'Author', 'additionalPictures', 'Image', 'date', 'formComment', 'currentComments', 'authorId'));  // 
+        // $currentComments = $this->commentsRepository->findByRelation($trickId); // paginé by 10
+        $currentComments = $CommentsRepository->findBy(['active' => true], ['created_at' => 'desc']);
+
+        return $this->render('tricks/details.html.twig', compact('trick', 'author', 'additionalPictures', 'Image', 'date', 'formComment', 'currentComments', 'authorId'));  // 
     }
 
     /**

@@ -66,7 +66,7 @@ SnowTricks - Trick detail - {{ trick.title }}
                 {######### description ##########}
 
                 <div class="text-left content text-white">
-                    {{ trick.content }}
+                    {{ trick.content|striptags }}
                 </div>
 
                 {####### information #########}
@@ -74,7 +74,7 @@ SnowTricks - Trick detail - {{ trick.title }}
                 <div class="card-body">
                     <ul class="list-inline">
                         <li class="list-inline-item badge bg-primary">
-                            created by : {{ Author.username }}
+                            created by : {{ author.username|striptags }}
                         </li class="list-inline-item"> |
                         <li class="list-inline-item badge bg-primary">
                             created at : {{ trick.createdAt|date('d-m-Y') }}
@@ -85,7 +85,7 @@ SnowTricks - Trick detail - {{ trick.title }}
                         </li> |
                         {% endif %}
                         <li class="list-inline-item badge bg-primary">
-                            Groupe : {{ trick.category }}
+                            Groupe : {{ trick.category|striptags }}
                         </li>
                     </ul>
                 </div>
@@ -99,64 +99,68 @@ SnowTricks - Trick detail - {{ trick.title }}
     {# comments #}
 
     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-    <div class="media">
-        <div class="media-body">
-            <div class="row text-left  text-white">
-                <div class="row align-items-start">
-                    <div class="row">
-                        <div class="col">
-
-                            {{ form_start(formComment) }}
-                            <div class="my-custom-class-for-errors">
-                                {{ form_errors(formComment) }}
-                            </div>
-
-                            <input type="hidden" name="_token" value="{{ csrf_token('comment-item') }}" />
-
-                            <div class="form-group">
-                                {{ form_row(formComment.content, {
-                                label: false,
-                                attr : {'class': 'form-control'}
-                                }) }}
-                            </div>
-
-                        </div>
-                        <div class=" col posFctText">
-                            <button type="submit" class="btn btn-info mb-2">Leave a comment</button>
-                        </div>
-
-                        {{ form_end(formComment) }}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <hr>
-    {% endif %}
-
-    {# currentComments #}
-
-    <div class="margCom">
-        {% for currentComment in currentComments %}
+    <div class="">
         <div class="media">
-            <img class="mr-3 rounded-circle" alt=""
-                src=" {{ app.request.getSchemeAndHttpHost()}}/assets/img/avatars/avatar-252×230.png" /></a>
             <div class="media-body">
-                <div class="row text-left contentGrey text-white">
-                    <div class="col-8 d-flex">
-                        <h5>Maria Smantha</h5>
-                        <span> - created at : {{ currentComment.createdAt|date('d-m-Y') }}} </span>
-                    </div>
-                    <div class="col-8 d-flex">
-                        {{ currentComment.content }}
+                <div class="row text-left  text-white">
+                    <div class="row align-items-start">
+                        <div class="row">
+                            <div class="col">
+
+                                {{ form_start(formComment) }}
+                                <div class="my-custom-class-for-errors">
+                                    {{ form_errors(formComment) }}
+                                </div>
+
+                                <input type="hidden" name="_token" value="{{ csrf_token('comment-item') }}" />
+
+                                <div class="form-group">
+                                    {{ form_row(formComment.content, {
+                                    label: false,
+                                    attr : {'class': 'form-control'}
+                                    }) }}
+                                </div>
+
+                            </div>
+                            <div class=" col posFctText">
+                                <button type="submit" class="btn btn-info mb-2">Leave a comment</button>
+                            </div>
+
+                            {{ form_end(formComment) }}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        {% endfor %}
+        <hr>
+        {% endif %}
+
+        {# currentComments margCom #}
+
+        <div class="">
+            {% for currentComment in currentComments %}
+            <div class="media">
+                <img class="mr-3 rounded-circle" alt=""
+                    src=" {{ app.request.getSchemeAndHttpHost()}}/assets/img/avatars/avatar-252×230.png" /></a>
+                <div class="media-body">
+                    <div class="row text-left contentGrey text-white">
+                        <div class="col-8 d-flex">
+                            <h5>Maria Smantha</h5>
+                            <span> - created at : {{ currentComment.createdAt|date('d-m-Y') }}} </span>
+                        </div>
+                        <div class="col-8 d-flex">
+                            {{ currentComment.content }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+
     </div>
 
-</div>
+
 </div>
 
 <br>

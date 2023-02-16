@@ -45,16 +45,16 @@ class CommentsRepository extends ServiceEntityRepository
      * @param [type] $value
      * @return Comments|null
      */
-    public function findByRelation($value): array
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.relation = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult();
-    }
+    // public function findByRelation($value): array
+    // {
+    //     return $this->createQueryBuilder('c')
+    //         ->andWhere('c.relation = :val')
+    //         ->setParameter('val', $value)
+    //         ->orderBy('c.id', 'ASC')
+    //         ->setMaxResults(10)
+    //         ->getQuery()
+    //         ->getResult();
+    // }
 
     //    /**
     //     * @return Comments[] Returns an array of Comments objects
