@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Tricks;
 use App\Entity\Pictures;
 use App\Entity\Comments;
+use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Repository\TricksRepository;
 use App\Repository\PicturesRepository;
@@ -90,6 +91,10 @@ class TrickController extends AbstractController
         }
         // $currentComments = $this->commentsRepository->findByRelation($trickId); // paginé by 10
         $currentComments = $CommentsRepository->findBy(['active' => true], ['created_at' => 'desc']);
+
+        // send too userID
+
+
 
         return $this->render('tricks/details.html.twig', compact('trick', 'author', 'additionalPictures', 'Image', 'date', 'formComment', 'currentComments', 'authorId'));  // 
     }
@@ -314,6 +319,9 @@ class TrickController extends AbstractController
         $formAddTrick = $this->createForm(TricksType::class, $tricks);
         $formAddTrick->handleRequest($request);
 
+        $user = $this->getUser();
+        $userId = $user->getId();
+
         if ($formAddTrick->isSubmitted() && $formAddTrick->isValid()) {
 
             $pictureFile =  $formAddTrick->get('picture')->getData();
@@ -353,6 +361,7 @@ class TrickController extends AbstractController
         }
         return $this->render('tricks/add.html.twig', [
             'formAddTrick' =>  $formAddTrick->createView(),
+            'userId' => $userId,
         ]);
     }
 
@@ -418,15 +427,19 @@ class TrickController extends AbstractController
      *  
      * Function update individual picture (write)
      */
-    #[Route('/memberName/{pictureId}', name: 'app_memberName')]
-    public function firstAndLastName(int $pictureId, Request $request, TricksRepository $tricksRepository)
+    #[Route('/memberName/{userId}', name: 'app_memberName')]
+    public function firstAndLastName(int $userId, Request $request, TricksRepository $tricksRepository)
     {
 
 
         $submittedToken = $request->request->get('_token');
-        if ($this->isCsrfTokenValid('FirstAnd-itemLastName' . $pictureId, $submittedToken)) {
 
-            dd('rrrrr');
+        if ($this->isCsrfTokenValid('FirstAndLastName' . $userId, $submittedToken)) {
+
+            dd('rrrr passage');
+
+
+
             //$oPicture = ($request); // object
             // dd($oPicture);
             // $oPicture->bindRequest($request);
@@ -435,14 +448,14 @@ class TrickController extends AbstractController
             //dd($request->request->get('file_-_' . $pictureId)); : null
             //$test = $this->getRequest()->request->all(); : Attempted to call an undefined method named "getRequest" of class "App\Controller\TrickController".
 
-            $test = $request->request->all();
-            $originalFilename = ($_FILES['picture' . $pictureId]['name']); // OK
+            // $test = $request->request->all();
+            // $originalFilename = ($_FILES['picture' . $pictureId]['name']); // OK
 
-            $newName = md5(uniqid()) . '.' . $originalFilename; // OK
+            // $newName = md5(uniqid()) . '.' . $originalFilename; // OK
 
-            $pictureFile =  $request->request->get('picture' . $pictureId);
+            // $pictureFile =  $request->request->get('picture' . $pictureId);
 
-            dd($pictureFile);
+            // dd($pictureFile);
 
             // //1- import new picture
 
@@ -495,6 +508,8 @@ class TrickController extends AbstractController
             //     return new JsonResponse("non ", 500);
 
 
+        } else {
+            dd("pas valid");
         }
     }
 
