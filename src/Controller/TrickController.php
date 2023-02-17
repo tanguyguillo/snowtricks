@@ -188,6 +188,94 @@ class TrickController extends AbstractController
         }
     }
 
+    /*
+     * function addTricks
+     * 
+     * @return void
+     */
+    #[Route('/add', name: 'app_user_tricks_add')]
+    public function addTricks(Request $request, ManagerRegistry $doctrine, SluggerInterface $slugger): Response
+    {
+        $tricks =  new Tricks();
+        $formAddTrick = $this->createForm(TricksType::class, $tricks);
+        $formAddTrick->handleRequest($request);
+
+        // $formName = $this->createForm(RealName::class, $user);
+        // $formName->handleRequest($request);
+
+        $user = $this->getUser();
+        $userId = $user->getId();
+
+        if ($formAddTrick->isSubmitted() && $formAddTrick->isValid()) {
+
+            $pictureFile =  $formAddTrick->get('picture')->getData();
+
+            if ($pictureFile) {
+                $originalFilename = $pictureFile;
+
+                // may have multiple more pictures
+                $additionalPictures = $formAddTrick->get('pictures')->getData();
+                $this->addAdditionalPicture($additionalPictures, $tricks);
+
+                $safeFilename = $slugger->slug($originalFilename);  // not used
+                $newFilename = md5(uniqid()) . '.' . $originalFilename->guessExtension();
+                $tricks->setPicture($newFilename);
+                try {
+                    $pictureFile->move(
+                        $this->getParameter('pictures_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // handle exception if something happens during file upload
+                    // be redirected to the form page in the event of an error, specifying the type(s) of error;
+                    $message = $this->addFlash('error', 'error type: ' . $e);
+                    return $this->render('tricks/add.html.twig', [
+                        'formAddTrick' =>  $formAddTrick->createView(),
+                        'message' => $message
+                    ]);
+                }
+                $tricks->setPicture($newFilename);
+            }
+            $tricks->setUser($this->getUser());
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($tricks);
+            $entityManager->flush();
+            $this->addFlash('success', 'Your trick have been added.');
+            return $this->redirectToRoute('app_home');
+        }
+        return $this->render('tricks/add.html.twig', [
+            'formAddTrick' =>  $formAddTrick->createView(),
+            'userId' => $userId,
+        ]);
+    }
+
+    /** 
+     * Function write your first and last name (in user) in add a tricks page
+     */
+    #[Route('/memberName/{userId}', name: 'app_memberName')]
+    public function firstAndLastName(int $userId, Request $request, ManagerRegistry $doctrine)
+    {
+        $user = $this->getUser();
+        $submittedToken = $request->request->get('_token');
+        if ($this->isCsrfTokenValid('FirstAndLastName' . $userId, $submittedToken)) {
+
+            $firstName = htmlentities($request->request->get('firstName'));
+            $lastName = htmlentities($request->request->get('lastName'));
+
+            $user->setFirstName($firstName);
+            $user->setLastName($lastName);
+
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Your name have been added or updated.');
+        } else {
+            $this->addFlash('error', "Your name don't have been added; try again.");
+        }
+        return $this->redirectToRoute('tricks_app_user_tricks_add');
+    }
+
     /*************** deleting *******************/
 
     /**
@@ -302,70 +390,7 @@ class TrickController extends AbstractController
             }
         }
     }
-
     /*************** end deleting *******************/
-
-    /*
-     * function addTricks
-     * 
-     * @return void
-     */
-    #[Route('/add', name: 'app_user_tricks_add')]
-    public function addTricks(Request $request, ManagerRegistry $doctrine, SluggerInterface $slugger): Response
-    {
-        $tricks =  new Tricks();
-        $formAddTrick = $this->createForm(TricksType::class, $tricks);
-        $formAddTrick->handleRequest($request);
-
-        // $formName = $this->createForm(RealName::class, $user);
-        // $formName->handleRequest($request);
-
-        $user = $this->getUser();
-        $userId = $user->getId();
-
-        if ($formAddTrick->isSubmitted() && $formAddTrick->isValid()) {
-
-            $pictureFile =  $formAddTrick->get('picture')->getData();
-
-            if ($pictureFile) {
-                $originalFilename = $pictureFile;
-
-                // may have multiple more pictures
-                $additionalPictures = $formAddTrick->get('pictures')->getData();
-                $this->addAdditionalPicture($additionalPictures, $tricks);
-
-                $safeFilename = $slugger->slug($originalFilename);  // not used
-                $newFilename = md5(uniqid()) . '.' . $originalFilename->guessExtension();
-                $tricks->setPicture($newFilename);
-                try {
-                    $pictureFile->move(
-                        $this->getParameter('pictures_directory'),
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-                    // handle exception if something happens during file upload
-                    //be redirected to the form page in the event of an error, specifying the type(s) of error;
-                    $message = $this->addFlash('error', 'error type:' . $e);
-                    return $this->render('tricks/add.html.twig', [
-                        'formAddTrick' =>  $formAddTrick->createView(),
-                        'message' => $message
-                    ]);
-                }
-                $tricks->setPicture($newFilename);
-            }
-            $tricks->setUser($this->getUser());
-            $entityManager = $doctrine->getManager();
-            $entityManager->persist($tricks);
-            $entityManager->flush();
-            $this->addFlash('success', 'Your trick have been added.');
-            return $this->redirectToRoute('app_home');
-        }
-        return $this->render('tricks/add.html.twig', [
-            'formAddTrick' =>  $formAddTrick->createView(),
-            // 'formName' =>  $formName->createView(),
-            'userId' => $userId,
-        ]);
-    }
 
     /**
      * function to add additional picture
@@ -425,32 +450,7 @@ class TrickController extends AbstractController
     //     }
     // }
 
-    /** 
-     * Function write your first and last name (in user) in add page
-     */
-    #[Route('/memberName/{userId}', name: 'app_memberName')]
-    public function firstAndLastName(int $userId, Request $request, ManagerRegistry $doctrine)
-    {
-        $user = $this->getUser();
-        $submittedToken = $request->request->get('_token');
-        if ($this->isCsrfTokenValid('FirstAndLastName' . $userId, $submittedToken)) {
 
-            $firstName = htmlentities($request->request->get('firstName'));
-            $lastName = htmlentities($request->request->get('lastName'));
-
-            $user->setFirstName($firstName);
-            $user->setLastName($lastName);
-
-            $entityManager = $doctrine->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
-
-            $this->addFlash('success', 'Your name have been added.');
-        } else {
-            $this->addFlash('error', "Your name don't have been added; try again.");
-        }
-        return $this->redirectToRoute('tricks_app_user_tricks_add');
-    }
 
     /********************* functions shared ****************************/
 

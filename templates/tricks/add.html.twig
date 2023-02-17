@@ -19,16 +19,7 @@
 
             <div class="media">
                 <img class="mr-3 rounded-circle" alt=""
-                    src=" {{ app.request.getSchemeAndHttpHost()}}/assets/img/avatars/avatar-252×230.png" /></a>
-
-                {# <label for="avatar">Choose a profile picture:</label>
-                <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg"> #}
-
-                {# {{ form_start(formName) }}
-
-                {{ form_end(formName) }} #}
-
-
+                    src=" {{ app.request.getSchemeAndHttpHost()}}/assets/img/avatars/avatar-252×230.png" />
                 <form method="post" action="{{ path('tricks_app_memberName', {'userId': userId}) }}">
                     <div class="media-body">
                         <div class="row text-left content text-white">
@@ -36,12 +27,14 @@
                             <div class="row align-items-start">
                                 <div class="row">
                                     <div class="col-6">
-                                        <input type="text" class="form-control" placeholder="First name" id="firstName"
-                                            name="firstName">
+                                        <label>First name</label>
+                                        <input type="text" class="form-control" placeholder="{{ app.user.firstName }}"
+                                            id="firstName" name="firstName">
                                     </div>
                                     <div class="col-6">
-                                        <input type="text" class="form-control" placeholder="Last name" id="lastName"
-                                            name="lastName">
+                                        <label>Last name</label>
+                                        <input type="text" class="form-control" placeholder="{{ app.user.lastName }}"
+                                            id="lastName" name="lastName">
                                     </div>
 
                                     <input type="hidden" name="_token"

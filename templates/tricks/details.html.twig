@@ -135,18 +135,25 @@ SnowTricks - Trick detail - {{ trick.title }}
         <hr>
         {% endif %}
 
-        {# currentComments margCom #}
+        {# currentComments #}
+
+        trickId : {{ trick.id }}
+
+        {# commentsRelation : {{ currentComment.getRelation }} #} ----- do the "tri before by the trick"
 
         <div class="">
             {% for currentComment in currentComments %}
+            {# for this tricks #}
             <div class="media">
                 <img class="mr-3 rounded-circle" alt=""
                     src=" {{ app.request.getSchemeAndHttpHost()}}/assets/img/avatars/avatar-252×230.png" /></a>
                 <div class="media-body">
                     <div class="row text-left contentGrey text-white">
                         <div class="col-8 d-flex">
-                            <h5>Maria Smantha</h5>
-                            <span> - created at : {{ currentComment.createdAt|date('d-m-Y') }}} </span>
+
+                            <h5> {{ currentComment.getUser.firstName() }} {{
+                                currentComment.getUser.lastName() }}</h5>
+                            <span> - created : {{ currentComment.createdAt|date('d-m-Y') }}} </span>
                         </div>
                         <div class="col-8 d-flex">
                             {{ currentComment.content }}
