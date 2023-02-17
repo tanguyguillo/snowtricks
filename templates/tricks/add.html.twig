@@ -24,95 +24,102 @@
                 {# <label for="avatar">Choose a profile picture:</label>
                 <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg"> #}
 
+                {# {{ form_start(formName) }}
 
-                <form method="post" action="{{ path('tricks_app_memberName', {'userId': userId}) }}" <div <div
-                    class="media-body">
-                    <div class="row text-left content text-white">
+                {{ form_end(formName) }} #}
 
-                        <div class="row align-items-start">
-                            <div class="row">
-                                <div class="col-6">
-                                    <input type="text" class="form-control" placeholder="First name">
-                                </div>
-                                <div class="col-6">
-                                    <input type="text" class="form-control" placeholder="Last name">
-                                </div>
 
-                                <input type="hidden" name="_token"
-                                    value="{{ csrf_token('FirstAndLastName' ~ userId) }}" />
+                <form method="post" action="{{ path('tricks_app_memberName', {'userId': userId}) }}">
+                    <div class="media-body">
+                        <div class="row text-left content text-white">
 
-                                <div class="col">
-                                    <button type="submit" class="btn btn-info mb-2">Record your name</button>
+                            <div class="row align-items-start">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <input type="text" class="form-control" placeholder="First name" id="firstName"
+                                            name="firstName">
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="text" class="form-control" placeholder="Last name" id="lastName"
+                                            name="lastName">
+                                    </div>
+
+                                    <input type="hidden" name="_token"
+                                        value="{{ csrf_token('FirstAndLastName' ~ userId) }}" />
+
+                                    <div class="col">
+                                        <button type="submit" class="btn btn-info mb-2">Record your name</button>
+                                    </div>
                                 </div>
                             </div>
+
+
+                            Please write your First name and Last name for comments<br>
+                            You can change your avatar's picture too
                         </div>
-
-
-                        Please write your First name and Last name for comments<br>
-                        You can change your avatar's picture too
                     </div>
+
+
+                </form>
+
             </div>
 
-            </form>
 
+
+            <br>
+            <h2 class="tricks-modal-title text-secondary mb-0 text-center">Add a trick</h2>
+            <br><br>
+
+            {{ form_start(formAddTrick) }}
+
+            {{ form_row(formAddTrick.picture, {
+            label: 'Add the main picture',
+            type : "file",
+            attr : {'class': 'form-control'},
+            }) }}
+
+            <br>
+
+            {{ form_row(formAddTrick.title, {
+            label: 'Trick name',
+            attr : {'class': 'form-control'}
+            }) }}
+
+            <br>
+
+            {{ form_row(formAddTrick.content, {
+            label: 'Description',
+            attr : {'class': 'form-control'}
+            }) }}
+
+            <br>
+
+            {{ form_row(formAddTrick.category, {
+            label: 'Groupe',
+            attr : {'class': 'form-control'}
+            }) }}
+
+            <br>
+
+            {{ form_row(formAddTrick.pictures, {
+            label: 'Additional pictures',
+            attr : {'class': 'form-control'}
+            }) }}
+
+            <br><br>
+
+            <button class="w-50 btn btn-lg btn-info" type="submit">Add this trick</button>
+
+            {{ form_end(formAddTrick) }}
+
+            <br>
         </div>
-
-
-
         <br>
-        <h2 class="tricks-modal-title text-secondary mb-0 text-center">Add a trick</h2>
-        <br><br>
-
-        {{ form_start(formAddTrick) }}
-
-        {{ form_row(formAddTrick.picture, {
-        label: 'Add the main picture',
-        type : "file",
-        attr : {'class': 'form-control'},
-        }) }}
-
         <br>
-
-        {{ form_row(formAddTrick.title, {
-        label: 'Trick name',
-        attr : {'class': 'form-control'}
-        }) }}
-
         <br>
-
-        {{ form_row(formAddTrick.content, {
-        label: 'Description',
-        attr : {'class': 'form-control'}
-        }) }}
-
         <br>
-
-        {{ form_row(formAddTrick.category, {
-        label: 'Groupe',
-        attr : {'class': 'form-control'}
-        }) }}
-
-        <br>
-
-        {{ form_row(formAddTrick.pictures, {
-        label: 'Additional pictures',
-        attr : {'class': 'form-control'}
-        }) }}
-
-        <br><br>
-
-        <button class="w-50 btn btn-lg btn-info" type="submit">Add this trick</button>
-
-        {{ form_end(formAddTrick) }}
-
         <br>
     </div>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-</div>
 </div>
 </div>
 </div>

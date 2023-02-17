@@ -75,26 +75,24 @@ class TrickController extends AbstractController
         $formComment->handleRequest($request);
         // 'tricks' => $TricksRepository->findBy(['active' => true], ['created_at' => 'asc'])
 
-        if ($formComment->isSubmitted() && $formComment->isValid()) {
 
-            $submittedToken = $request->request->get('_token');
+        // if ($this->isCsrfTokenValid('FirstAndLastName' . $userId, $submittedToken)) {
+        //  <input type="hidden" name="_token" value="{{ csrf_token('comment-item') }}" />
+        // if ($formComment->isSubmitted() && $formComment->isValid()) {
 
-            if ($this->isCsrfTokenValid('comment-item', $submittedToken)) {
-                $comments->setContent($formComment->get('content')->getData());
-                $comments->setRelation($trick);
-                $comments->setUser($authorId);
-                $entityManager = $doctrine->getManager();
-                $entityManager->persist($comments);
-                $entityManager->flush();
-                $this->addFlash('success', 'Your Comment have been added.');
-            }
+        $submittedToken = $request->request->get('_token');
+        if ($this->isCsrfTokenValid('comment-item', $submittedToken)) {
+            $comments->setContent($formComment->get('content')->getData());
+            $comments->setRelation($trick);
+            $comments->setUser($authorId);
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($comments);
+            $entityManager->flush();
+            $this->addFlash('success', 'Your Comment have been added.');
         }
+
         // $currentComments = $this->commentsRepository->findByRelation($trickId); // paginé by 10
         $currentComments = $CommentsRepository->findBy(['active' => true], ['created_at' => 'desc']);
-
-        // send too userID
-
-
 
         return $this->render('tricks/details.html.twig', compact('trick', 'author', 'additionalPictures', 'Image', 'date', 'formComment', 'currentComments', 'authorId'));  // 
     }
@@ -319,6 +317,9 @@ class TrickController extends AbstractController
         $formAddTrick = $this->createForm(TricksType::class, $tricks);
         $formAddTrick->handleRequest($request);
 
+        // $formName = $this->createForm(RealName::class, $user);
+        // $formName->handleRequest($request);
+
         $user = $this->getUser();
         $userId = $user->getId();
 
@@ -361,6 +362,7 @@ class TrickController extends AbstractController
         }
         return $this->render('tricks/add.html.twig', [
             'formAddTrick' =>  $formAddTrick->createView(),
+            // 'formName' =>  $formName->createView(),
             'userId' => $userId,
         ]);
     }
@@ -423,94 +425,31 @@ class TrickController extends AbstractController
     //     }
     // }
 
-    /**
-     *  
-     * Function update individual picture (write)
+    /** 
+     * Function write your first and last name (in user) in add page
      */
     #[Route('/memberName/{userId}', name: 'app_memberName')]
-    public function firstAndLastName(int $userId, Request $request, TricksRepository $tricksRepository)
+    public function firstAndLastName(int $userId, Request $request, ManagerRegistry $doctrine)
     {
-
-
+        $user = $this->getUser();
         $submittedToken = $request->request->get('_token');
-
         if ($this->isCsrfTokenValid('FirstAndLastName' . $userId, $submittedToken)) {
 
-            dd('rrrr passage');
+            $firstName = htmlentities($request->request->get('firstName'));
+            $lastName = htmlentities($request->request->get('lastName'));
 
+            $user->setFirstName($firstName);
+            $user->setLastName($lastName);
 
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
 
-            //$oPicture = ($request); // object
-            // dd($oPicture);
-            // $oPicture->bindRequest($request);
-            // $data = $form->getValues();
-            //$test = $request->request->get('file'); :null
-            //dd($request->request->get('file_-_' . $pictureId)); : null
-            //$test = $this->getRequest()->request->all(); : Attempted to call an undefined method named "getRequest" of class "App\Controller\TrickController".
-
-            // $test = $request->request->all();
-            // $originalFilename = ($_FILES['picture' . $pictureId]['name']); // OK
-
-            // $newName = md5(uniqid()) . '.' . $originalFilename; // OK
-
-            // $pictureFile =  $request->request->get('picture' . $pictureId);
-
-            // dd($pictureFile);
-
-            // //1- import new picture
-
-
-            // $pictureFile =  $formAddTrick->get('picture')->getData();
-
-
-            // $file  = md5(uniqid()) . '.' . $originalFilename->guessExtension();
-
-            // // //$pictureFile =  $request->get('picture')->getData();
-
-            // dd($file);   //. $originalFilename->guessExtension();
-
-
-            //1- import new picture
-            //$file  = md5(uniqid()) . '.' . $additionalPicture->guessExtension();
-            // $additionalPicture->move(
-            //     $this->getParameter('pictures_directory'),
-            //     $file
-            // );
-
-            // if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            //     $additionalPicture = ($_FILES['file']['name']);
-            //     // $this->addAdditionalPicture($file, $tricks); ????
-
-            //     // 1- import new picture
-            //     // $file  = md5(uniqid()) . '.' . $additionalPicture->guessExtension();
-            //     // $additionalPicture->move(
-            //     //     $this->getParameter('pictures_directory'),
-            //     //     $file
-            //     // );
-            // }
-
-
-
-
-            // $additionalPicture = $this->picturesRepository->findOneById($pictureId);
-            // $file  = $additionalPicture->getPicture();
-
-            // $additionalPictureWithPath = $this->getParameter('pictures_directory') . '/' .  $file;
-
-
-            // if ($this->deletePicture($additionalPictureWithPath)) {
-
-            //     $this->em->remove($additionalPicture);
-            //     $this->em->flush();
-
-            //     return new JsonResponse("oui : additionalPictureDeleted", 200);
-            // } else {
-            //     return new JsonResponse("non ", 500);
-
-
+            $this->addFlash('success', 'Your name have been added.');
         } else {
-            dd("pas valid");
+            $this->addFlash('error', "Your name don't have been added; try again.");
         }
+        return $this->redirectToRoute('tricks_app_user_tricks_add');
     }
 
     /********************* functions shared ****************************/

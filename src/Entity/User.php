@@ -63,7 +63,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         maxMessage: 'Your first name cannot be longer than {{ limit }} characters',
     )]
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $FirstName = null;
+    private ?string $firstName = null;
 
     #[Assert\Length(
         min: 3,
@@ -72,7 +72,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         maxMessage: 'Your first name cannot be longer than {{ limit }} characters',
     )]
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $LastName = null;
+    private ?string $lastName = null;
 
     /**
      * initialisation function
@@ -278,24 +278,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getFirstName(): ?string
     {
-        return $this->FirstName;
+        return $this->firstName;
     }
 
-    public function setSurName(?string $FirstName): self
+    public function setFirstName(?string $firstName): self
     {
-        $this->FirstName = $FirstName;
+        $this->firstName = $firstName;
 
         return $this;
     }
 
     public function getLastName(): ?string
     {
-        return $this->LastName;
+        return $this->lastName;
     }
 
-    public function setLastName(?string $LastName): self
+    public function setLastName(?string $lastName): self
     {
-        $this->LastName = $LastName;
+        $this->lastName = $lastName;
 
         return $this;
     }
