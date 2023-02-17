@@ -2,6 +2,8 @@ $(document).ready(function () {
     let id
     let idPicture
 
+    // document.getElementById("comments").reset();
+
     $(function () {
         $('a[data-confirm]').click(function (ev) {
             var href = $(this).attr('href');

@@ -423,8 +423,6 @@ class TrickController extends AbstractController
     {
 
 
-
-
         $submittedToken = $request->request->get('_token');
         if ($this->isCsrfTokenValid('FirstAnd-itemLastName' . $pictureId, $submittedToken)) {
 
