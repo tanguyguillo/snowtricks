@@ -91,8 +91,11 @@ class TrickController extends AbstractController
             $this->addFlash('success', 'Your Comment have been added.');
         }
 
-        // $currentComments = $this->commentsRepository->findByRelation($trickId); // paginé by 10
-        $currentComments = $CommentsRepository->findBy(['active' => true], ['created_at' => 'desc']);
+        // $currentComments = $this->commentsRepository->findByRelation($trickId); // paginé by 10  ['relation_id' => $trickId]
+
+        //findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)  ['active' => true]
+
+        $currentComments = $CommentsRepository->findBy(['relation' => $trickId], ['created_at' => 'desc']);
 
         return $this->render('tricks/details.html.twig', compact('trick', 'author', 'additionalPictures', 'Image', 'date', 'formComment', 'currentComments', 'authorId'));  // 
     }
