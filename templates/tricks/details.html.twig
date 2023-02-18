@@ -153,11 +153,11 @@ SnowTricks - Trick detail - {{ trick.title }}
                                 {{ currentComment.user.firstName() }}
                                 {{currentComment.user.lastName() }}
                                 {% else %}
-                                {# if first and lastname not given #}
+                                {# if first and last name not given #}
                                 created by : {{ trick.user.username|striptags }}
                                 {% endif %}
                             </h5>
-                            <span> - created : {{ currentComment.createdAt|date('d-m-Y') }}} </span>
+                            <span>&nbsp; - created : {{ currentComment.createdAt|date('d-m-Y') }}} </span>
                         </div>
                         <div class="col-8 d-flex">
                             {{ currentComment.content }}
