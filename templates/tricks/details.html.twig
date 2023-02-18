@@ -74,7 +74,7 @@ SnowTricks - Trick detail - {{ trick.title }}
                 <div class="card-body">
                     <ul class="list-inline">
                         <li class="list-inline-item badge bg-primary">
-                            created by : {{ author.username|striptags }}
+                            created by : {{ trick.user.username|striptags }}
                         </li class="list-inline-item"> |
                         <li class="list-inline-item badge bg-primary">
                             created at : {{ trick.createdAt|date('d-m-Y') }}
@@ -136,10 +136,6 @@ SnowTricks - Trick detail - {{ trick.title }}
         {% endif %}
 
         {# currentComments #}
-
-        trickId : {{ trick.id }}
-
-        {# commentsRelation : {{ currentComment.getRelation }} #} ----- review the author of comment
 
         <div class="">
             {% for currentComment in currentComments %}

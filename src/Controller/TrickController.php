@@ -63,21 +63,22 @@ class TrickController extends AbstractController
             throw new NotFoundHttpException("No trick found");
         }
 
-        // in fact here, the current user id
+        // the current user id
         $user = $this->getUser();
-        $userId = $user->getId();
-
-        // $authorId = $trick->getUser(); no
+        if ($user != null) {
+            $userId = $user->getId();
+        } else {
+            $userId = 0;
+        }
 
         // here for info space
-        // $authorId = $user;
-
         $author = $userRepository->findOneBy(['id' => $user]);
         $trickId = $trick->getId();
         $additionalPictures = $picturesRepository->findBy(['tricks' => $trickId]);
         $Image = $tricks->getPicture();
         $date = date('Y-m-d H:i:s');
 
+        // comments
         $comments = new Comments;
         $formComment = $this->createForm(CommentsType::class, $comments);
         $formComment->handleRequest($request);
