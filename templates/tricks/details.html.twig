@@ -139,7 +139,7 @@ SnowTricks - Trick detail - {{ trick.title }}
 
         trickId : {{ trick.id }}
 
-        {# commentsRelation : {{ currentComment.getRelation }} #} ----- review the author of comment and if active
+        {# commentsRelation : {{ currentComment.getRelation }} #} ----- review the author of comment
 
         <div class="">
             {% for currentComment in currentComments %}
@@ -151,8 +151,10 @@ SnowTricks - Trick detail - {{ trick.title }}
                 <div class="media-body">
                     <div class="row text-left contentGrey text-white">
                         <div class="col-8 d-flex">
-                            <h5> {{ currentComment.getUser.firstName() }} {{
-                                currentComment.getUser.lastName() }}</h5>
+                            <h5>
+                                {{ currentComment.user.firstName() }} {{
+                                currentComment.user.lastName() }}
+                            </h5>
                             <span> - created : {{ currentComment.createdAt|date('d-m-Y') }}} </span>
                         </div>
                         <div class="col-8 d-flex">

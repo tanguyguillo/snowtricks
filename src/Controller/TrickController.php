@@ -49,7 +49,6 @@ class TrickController extends AbstractController
         $this->picturesRepository = $picturesRepository;
         $this->tricksRepository = $tricksRepository;
         $this->commentsRepository = $commentsRepository;
-        // $this->tricks = $tricks;  
         $this->em = $em;
     }
 
@@ -63,8 +62,17 @@ class TrickController extends AbstractController
         if (!$trick) {
             throw new NotFoundHttpException("No trick found");
         }
-        $authorId = $trick->getUser();
-        $author = $userRepository->findOneBy(['id' => $authorId]);
+
+        // in fact here, the current user id
+        $user = $this->getUser();
+        $userId = $user->getId();
+
+        // $authorId = $trick->getUser(); no
+
+        // here for info space
+        // $authorId = $user;
+
+        $author = $userRepository->findOneBy(['id' => $user]);
         $trickId = $trick->getId();
         $additionalPictures = $picturesRepository->findBy(['tricks' => $trickId]);
         $Image = $tricks->getPicture();
@@ -73,8 +81,8 @@ class TrickController extends AbstractController
         $comments = new Comments;
         $formComment = $this->createForm(CommentsType::class, $comments);
         $formComment->handleRequest($request);
-        // 'tricks' => $TricksRepository->findBy(['active' => true], ['created_at' => 'asc'])
 
+        // 'tricks' => $TricksRepository->findBy(['active' => true], ['created_at' => 'asc'])
 
         // if ($this->isCsrfTokenValid('FirstAndLastName' . $userId, $submittedToken)) {
         //  <input type="hidden" name="_token" value="{{ csrf_token('comment-item') }}" />
@@ -84,7 +92,7 @@ class TrickController extends AbstractController
         if ($this->isCsrfTokenValid('comment-item', $submittedToken)) {
             $comments->setContent($formComment->get('content')->getData());
             $comments->setRelation($trick);
-            $comments->setUser($authorId);
+            $comments->setUser($user);
             $entityManager = $doctrine->getManager();
             $entityManager->persist($comments);
             $entityManager->flush();
@@ -97,9 +105,9 @@ class TrickController extends AbstractController
 
         $currentComments = $CommentsRepository->findBy(['relation' => $trickId], ['created_at' => 'desc']);
 
-        // dd($currentComments);
+        //dd($currentComments);
 
-        return $this->render('tricks/details.html.twig', compact('trick', 'author', 'additionalPictures', 'Image', 'date', 'formComment', 'currentComments', 'authorId'));  // 
+        return $this->render('tricks/details.html.twig', compact('trick', 'author', 'additionalPictures', 'Image', 'date', 'formComment', 'currentComments', 'userId'));  // 
     }
 
     /**
@@ -204,9 +212,6 @@ class TrickController extends AbstractController
         $tricks =  new Tricks();
         $formAddTrick = $this->createForm(TricksType::class, $tricks);
         $formAddTrick->handleRequest($request);
-
-        // $formName = $this->createForm(RealName::class, $user);
-        // $formName->handleRequest($request);
 
         $user = $this->getUser();
         $userId = $user->getId();
