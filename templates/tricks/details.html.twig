@@ -99,7 +99,7 @@ SnowTricks - Trick detail - {{ trick.title }}
     {# comments #}
 
     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-    <div class="">
+    <div class="center">
         <div class="media">
             <div class="media-body">
                 <div class="row text-left  text-white">
@@ -146,10 +146,9 @@ SnowTricks - Trick detail - {{ trick.title }}
                     src=" {{ app.request.getSchemeAndHttpHost()}}/assets/img/avatars/avatar-252×230.png" /></a>
                 <div class="media-body">
                     <div class="row text-left contentGrey text-white">
-                        <div class="col-8 d-flex">
+                        <div class="col-12 d-flex">
                             <h5>
                                 {% if currentComment.user.firstName() != null %}
-                                created by :
                                 {{ currentComment.user.firstName() }}
                                 {{currentComment.user.lastName() }}
                                 {% else %}

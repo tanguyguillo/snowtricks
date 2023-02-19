@@ -101,12 +101,7 @@ class TrickController extends AbstractController
             return $this->redirectToRoute('tricks_details', array('slug' => $slug));
         }
 
-        // $currentComments = $this->commentsRepository->findByRelation($trickId); // paginé by 10  ['relation_id' => $trickId]
-        //findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)  ['active' => true]
-
         $currentComments = $CommentsRepository->findBy(['relation' => $trickId], ['created_at' => 'desc']);
-
-        //dd($currentComments);
 
         return $this->render('tricks/details.html.twig', compact('trick', 'author', 'additionalPictures', 'Image', 'date', 'formComment', 'currentComments', 'userId'));  // 
     }
@@ -172,34 +167,6 @@ class TrickController extends AbstractController
         }
 
         return $this->render('tricks/update.html.twig', compact('trick', 'Author', 'additionalPictures', 'formUpdateTrick', 'Image'));
-    }
-
-    /**
-     * function delete 
-     * trick for homePage with Ajax/JsonResponse
-     *
-     */
-    #[Route('/delete-tricks/{id}', name: 'app_tricks_delete', methods: ['DELETE'])]
-    public function delete(Request $request, Tricks $trick, TricksRepository $tricksRepository)
-    {
-        $submittedToken = $request->request->get('_token');
-        if ($this->isCsrfTokenValid('delete' . $trick->getId(), $submittedToken)) {
-            $trickId = $trick->getId();
-            // 1 delete additional picture from server
-            $this->deleteAdditionalPicture($trickId);
-            // get the physical path of the main picture
-            $mainPictureWithPath = $this->getParameter('pictures_directory') . '/' . $trick->getPicture();
-            // 2 - delete trick from Bd
-            $tricksRepository->remove($trick, true); // OK
-            // 3 - delete Main picture on server
-            if ($this->deletePicture($mainPictureWithPath)) {
-                return new JsonResponse("oui", 200);
-            } else {
-                return new JsonResponse("non : delete picture ", 500);
-            }
-        } else {
-            return new JsonResponse("non ", 500);
-        }
     }
 
     /*
@@ -288,6 +255,34 @@ class TrickController extends AbstractController
     }
 
     /*************** deleting *******************/
+
+    /**
+     * function delete 
+     * trick for homePage with Ajax/JsonResponse
+     *
+     */
+    #[Route('/delete-tricks/{id}', name: 'app_tricks_delete', methods: ['DELETE'])]
+    public function delete(Request $request, Tricks $trick, TricksRepository $tricksRepository)
+    {
+        $submittedToken = $request->request->get('_token');
+        if ($this->isCsrfTokenValid('delete' . $trick->getId(), $submittedToken)) {
+            $trickId = $trick->getId();
+            // 1 delete additional picture from server
+            $this->deleteAdditionalPicture($trickId);
+            // get the physical path of the main picture
+            $mainPictureWithPath = $this->getParameter('pictures_directory') . '/' . $trick->getPicture();
+            // 2 - delete trick from Bd
+            $tricksRepository->remove($trick, true); // OK
+            // 3 - delete Main picture on server
+            if ($this->deletePicture($mainPictureWithPath)) {
+                return new JsonResponse("oui", 200);
+            } else {
+                return new JsonResponse("non : delete picture ", 500);
+            }
+        } else {
+            return new JsonResponse("non ", 500);
+        }
+    }
 
     /**
      * function deleteFromDetail 

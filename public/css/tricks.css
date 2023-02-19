@@ -720,3 +720,22 @@ input#deleteTrick {
   color: #fff;
   background: #009da2;
 }
+
+input#update_pictures.form-control {
+  color: #fff;
+  background: #009da2;
+}
+
+input#tricks_picture.form-control {
+  color: #fff;
+  background: #009da2;
+  border-color: #009da2;
+  ;
+}
+
+input#tricks_pictures.form-control {
+  color: #fff;
+  background: #009da2;
+  border-color: #009da2;
+  ;
+}

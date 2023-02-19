@@ -53,6 +53,7 @@ class UpdateType extends AbstractType
                 FileType::class,
                 [
                     'attr' => ['accept' => "image/*",],
+                    'data_class' => null,
                     'label' => false,
                     'multiple' => true,
                     'mapped' => false,
