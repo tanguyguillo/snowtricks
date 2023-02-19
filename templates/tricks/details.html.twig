@@ -74,10 +74,10 @@ SnowTricks - Trick detail - {{ trick.title }}
                 <div class="card-body">
                     <ul class="list-inline">
                         <li class="list-inline-item badge bg-primary">
-                            created by : {{ trick.user.username|striptags }}
+                            Created by : {{ trick.user.username|striptags }}
                         </li class="list-inline-item"> |
                         <li class="list-inline-item badge bg-primary">
-                            created at : {{ trick.createdAt|date('d-m-Y') }}
+                            Created at : {{ trick.createdAt|date('d-m-Y') }}
                         </li> |
                         {% if trick.modifiedAt != null %}
                         <li class="list-inline-item badge bg-primary">
