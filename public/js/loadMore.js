@@ -1,7 +1,7 @@
 // read more fc
 // $(function () {
 // items to show
-var increment = 5;
+var increment = 15;
 var startFilter = 0;
 var endFilter = increment;
 
@@ -11,7 +11,8 @@ var $this = $('.items');
 var elementLength = $this.find('div').length;
 $('.listLength').text(elementLength);
 
-if (elementLength > 5) {
+// show/hide the Load More button
+if (elementLength > 15) {
     $('.buttonToogle').show();
 }
 

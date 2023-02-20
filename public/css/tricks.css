@@ -23,11 +23,6 @@ button.float-center.ml-1.additionalPictureModify.btWhite {
   border: white;
 }
 
-a data-delte:hover {
-  color red !important;
-
-}
-
 .centered {
   position: fixed;
   top: 50%;
@@ -742,7 +737,3 @@ button.showMore {
   border-color: #e83e8c;
   background-color: #e83e8c;
 }
-
-/* #page-top>footer {
-  max-height: 80px;
-} */
