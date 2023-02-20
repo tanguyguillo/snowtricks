@@ -69,7 +69,7 @@ SnowTricks - Trick detail - {{ trick.title }}
                     {{ trick.content|striptags }}
                 </div>
 
-                {####### informations #########}
+                {####### information #########}
 
                 <div class="card-body">
                     <ul class="list-inline">
@@ -147,13 +147,15 @@ SnowTricks - Trick detail - {{ trick.title }}
                 <div class="media-body">
                     <div class="row text-left contentGrey text-white">
                         <div class="col-12 d-flex">
+                            {# not the good name if not completed named : now ok <br> #}
                             <h5>
                                 {% if currentComment.user.firstName() != null %}
                                 {{ currentComment.user.firstName() }}
                                 {{currentComment.user.lastName() }}
                                 {% else %}
                                 {# if first and last name not given #}
-                                created by : {{ trick.user.username|striptags }}
+                                {# NO.... : created by : {{ trick.user.username|striptags }} #}
+                                created by : {{ currentComment.user.username|striptags }}
                                 {% endif %}
                             </h5>
                             <span>&nbsp; - created : {{ currentComment.createdAt|date('d-m-Y') }} </span>
