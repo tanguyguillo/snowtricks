@@ -81,7 +81,7 @@ SnowTricks - Trick detail - {{ trick.title }}
                         </li> |
                         {% if trick.modifiedAt != null %}
                         <li class="list-inline-item badge bg-primary">
-                            Updated at : {{ trick.modifiedAt|date('d-m-Y') }}
+                            Updated : {{ trick.modifiedAt|date('d-m-Y') }}
                         </li> |
                         {% endif %}
                         <li class="list-inline-item badge bg-primary">
@@ -156,7 +156,7 @@ SnowTricks - Trick detail - {{ trick.title }}
                                 created by : {{ trick.user.username|striptags }}
                                 {% endif %}
                             </h5>
-                            <span>&nbsp; - created : {{ currentComment.createdAt|date('d-m-Y') }}} </span>
+                            <span>&nbsp; - created : {{ currentComment.createdAt|date('d-m-Y') }} </span>
                         </div>
                         <div class="col-8 d-flex">
                             {{ currentComment.content }}
