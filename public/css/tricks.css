@@ -5,7 +5,7 @@ header {
   overflow: hidden;
 }
 
-/*make staying the section on the bottom of the page*/
+/* make staying the section on the bottom of the page */
 section.copyright {
   z-index: 2;
   /* position: fixed; */
@@ -384,9 +384,6 @@ div.card {
   color: #fff;
 }
 
-/* #page-top>footer {
-  max-height: 80px;
-} */
 
 i {
   color: #009da2;
@@ -739,3 +736,13 @@ input#tricks_pictures.form-control {
   border-color: #009da2;
   ;
 }
+
+button.showMore {
+  color: #fff;
+  border-color: #e83e8c;
+  background-color: #e83e8c;
+}
+
+/* #page-top>footer {
+  max-height: 80px;
+} */

@@ -311,9 +311,9 @@ class TrickController extends AbstractController
     }
 
     /**
-     * function delete Additional from Entity PicturesPicture
+     * function delete Additional from Entity PicturesPicture 
      *
-     * @param [type] $argument (trick id)
+     * @param [type] $argument (trick id)... all the additional pictures of a trick from the server
      * @return void
      */
     public function deleteAdditionalPicture($argument)

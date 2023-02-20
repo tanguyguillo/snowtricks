@@ -52,7 +52,7 @@
                 </div>
             </div>
             {% endfor %}
-            
+
             {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
 
             <div class="modal fade" id="deleteThisTrick">
@@ -94,13 +94,31 @@
             {% endif %}
         </div>
     </div>
+
+    {# button arrow-up #}
+
     <div class="d-flex align-items-center justify-content-center h-100 w-100">
         <a class="arrow-up" href="#tricks">
             <i class=" bi bi-arrow-up-circle-fill fa-3x"></i>
         </a>
-        <div class="row justify-content-center m-3 buttonToogle" style="display: none;">
+
+        {# button Load More #}
+        {# <div class="row justify-content-center m-3 buttonToogle" style="display: none;">
             <a href="javascript:;" class="showMore"><i class="bi bi-plus-circle-fill fa-3x"></i></a>
+        </div> #}
+
+        <div class="row justify-content-center m-3 buttonToogle" style="display: none;">
+            <a href="javascript:;" class="showMore"><button class="btn btn-outline-primary showMore">
+                    Load More
+                </button></a>
         </div>
     </div>
 </section>
+
+{# <div class="d-flex justify-content-center">
+    <button class="btn btn-outline-primary more">
+        Load More
+    </button>
+</div> #}
+
 {% endblock %}
