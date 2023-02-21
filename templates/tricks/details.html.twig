@@ -141,6 +141,7 @@ SnowTricks - Trick detail - {{ trick.title }}
             {% for currentComment in currentComments %}
             {# for this tricks #}
             <div class="media">
+                {# for a future moderation #}
                 {% if currentComment.active == 1 %}
                 <img class="mr-3 rounded-circle" alt=""
                     src=" {{ app.request.getSchemeAndHttpHost()}}/assets/img/avatars/avatar-252×230.png" /></a>
@@ -154,7 +155,6 @@ SnowTricks - Trick detail - {{ trick.title }}
                                 {{currentComment.user.lastName() }}
                                 {% else %}
                                 {# if first and last name not given #}
-                                {# NO.... : created by : {{ trick.user.username|striptags }} #}
                                 created by : {{ currentComment.user.username|striptags }}
                                 {% endif %}
                             </h5>
