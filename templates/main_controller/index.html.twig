@@ -29,7 +29,8 @@
                 <div class="mx-auto">
                     <div class="d-flex align-items-center justify-content-center h-100 w-100">
                         <div class="card {{trick.id}}">
-                            <img class="img-fluid" src="assets/img/tricks/{{ trick.picture }}"
+                            <img class="img-fluid"
+                                src="{{ app.request.getSchemeAndHttpHost() }}/assets/img/tricks/{{ trick.picture }}"
                                 alt="{{ trick.title|striptags}}">
                             <div class="card-body mainid{{trick.id}}">
                                 <a href="tricks/details/{{ trick.slug|slug }}" class="link-primary">{{
