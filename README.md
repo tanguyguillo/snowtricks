@@ -8,7 +8,7 @@ OPENCLASSROOMS project P6 for DEV PHP/SYMFONY certificate
 
 ## Context
 
-Create a website with symfony for Jimmy Sweat :  Snowtricks
+Create a website with symfony for Jimmy Sweat :  Snowtricks (with Symfony)
 
 ## Stack
 
@@ -26,9 +26,11 @@ Create a website with symfony for Jimmy Sweat :  Snowtricks
 
 ## Getting Started
 
-How to use it ?
+How to install this website ?
 
-1) 
+1) Clone the git depot : 
+<https://github.com/tanguyguillo/snowtricks.git>
+
 2) 
 3) 
 4) 
@@ -48,6 +50,11 @@ Every registred user is his own admin
 user's role:
 
 Make your own (email validation)
+
+User already  created and confirmed :
+
+user : user90
+password : user90@user90.fr
 
 ## IDE
 
