@@ -26,20 +26,6 @@
 
 <body id="page-top">
 
-    {% autoescape 'html' %}
-    {{ '&eacute;'|raw }} {# outputs: &eacute; #}
-    {{ '&eacute;'|e }} {# outputs: &amp;eacute; #}
-    {{ '&eacute;'|striptags }} {# outputs: &amp;eacute; #}
-    {{ '&eacute;'|raw|striptags }} {# outputs: &amp;eacute; #}
-    {{ '&eacute;'|striptags|raw }} {# outputs: &eacute; #}
-    {% endautoescape %}
-
-    {% autoescape false %}
-    {{ '&eacute;'|e }} {# outputs: &amp;eacute; #}
-    {{ '&eacute;'|raw|striptags }} {# outputs: &eacute; #}
-    {{ '&eacute;'|striptags|raw }} {# outputs: &eacute; #}
-    {% endautoescape %}
-
     {% block menuTop %}
     <section class="menuTop">
         <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">

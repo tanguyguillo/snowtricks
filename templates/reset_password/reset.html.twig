@@ -1,16 +1,3 @@
-{# {% extends 'base.html.twig' %}
-
-{% block title %}Reset your password{% endblock %}
-
-{% block body %}
-<h1>Reset your password</h1>
-
-{{ form_start(resetForm) }}
-{{ form_row(resetForm.plainPassword) }}
-<button class="btn btn-primary">Reset password</button>
-{{ form_end(resetForm) }}
-{% endblock %} #}
-
 {% extends 'base.html.twig' %}
 
 {% block title %}Reset your password{% endblock %}
@@ -30,18 +17,18 @@
                 {{ form_start(resetForm) }}
 
                 {{ form_row(resetForm.username, {
-                        label: 'Username',
-                        attr : {'class': 'form-control'}
-                        }) }}
+                label: 'Username',
+                attr : {'class': 'form-control'}
+                }) }}
 
-                        <br>
+                <br>
 
                 {{ form_row(resetForm.plainPassword, {
-                        label: 'Password',
-                        attr : {'class': 'form-control'}
-                        }) }}
+                label: 'Password',
+                attr : {'class': 'form-control'}
+                }) }}
 
-                        <br>
+                <br>
 
                 <button class="w-50 btn btn-lg btn-info">Reset password</button>
                 {{ form_end(resetForm) }}
@@ -49,6 +36,14 @@
             </div>
         </div>
     </div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+
 </div>
+
+
 
 {% endblock %}
