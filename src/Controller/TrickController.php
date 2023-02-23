@@ -25,11 +25,8 @@ use App\Form\CommentsType;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
 
-use Symfony\Component\HttpFoundation\File\File;
-
 /**
  * class TrickController
- *
  * 
  */
 #[Route('/tricks', name: 'tricks_')]
@@ -67,15 +64,14 @@ class TrickController extends AbstractController
         $user = $this->getUser();
         if ($user != null) {
             $userId = $user->getId();
-            // $currentAvatar = $user->getAvatar();
         } else {
             $userId = 0;
-            // $currentAvatar = "avatar-252×230.png";
         }
 
         $author = $userRepository->findOneBy(['id' => $user]);
         $trickId = $trick->getId();
         $additionalPictures = $picturesRepository->findBy(['tricks' => $trickId]);
+
         $Image = $tricks->getPicture();
         $date = date('Y-m-d H:i:s');
 
@@ -107,14 +103,19 @@ class TrickController extends AbstractController
     public function Update(EntityManagerInterface $entityManager, Request $request, $slug, TricksRepository $tricksRepository, UserRepository $userRepository,  Tricks $tricks, PicturesRepository $picturesRepository, Pictures $pictures): Response
     {
         $trick = $tricksRepository->findOneBy(['slug' => $slug]);
+
         if (!$trick) {
             throw new NotFoundHttpException("No trick found");
         }
-        $AuthorId = $trick->getUser();
-        $Author = $userRepository->findOneBy(['id' => $AuthorId]);
+
+        $authorId = $trick->getUser();
+        $author = $userRepository->findOneBy(['id' => $authorId]);
         $trickId = $trick->getId();
+
         $additionalPictures = $picturesRepository->findBy(['tricks' => $trickId]);
-        $Image = $tricks->getPicture();
+
+        $image = $tricks->getPicture();
+
         $formUpdateTrick = $this->createForm(UpdateType::class, $trick);
         $formUpdateTrick->handleRequest($request);
         $submittedToken = $request->request->get('_token');
@@ -125,7 +126,8 @@ class TrickController extends AbstractController
             $trick->setModifiedAt(new \DateTimeImmutable("now"));
             $pictureFile =  $formUpdateTrick->get('picture')->getData();
 
-            $morePictures = $formUpdateTrick->get('pictures')->getData(); // array
+            $morePictures = $formUpdateTrick->get('pictures')->getData();
+
 
             if ($morePictures != []) {
                 $this->addAdditionalPicture($morePictures, $tricks);
@@ -159,7 +161,7 @@ class TrickController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
-        return $this->render('tricks/update.html.twig', compact('trick', 'Author', 'additionalPictures', 'formUpdateTrick', 'Image'));
+        return $this->render('tricks/update.html.twig', compact('trick', 'author', 'additionalPictures', 'formUpdateTrick', 'image'));
     }
 
     /*
@@ -280,8 +282,6 @@ class TrickController extends AbstractController
         return $this->redirectToRoute('tricks_app_user_tricks_add');
     }
 
-    /*************** deleting *******************/
-
     /**
      * function delete 
      * trick for homePage with Ajax/JsonResponse
@@ -293,13 +293,9 @@ class TrickController extends AbstractController
         $submittedToken = $request->request->get('_token');
         if ($this->isCsrfTokenValid('delete' . $trick->getId(), $submittedToken)) {
             $trickId = $trick->getId();
-            // 1 delete additional picture from server
             $this->deleteAdditionalPicture($trickId);
-            // get the physical path of the main picture
             $mainPictureWithPath = $this->getParameter('pictures_directory') . '/' . $trick->getPicture();
-            // 2 - delete trick from Bd
-            $tricksRepository->remove($trick, true); // OK
-            // 3 - delete Main picture on server
+            $tricksRepository->remove($trick, true);
             if ($this->deletePicture($mainPictureWithPath)) {
                 return new JsonResponse("oui", 200);
             } else {
@@ -320,18 +316,14 @@ class TrickController extends AbstractController
         $submittedToken = $request->request->get('_token');
         if ($this->isCsrfTokenValid('delete' . $trick->getId(), $submittedToken)) {
             $trickId = $trick->getId();
-            // 1 delete additional picture from server
             $this->deleteAdditionalPicture($trickId);
             $mainPictureWithPath = $this->getParameter('pictures_directory') . '/' . $trick->getPicture();
-            // 2 - delete trick from Bd
             $tricksRepository->remove($trick, true);
-            // 3 - delete Main picture on server
             if ($this->deletePicture($mainPictureWithPath)) {
                 $this->addFlash('success', 'Your trick have been deleted.');
             } else {
                 $this->addFlash('error', 'Something goes wrong.');
             }
-            // go back home
             return $this->redirectToRoute('app_home');
         }
     }
@@ -386,9 +378,6 @@ class TrickController extends AbstractController
         }
     }
 
-    /**
-     * 
-     */
     #[Route('/delete-main-picture-only/{trickId}', name: 'app_delete_main_only', methods: ['DELETE'])]
     public function deleteMainPictureOnly(int $trickId, Request $request)
     {
@@ -418,7 +407,6 @@ class TrickController extends AbstractController
                 $this->getParameter('pictures_directory'),
                 $file
             );
-            // in db 
             $img = new Pictures();
             $img->setPicture($file);
             $tricks->addAdditionalTrick($img);
@@ -451,21 +439,6 @@ class TrickController extends AbstractController
             'messageError' =>  $messageError(),
         ]);
     }
-
-    // #[Route('/individual/{pictureId}', name: 'app_individual')]
-    // public function individual(int $pictureId, Request $request, TricksRepository $tricksRepository)
-    // {
-    //     $submittedToken = $request->request->get('_token');
-    //     if ($this->isCsrfTokenValid('updateAdditionalPicture' . $pictureId, $submittedToken)) {
-
-
-
-    //     }
-    // }
-
-
-
-    /********************* functions shared ****************************/
 
     /**
      *  function to delete 
