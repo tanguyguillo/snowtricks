@@ -1,9 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{# {{ app.request.getSchemeAndHttpHost()}} path('app_home') #}
-{# {% set path = {{ app.request.getSchemeAndHttpHost()}} %}
-{{ path }} #}
-
 {% set perId = 1 %}
 
 {% block title %}
@@ -74,7 +70,6 @@ SnowTricks - modifications - {{ trick.title }}
                         </div>
                     </div>
 
-                    {####### more pictures #########}
                     <br>
                     <div class="row justify-content-center">
                         {% for additionalPicture in additionalPictures %}
@@ -111,7 +106,6 @@ SnowTricks - modifications - {{ trick.title }}
                         </div>
                         {% endfor %}
 
-                        {# video #}
                         <div class="col-sm-2">
                             <div class="mx-auto">
                                 <div class="d-flex align-items-center justify-content-center h-100 w-100">
@@ -134,8 +128,6 @@ SnowTricks - modifications - {{ trick.title }}
                             </div>
                         </div>
 
-                        {# mode additional picture #}
-
                         <div class="card container text-center collapse" id="collapseIndividual">
                             <br>
                             <div class="form-group">
@@ -148,11 +140,7 @@ SnowTricks - modifications - {{ trick.title }}
                             </div>
                         </div>
 
-
-
-
-
-                    </div> {####### end of more pictures and Movie #########}
+                    </div>
 
                     <br>
                     <ul class="list-inline">

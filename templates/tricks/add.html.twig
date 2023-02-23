@@ -28,13 +28,13 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <label>First name</label>
-                                        <input type="text" class="form-control" placeholder="{{ app.user.firstName }}"
-                                            id="firstName" name="firstName">
+                                        <input type="text" class="form-control" placeholder="Write your fist name here"
+                                            value="{{ app.user.firstName|raw }}" id="firstName" name="firstName">
                                     </div>
                                     <div class="col-6">
                                         <label>Last name</label>
-                                        <input type="text" class="form-control" placeholder="{{ app.user.lastName }}"
-                                            id="lastName" name="lastName">
+                                        <input type="text" class="form-control" placeholder="Write your last name here"
+                                            value={{ app.user.lastName|raw }} id="lastName" name="lastName">
                                     </div>
 
                                     <input type="hidden" name="_token"

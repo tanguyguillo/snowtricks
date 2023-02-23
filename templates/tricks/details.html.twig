@@ -28,8 +28,6 @@ SnowTricks - Trick detail - {{ trick.title }}
                     </div>
                 </div>
 
-                {####### more pictures #########}
-
                 <div class="row justify-content-center">
                     {% for additionalPicture in additionalPictures %}
                     <div class="col-md-2 col-lg-2 mb-5 item">
@@ -47,8 +45,6 @@ SnowTricks - Trick detail - {{ trick.title }}
 
                     <br>
 
-                    {####### additional video #########}
-
                     <div class="col-sm-2">
                         <div class="mx-auto">
                             <div class="d-flex align-items-center justify-content-center h-100 w-100">
@@ -63,13 +59,14 @@ SnowTricks - Trick detail - {{ trick.title }}
 
                 </div>
 
-                {######### description ##########}
-
-                <div class="text-left content text-white">
-                    {{ trick.content|striptags }}
+                <div class="card border-primary mb-3" style="max-width: 200rem;">
+                    <div class="card-body">
+                        <h4 class="card-title">Description</h4>
+                        <p class="card-text">
+                            {{ trick.content|nl2br }}
+                        </p>
+                    </div>
                 </div>
-
-                {####### information #########}
 
                 <div class="card-body">
                     <ul class="list-inline">
@@ -95,8 +92,6 @@ SnowTricks - Trick detail - {{ trick.title }}
     </div>
 
     <hr>
-
-    {# comments #}
 
     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
     <div class="center">
@@ -135,26 +130,20 @@ SnowTricks - Trick detail - {{ trick.title }}
         <hr>
         {% endif %}
 
-        {# currentComments #}
-
-        <div class="">
+        <div>
             {% for currentComment in currentComments %}
-            {# for this tricks #}
             <div class="media">
-                {# for a future moderation #}
                 {% if currentComment.active == 1 %}
                 <img class="mr-3 rounded-circle" alt=""
                     src=" {{ app.request.getSchemeAndHttpHost()}}/assets/img/avatars/avatar-252×230.png" /></a>
                 <div class="media-body">
                     <div class="row text-left contentGrey text-white">
                         <div class="col-12 d-flex">
-                            {# not the good name if not completed named : now ok <br> #}
                             <h5>
                                 {% if currentComment.user.firstName() != null %}
-                                {{ currentComment.user.firstName() }}
-                                {{currentComment.user.lastName() }}
+                                {{ currentComment.user.firstName()|raw }}
+                                {{currentComment.user.lastName()|raw }}
                                 {% else %}
-                                {# if first and last name not given #}
                                 created by : {{ currentComment.user.username|striptags }}
                                 {% endif %}
                             </h5>
@@ -172,7 +161,6 @@ SnowTricks - Trick detail - {{ trick.title }}
 
     </div>
 
-
 </div>
 
 <br>
@@ -180,7 +168,6 @@ SnowTricks - Trick detail - {{ trick.title }}
 <br>
 <br>
 
-<!-- tricks Zoom -->
 <div id="overlay" class="zoom"></div>
 
 <br>
