@@ -130,12 +130,23 @@ SnowTricks - Trick detail - {{ trick.title }}
         <hr>
         {% endif %}
 
+
         <div>
             {% for currentComment in currentComments %}
+
+            {% set currentAvatar = currentComment.user.avatar %}
+
             <div class="media">
                 {% if currentComment.active == 1 %}
-                <img class="mr-3 rounded-circle" alt=""
-                    src=" {{ app.request.getSchemeAndHttpHost()}}/assets/img/avatars/avatar-252×230.png" /></a>
+
+                {% if currentAvatar == 'avatar-252×230.png' %}
+                <img class="mr-3 rounded-circle" alt="Avatar picture"
+                    src=" {{ app.request.getSchemeAndHttpHost()}}/assets/img/avatars/avatar-252×230.png" />
+                {% else %}
+                <img class="mr-3 rounded-circle" alt="Avatar picture"
+                    src=" {{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/{{ currentAvatar }}" />
+                {% endif %}
+
                 <div class="media-body">
                     <div class="row text-left contentGrey text-white">
                         <div class="col-12 d-flex">

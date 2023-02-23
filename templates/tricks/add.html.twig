@@ -23,9 +23,9 @@
                                     <img class="mr-3 rounded-circle" alt="Avatar picture"
                                         src=" {{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/{{ currentAvatar }}" />
                                     {% endif %}
+                                    <br>
                                     {{ form_start(formAvatar) }}
                                     {{ form_row(formAvatar.avatar, {
-                                    label: 'Choose an avatar',
                                     attr : {'class': 'form-control'}
                                     }) }}
                                     <button class="btn btn-info mb-2" type="submit">Add this Avatar</button>
@@ -55,7 +55,7 @@
                                     <div class="col-6">
                                         <label>Last name</label>
                                         <input type="text" class="form-control" placeholder="Write your last name here"
-                                            value={{ app.user.lastName|raw }} id="lastName" name="lastName">
+                                            value="{{ app.user.lastName|raw }}" id="lastName" name="lastName">
                                     </div>
                                     <input type="hidden" name="_token"
                                         value="{{ csrf_token('FirstAndLastName' ~ userId) }}" />
