@@ -148,14 +148,12 @@ div.col-md-2 {
   justify-content: center;
 }
 
-/* only 5 column */
 div.col-md-2.col-lg-2.mb-5 {
   margin: 1px;
 }
 
 footer {
   z-index: 2;
-  /* position: fixed; */
   padding: 25px 150;
   bottom: 0;
   width: 100%;
@@ -209,7 +207,6 @@ ul li a:hover .footerDown {
   box-sizing: border-box;
 }
 
-/* go down */
 .chevron-down {
   color: #1f2d41;
   position: absolute;
@@ -220,7 +217,6 @@ ul li a:hover .footerDown {
 
 .slogan {
   height: 70vh;
-  /* Relative to 100% of the height of the viewport**/
   text-align: center;
   width: 100%;
   display: flex;
@@ -240,27 +236,21 @@ ul li a:hover .footerDown {
   }
 }
 
-/* *********** @media (max-width: 992px **************** */
 @media (max-width: 992px) {
 
   h1>span.grey {
     font-size: medium;
   }
 
-  /* hidden top menu on smalls screens */
   .menuTop {
     display: none !important;
   }
 
-  /* section.menuTop {
-    display: none;
-  } */
 
   img.logoTop {
     display: visible;
   }
 
-  /* copyright hidden on smalls screens */
   .footer-below {
     display: none;
   }
@@ -273,8 +263,6 @@ ul li a:hover .footerDown {
     color: white;
   }
 }
-
-.form-additionalPicture {}
 
 .list-element .content {
   position: relative;
@@ -292,9 +280,6 @@ ul li a:hover .footerDown {
   display: block;
 }
 
-/***************************/
-
-/* copyright */
 .footer-below {
   visibility: hidden;
 }
@@ -341,7 +326,6 @@ li {
   color: blue !important;
 }
 
-/* error message */
 div>form>div>ul>li {
   color: #e83e8c;
 }
@@ -364,7 +348,6 @@ div>form>div>ul>li {
   background: none repeat scroll 0 0 #FFFFFF;
   opacity: 0.5;
   margin-top: 2%;
-  /* margin: -54px 20px 12px; */
   position: relative;
 }
 
@@ -390,7 +373,6 @@ i {
 
 .content {
   overflow: scroll;
-  /* border: #e83e8c 1px solid; */
   border: #495057 1px solid;
   border-radius: 30px;
   height: auto;
@@ -398,8 +380,6 @@ i {
   padding: 20px;
   margin: 30px;
 }
-
-/* copyright */
 
 .footer-below {
   margin-top: 25px;
@@ -414,7 +394,6 @@ i {
   color: #fff;
 }
 
-/********  modal ************/
 .modal-content {
   border: none;
   box-shadow: inset 1px 1px rgb(255 255 255 / 20%), inset -1px -1px rgb(255 255 255 / 10%), 1px 3px 24px -1px rgb(0 0 0 / 15%);
@@ -430,7 +409,6 @@ h5.modal-title {
 
 div>div>div.modal-body>p {
   color: #fff;
-  /* border-bottom: var(--bs-modal-header-border-width) solid */
 }
 
 div.modal-footer>button.btn.btn.btn-primary {
@@ -458,14 +436,10 @@ div.modal-body {
   border-bottom: var(--bs-modal-header-border-width) solid
 }
 
-/* align bt no in modal */
 .btNo {
   padding-left: 20px;
 }
 
-/******** End modal ************/
-
-/******** Single image lightbox ************/
 img {
   height: 100px;
 }
@@ -486,8 +460,7 @@ img {
 
 #overlay.open {
   visibility: visible;
-  /* cursor: zoom-out; */
-  cursor: pointer;
+  cursor: zoom-out;
   opacity: 1;
   border-radius: 0.5rem !important;
 }
@@ -495,18 +468,6 @@ img {
 .zoom {
   cursor: zoom-in;
 }
-
-#overlay:after {
-  /* X button icon */
-  content: "\2715";
-  position: absolute;
-  color: rgb(6, 6, 6);
-  top: 10px;
-  right: 20px;
-  font-size: 2em;
-}
-
-/******** End Single image lightbox ************/
 
 .displayNone {
   display: none;
@@ -659,13 +620,10 @@ img.mr-3.rounded-circle {
   display: none;
 }
 
-/* bottom menu */
-
 .flex-container {
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-between;
-
 }
 
 .flex-container>div {
@@ -675,7 +633,6 @@ img.mr-3.rounded-circle {
   font-size: 30px;
 }
 
-/* login page */
 form>div.mb-3>label {
   color: white;
 }
