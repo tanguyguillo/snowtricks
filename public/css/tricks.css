@@ -689,6 +689,13 @@ input#tricks_pictures.form-control {
   ;
 }
 
+input#avatar_avatar.form-control {
+  color: #fff;
+  background: #009da2;
+  border-color: #009da2;
+  ;
+}
+
 button.showMore {
   color: #fff;
   border-color: #e83e8c;

@@ -7,19 +7,20 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Validator\Constraints\File;
+use App\Entity\User;
 
-class PicturesType extends AbstractType
+class AvatarType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add(
-                'pictures',
+                'avatar',
                 FileType::class,
                 [
                     'attr' => ['accept' => "image/*",],
                     'label' => false,
-                    'multiple' => true,
+                    'multiple' => false,
                     'mapped' => false,
                     'required' => false
                 ]
@@ -28,6 +29,9 @@ class PicturesType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([]);
+        $resolver->setDefaults([
+            // 'data_class' => User::class
+            'data_class' => null
+        ]);
     }
 }

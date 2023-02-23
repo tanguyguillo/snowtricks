@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Tricks;
+use App\Entity\User;
 use App\Entity\Pictures;
 use App\Entity\Comments;
 use App\Repository\UserRepository;
@@ -18,10 +19,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use App\Form\TricksType;
+use App\Form\AvatarType;
 use App\Form\UpdateType;
 use App\Form\CommentsType;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
+
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * class TrickController
@@ -34,7 +38,6 @@ class TrickController extends AbstractController
     public $picturesRepository;
     public $tricksRepository;
     public $commentsRepository;
-    // public $tricks;
     private $em;
 
     /**
@@ -69,23 +72,15 @@ class TrickController extends AbstractController
             $userId = 0;
         }
 
-        // here for info space
         $author = $userRepository->findOneBy(['id' => $user]);
         $trickId = $trick->getId();
         $additionalPictures = $picturesRepository->findBy(['tricks' => $trickId]);
         $Image = $tricks->getPicture();
         $date = date('Y-m-d H:i:s');
 
-        // comments
         $comments = new Comments;
         $formComment = $this->createForm(CommentsType::class, $comments);
         $formComment->handleRequest($request);
-
-        // 'tricks' => $TricksRepository->findBy(['active' => true], ['created_at' => 'asc'])
-
-        // if ($this->isCsrfTokenValid('FirstAndLastName' . $userId, $submittedToken)) {
-        //  <input type="hidden" name="_token" value="{{ csrf_token('comment-item') }}" />
-        // if ($formComment->isSubmitted() && $formComment->isValid()) {
 
         $submittedToken = $request->request->get('_token');
         if ($this->isCsrfTokenValid('comment-item', $submittedToken)) {
@@ -128,7 +123,7 @@ class TrickController extends AbstractController
             $trick->setCategory($formUpdateTrick->get('category')->getData());
             $trick->setModifiedAt(new \DateTimeImmutable("now"));
             $pictureFile =  $formUpdateTrick->get('picture')->getData();
-            // replace pictures
+
             $morePictures = $formUpdateTrick->get('pictures')->getData(); // array
 
             if ($morePictures != []) {
@@ -148,7 +143,7 @@ class TrickController extends AbstractController
                     );
                 } catch (FileException $e) {
                     // be redirected to the form page in the event of an error, specifying the type(s) of error;
-                    $message = $this->addFlash('error', 'error type:' . $e); // or in twig
+                    $message = $this->addFlash('error', 'error type:' . $e);
                     return $this->render('tricks/add.html.twig', [
                         'formAddTrick' =>  $formUpdateTrick->createView(),
                         'message' => $message
@@ -179,8 +174,14 @@ class TrickController extends AbstractController
         $formAddTrick = $this->createForm(TricksType::class, $tricks);
         $formAddTrick->handleRequest($request);
 
+        $user = new User();
+
+        $formAvatar = $this->createForm(AvatarType::class, $user);
+        $formAvatar->handleRequest($request);
+
         $user = $this->getUser();
         $userId = $user->getId();
+        $currentAvatar = $user->getAvatar();
 
         if ($formAddTrick->isSubmitted() && $formAddTrick->isValid()) {
 
@@ -189,11 +190,9 @@ class TrickController extends AbstractController
             if ($pictureFile) {
                 $originalFilename = $pictureFile;
 
-                // may have multiple more pictures
                 $additionalPictures = $formAddTrick->get('pictures')->getData();
                 $this->addAdditionalPicture($additionalPictures, $tricks);
 
-                $safeFilename = $slugger->slug($originalFilename);  // not used
                 $newFilename = md5(uniqid()) . '.' . $originalFilename->guessExtension();
                 $tricks->setPicture($newFilename);
                 try {
@@ -202,8 +201,6 @@ class TrickController extends AbstractController
                         $newFilename
                     );
                 } catch (FileException $e) {
-                    // handle exception if something happens during file upload
-                    // be redirected to the form page in the event of an error, specifying the type(s) of error;
                     $message = $this->addFlash('error', 'error type: ' . $e);
                     return $this->render('tricks/add.html.twig', [
                         'formAddTrick' =>  $formAddTrick->createView(),
@@ -219,9 +216,40 @@ class TrickController extends AbstractController
             $this->addFlash('success', 'Your trick have been added.');
             return $this->redirectToRoute('app_home');
         }
+
+        if ($formAvatar->isSubmitted() && $formAvatar->isValid()) {
+            $pictureFile =  $formAvatar->get('avatar')->getData();
+            $originalFilename = $pictureFile;
+            $originalFilenameWithPath = $this->getParameter('pictures_directory') . '/' . $user->getAvatar();
+            $newFilename = md5(uniqid()) . '.' . $originalFilename->guessExtension();
+            try {
+                $pictureFile->move(
+                    $this->getParameter('pictures_directory'),
+                    $newFilename
+                );
+            } catch (FileException $e) {
+                $message = $this->addFlash('error', 'error type: ' . $e);
+                return $this->render('tricks/add.html.twig', [
+                    'formAddTrick' =>  $formAddTrick->createView(),
+                    'message' => $message
+                ]);
+            }
+            $user->setAvatar($newFilename);
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            $this->deletePicture($originalFilenameWithPath);
+            $this->addFlash('success', 'Your avatar have been added.');
+
+            return $this->redirectToRoute('tricks_app_user_tricks_add');
+        }
+
         return $this->render('tricks/add.html.twig', [
             'formAddTrick' =>  $formAddTrick->createView(),
+            'formAvatar' =>   $formAvatar->createView(),
             'userId' => $userId,
+            'currentAvatar' => $currentAvatar
         ]);
     }
 
