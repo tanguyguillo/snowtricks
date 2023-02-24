@@ -43,18 +43,12 @@ You can see an onLine version to this URL (web site in english):
 
 <https://snowtricks.omegawebprod.com//>
 
-admin's role:
+admin's role: every registred user is his own admin (email validation)
 
-Every registred user is his own admin
+Make your own (email validation) or use user already created and confirmed :
 
-user's role:
-
-Make your own (email validation)
-
-User already  created and confirmed :
-
-user : user90
-password : user90@user90.fr
+user : john
+password : johnisaniceguy
 
 ## IDE
 
