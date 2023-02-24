@@ -62,7 +62,7 @@ SnowTricks - modifications - {{ trick.title }}
                         <br>
                         <div class="text-white bg-Light mb-3">
                             <div class="rounded shadow p-3 mb-5 bg-white embedPicture">
-                                <img class="bd-placeholder-img bd-placeholder-img-lg img-fluid mainPicture empty"
+                                <img class="bd-placeholder-img bd-placeholder-img-lg img-fluid mainPicture empty zoom"
                                     width="100%" height="150"
                                     src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/{{ trick.picture }}"
                                     alt="Category : {{trick.category}} - trick : {{trick.title }}">
@@ -103,7 +103,6 @@ SnowTricks - modifications - {{ trick.title }}
                                                 </div>
 
                                                 <span>
-
                                                     <button type="button"
                                                         class="float-center ml-1 additionalPictureModify btWhite" <a
                                                         data-bs-toggle="collapse" href="#collapseIndividual"
@@ -120,26 +119,45 @@ SnowTricks - modifications - {{ trick.title }}
                                                         data-token="{{ csrf_token('delete'~additionalPicture.id )}}">
                                                         <i class="bi bi-trash-fill iconTricks"></i>
                                                     </a>
-
                                                 </span>
+
                                             </div>
                                         </div>
                                         {% endfor %}
 
-                                        <br>
+                                        <div class="col-md-2 col-lg-2 mb-5 item">
+                                            <div class="mx-auto rounded shadow  paddingAdditional bg-white">
+                                                <div
+                                                    class="d-flex align-items-center justify-content-center h-100 w-100">
+                                                    <div class="card image-popup-vertical-fit">
+                                                        <img class="img-fluid zoom"
+                                                            src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/main-video.png"
+                                                            alt="additional video {{ trick.title|striptags}} 1" />
+                                                    </div>
+                                                </div>
+                                                <span>
+                                                    <div>
+                                                    </div>
+                                                    <a href="/tricks/modification/{{ trick.slug|striptags }}"
+                                                        class="float-center ml-1">
+                                                        <i class="bi bi-pencil-fill iconTricks"></i>
+                                                    </a>
+                                                    <a href="#tricksDelete" class="float-center ml-1">
+                                                        <i class="bi bi-trash-fill iconTricks"></i>
+                                                    </a>
+                                                </span>
+                                            </div>
+                                        </div>
 
+                                        <br>
                                         <div class="col-sm-2">
 
                                         </div>
                                     </div>
-
-
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
 
                     <div class="row justify-content-center additionalStuff">
                         {% for additionalPicture in additionalPictures %}
@@ -198,6 +216,8 @@ SnowTricks - modifications - {{ trick.title }}
                                 </span>
                             </div>
                         </div>
+
+                        <br>
                         <div class="card container text-center collapse" id="collapseIndividual">
                             <br>
                             <div class="form-group">
@@ -211,9 +231,6 @@ SnowTricks - modifications - {{ trick.title }}
                         </div>
 
                     </div>
-
-
-
 
                     <br>
                     <ul class="list-inline">

@@ -80,7 +80,7 @@
             {{ form_row(formAddTrick.picture, {
             label: 'Add the main picture',
             type : "file",
-            attr : {'class': 'form-control'},
+            attr : {'class': 'form-control',},
             }) }}
             <br>
             {{ form_row(formAddTrick.title, {
@@ -100,7 +100,7 @@
             <br>
             {{ form_row(formAddTrick.pictures, {
             label: 'Additional pictures',
-            attr : {'class': 'form-control'}
+            attr : {'class': 'form-control','required':'required'}
             }) }}
             <br><br>
             <button class="w-50 btn btn-lg btn-info" type="submit">Add this trick</button>

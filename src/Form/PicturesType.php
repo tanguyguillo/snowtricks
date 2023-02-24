@@ -21,7 +21,7 @@ class PicturesType extends AbstractType
                     'label' => false,
                     'multiple' => true,
                     'mapped' => false,
-                    'required' => false
+                    'required' => true
                 ]
             );
     }
