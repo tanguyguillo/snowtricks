@@ -109,3 +109,7 @@
 </section>
 
 {% endblock %}
+
+{% block javaScripts %}
+<script src="{{ app.request.getSchemeAndHttpHost() }}/js/loadMore.js"></script>
+{% endblock %}

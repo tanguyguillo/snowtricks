@@ -132,7 +132,6 @@ SnowTricks - Trick detail - {{ trick.title }}
         <hr>
         {% endif %}
 
-
         <div class="row justify-content-center items">
             {% for currentComment in currentComments %}
 
@@ -169,21 +168,19 @@ SnowTricks - Trick detail - {{ trick.title }}
                     </div>
                 </div>
 
-
                 {% endif %}
             </div>
             {% endfor %}
         </div>
 
         <div class="d-flex align-items-center justify-content-center h-100 w-100">
-            <div class="row justify-content-center m-3 buttonToogle" style="display: none;">
-                <a href="javascript:;" class="showMore2">
+            <div class="row justify-content-center m-3 buttonToogle shown" style="display: none;">
+                <a href="javascript:;" class="showMore">
                     <button class="btn btn-outline-primary showMore">Load More</button></a>
             </div>
         </div>
 
     </div>
-
 </div>
 
 <br>
@@ -197,4 +194,8 @@ SnowTricks - Trick detail - {{ trick.title }}
 <br>
 <br>
 <br>
+{% endblock %}
+
+{% block javaScripts %}
+<script src="{{ app.request.getSchemeAndHttpHost() }}/js/loadMore2.js"></script>
 {% endblock %}

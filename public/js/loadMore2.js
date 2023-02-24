@@ -1,6 +1,6 @@
 
 
-var increment = 15;
+var increment = 10;
 var startFilter = 0;
 var endFilter = increment;
 
@@ -9,7 +9,7 @@ var $this = $('.items');
 var elementLength = $this.find('div.item').length;
 $('.listLength').text(elementLength);
 
-if (elementLength > 15) {
+if (elementLength > 10) {
     $('.buttonToogle').show();
 }
 
