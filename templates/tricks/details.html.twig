@@ -28,6 +28,54 @@ SnowTricks - Trick detail - {{ trick.title }}
                     </div>
                 </div>
 
+                <div class="accordion" id="accordionSnowTricks">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                See medias
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                            data-bs-parent="#accordionSnowTricks">
+                            <div class="accordion-body">
+
+                                <div class="row justify-content-center">
+                                    {% for additionalPicture in additionalPictures %}
+                                    <div class="col-md-2 col-lg-2 mb-5 item">
+                                        <div class="mx-auto">
+                                            <div class="d-flex align-items-center justify-content-center h-100 w-100">
+                                                <div class="card {{additionalPicture.id}}">
+                                                    <img class="img-fluid zoom"
+                                                        src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/{{ additionalPicture.picture }}"
+                                                        alt="additional picture of {{ trick.title|striptags}}" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+
+                                    <br>
+
+                                    <div class="col-sm-2">
+                                        <div class="mx-auto">
+                                            <div class="d-flex align-items-center justify-content-center h-100 w-100">
+                                                <div class="card image-popup-vertical-fit">
+                                                    <img class="img-fluid zoom"
+                                                        src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/main-video.png"
+                                                        alt="additional video {{ trick.title|striptags}} 1" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row justify-content-center">
                     {% for additionalPicture in additionalPictures %}
                     <div class="col-md-2 col-lg-2 mb-5 item">
@@ -58,12 +106,10 @@ SnowTricks - Trick detail - {{ trick.title }}
                     </div>
 
                 </div>
-
                 <br>
 
                 <div class="card border-primary mb-3" style="max-width: 200rem;">
                     <div class="card-body">
-                        <h4 class="card-title">Description</h4>
                         <p class="card-text">
                             {{ trick.content|nl2br }}
                         </p>
@@ -148,24 +194,30 @@ SnowTricks - Trick detail - {{ trick.title }}
                         src=" {{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/{{ currentAvatar }}" />
                     {% endif %}
 
-                    <div class="media-body">
-                        <div class="row text-left contentGrey text-white">
-                            <div class="col-12 d-flex">
-                                <h5>
-                                    {% if currentComment.user.firstName() != null %}
-                                    {{ currentComment.user.firstName()|raw }}
-                                    {{currentComment.user.lastName()|raw }}
-                                    {% else %}
-                                    created by : {{ currentComment.user.username|striptags }}
-                                    {% endif %}
-                                </h5>
-                                <span>&nbsp; - created : {{ currentComment.createdAt|date('d-m-Y') }} </span>
-                            </div>
-                            <div class="col-8 d-flex">
-                                {{ currentComment.content }}
+                    <div class="card border-primary mb-3">
+                        <div class="card-body">
+
+                            <div class="media-body">
+                                <div class="row text-left contentGrey text-white">
+                                    <div class="col-12 d-flex">
+                                        <h5>
+                                            {% if currentComment.user.firstName() != null %}
+                                            {{ currentComment.user.firstName()|raw }}
+                                            {{currentComment.user.lastName()|raw }}
+                                            {% else %}
+                                            created by : {{ currentComment.user.username|striptags }}
+                                            {% endif %}
+                                        </h5>
+                                        <span>&nbsp; - created : {{ currentComment.createdAt|date('d-m-Y') }} </span>
+                                    </div>
+                                    <div class="col-12 d-flex">
+                                        {{ currentComment.content }}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
 
                 {% endif %}
