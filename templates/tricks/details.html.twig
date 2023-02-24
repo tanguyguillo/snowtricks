@@ -133,43 +133,53 @@ SnowTricks - Trick detail - {{ trick.title }}
         {% endif %}
 
 
-        <div>
+        <div class="row justify-content-center items">
             {% for currentComment in currentComments %}
 
             {% set currentAvatar = currentComment.user.avatar %}
+            <div class="item">
+                <div class="media">
+                    {% if currentComment.active == 1 %}
 
-            <div class="media">
-                {% if currentComment.active == 1 %}
+                    {% if currentAvatar == 'avatar-252×230.png' %}
+                    <img class="mr-3 rounded-circle" alt="Avatar picture"
+                        src=" {{ app.request.getSchemeAndHttpHost()}}/assets/img/avatars/avatar-252×230.png" />
+                    {% else %}
+                    <img class="mr-3 rounded-circle" alt="Avatar picture"
+                        src=" {{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/{{ currentAvatar }}" />
+                    {% endif %}
 
-                {% if currentAvatar == 'avatar-252×230.png' %}
-                <img class="mr-3 rounded-circle" alt="Avatar picture"
-                    src=" {{ app.request.getSchemeAndHttpHost()}}/assets/img/avatars/avatar-252×230.png" />
-                {% else %}
-                <img class="mr-3 rounded-circle" alt="Avatar picture"
-                    src=" {{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/{{ currentAvatar }}" />
-                {% endif %}
-
-                <div class="media-body">
-                    <div class="row text-left contentGrey text-white">
-                        <div class="col-12 d-flex">
-                            <h5>
-                                {% if currentComment.user.firstName() != null %}
-                                {{ currentComment.user.firstName()|raw }}
-                                {{currentComment.user.lastName()|raw }}
-                                {% else %}
-                                created by : {{ currentComment.user.username|striptags }}
-                                {% endif %}
-                            </h5>
-                            <span>&nbsp; - created : {{ currentComment.createdAt|date('d-m-Y') }} </span>
-                        </div>
-                        <div class="col-8 d-flex">
-                            {{ currentComment.content }}
+                    <div class="media-body">
+                        <div class="row text-left contentGrey text-white">
+                            <div class="col-12 d-flex">
+                                <h5>
+                                    {% if currentComment.user.firstName() != null %}
+                                    {{ currentComment.user.firstName()|raw }}
+                                    {{currentComment.user.lastName()|raw }}
+                                    {% else %}
+                                    created by : {{ currentComment.user.username|striptags }}
+                                    {% endif %}
+                                </h5>
+                                <span>&nbsp; - created : {{ currentComment.createdAt|date('d-m-Y') }} </span>
+                            </div>
+                            <div class="col-8 d-flex">
+                                {{ currentComment.content }}
+                            </div>
                         </div>
                     </div>
                 </div>
+
+
                 {% endif %}
             </div>
             {% endfor %}
+        </div>
+
+        <div class="d-flex align-items-center justify-content-center h-100 w-100">
+            <div class="row justify-content-center m-3 buttonToogle" style="display: none;">
+                <a href="javascript:;" class="showMore2">
+                    <button class="btn btn-outline-primary showMore">Load More</button></a>
+            </div>
         </div>
 
     </div>

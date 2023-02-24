@@ -67,7 +67,6 @@ $(document).ready(function () {
 
     $('.updateTrick').click(function () {
         console.log("4");
-        console.log('pass update');
     });
 
     $('.close').click(function () {
