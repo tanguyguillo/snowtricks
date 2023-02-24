@@ -23,6 +23,8 @@ button.float-center.ml-1.additionalPictureModify.btWhite {
   border: white;
 }
 
+.accordion {}
+
 .centered {
   position: fixed;
   top: 50%;
@@ -234,6 +236,15 @@ ul li a:hover .footerDown {
   .footer-below {
     visibility: visible !important;
   }
+
+  .additionalStuff {
+    display: visible !important;
+  }
+
+  .accordion {
+    visibility: hidden !important;
+  }
+
 }
 
 @media (max-width: 992px) {
@@ -242,10 +253,18 @@ ul li a:hover .footerDown {
     font-size: medium;
   }
 
-  .menuTop {
+  .additionalStuff {
     display: none !important;
   }
 
+  .accordion {
+    visibility: visible !important;
+  }
+
+  .menuTop {
+    /* display: none !important; */
+    visibility: hidden !important;
+  }
 
   img.logoTop {
     display: visible;
