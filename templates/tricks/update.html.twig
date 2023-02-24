@@ -16,7 +16,7 @@ SnowTricks - modifications - {{ trick.title }}
     <div class="row justify-content-center" id="#tricks">
         <div class="col-lg-12">
             <div class="modifications">
-                <div class="rounded shadow p-3 mb-5 bg-white">
+                <div class="rounded shadow p-3 mb-5 list-group">
 
                     {{ form_start(formUpdateTrick) }}
 
@@ -40,25 +40,29 @@ SnowTricks - modifications - {{ trick.title }}
                             attr : {'class': 'form-control'}
                             }) }}
                         </div>
+                        <br>
                     </div>
 
-                    <a data-main-delete
-                        href="{{ app.request.getSchemeAndHttpHost() }}/tricks/delete-main-picture-only/{{ trick.id }}"
-                        class="float-right ml-1 mainPictureDelete" id="-{{trick.id }}"
-                        data-token="{{ csrf_token('delete'~trick.id)}}">
-                        <i class="bi bi-trash-fill iconTricks"></i>
-                    </a>
+                    <div class="text-white bg-white mb-3">
+                        <a data-main-delete
+                            href="{{ app.request.getSchemeAndHttpHost() }}/tricks/delete-main-picture-only/{{ trick.id }}"
+                            class="float-right ml-1 mainPictureDelete" id="-{{trick.id }}"
+                            data-token="{{ csrf_token('delete'~trick.id)}}">
+                            <i class="bi bi-trash-fill btn btn btn-light iconTricks"></i>
+                        </a>
 
-                    <a data-bs-toggle="collapse" href="#collapseMain" class="float-right ml-1 collapseMain"
-                        alt="update trick">
-                        <i class="bi bi-pencil-fill iconTricks"></i>
-                    </a>
+                        <a data-bs-toggle="collapse" href="#collapseMain" class="float-right ml-1 collapseMain"
+                            alt="update trick">
+                            <i class="bi bi-pencil-fill btn btn btn-light iconTricks"></i>
+                        </a>
+                    </div>
 
                     <br>
                     <div class="col-lg-12">
+                        <br>
                         <div class="text-white bg-Light mb-3">
                             <div class="rounded shadow p-3 mb-5 bg-white embedPicture">
-                                <img class="bd-placeholder-img bd-placeholder-img-lg img-fluid mainPicture  empty"
+                                <img class="bd-placeholder-img bd-placeholder-img-lg img-fluid mainPicture empty"
                                     width="100%" height="150"
                                     src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/{{ trick.picture }}"
                                     alt="Category : {{trick.category}} - trick : {{trick.title }}">
@@ -71,11 +75,78 @@ SnowTricks - modifications - {{ trick.title }}
                     </div>
 
                     <br>
-                    <div class="row justify-content-center">
+
+                    <div class="accordion" id="accordionSnowTricks">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                    See medias
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                                data-bs-parent="#accordionSnowTricks">
+                                <div class="accordion-body">
+
+                                    <div class="row justify-content-center">
+                                        {% for additionalPicture in additionalPictures %}
+                                        <div class="col-md-2 col-lg-2 mb-5 item">
+                                            <div
+                                                class="mx-auto rounded shadow  paddingAdditional bg-white general{{ additionalPicture.id }}">
+                                                <div
+                                                    class="d-flex align-items-center justify-content-center h-100 w-100">
+                                                    <div class="card {{additionalPicture.id}}">
+                                                        <img class="img-fluid zoom"
+                                                            src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/{{ additionalPicture.picture }}"
+                                                            alt="additional picture of {{ trick.title|striptags}}" />
+                                                    </div>
+                                                </div>
+
+                                                <span>
+
+                                                    <button type="button"
+                                                        class="float-center ml-1 additionalPictureModify btWhite" <a
+                                                        data-bs-toggle="collapse" href="#collapseIndividual"
+                                                        class="float-right ml-1 collapseIndividual" alt="update trick">
+                                                        <i class=" bi bi-pencil-fill iconTricks"></i>
+                                                        </a>
+                                                    </button>
+
+                                                    <a data-additional-delete
+                                                        href="{{ app.request.getSchemeAndHttpHost() }}/tricks/delete-additional-picture/{{ additionalPicture.id }}"
+                                                        data-confirm="Are your sur to delete this picture ?"
+                                                        class="float-center ml-1 btnAdditionalDelete"
+                                                        id="{{ additionalPicture.id }}"
+                                                        data-token="{{ csrf_token('delete'~additionalPicture.id )}}">
+                                                        <i class="bi bi-trash-fill iconTricks"></i>
+                                                    </a>
+
+                                                </span>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+
+                                        <br>
+
+                                        <div class="col-sm-2">
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row justify-content-center additionalStuff">
                         {% for additionalPicture in additionalPictures %}
                         <div class="col-md-2 col-lg-2 mb-5 item">
 
-                            <div class="mx-auto general{{ additionalPicture.id }}">
+                            <div
+                                class="mx-auto rounded shadow  paddingAdditional bg-white general{{ additionalPicture.id }}">
                                 <div class="d-flex align-items-center justify-content-center h-100 w-100">
                                     <div class="card {{additionalPicture.id}}">
                                         <img class="img-fluid zoom"
@@ -107,7 +178,7 @@ SnowTricks - modifications - {{ trick.title }}
                         {% endfor %}
 
                         <div class="col-sm-2">
-                            <div class="mx-auto">
+                            <div class="mx-auto rounded shadow paddingAdditional bg-white">
                                 <div class="d-flex align-items-center justify-content-center h-100 w-100">
                                     <div class="card image-popup-vertical-fit">
                                         <img class="img-fluid zoom"
@@ -127,7 +198,6 @@ SnowTricks - modifications - {{ trick.title }}
                                 </span>
                             </div>
                         </div>
-
                         <div class="card container text-center collapse" id="collapseIndividual">
                             <br>
                             <div class="form-group">
@@ -141,6 +211,9 @@ SnowTricks - modifications - {{ trick.title }}
                         </div>
 
                     </div>
+
+
+
 
                     <br>
                     <ul class="list-inline">

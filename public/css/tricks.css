@@ -1,6 +1,6 @@
 header {
   /* min-height: 1110px; */
-  /* min-width: 900px !important; */
+  min-width: 650px !important;
   max-height: 800;
   overflow: hidden;
 }
@@ -22,8 +22,6 @@ button.float-center.ml-1.additionalPictureModify.btWhite {
   background-color: white;
   border: white;
 }
-
-.accordion {}
 
 .centered {
   position: fixed;
@@ -47,7 +45,6 @@ button.float-center.ml-1.additionalPictureModify.btWhite {
 .white {
   color: white;
 }
-
 
 .home-background {
   background-repeat: no-repeat;
@@ -96,7 +93,6 @@ span.trickName {
 
 /* for register and forgot password  */
 div.readyAccount a {
-  /*  color: #1f2d41; */
   color: #e83e8c;
   text-decoration: underline;
 }
@@ -481,7 +477,6 @@ img {
   visibility: visible;
   cursor: zoom-out;
   opacity: 1;
-  border-radius: 0.5rem !important;
 }
 
 .zoom {
@@ -719,4 +714,12 @@ button.showMore {
   color: #fff;
   border-color: #e83e8c;
   background-color: #e83e8c;
+}
+
+.paddingAdditional {
+  padding: 10px;
+}
+
+.marginMainButton {
+  margin: 50px;
 }
