@@ -252,7 +252,7 @@ SnowTricks - modifications - {{ trick.title }}
                     <input type="hidden" name="_token" value="{{ csrf_token('update' ~ trick.id) }}">
                     <br>
                     {{ form_row(formUpdateTrick.content, {
-                    label: 'Comments',
+                    label: 'Content',
                     attr : {'class': 'form-control'}
                     }) }}
                     <div class="container text-center">
