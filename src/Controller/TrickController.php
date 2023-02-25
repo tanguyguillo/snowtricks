@@ -221,6 +221,12 @@ class TrickController extends AbstractController
 
         if ($formAvatar->isSubmitted() && $formAvatar->isValid()) {
             $pictureFile =  $formAvatar->get('avatar')->getData();
+
+            if ($pictureFile == null) {
+                $this->addFlash('error', 'Please select an avatar picture before submited "Add this Avatar"!');
+                return $this->redirectToRoute('tricks_app_user_tricks_add');
+            };
+
             $originalFilename = $pictureFile;
             $originalFilenameWithPath = $this->getParameter('pictures_directory') . '/' . $user->getAvatar();
             $newFilename = md5(uniqid()) . '.' . $originalFilename->guessExtension();
