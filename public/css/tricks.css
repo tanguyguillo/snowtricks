@@ -127,6 +127,10 @@ h1#slogan {
   right: 3%;
 }
 
+.additionalStuff {
+  padding-top: 20px;
+}
+
 .positionArrow {
   text-align: top !important;
 }
@@ -202,6 +206,10 @@ ul li a:hover .footerDown {
   height: 70px;
 }
 
+.logoSmallScreen {
+  padding: 21px;
+}
+
 *,
 ::after,
 ::before {
@@ -240,7 +248,8 @@ ul li a:hover .footerDown {
     display: visible !important;
   }
 
-  .accordion {
+  .accordion,
+  .logoSmallScreen {
     visibility: hidden !important;
   }
 
@@ -256,7 +265,8 @@ ul li a:hover .footerDown {
     display: none !important;
   }
 
-  .accordion {
+  .accordion,
+  .logoSmallScreen {
     visibility: visible !important;
   }
 
