@@ -9,8 +9,8 @@ use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 
 /**
- * class fixture (testing)
- * php bin/console doctrine:fixtures:load.... to see make:fixtures
+ * class fixture 
+ * php bin/console doctrine:fixtures:load
  */
 class CategoryFixtures extends Fixture
 {

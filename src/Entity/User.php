@@ -197,12 +197,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    // public function getVerified(): bool
-    // {
-    //     $checkVerified = $this->isVerified;
+    public function getVerified(): bool
+    {
+        $checkVerified = $this->isVerified;
 
-    //     return $checkVerified;
-    // }
+        return $checkVerified;
+    }
 
     function getAvatar(): ?string
     {

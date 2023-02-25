@@ -63,9 +63,19 @@
                         {% endif %}
                 </ul>
         </nav>
-
     </section>
     {% endblock %}
+
+    {# {% if app.user and app.user.isVerified == false %}
+    <div class="alert alert-dismissible alert-warning">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <h4 class="alert-heading">Warning!</h4>
+        <p class="mb-0">Your account is not activated
+            <a href="{{ app.request.getSchemeAndHttpHost() }}/reset-password/check-email) }}" class="alert-link">resent
+                link activation</a>.
+        </p>
+    </div>
+    {% endif %} #}
 
     {% for message in app.flashes('success') %}
     <div class="alert success alert-dismissible fade show alertAction" role="alert">{{ message }}
@@ -100,44 +110,41 @@
     {% block footer %}
 
     <footer class="copyright  text-white {{ ifOfOrNot }}">
-        {# <div class="row align-items-start"> #}
-            <div class="flex-container">
-                <span class="footer-below">
-                    Copyright &copy; {{ "now"|date("Y") }}
-                </span>
-                <div><a href="{{ app.request.getSchemeAndHttpHost() }}/">
-                        <button class="btn btn-menu-down white"><i class="fa fa-home">
-                    </a></i></button>
-                </div>
-                <div>
-                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                    <a href="{{ app.request.getSchemeAndHttpHost() }}/tricks/add">
-                        <button class="btn btn-menu-down"><i class="fa fa-bookmark"></i></button>
-                    </a>
-                    {% endif %}
-                    {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
-                    <a href="{{ app.request.getSchemeAndHttpHost() }}/registration">
-                        <button class="btn btn-menu-down"><i class="fa fa-user-plus"></i></button>
-                    </a>
-                    {% endif %}
-                </div>
-                <div>
-                    {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
-                    <a href="{{ app.request.getSchemeAndHttpHost() }}/login">
-                        <button class="btn btn-menu-down"><i class="fa fa-sign-in"></i></button>
-                    </a>
-
-                    {% endif %}
-                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                    <a href="{{ app.request.getSchemeAndHttpHost() }}/logout">
-                        <button class="btn btn-menu-down"><i class="fa fa-sign-out"></i></button>
-                    </a>
-                    {% endif %}
-                </div>
-
+        <div class="flex-container">
+            <span class="footer-below">
+                Copyright &copy; {{ "now"|date("Y") }}
+            </span>
+            <div><a href="{{ app.request.getSchemeAndHttpHost() }}/">
+                    <button class="btn btn-menu-down white"><i class="fa fa-home">
+                </a></i></button>
             </div>
-            {#
-        </div> #}
+            <div>
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <a href="{{ app.request.getSchemeAndHttpHost() }}/tricks/add">
+                    <button class="btn btn-menu-down"><i class="fa fa-bookmark"></i></button>
+                </a>
+                {% endif %}
+                {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                <a href="{{ app.request.getSchemeAndHttpHost() }}/registration">
+                    <button class="btn btn-menu-down"><i class="fa fa-user-plus"></i></button>
+                </a>
+                {% endif %}
+            </div>
+            <div>
+                {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                <a href="{{ app.request.getSchemeAndHttpHost() }}/login">
+                    <button class="btn btn-menu-down"><i class="fa fa-sign-in"></i></button>
+                </a>
+
+                {% endif %}
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <a href="{{ app.request.getSchemeAndHttpHost() }}/logout">
+                    <button class="btn btn-menu-down"><i class="fa fa-sign-out"></i></button>
+                </a>
+                {% endif %}
+            </div>
+
+        </div>
     </footer>
     {% endblock %}
 

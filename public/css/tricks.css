@@ -1,14 +1,11 @@
 header {
-  /* min-height: 1110px; */
-  min-width: 650px !important;
+  min-width: 375 !important;
   max-height: 800;
   overflow: hidden;
 }
 
-/* make staying the section on the bottom of the page */
 section.copyright {
   z-index: 2;
-  /* position: fixed; */
   padding: 25px 0;
   bottom: 0;
   width: 100%;
@@ -257,8 +254,11 @@ ul li a:hover .footerDown {
     visibility: visible !important;
   }
 
+  div.slogan {
+    font-size: 1.5rem
+  }
+
   .menuTop {
-    /* display: none !important; */
     visibility: hidden !important;
   }
 
