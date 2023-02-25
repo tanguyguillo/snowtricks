@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block title %}SnowTricks - add your trick{% endblock %}
 {% block main %}
-
+{{ include('fragments/logo.html.twig') }}
 {% for message in app.flashes('success') %}
 <div class="alert success alert-dismissible fade show alertAction" role="alert">{{ message }}
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -17,7 +17,6 @@
 
 {% endfor %}
 
-{{ include('fragments/logo.html.twig') }}
 <div class="container text-center">
     <div class="row justify-content-center">
         <div class="col-lg-8">

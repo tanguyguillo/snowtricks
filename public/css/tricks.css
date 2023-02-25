@@ -382,6 +382,10 @@ div>form>div>ul>li {
   position: relative;
 }
 
+/* div.caption.post-content h1 {
+  font-size: 15x;
+} */
+
 div.card {
   min-width: 90px;
   min-height: 50px;
