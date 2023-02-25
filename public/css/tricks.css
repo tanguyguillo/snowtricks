@@ -57,6 +57,12 @@ button.float-center.ml-1.additionalPictureModify.btWhite {
   padding: 30px;
 }
 
+.border-left {
+  border-left-color: #fff;
+  margin-left: 5px;
+  padding-left: 5px;
+}
+
 .btn-secondary {
   color: #fff;
   background-color: red;

@@ -212,8 +212,12 @@ SnowTricks - Trick detail - {{ trick.title }}
                                             created by : {{ currentComment.user.username|striptags }}
                                             {% endif %}
                                         </h5>
-                                        <span>&nbsp; / {{ currentComment.createdAt|date('F j, Y, g:i a') }} </span>
+                                        {# <span>&nbsp; / {{ currentComment.createdAt|date('F j, Y, g:i a') }} </span>
+                                        #}
+                                        <div class="border-left">{{ currentComment.createdAt|date('F j, Y, g:i
+                                            a') }}</div>
                                     </div>
+
                                     <div class="col-12 d-flex">
                                         {{ currentComment.content }}
                                     </div>
