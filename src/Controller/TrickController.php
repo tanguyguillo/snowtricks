@@ -25,6 +25,8 @@ use App\Form\CommentsType;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
 
+use App\Controller\DeleteController;
+
 /**
  * class TrickController
  * 
@@ -35,15 +37,22 @@ class TrickController extends AbstractController
     public $picturesRepository;
     public $tricksRepository;
     public $commentsRepository;
+    public $deleteController;
     private $em;
 
     /**
-     *  function __construct 
+     *  function __construct
      *
-     * @param PicturesRepository $picturesRepository, TricksRepository $tricksRepository, EntityManagerInterface $em, Tricks $tricks
+     * @param PicturesRepository $picturesRepository
+     * @param TricksRepository $tricksRepository
+     * @param EntityManagerInterface $em
+     * @param CommentsRepository $commentsRepository
+     * @param DeleteController $deleteController
      */
-    public function __construct(PicturesRepository $picturesRepository, TricksRepository $tricksRepository, EntityManagerInterface $em, CommentsRepository $commentsRepository)
+    public function __construct(PicturesRepository $picturesRepository, TricksRepository $tricksRepository, EntityManagerInterface $em, CommentsRepository $commentsRepository, DeleteController $deleteController)
     {
+        $this->deleteController = $deleteController;
+
         $this->picturesRepository = $picturesRepository;
         $this->tricksRepository = $tricksRepository;
         $this->commentsRepository = $commentsRepository;
@@ -247,7 +256,7 @@ class TrickController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            $this->deletePicture($originalFilenameWithPath);
+            $this->deleteController->deletePicture($originalFilenameWithPath);
             $this->addFlash('success', 'Your avatar have been added.');
 
             return $this->redirectToRoute('tricks_app_user_tricks_add');
@@ -302,7 +311,7 @@ class TrickController extends AbstractController
             $this->deleteAdditionalPicture($trickId);
             $mainPictureWithPath = $this->getParameter('pictures_directory') . '/' . $trick->getPicture();
             $tricksRepository->remove($trick, true);
-            if ($this->deletePicture($mainPictureWithPath)) {
+            if ($this->deleteController->deletePicture($mainPictureWithPath)) {
                 return new JsonResponse("oui", 200);
             } else {
                 return new JsonResponse("non : delete picture ", 500);
@@ -325,7 +334,7 @@ class TrickController extends AbstractController
             $this->deleteAdditionalPicture($trickId);
             $mainPictureWithPath = $this->getParameter('pictures_directory') . '/' . $trick->getPicture();
             $tricksRepository->remove($trick, true);
-            if ($this->deletePicture($mainPictureWithPath)) {
+            if ($this->deleteController->deletePicture($mainPictureWithPath)) {
                 $this->addFlash('success', 'Your trick have been deleted.');
             } else {
                 $this->addFlash('error', 'Something goes wrong.');
@@ -374,7 +383,7 @@ class TrickController extends AbstractController
 
             $file =  $additionalPicture->getPicture();
             $additionalPictureWithPath = $this->getParameter('pictures_directory') . '/' .  $file;
-            if ($this->deletePicture($additionalPictureWithPath)) {
+            if ($this->deleteController->deletePicture($additionalPictureWithPath)) {
                 $this->em->remove($additionalPicture);
                 $this->em->flush();
                 return new JsonResponse("oui : additionalPictureDeleted", 200);
@@ -392,7 +401,7 @@ class TrickController extends AbstractController
             $trick = $this->tricksRepository->findOneById($trickId);
             $file  = htmlentities($trick->getPicture());
             $PictureWithPath = $this->getParameter('pictures_directory') . '/' .  $file;
-            if ($this->deletePicture($PictureWithPath)) {
+            if ($this->deleteController->deletePicture($PictureWithPath)) {
                 return new JsonResponse("oui : additionalPictureDeleted", 200);
             } else {
                 return new JsonResponse("non ", 500);
@@ -446,21 +455,21 @@ class TrickController extends AbstractController
         ]);
     }
 
-    /**
-     *  function to delete 
-     * the  adding picture in trick on server
-     *
-     * @param [type]  string (path of picture to delete on server) 
-     * 
-     * @return bool
-     */
-    private function deletePicture($PictureWithPath)
-    {
-        if (file_exists($PictureWithPath)) {
-            unlink($PictureWithPath);
-            return 1;
-        } else {
-            return 0;
-        }
-    }
+    // /**
+    //  *  function to delete --> move to Delete controller
+    //  * the  adding picture in trick on server
+    //  *
+    //  * @param [type]  string (path of picture to delete on server) 
+    //  * 
+    //  * @return bool
+    //  */
+    // private function deletePicture($PictureWithPath)
+    // {
+    //     if (file_exists($PictureWithPath)) {
+    //         unlink($PictureWithPath);
+    //         return 1;
+    //     } else {
+    //         return 0;
+    //     }
+    // }
 }
