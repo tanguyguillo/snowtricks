@@ -55,12 +55,12 @@ SnowTricks - Trick detail - {{ trick.title }}
 
                                     <div class="col-md-2 col-lg-2 mb-5 item">
                                         <div class="mx-auto rounded shadow  paddingAdditional bg-white">
-                                            <div class="d-flex align-items-center justify-content-center h-100 w-100">
-                                                <div class="card image-popup-vertical-fit">
-                                                    <img class="img-fluid zoom"
-                                                        src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/main-video.png"
-                                                        alt="additional video {{ trick.title|striptags}} 1" />
-                                                </div>
+                                            <div class="iframe-container">
+                                                <iframe width="560" height="315"
+                                                    src="https://www.youtube.com/embed/dYVpEyH3kRw"
+                                                    title="YouTube video player" frameborder="0"
+                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                    allowfullscreen></iframe>
                                             </div>
                                         </div>
                                     </div>
@@ -95,11 +95,14 @@ SnowTricks - Trick detail - {{ trick.title }}
                         <div class="col-md-2 col-lg-2 mb-5 item">
                             <div class="mx-auto rounded shadow  paddingAdditional bg-white">
                                 <div class="d-flex align-items-center justify-content-center h-100 w-100">
-                                    <div class="card image-popup-vertical-fit">
-                                        <img class="img-fluid zoom"
-                                            src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/main-video.png"
-                                            alt="additional video {{ trick.title|striptags}} 1" />
+
+                                    <div class="iframe-container">
+                                        <iframe width="560" height="315" src="https://www.youtube.com/embed/dYVpEyH3kRw"
+                                            title="YouTube video player" frameborder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                            allowfullscreen></iframe>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
