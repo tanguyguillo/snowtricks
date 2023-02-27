@@ -5,7 +5,9 @@ SnowTricks - Trick detail - {{ trick.title }}
 {% endblock %}
 
 {% block main %}
+
 {{ include('fragments/logo.html.twig') }}
+
 <div class="container text-center">
     <span class="badge bg-primary">SnowTricks - Trick details </span>
 
@@ -24,6 +26,40 @@ SnowTricks - Trick detail - {{ trick.title }}
                     </div>
                 </div>
 
+                {% set myContent %}
+
+                <div class="row justify-content-center">
+                    {% for additionalPicture in additionalPictures %}
+                    <div class="col-md-2 col-lg-2 mb-5 item">
+                        <div class="mx-auto rounded shadow  paddingAdditional bg-white">
+                            <div class="d-flex align-items-center justify-content-center h-100 w-100">
+                                <div class="card {{additionalPicture.id}}">
+                                    <img class="img-fluid zoom"
+                                        src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/{{ additionalPicture.picture }}"
+                                        alt="additional picture of {{ trick.title|striptags}}" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                    <br>
+
+                    <div class="col-md-2 col-lg-2 mb-5 item">
+                        <div class="mx-auto rounded shadow  paddingAdditional bg-white">
+                            <div class="iframe-container">
+                                <iframe width="560" height="315" src="https://www.youtube.com/embed/dYVpEyH3kRw"
+                                    title="YouTube video player" frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                {% endset %}
+
                 <div class="accordion" id="accordionSnowTricks">
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingOne">
@@ -36,37 +72,7 @@ SnowTricks - Trick detail - {{ trick.title }}
                             data-bs-parent="#accordionSnowTricks">
                             <div class="accordion-body">
 
-                                <div class="row justify-content-center">
-                                    {% for additionalPicture in additionalPictures %}
-                                    <div class="col-md-2 col-lg-2 mb-5 item">
-                                        <div class="mx-auto rounded shadow  paddingAdditional bg-white">
-                                            <div class="d-flex align-items-center justify-content-center h-100 w-100">
-                                                <div class="card {{additionalPicture.id}}">
-                                                    <img class="img-fluid zoom"
-                                                        src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/{{ additionalPicture.picture }}"
-                                                        alt="additional picture of {{ trick.title|striptags}}" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {% endfor %}
-
-                                    <br>
-
-                                    <div class="col-md-2 col-lg-2 mb-5 item">
-                                        <div class="mx-auto rounded shadow  paddingAdditional bg-white">
-                                            <div class="iframe-container">
-                                                <iframe width="560" height="315"
-                                                    src="https://www.youtube.com/embed/dYVpEyH3kRw"
-                                                    title="YouTube video player" frameborder="0"
-                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                                    allowfullscreen></iframe>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-
+                                {{ myContent }}
 
                             </div>
                         </div>
@@ -75,39 +81,9 @@ SnowTricks - Trick detail - {{ trick.title }}
 
                 <div class="card border-primary mb-3 additionalStuff" style="max-width: 200rem;">
                     <br>
-                    <div class="row justify-content-center">
-                        {% for additionalPicture in additionalPictures %}
-                        <div class="col-md-2 col-lg-2 mb-5 item">
-                            <div class="mx-auto rounded shadow  paddingAdditional bg-white">
-                                <div class="d-flex align-items-center justify-content-center h-100 w-100">
-                                    <div class="card {{additionalPicture.id}}">
-                                        <img class="img-fluid zoom"
-                                            src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/{{ additionalPicture.picture }}"
-                                            alt="additional picture of {{ trick.title|striptags}}" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {% endfor %}
 
-                        <br>
+                    {{ myContent }}
 
-                        <div class="col-md-2 col-lg-2 mb-5 item">
-                            <div class="mx-auto rounded shadow  paddingAdditional bg-white">
-                                <div class="d-flex align-items-center justify-content-center h-100 w-100">
-
-                                    <div class="iframe-container">
-                                        <iframe width="560" height="315" src="https://www.youtube.com/embed/dYVpEyH3kRw"
-                                            title="YouTube video player" frameborder="0"
-                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                            allowfullscreen></iframe>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
                 </div>
                 <br>
 
