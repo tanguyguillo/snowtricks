@@ -45,11 +45,14 @@ SnowTricks - Trick detail - {{ trick.title }}
 
                     <br>
 
+                    {% set aVideo = "mBB7CznvSPQ" %}
+
                     <div class="col-md-2 col-lg-2 mb-5 item">
                         <div class="mx-auto rounded shadow  paddingAdditional bg-white">
                             <div class="iframe-container">
-                                <iframe width="560" height="315" src="https://www.youtube.com/embed/dYVpEyH3kRw"
-                                    title="YouTube video player" frameborder="0"
+                                <iframe id="player" width="560" height="315"
+                                    src="https://www.youtube.com/embed/{{ aVideo }}" title="YouTube video player"
+                                    frameborder="0"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                     allowfullscreen></iframe>
                             </div>
@@ -71,9 +74,7 @@ SnowTricks - Trick detail - {{ trick.title }}
                         <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
                             data-bs-parent="#accordionSnowTricks">
                             <div class="accordion-body">
-
                                 {{ myContent }}
-
                             </div>
                         </div>
                     </div>
@@ -81,9 +82,7 @@ SnowTricks - Trick detail - {{ trick.title }}
 
                 <div class="card border-primary mb-3 additionalStuff" style="max-width: 200rem;">
                     <br>
-
                     {{ myContent }}
-
                 </div>
                 <br>
 
@@ -231,4 +230,7 @@ SnowTricks - Trick detail - {{ trick.title }}
 
 {% block javaScripts %}
 <script src="{{ app.request.getSchemeAndHttpHost() }}/js/loadMore2.js"></script>
+
+<script type="text/javascript" src="http://www.youtube.com/player_api"></script>
+<script src="{{ app.request.getSchemeAndHttpHost() }}/js/video.js"></script>
 {% endblock %}

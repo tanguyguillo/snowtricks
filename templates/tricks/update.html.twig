@@ -73,6 +73,84 @@ SnowTricks - modifications - {{ trick.title }}
 
                     <br>
 
+                    {% set myContent %}
+                    <div class="row justify-content-center">
+                        {% for additionalPicture in additionalPictures %}
+                        <div class="col-md-2 col-lg-2 mb-5 item">
+                            <div
+                                class="mx-auto rounded shadow  paddingAdditional bg-white general{{ additionalPicture.id }}">
+                                <div class="d-flex align-items-center justify-content-center h-100 w-100">
+                                    <div class="card {{additionalPicture.id}}">
+                                        <img class="img-fluid zoom"
+                                            src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/{{ additionalPicture.picture }}"
+                                            alt="additional picture of {{ trick.title|striptags}}" />
+                                    </div>
+                                </div>
+
+                                <span>
+                                    <button type="button" class="float-center ml-1 additionalPictureModify btWhite" <a
+                                        data-bs-toggle="collapse" href="#collapseIndividual"
+                                        class="float-right ml-1 collapseIndividual" alt="update trick">
+                                        <i class=" bi bi-pencil-fill iconTricks"></i>
+                                        </a>
+                                    </button>
+
+                                    <a data-additional-delete
+                                        href="{{ app.request.getSchemeAndHttpHost() }}/tricks/delete-additional-picture/{{ additionalPicture.id }}"
+                                        data-confirm="Are your sur to delete this picture ?"
+                                        class="float-center ml-1 btnAdditionalDelete" id="{{ additionalPicture.id }}"
+                                        data-token="{{ csrf_token('delete'~additionalPicture.id )}}">
+                                        <i class="bi bi-trash-fill iconTricks"></i>
+                                    </a>
+                                </span>
+
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                        <div class="col-md-2 col-lg-2 mb-5 item">
+                            <div class="mx-auto rounded shadow  paddingAdditional bg-white">
+                                <div class="d-flex align-items-center justify-content-center h-100 w-100">
+                                    {% set aVideo = "mBB7CznvSPQ" %}
+                                    <div class="iframe-container">
+                                        <iframe id="player" width="560" height="315"
+                                            src="https://www.youtube.com/embed/{{ aVideo }}"
+                                            title="YouTube video player" frameborder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                            allowfullscreen></iframe>
+                                    </div>
+                                </div>
+                                <span>
+
+                                    <a href="/tricks/modification/{{ trick.slug|striptags }}" class="float-center ml-1">
+                                        <i class="bi bi-pencil-fill iconTricks"></i>
+                                    </a>
+                                    <a href="#tricksDelete" class="float-center ml-1">
+                                        <i class="bi bi-trash-fill iconTricks"></i>
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+
+                        <br>
+                        <div class="col-sm-2">
+                        </div>
+                    </div>
+
+                    <div class="card container text-center collapse" id="collapseIndividual">
+                        <br>
+                        <div class="form-group">
+                            {{ form_row(formUpdateTrick.pictures, {
+                            label: 'Add more additional pictures',
+                            attr : {'class': 'form-control'}
+                            }) }}
+
+                            <input type="hidden" name="idPictureTodelete" value="1">
+                        </div>
+                    </div>
+
+                    {% endset %}
+
                     <div class="accordion" id="accordionSnowTricks">
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="headingOne">
@@ -85,78 +163,20 @@ SnowTricks - modifications - {{ trick.title }}
                                 data-bs-parent="#accordionSnowTricks">
                                 <div class="accordion-body">
 
-                                    <div class="row justify-content-center">
-                                        {% for additionalPicture in additionalPictures %}
-                                        <div class="col-md-2 col-lg-2 mb-5 item">
-                                            <div
-                                                class="mx-auto rounded shadow  paddingAdditional bg-white general{{ additionalPicture.id }}">
-                                                <div
-                                                    class="d-flex align-items-center justify-content-center h-100 w-100">
-                                                    <div class="card {{additionalPicture.id}}">
-                                                        <img class="img-fluid zoom"
-                                                            src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/{{ additionalPicture.picture }}"
-                                                            alt="additional picture of {{ trick.title|striptags}}" />
-                                                    </div>
-                                                </div>
+                                    {{ myContent }}
 
-                                                <span>
-                                                    <button type="button"
-                                                        class="float-center ml-1 additionalPictureModify btWhite" <a
-                                                        data-bs-toggle="collapse" href="#collapseIndividual"
-                                                        class="float-right ml-1 collapseIndividual" alt="update trick">
-                                                        <i class=" bi bi-pencil-fill iconTricks"></i>
-                                                        </a>
-                                                    </button>
-
-                                                    <a data-additional-delete
-                                                        href="{{ app.request.getSchemeAndHttpHost() }}/tricks/delete-additional-picture/{{ additionalPicture.id }}"
-                                                        data-confirm="Are your sur to delete this picture ?"
-                                                        class="float-center ml-1 btnAdditionalDelete"
-                                                        id="{{ additionalPicture.id }}"
-                                                        data-token="{{ csrf_token('delete'~additionalPicture.id )}}">
-                                                        <i class="bi bi-trash-fill iconTricks"></i>
-                                                    </a>
-                                                </span>
-
-                                            </div>
-                                        </div>
-                                        {% endfor %}
-
-                                        <div class="col-md-2 col-lg-2 mb-5 item">
-                                            <div class="mx-auto rounded shadow  paddingAdditional bg-white">
-                                                <div
-                                                    class="d-flex align-items-center justify-content-center h-100 w-100">
-                                                    <div class="card image-popup-vertical-fit">
-                                                        <img class="img-fluid zoom"
-                                                            src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/main-video.png"
-                                                            alt="additional video {{ trick.title|striptags}} 1" />
-                                                    </div>
-                                                </div>
-                                                <span>
-                                                    <div>
-                                                    </div>
-                                                    <a href="/tricks/modification/{{ trick.slug|striptags }}"
-                                                        class="float-center ml-1">
-                                                        <i class="bi bi-pencil-fill iconTricks"></i>
-                                                    </a>
-                                                    <a href="#tricksDelete" class="float-center ml-1">
-                                                        <i class="bi bi-trash-fill iconTricks"></i>
-                                                    </a>
-                                                </span>
-                                            </div>
-                                        </div>
-
-                                        <br>
-                                        <div class="col-sm-2">
-
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="row justify-content-center additionalStuff">
+                    <div class="card border-primary mb-3 additionalStuff" style="max-width: 200rem;">
+                        <br>
+                        {{ myContent }}
+                    </div>
+                    <br>
+
+                    {# <div class="row justify-content-center additionalStuff">
                         {% for additionalPicture in additionalPictures %}
                         <div class="col-md-2 col-lg-2 mb-5 item">
 
@@ -227,7 +247,10 @@ SnowTricks - modifications - {{ trick.title }}
                             </div>
                         </div>
 
-                    </div>
+                    </div> #}
+
+
+
 
                     <br>
                     <ul class="list-inline">
