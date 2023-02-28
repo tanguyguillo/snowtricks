@@ -25,7 +25,7 @@ use App\Form\CommentsType;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
 
-use App\Controller\DeleteController;
+use App\Controller\ServiceController;
 
 /**
  * class TrickController
@@ -37,7 +37,7 @@ class TrickController extends AbstractController
     public $picturesRepository;
     public $tricksRepository;
     public $commentsRepository;
-    public $deleteController;
+    public $serviceController;
     private $em;
 
     /**
@@ -49,10 +49,9 @@ class TrickController extends AbstractController
      * @param CommentsRepository $commentsRepository
      * @param DeleteController $deleteController
      */
-    public function __construct(PicturesRepository $picturesRepository, TricksRepository $tricksRepository, EntityManagerInterface $em, CommentsRepository $commentsRepository, DeleteController $deleteController)
+    public function __construct(PicturesRepository $picturesRepository, TricksRepository $tricksRepository, EntityManagerInterface $em, CommentsRepository $commentsRepository, ServiceController $serviceController)
     {
-        $this->deleteController = $deleteController;
-
+        $this->serviceController = $serviceController;
         $this->picturesRepository = $picturesRepository;
         $this->tricksRepository = $tricksRepository;
         $this->commentsRepository = $commentsRepository;
@@ -231,11 +230,6 @@ class TrickController extends AbstractController
         if ($formAvatar->isSubmitted() && $formAvatar->isValid()) {
             $pictureFile =  $formAvatar->get('avatar')->getData();
 
-            if ($pictureFile == null) {
-                $this->addFlash('error', 'Please select an avatar picture before submited "Add this Avatar"!');
-                return $this->redirectToRoute('tricks_app_user_tricks_add');
-            };
-
             $originalFilename = $pictureFile;
             $originalFilenameWithPath = $this->getParameter('pictures_directory') . '/' . $user->getAvatar();
             $newFilename = md5(uniqid()) . '.' . $originalFilename->guessExtension();
@@ -256,7 +250,7 @@ class TrickController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            $this->deleteController->deletePicture($originalFilenameWithPath);
+            $this->serviceController->deletePicture($originalFilenameWithPath);
             $this->addFlash('success', 'Your avatar have been added.');
 
             return $this->redirectToRoute('tricks_app_user_tricks_add');
@@ -322,7 +316,7 @@ class TrickController extends AbstractController
     }
 
     /**
-     * function deleteFromDetail 
+     * function deleteFromDetail // tosee
      * (button delete all trick from modification page)
      */
     #[Route('/delete-tricks_from_detail/{id}', name: 'app_tricks_delete_from_detail', methods: ['Post'])]
@@ -344,7 +338,7 @@ class TrickController extends AbstractController
     }
 
     /**
-     * function delete Additional from Entity PicturesPicture 
+     * function delete Additional from Entity PicturesPicture  // tosee
      *
      * @param [type] $argument (trick id)... all the additional pictures of a trick from the server
      * @return void
