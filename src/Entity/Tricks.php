@@ -70,6 +70,9 @@ class Tricks
     #[ORM\OneToMany(mappedBy: 'relation', targetEntity: Comments::class, cascade: ["all"], orphanRemoval: true)]
     private Collection $comments;
 
+    #[ORM\OneToMany(mappedBy: 'tricks', targetEntity: Movie::class, orphanRemoval: true)]
+    private Collection $videos;
+
     public function __construct()
     {
         $this->setActive(1);
@@ -79,6 +82,7 @@ class Tricks
         $this->setDescription("X"); // not used for instance... so yet X
         $this->additionalTrick = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->videos = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -256,6 +260,36 @@ class Tricks
             // set the owning side to null (unless already changed)
             if ($comment->getRelation() === $this) {
                 $comment->setRelation(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Movie>
+     */
+    public function getVideos(): Collection
+    {
+        return $this->videos;
+    }
+
+    public function addVideo(Movie $video): self
+    {
+        if (!$this->videos->contains($video)) {
+            $this->videos->add($video);
+            $video->setTricks($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVideo(Movie $video): self
+    {
+        if ($this->videos->removeElement($video)) {
+            // set the owning side to null (unless already changed)
+            if ($video->getTricks() === $this) {
+                $video->setTricks(null);
             }
         }
 
