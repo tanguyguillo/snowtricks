@@ -1,6 +1,9 @@
 $(document).ready(function () {
     let id
     let idPicture
+    var player;
+
+    function onYouTubePlayerAPIReady() { player = new YT.Player('player'); }
 
     $(function () {
         $('a[data-confirm]').click(function (ev) {
@@ -100,6 +103,9 @@ $(document).ready(function () {
         });
     });
 
-    $(window).resize(function () { location.reload(); });
-
+    // $(window).resize(function () { location.reload(); });
+    $(window).resize(function () {
+        // location.reload();
+        player.stopVideo();
+    });
 });

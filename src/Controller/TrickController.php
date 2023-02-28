@@ -6,6 +6,7 @@ use App\Entity\Tricks;
 use App\Entity\User;
 use App\Entity\Pictures;
 use App\Entity\Comments;
+use App\Entity\Movie;
 use App\Repository\UserRepository;
 use App\Repository\TricksRepository;
 use App\Repository\PicturesRepository;
@@ -22,6 +23,7 @@ use App\Form\TricksType;
 use App\Form\AvatarType;
 use App\Form\UpdateType;
 use App\Form\CommentsType;
+use App\Form\MovieType;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -47,7 +49,7 @@ class TrickController extends AbstractController
      * @param TricksRepository $tricksRepository
      * @param EntityManagerInterface $em
      * @param CommentsRepository $commentsRepository
-     * @param DeleteController $deleteController
+     * @param ServiceController $serviceController
      */
     public function __construct(PicturesRepository $picturesRepository, TricksRepository $tricksRepository, EntityManagerInterface $em, CommentsRepository $commentsRepository, ServiceController $serviceController)
     {
@@ -138,7 +140,7 @@ class TrickController extends AbstractController
 
 
             if ($morePictures != []) {
-                $this->addAdditionalPicture($morePictures, $tricks);
+                $this->serviceController->addAdditionalPicture($morePictures, $tricks);
             }
 
             if (!$pictureFile == null) {
@@ -184,6 +186,10 @@ class TrickController extends AbstractController
         $formAddTrick = $this->createForm(TricksType::class, $tricks);
         $formAddTrick->handleRequest($request);
 
+        $movie =  new Movie();
+        $formMovie = $this->createForm(MovieType::class, $movie);
+        $formMovie->handleRequest($request);
+
         $user = new User();
 
         $formAvatar = $this->createForm(AvatarType::class, $user);
@@ -201,7 +207,7 @@ class TrickController extends AbstractController
                 $originalFilename = $pictureFile;
 
                 $additionalPictures = $formAddTrick->get('pictures')->getData();
-                $this->addAdditionalPicture($additionalPictures, $tricks);
+                $this->serviceController->addAdditionalPicture($additionalPictures, $tricks);
 
                 $newFilename = md5(uniqid()) . '.' . $originalFilename->guessExtension();
                 $tricks->setPicture($newFilename);
@@ -256,11 +262,12 @@ class TrickController extends AbstractController
             return $this->redirectToRoute('tricks_app_user_tricks_add');
         }
 
+        // 'formMovie' => $formMovie->createView()
         return $this->render('tricks/add.html.twig', [
             'formAddTrick' =>  $formAddTrick->createView(),
             'formAvatar' =>   $formAvatar->createView(),
             'userId' => $userId,
-            'currentAvatar' => $currentAvatar
+            'currentAvatar' => $currentAvatar,
         ]);
     }
 
@@ -302,10 +309,10 @@ class TrickController extends AbstractController
         $submittedToken = $request->request->get('_token');
         if ($this->isCsrfTokenValid('delete' . $trick->getId(), $submittedToken)) {
             $trickId = $trick->getId();
-            $this->deleteAdditionalPicture($trickId);
+            $this->serviceController->deleteAdditionalPicture($trickId);
             $mainPictureWithPath = $this->getParameter('pictures_directory') . '/' . $trick->getPicture();
             $tricksRepository->remove($trick, true);
-            if ($this->deleteController->deletePicture($mainPictureWithPath)) {
+            if ($this->serviceController->deletePicture($mainPictureWithPath)) {
                 return new JsonResponse("oui", 200);
             } else {
                 return new JsonResponse("non : delete picture ", 500);
@@ -316,7 +323,7 @@ class TrickController extends AbstractController
     }
 
     /**
-     * function deleteFromDetail // tosee
+     * function deleteFromDetail
      * (button delete all trick from modification page)
      */
     #[Route('/delete-tricks_from_detail/{id}', name: 'app_tricks_delete_from_detail', methods: ['Post'])]
@@ -325,39 +332,15 @@ class TrickController extends AbstractController
         $submittedToken = $request->request->get('_token');
         if ($this->isCsrfTokenValid('delete' . $trick->getId(), $submittedToken)) {
             $trickId = $trick->getId();
-            $this->deleteAdditionalPicture($trickId);
+            $this->serviceController->deleteAdditionalPicture($trickId);
             $mainPictureWithPath = $this->getParameter('pictures_directory') . '/' . $trick->getPicture();
             $tricksRepository->remove($trick, true);
-            if ($this->deleteController->deletePicture($mainPictureWithPath)) {
+            if ($this->serviceController->deletePicture($mainPictureWithPath)) {
                 $this->addFlash('success', 'Your trick have been deleted.');
             } else {
                 $this->addFlash('error', 'Something goes wrong.');
             }
             return $this->redirectToRoute('app_home');
-        }
-    }
-
-    /**
-     * function delete Additional from Entity PicturesPicture  // tosee
-     *
-     * @param [type] $argument (trick id)... all the additional pictures of a trick from the server
-     * @return void
-     */
-    public function deleteAdditionalPicture($argument)
-    {
-        $trickId = $argument;
-        if ($this->tricksRepository->find($trickId) != null) {
-            $additionalPictures = [];
-            $additionalPictures = $this->picturesRepository->findBy(['tricks' => $trickId]);
-            if ($additionalPictures != []) {
-                foreach ($additionalPictures as $additionalPicture) {
-                    $file = $additionalPicture->getPicture();
-                    $additionalPictureWithPath = $this->getParameter('pictures_directory') . '/' .  $file;
-                    if (file_exists($additionalPictureWithPath = $this->getParameter('pictures_directory') . '/' .  $file)) {
-                        unlink($additionalPictureWithPath = $this->getParameter('pictures_directory') . '/' .  $file);
-                    }
-                }
-            }
         }
     }
 
@@ -395,44 +378,12 @@ class TrickController extends AbstractController
             $trick = $this->tricksRepository->findOneById($trickId);
             $file  = htmlentities($trick->getPicture());
             $PictureWithPath = $this->getParameter('pictures_directory') . '/' .  $file;
-            if ($this->deleteController->deletePicture($PictureWithPath)) {
+            if ($this->serviceController->deletePicture($PictureWithPath)) {
                 return new JsonResponse("oui : additionalPictureDeleted", 200);
             } else {
                 return new JsonResponse("non ", 500);
             }
         }
-    }
-
-    /**
-     * function to add additional picture
-     *
-     * @return void
-     */
-    private function addAdditionalPicture($additionalPictures, $tricks)
-    {
-        foreach ($additionalPictures as $additionalPicture) {
-            $file  = md5(uniqid()) . '.' . $additionalPicture->guessExtension();
-            $additionalPicture->move(
-                $this->getParameter('pictures_directory'),
-                $file
-            );
-            $img = new Pictures();
-            $img->setPicture($file);
-            $tricks->addAdditionalTrick($img);
-        }
-    }
-
-    /************************************************
-     *  function set picture empty for main picture
-     *
-     * @param string $fileName
-     * @param [type] $trickId
-     * @return void
-     */
-    private function setEmpty(string $fileName, $trickId)
-    {
-        $trick = $this->tricksRepository->findOneById($trickId);
-        $trick->setPicture($fileName);
     }
 
     /**
@@ -449,21 +400,10 @@ class TrickController extends AbstractController
         ]);
     }
 
-    // /**
-    //  *  function to delete --> move to Delete controller
-    //  * the  adding picture in trick on server
-    //  *
-    //  * @param [type]  string (path of picture to delete on server) 
-    //  * 
-    //  * @return bool
-    //  */
-    // private function deletePicture($PictureWithPath)
-    // {
-    //     if (file_exists($PictureWithPath)) {
-    //         unlink($PictureWithPath);
-    //         return 1;
-    //     } else {
-    //         return 0;
-    //     }
-    // }
+    // /** deletePicture -> service
+    //   deleteAdditionalPicture
+
+    /* addAdditionalPicture -> service
+    setEmpty -> service
+    */
 }

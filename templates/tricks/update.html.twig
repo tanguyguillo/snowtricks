@@ -116,7 +116,8 @@ SnowTricks - modifications - {{ trick.title }}
                                         <iframe id="player" width="560" height="315" frameborder='0'
                                             src="https://www.youtube.com/embed/{{ aVideo }}"
                                             title="YouTube video player" frameborder="0"
-                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share">
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                            allowfullscreen>
                                         </iframe>
                                     </div>
                                 </div>
@@ -229,4 +230,8 @@ SnowTricks - modifications - {{ trick.title }}
 <br>
 <br>
 <br>
+{% endblock %}
+
+{% block javaScripts %}
+<script type="text/javascript" src="http://www.youtube.com/player_api"></script>
 {% endblock %}

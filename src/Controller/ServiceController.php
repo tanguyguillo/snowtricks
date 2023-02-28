@@ -3,9 +3,8 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
-
 use App\Entity\Tricks;
+use App\Entity\Pictures;
 use App\Repository\TricksRepository;
 use App\Repository\PicturesRepository;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,18 +12,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
- * class
- */
-
-/**
- * class DeleteController
+ * class ServiceController
  */
 class ServiceController extends AbstractController
 {
     public $picturesRepository;
     public $tricksRepository;
     public $commentsRepository;
-    public $deleteController;
     private $em;
 
     // */
@@ -40,6 +34,38 @@ class ServiceController extends AbstractController
         $this->tricksRepository = $tricksRepository;
 
         $this->em = $em;
+    }
+
+    /**
+     * function to add additional picture
+     *
+     * @return void
+     */
+    public function addAdditionalPicture($additionalPictures, $tricks)
+    {
+        foreach ($additionalPictures as $additionalPicture) {
+            $file  = md5(uniqid()) . '.' . $additionalPicture->guessExtension();
+            $additionalPicture->move(
+                $this->getParameter('pictures_directory'),
+                $file
+            );
+            $img = new Pictures();
+            $img->setPicture($file);
+            $tricks->addAdditionalTrick($img);
+        }
+    }
+
+    /************************************************
+     *  function set picture empty for main picture
+     *
+     * @param string $fileName
+     * @param [type] $trickId
+     * @return void
+     */
+    public function setEmpty(string $fileName, $trickId)
+    {
+        $trick = $this->tricksRepository->findOneById($trickId);
+        $trick->setPicture($fileName);
     }
 
     /**

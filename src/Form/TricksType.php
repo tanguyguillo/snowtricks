@@ -60,6 +60,15 @@ class TricksType extends AbstractType
                     'required' => false
                 ]
             );
+        // ->add(
+        //     'movie',
+        //     TextType::class,
+        //     [
+        //         'attr' => [
+        //             'class' => 'form-control',
+        //         ]
+        //     ]
+        // );
     }
 
     /**
