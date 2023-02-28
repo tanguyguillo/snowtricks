@@ -66,7 +66,7 @@ $(document).ready(function () {
     });
 
     $('.updateTrick').click(function () {
-        console.log("4");
+        // console.log("4");
     });
 
     $('.close').click(function () {
@@ -99,5 +99,7 @@ $(document).ready(function () {
             },
         });
     });
+
+    $(window).resize(function () { location.reload(); });
 
 });
