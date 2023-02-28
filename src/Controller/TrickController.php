@@ -377,7 +377,7 @@ class TrickController extends AbstractController
 
             $file =  $additionalPicture->getPicture();
             $additionalPictureWithPath = $this->getParameter('pictures_directory') . '/' .  $file;
-            if ($this->deleteController->deletePicture($additionalPictureWithPath)) {
+            if ($this->serviceController->deletePicture($additionalPictureWithPath)) {
                 $this->em->remove($additionalPicture);
                 $this->em->flush();
                 return new JsonResponse("oui : additionalPictureDeleted", 200);

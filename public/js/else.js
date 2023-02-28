@@ -70,17 +70,14 @@ $(document).ready(function () {
     });
 
     $('.close').click(function () {
-        console.log("3");
         $(".alert").alert('close')
     });
 
     $('.pencilMainPicture').click(function () {
-        console.log("2");
         $('.pencilMainPictureAction').removeClass('displayNone')
     });
 
     $('.pencilTitleAction').click(function () {
-        console.log("pencilTitleAction");
         $('.titleAction').removeClass('displayNone')
     });
 
