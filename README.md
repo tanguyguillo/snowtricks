@@ -28,13 +28,13 @@ Create a website with symfony for Jimmy Sweat :  Snowtricks
 
 How to install this website ?
 
-1) Clone the git depot : 
-<https://github.com/tanguyguillo/snowtricks.git>
-2) 
-3) 
-4) 
-5) 
-6) that's it
+1) Clone the git depot : git clone https://github.com/tanguyguillo/snowtricks.git
+2) Open the folder created (git cd ...)
+3) Install dependance : composer install
+4) Create your DB and DATABASE_URL of .env.local (dev) and .env (prod)
+5) Do :  php bin/console make:migration and after php bin/console doctrine:migrations:migrate
+6) php bin/console s:r (start the server)
+7) that's it
 
 ## how to test
 

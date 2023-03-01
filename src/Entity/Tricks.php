@@ -70,7 +70,7 @@ class Tricks
     #[ORM\OneToMany(mappedBy: 'relation', targetEntity: Comments::class, cascade: ["all"], orphanRemoval: true)]
     private Collection $comments;
 
-    #[ORM\OneToMany(mappedBy: 'tricks', targetEntity: Movie::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'tricks', targetEntity: Movie::class, cascade: ["all"], orphanRemoval: true)]
     private Collection $videos;
 
     public function __construct()
@@ -79,7 +79,7 @@ class Tricks
         $this->setCreatedAt(new \DateTimeImmutable("now"));
         $this->slugger = new AsciiSlugger();
         $this->setPicture("main-picture.jpg");
-        $this->setDescription("X"); // not used for instance... so yet X
+        $this->setDescription("X");
         $this->additionalTrick = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->videos = new ArrayCollection();

@@ -65,6 +65,7 @@ class TricksType extends AbstractType
                 TextType::class,
                 [
                     'label' => "add a youtube item",
+                    'mapped' => false,
                     'attr' => [
                         'class' => 'form-control',
                     ]

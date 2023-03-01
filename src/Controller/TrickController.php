@@ -29,6 +29,8 @@ use Doctrine\ORM\EntityManagerInterface;
 
 use App\Controller\ServiceController;
 
+
+
 /**
  * class TrickController
  * 
@@ -184,23 +186,14 @@ class TrickController extends AbstractController
     {
         $tricks =  new Tricks();
         $formAddTrick = $this->createForm(TricksType::class, $tricks);
-
-        // $video =  $formAddTrick->get('video')->getData();
-        //dd($request->get('videos'));
-
         $formAddTrick->handleRequest($request);
 
-        // $movie =  new Movie();
-        // $formMovie = $this->createForm(MovieType::class, $movie);
-        // $formMovie->handleRequest($request);
-
         $user = new User();
-
         $formAvatar = $this->createForm(AvatarType::class, $user);
         $formAvatar->handleRequest($request);
-
         $user = $this->getUser();
         $userId = $user->getId();
+
         $currentAvatar = $user->getAvatar();
 
         if ($formAddTrick->isSubmitted() && $formAddTrick->isValid()) {
@@ -209,8 +202,8 @@ class TrickController extends AbstractController
 
             if ($pictureFile) {
                 $originalFilename = $pictureFile;
-
                 $additionalPictures = $formAddTrick->get('pictures')->getData();
+
                 $this->serviceController->addAdditionalPicture($additionalPictures, $tricks);
 
                 $newFilename = md5(uniqid()) . '.' . $originalFilename->guessExtension();
@@ -229,6 +222,12 @@ class TrickController extends AbstractController
                 }
                 $tricks->setPicture($newFilename);
             }
+
+            $video = $formAddTrick->get('videos')->getData();
+            $movie = new Movie();
+            $movie = $movie->setMovies($video);
+            $tricks->addVideo($movie);
+
             $tricks->setUser($this->getUser());
             $entityManager = $doctrine->getManager();
             $entityManager->persist($tricks);
@@ -266,7 +265,7 @@ class TrickController extends AbstractController
             return $this->redirectToRoute('tricks_app_user_tricks_add');
         }
 
-        // 'formMovie' => $formMovie->createView()
+
         return $this->render('tricks/add.html.twig', [
             'formAddTrick' =>  $formAddTrick->createView(),
             'formAvatar' =>   $formAvatar->createView(),
