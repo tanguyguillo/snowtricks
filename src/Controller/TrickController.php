@@ -184,11 +184,15 @@ class TrickController extends AbstractController
     {
         $tricks =  new Tricks();
         $formAddTrick = $this->createForm(TricksType::class, $tricks);
+
+        // $video =  $formAddTrick->get('video')->getData();
+        //dd($request->get('videos'));
+
         $formAddTrick->handleRequest($request);
 
-        $movie =  new Movie();
-        $formMovie = $this->createForm(MovieType::class, $movie);
-        $formMovie->handleRequest($request);
+        // $movie =  new Movie();
+        // $formMovie = $this->createForm(MovieType::class, $movie);
+        // $formMovie->handleRequest($request);
 
         $user = new User();
 

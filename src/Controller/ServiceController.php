@@ -29,10 +29,8 @@ class ServiceController extends AbstractController
 
     public function __construct(PicturesRepository $picturesRepository, TricksRepository $tricksRepository, EntityManagerInterface $em)
     {
-
         $this->picturesRepository = $picturesRepository;
         $this->tricksRepository = $tricksRepository;
-
         $this->em = $em;
     }
 
@@ -56,22 +54,22 @@ class ServiceController extends AbstractController
     }
 
     /************************************************
-     *  function set picture empty for main picture
+     *  function set picture empty for main picture - not used - to delete
      *
      * @param string $fileName
      * @param [type] $trickId
      * @return void
      */
-    public function setEmpty(string $fileName, $trickId)
-    {
-        $trick = $this->tricksRepository->findOneById($trickId);
-        $trick->setPicture($fileName);
-    }
+    // public function setEmpty(string $fileName, $trickId)
+    // {
+    //     $trick = $this->tricksRepository->findOneById($trickId);
+    //     $trick->setPicture($fileName);
+    // }
 
     /**
-     * function delete Additional from Entity PicturesPicture 
+     * function delete Additional from Entity PicturesPicture - $argument (trick id) :  all the additional pictures of a trick from the server
      *
-     * @param [type] $argument (trick id) :  all the additional pictures of a trick from the server
+     * @param [type] $argument
      * @return void
      */
     public function deleteAdditionalPicture($argument)
@@ -94,9 +92,9 @@ class ServiceController extends AbstractController
 
     /**
      *  function to delete 
-     * the  adding picture in trick on server
+     * the  adding picture in trick on server - string (path of picture to delete on server) 
      *
-     * @param [type]  string (path of picture to delete on server) 
+     * @param [type]  string
      * 
      * @return bool
      */

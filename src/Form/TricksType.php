@@ -59,16 +59,17 @@ class TricksType extends AbstractType
                     'mapped' => false,
                     'required' => false
                 ]
+            )
+            ->add(
+                'videos',
+                TextType::class,
+                [
+                    'label' => "add a youtube item",
+                    'attr' => [
+                        'class' => 'form-control',
+                    ]
+                ]
             );
-        // ->add(
-        //     'movie',
-        //     TextType::class,
-        //     [
-        //         'attr' => [
-        //             'class' => 'form-control',
-        //         ]
-        //     ]
-        // );
     }
 
     /**
