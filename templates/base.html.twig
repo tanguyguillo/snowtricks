@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Jimmy Sweat, Community, Tricks, snowboard">
+    <meta name="description" content="Jimmy Sweat, Community, tricks, snowboard">
     <meta name="author" content="François Tanguy Guillo">
     <title>
         {% block preTitle %}{% endblock %}
@@ -29,8 +29,10 @@
     {% block menuTop %}
     <section class="menuTop">
         <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
-            <img src="{{ app.request.getSchemeAndHttpHost() }}/assets/logo/logo-jimmy-sweat-top.png"
-                alt="Logo Jimmy Sweat" class="logoTop">
+            <a href="{{ app.request.getSchemeAndHttpHost() }}/">
+                <img src="{{ app.request.getSchemeAndHttpHost() }}/assets/logo/logo-jimmy-sweat-top.png"
+                    alt="Logo Jimmy Sweat" class="logoTop" />
+            </a>
             <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded"
                 type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
                 aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button>
@@ -65,17 +67,6 @@
         </nav>
     </section>
     {% endblock %}
-
-    {# {% if app.user and app.user.isVerified == false %}
-    <div class="alert alert-dismissible alert-warning">
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        <h4 class="alert-heading">Warning!</h4>
-        <p class="mb-0">Your account is not activated
-            <a href="{{ app.request.getSchemeAndHttpHost() }}/reset-password/check-email) }}" class="alert-link">resent
-                link activation</a>.
-        </p>
-    </div>
-    {% endif %} #}
 
     {% for message in app.flashes('success') %}
     <div class="alert success alert-dismissible fade show alertAction" role="alert">{{ message }}

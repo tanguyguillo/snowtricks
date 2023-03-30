@@ -38,9 +38,9 @@ How to install this website ?
 
 ## how to test
 
-You can check an on Line version of SnowTriks to this URL:
+You can check an on Line version of SnowTricks to this URL:
 
-<https://snowtricks.omegawebprod.com//>
+<https://snowtricks.omegawebprod.com/>
 
 Admin: every registered user is his own admin (email validation)
 
@@ -55,4 +55,4 @@ Visual Studio Code
 
 ## Creator
 
-François marie Tanguy Guillo
+François Marie Tanguy Guillo

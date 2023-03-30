@@ -70,7 +70,13 @@ class Tricks
     #[ORM\OneToMany(mappedBy: 'relation', targetEntity: Comments::class, cascade: ["all"], orphanRemoval: true)]
     private Collection $comments;
 
+    // #[Assert\Regex('/^\w+/')]
     #[ORM\OneToMany(mappedBy: 'tricks', targetEntity: Movie::class, cascade: ["all"], orphanRemoval: true)]
+    #[Assert\Regex(
+        pattern: '/^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/',
+        match: false,
+        message: "Your youtube's address have not the goog format",
+    )]
     private Collection $videos;
 
     public function __construct()
