@@ -118,7 +118,7 @@
             <div>
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 <a href="{{ app.request.getSchemeAndHttpHost() }}/tricks/add">
-                    <button class="btn btn-menu-down"><i class="fa fa-bookmark"></i></button>
+                    <button class="btn btn-menu-down"><i class="fa fa-plus"></i></button>
                 </a>
                 {% endif %}
                 {% if not is_granted('IS_AUTHENTICATED_FULLY') %}

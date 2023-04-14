@@ -21,12 +21,13 @@ class ServiceController extends AbstractController
     public $commentsRepository;
     private $em;
 
-    // */
-    // -    #[Route('/delete-tricks_from_detail/{id}', name: 'app_tricks_delete_from_detail', methods: ['Post'])]
-    // -    public function deleteFromDetail(Request $request, Tricks $trick, TricksRepository $tricksRepository)
-    // +    #[Route('/details/modifications/{slug}', name: 'modifications')]
-    // Slit the controller in smaller controller
-
+    /**
+     * __construct function
+     *
+     * @param PicturesRepository $picturesRepository
+     * @param TricksRepository $tricksRepository
+     * @param EntityManagerInterface $em
+     */
     public function __construct(PicturesRepository $picturesRepository, TricksRepository $tricksRepository, EntityManagerInterface $em)
     {
         $this->picturesRepository = $picturesRepository;

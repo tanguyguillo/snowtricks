@@ -196,6 +196,7 @@ class TrickController extends AbstractController
 
         $currentAvatar = $user->getAvatar();
 
+
         if ($formAddTrick->isSubmitted() && $formAddTrick->isValid()) {
 
             $pictureFile =  $formAddTrick->get('picture')->getData();
@@ -402,11 +403,4 @@ class TrickController extends AbstractController
             'messageError' =>  $messageError(),
         ]);
     }
-
-    // /** deletePicture -> service
-    //   deleteAdditionalPicture
-
-    /* addAdditionalPicture -> service
-    setEmpty -> service
-    */
 }
