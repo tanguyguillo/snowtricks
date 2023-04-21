@@ -15,6 +15,8 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordC
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
+
+
 class UserAuthentificatorAuthenticator extends AbstractLoginFormAuthenticator
 {
     use TargetPathTrait;
@@ -27,7 +29,7 @@ class UserAuthentificatorAuthenticator extends AbstractLoginFormAuthenticator
 
     public function authenticate(Request $request): Passport
     {
-        $username= $request->request->get('username', '');
+        $username = $request->request->get('username', '');
 
         // if user is not verified : to go  ... $userTest = UserBadge($username),
 
@@ -40,21 +42,20 @@ class UserAuthentificatorAuthenticator extends AbstractLoginFormAuthenticator
                 new CsrfTokenBadge('authenticate', $request->request->get('_csrf_token')),
             ]
         );
-        
     }
 
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName, ): ?Response
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-        // if (!$user->setIsVerified(true)) { //isVerified show "undefined method"
-
+        // $user = $userRepository->find($request->query->get('id'));
+        // if (!$user->setIsVerified(true)) {
         //     $request->getSession()->set(Security::AUTHENTICATION_ERROR, "You are not verified. Check your emails.");
         //     return null;
         // }
-    
+
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
-        
+
         return new RedirectResponse($this->urlGenerator->generate('app_home'));
     }
 

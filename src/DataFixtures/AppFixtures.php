@@ -9,8 +9,8 @@ use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 
 /**
- * class fixture (testing)
- * php bin/console doctrine:fixtures:load.... to see make:fixtures
+ * class fixture
+ * php bin/console doctrine:fixtures
  */
 class AppFixtures extends Fixture
 {
@@ -27,6 +27,8 @@ class AppFixtures extends Fixture
             $manager->persist($category);
         }
         $manager->flush();
-
+        //    $tag = Tag::create([
+        //     'name' => $faker->text($maxNbChars = 6),
+        //     'slug' => ["fa" =>"test]
     }
 }

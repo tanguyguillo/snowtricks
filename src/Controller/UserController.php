@@ -2,18 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\Pictures;
-use App\Entity\Tricks;
-
-use App\Form\TricksType;
-
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\String\Slugger\SluggerInterface;
+
 
 /**
  * UserController

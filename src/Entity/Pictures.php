@@ -15,10 +15,10 @@ class Pictures
 
     #[ORM\ManyToOne(inversedBy: 'additionnalTrick')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Tricks $tricks = null;
+    public ?Tricks $tricks = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $picure = null;
+    private ?string $picture = null;
 
     public function getId(): ?int
     {
@@ -37,14 +37,14 @@ class Pictures
         return $this;
     }
 
-    public function getPicure(): ?string
+    public function getPicture(): ?string
     {
-        return $this->picure;
+        return $this->picture;
     }
 
-    public function setPicure(string $picure): self
+    public function setPicture(string $picture): self
     {
-        $this->picure = $picure;
+        $this->picture = $picture;
 
         return $this;
     }

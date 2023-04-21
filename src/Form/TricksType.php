@@ -8,11 +8,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Validator\Constraints\Length;
 
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 use App\Entity\Category;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 /**
  * class TricksType
@@ -59,6 +59,17 @@ class TricksType extends AbstractType
                     'mapped' => false,
                     'required' => false
                 ]
+            )
+            ->add(
+                'videos',
+                TextType::class,
+                [
+                    'label' => "add a youtube item",
+                    'mapped' => false,
+                    'attr' => [
+                        'class' => 'form-control',
+                    ]
+                ]
             );
     }
 
@@ -70,7 +81,6 @@ class TricksType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        // 'data_class' => TricksType::class,
         $resolver->setDefaults([]);
     }
 }

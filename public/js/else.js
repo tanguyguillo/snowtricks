@@ -1,22 +1,36 @@
 $(document).ready(function () {
-    var id
+    let id
+    let idPicture
+    var player;
+
+    function onYouTubePlayerAPIReady() { player = new YT.Player('player'); }
+
+    $(function () {
+        $('a[data-confirm]').click(function (ev) {
+            var href = $(this).attr('href');
+
+            if (!$('#dataConfirmModal').length) {
+                $('body').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h3 id="dataConfirmLabel">Merci de confirmer</h3></div><div class="modal-body"></div><div class="modal-footer"><button class="btn" data-dismiss="modal" aria-hidden="true">Non</button><a class="btn btn-danger" id="dataConfirmOK">Oui</a></div></div></div></div>');
+            }
+            $('#dataConfirmModal').find('.modal-body').text($(this).attr('data-confirm'));
+            $('#dataConfirmOK').attr('href', href);
+            $('#dataConfirmModal').modal({ show: true });
+
+            return false;
+        });
+    });
+
+    const img = document.createElement('img')
 
     $('.btndelete').click(function () {
-        console.log("1");
         id = $(this).attr('id')
-        $('.' + id).removeClass('displayNone').addClass('displayContents');
+        $('.tricks-' + id).removeClass('displayNone').addClass('displayContents');
     });
 
     $('.close-modal').click(function () {
-        console.log(id); // OK
-        $('.' + id).removeClass('displayContent').addClass('displayNone');
+        $('.tricks-' + id).removeClass('displayContents').addClass('displayNone');
     });
 
-    $('#deleteThisTrick').click(function () {
-        $('.' + id).removeClass('displayContent').addClass('displayNone');
-    });
-
-    // go to controler
     $("a[data-delete]").on("click", function (e) {
         e.preventDefault();
         $.ajax({
@@ -24,42 +38,74 @@ $(document).ready(function () {
             url: "/tricks/delete-tricks/" + id,
             data: { "_token": this.dataset.token },
             success: function (response) {
-                console.log(response);
                 $('#deleteThisTrick').modal('toggle');
                 $('.' + id).addClass('displayNone');
             },
             error: function (error) {
-                console.log(error);
                 $('#deleteThisTrick').modal('toggle');
-
             },
         });
     });
 
-    // $().alert()	//Makes an alert listen for click events on descendant elements which have the data - dismiss="alert" attribute. (Not necessary when using the data - api’s auto - initialization.)
-    // $().alert('close')
+    $('.btnAdditionalDelete').click(function () {
+        idPicture = $(this).attr('id')
+    });
+
+    $("a[data-additional-delete]").on("click", function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            type: "DELETE",
+            url: "/tricks/delete-picture/" + idPicture,
+            data: { "_token": this.dataset.token },
+            success: function (response) {
+                $('.general' + idPicture).addClass('displayNone');
+                alert("Your picture have been deleted");
+            },
+            error: function (error) {
+                alert("Your picture didn't have been deleted, try again");
+            },
+        });
+    });
+
+    $('.updateTrick').click(function () {
+        // console.log("4");
+    });
 
     $('.close').click(function () {
-        console.log("1");
-        // id = $(this).attr('id')
-        // $('.' + id).removeClass('displayNone').addClass('displayContents');
+        $(".alert").alert('close')
     });
 
-    /// alerte... to see... don't work
-    $('.alert').click(function () {
-        $('.alert-dismissible' + id).addClass('displayNone');
-    });
-
-    // form main picture
     $('.pencilMainPicture').click(function () {
-        //console.log("pencilMainPicture");
         $('.pencilMainPictureAction').removeClass('displayNone')
     });
 
-    //pencilTitleAction
     $('.pencilTitleAction').click(function () {
-        console.log("pencilTitleAction");
         $('.titleAction').removeClass('displayNone')
     });
 
+    $("a[data-main-delete]").on("click", function (e) {
+        console.log("passage data-main-delete")
+        e.preventDefault();
+        id = $(this).attr('id')
+        id = id.substring(1);
+        $.ajax({
+            type: "DELETE",
+            url: "/tricks/delete-main-picture-only/" + id,
+            data: { "_token": this.dataset.token },
+            success: function (response) {
+                alert("Your picture have been deleted");
+                void window.location.reload()
+            },
+            error: function (error) {
+                alert("Your picture didn't have been deleted, try again");
+            },
+        });
+    });
+
+    // $(window).resize(function () { location.reload(); });
+    $(window).resize(function () {
+        // location.reload();
+        player.stopVideo();
+    });
 });

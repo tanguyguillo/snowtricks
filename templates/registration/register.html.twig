@@ -3,7 +3,7 @@
 {% block title %}Snowtricks - Registration{% endblock %}
 
 {% block main %}
-<br><br><br>
+{{ include('fragments/logo.html.twig') }}
 <div class="container text-center">
     <div class="row justify-content-center">
         <div class="col-lg-8">
@@ -33,7 +33,7 @@
                 }) }}
 
                 <br>
-                
+
                 {{ form_row(registrationForm.plainPassword, {
                 label: 'Password',
                 attr : {'class': 'form-control'}
@@ -45,17 +45,19 @@
 
                 {{ form_end(registrationForm) }}
 
-                <div>
+                <p class="label">
                     <br>
                     <a href="{{ app.request.getSchemeAndHttpHost() }}/login">Already an account ?</a>
-                </div>
+                </p>
             </div>
 
-            
+
 
         </div>
     </div>
 </div>
 </div>
+
+<br><br><br><br>
 
 {% endblock %}

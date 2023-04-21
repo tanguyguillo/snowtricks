@@ -1,0 +1,237 @@
+{% extends 'base.html.twig' %}
+
+{% set perId = 1 %}
+
+{% block title %}
+SnowTricks - modifications - {{ trick.title }}
+{% endblock %}
+
+{% block main %}
+{{ include('fragments/logo.html.twig') }}
+<div class="container text-center">
+    <span class="badge bg-primary">SnowTricks - update </span>
+    <div class="row justify-content-center" id="#tricks">
+        <div class="col-lg-12">
+            <div class="modifications">
+                <div class="rounded shadow p-3 mb-5 list-group">
+
+                    {{ form_start(formUpdateTrick) }}
+
+                    <div class="my-custom-class-for-errors">
+                        {{ form_errors(formUpdateTrick) }}
+                    </div>
+
+                    <div class="card container text-center collapse" id="collapseMain">
+                        <br>
+                        <div class="form-group">
+                            {{ form_row(formUpdateTrick.picture, {
+                            label: "Change this main picture's trick",
+                            type : "file",
+                            attr : {'class': 'form-control'},
+                            }) }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_row(formUpdateTrick.title, {
+                            label: 'Change this Trick name',
+                            attr : {'class': 'form-control'}
+                            }) }}
+                        </div>
+                        <br>
+                    </div>
+
+                    <div class="text-white bg-white mb-3">
+                        <a data-main-delete
+                            href="{{ app.request.getSchemeAndHttpHost() }}/tricks/delete-main-picture-only/{{ trick.id }}"
+                            class="float-right ml-1 mainPictureDelete" id="-{{trick.id }}"
+                            data-token="{{ csrf_token('delete'~trick.id)}}">
+                            <i class="bi bi-trash-fill btn btn btn-light iconTricks"></i>
+                        </a>
+
+                        <a data-bs-toggle="collapse" href="#collapseMain" class="float-right ml-1 collapseMain"
+                            alt="update trick">
+                            <i class="bi bi-pencil-fill btn btn btn-light iconTricks"></i>
+                        </a>
+                    </div>
+
+                    <br>
+                    <div class="col-lg-12">
+                        <br>
+                        <div class="text-white bg-Light mb-3">
+                            <div class="rounded shadow p-3 mb-5 bg-white embedPicture">
+                                <img class="bd-placeholder-img bd-placeholder-img-lg img-fluid mainPicture empty zoom"
+                                    width="100%" height="150"
+                                    src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/{{ trick.picture }}"
+                                    alt="Category : {{trick.category}} - trick : {{trick.title }}">
+                                <div class="caption post-content">
+                                    <h1><span class="grey">{{ trick.title|striptags }}</span>
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br>
+
+                    {% set myContent %}
+                    <div class="row justify-content-center">
+                        {% for additionalPicture in additionalPictures %}
+                        <div class="col-md-2 col-lg-2 mb-5 item">
+                            <div
+                                class="mx-auto rounded shadow  paddingAdditional bg-white general{{ additionalPicture.id }}">
+                                <div class="d-flex align-items-center justify-content-center h-100 w-100">
+                                    <div class="card {{additionalPicture.id}}">
+                                        <img class="img-fluid zoom"
+                                            src="{{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/{{ additionalPicture.picture }}"
+                                            alt="additional picture of {{ trick.title|striptags}}" />
+                                    </div>
+                                </div>
+
+                                <span>
+                                    <button type="button" class="float-center ml-1 additionalPictureModify btWhite" <a
+                                        data-bs-toggle="collapse" href="#collapseIndividual"
+                                        class="float-right ml-1 collapseIndividual" alt="update trick">
+                                        <i class=" bi bi-pencil-fill iconTricks"></i>
+                                        </a>
+                                    </button>
+
+                                    <a data-additional-delete
+                                        href="{{ app.request.getSchemeAndHttpHost() }}/tricks/delete-additional-picture/{{ additionalPicture.id }}"
+                                        data-confirm="Are your sur to delete this picture ?"
+                                        class="float-center ml-1 btnAdditionalDelete" id="{{ additionalPicture.id }}"
+                                        data-token="{{ csrf_token('delete'~additionalPicture.id )}}">
+                                        <i class="bi bi-trash-fill iconTricks"></i>
+                                    </a>
+                                </span>
+
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                        <div class="col-md-2 col-lg-2 mb-5 item">
+                            <div class="mx-auto rounded shadow  paddingAdditional bg-white">
+                                <div class="d-flex align-items-center justify-content-center h-100 w-100">
+                                    {% set aVideo = "mBB7CznvSPQ" %}
+                                    <div class="iframe-container">
+                                        <iframe id="player" width="560" height="315" frameborder='0'
+                                            src="https://www.youtube.com/embed/{{ aVideo }}"
+                                            title="YouTube video player" frameborder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                            allowfullscreen>
+                                        </iframe>
+                                    </div>
+                                </div>
+                                <span>
+
+                                    <a href="/tricks/modification/{{ trick.slug|striptags }}" class="float-center ml-1">
+                                        <i class="bi bi-pencil-fill iconTricks"></i>
+                                    </a>
+                                    <a href="#tricksDelete" class="float-center ml-1">
+                                        <i class="bi bi-trash-fill iconTricks"></i>
+                                    </a>
+                                </span>
+                            </div>
+
+                        </div>
+
+                        <br>
+                        <div class="col-sm-2">
+                        </div>
+                    </div>
+
+                    <div class="card container text-center collapse" id="collapseIndividual">
+                        <br>
+                        <div class="form-group">
+                            {{ form_row(formUpdateTrick.pictures, {
+                            label: 'Add more additional pictures',
+                            attr : {'class': 'form-control'}
+                            }) }}
+
+                            <input type="hidden" name="idPictureTodelete" value="1">
+                        </div>
+                    </div>
+
+                    {% endset %}
+
+                    <div class="accordion" id="accordionSnowTricks">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                    See medias
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                                data-bs-parent="#accordionSnowTricks">
+                                <div class="accordion-body">
+
+                                    {{ myContent }}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card border-primary mb-3 additionalStuff" style="max-width: 200rem;">
+                        <br>
+                        {{ myContent }}
+                    </div>
+                    <br>
+
+                    <br>
+                    <ul class="list-inline">
+                        <li class="list-inline-item badge bg-primary">
+                            Created by : {{ author.username }}
+                        </li class="list-inline-item"> |
+                        <li class="list-inline-item badge bg-primary">
+                            Created at : {{ trick.createdAt|date('d-m-Y') }}
+                        </li> |
+                        {% if trick.modifiedAt != null %}
+                        <li class="list-inline-item badge bg-primary">
+                            Updated at : {{ trick.modifiedAt|date('d-m-Y') }}
+                        </li> |
+                        {% endif %}
+                        <li class="list-inline-item badge bg-primary">
+                            Groupe : {{ trick.category }}
+                        </li>
+                    </ul>
+                    <input type="hidden" name="_token" value="{{ csrf_token('update' ~ trick.id) }}">
+                    <br>
+                    {{ form_row(formUpdateTrick.content, {
+                    label: 'Content',
+                    attr : {'class': 'form-control'}
+                    }) }}
+                    <div class="container text-center">
+                        <div class="col-4">
+                            {{ form_row(formUpdateTrick.category, {
+                            label: 'Groups',
+                            attr : {'class': 'form-control'}
+                            }) }}
+                        </div>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="submit" class="btn btn-info updateTrick">Save</button>
+                            {{ form_end(formUpdateTrick) }}
+                            <form method="post"
+                                action="{{ path('tricks_app_tricks_delete_from_detail', {'id': trick.id}) }}"
+                                onsubmit="return confirm('Are you sure you want to delete this trick?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ trick.id) }}">
+                                <button class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<div id="overlay"></div>
+<br>
+<br>
+<br>
+{% endblock %}
+
+{% block javaScripts %}
+<script type="text/javascript" src="http://www.youtube.com/player_api"></script>
+{% endblock %}

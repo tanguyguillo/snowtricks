@@ -9,8 +9,8 @@ use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 
 /**
- * class fixture (testing)
- * php bin/console doctrine:fixtures:load.... to see make:fixtures
+ * class fixture 
+ * php bin/console doctrine:fixtures:load
  */
 class CategoryFixtures extends Fixture
 {
@@ -19,11 +19,12 @@ class CategoryFixtures extends Fixture
         $catList = ['Stalls', 'Straight Airs', 'Grabs', 'Spins', "Flips and inversed rotations", 'Slides', "Tweats and variations", "Inverted hand plants", "Else"];
         $slugger = new AsciiSlugger();
 
-        foreach ($catList as $valeur) {
+        foreach ($catList as $value) {
             $category = new Category();
-            $category->setName($valeur);
-            $slug = $slugger->slug($valeur);
-            $category->setslug($slug);
+            $category->setName($value);
+            $value = strtolower($value);
+            $slug = $slugger->slug($value);
+            $category->setSlug($slug);
             $manager->persist($category);
         }
         $manager->flush();

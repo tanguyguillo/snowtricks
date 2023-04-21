@@ -1,83 +1,142 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}Snowtricks - add a trick{% endblock %}
-
+{% block title %}SnowTricks - add your trick{% endblock %}
 {% block main %}
-<br><br><br>
+{{ include('fragments/logo.html.twig') }}
+{% for message in app.flashes('success') %}
+<div class="alert success alert-dismissible fade show alertAction" role="alert">{{ message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span></button>
+</div>
+
+{% for message in app.flashes('error') %}
+<div class="alert error alert-dismissible fade show" role="alert">{{ message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span></button>
+</div>
+{% endfor %}
+
+{% endfor %}
+
 <div class="container text-center">
     <div class="row justify-content-center">
         <div class="col-lg-8">
+
+            <h2 class="tricks-modal-title text-secondary mb-0 text-center">Choose your avatar picture</h2>
             <br>
+
+            <div class="media">
+                <div class="media-body">
+                    <div class="row text-left content text-white">
+                        <div class="row align-items-start">
+
+                            <div class="row">
+                                <div class="col-12">
+                                    {% if currentAvatar == 'avatar-252×230.png' %}
+                                    <img class="mr-3 rounded-circle" alt="Avatar picture"
+                                        src=" {{ app.request.getSchemeAndHttpHost()}}/assets/img/avatars/avatar-252×230.png" />
+                                    {% else %}
+                                    <img class="mr-3 rounded-circle" alt="Avatar picture"
+                                        src=" {{ app.request.getSchemeAndHttpHost()}}/assets/img/tricks/{{ currentAvatar }}" />
+                                    {% endif %}
+                                    <br>
+                                    {{ form_start(formAvatar) }}
+                                    {{ form_row(formAvatar.avatar, {
+                                    attr : {'class': 'form-control'}
+                                    }) }}
+                                    <button class="btn btn-info mb-2" type="submit">Add this Avatar</button>
+                                    {{ form_end(formAvatar) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br><br><br>
+            <h2 class="tricks-modal-title text-secondary mb-0 text-center">Write your complete name</h2>
             <br>
-            <br>
+
+            <div class="media">
+                <form method="post" action="{{ path('tricks_app_memberName', {'userId': userId}) }}">
+                    <div class="media-body">
+                        <div class="row text-left content text-white">
+                            <div class="row align-items-start">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label>First name</label>
+                                        <input type="text" class="form-control" placeholder="Write your fist name"
+                                            value="{{ app.user.firstName|raw }}" id="firstName" name="firstName">
+                                    </div>
+                                    <div class="col-6">
+                                        <label>Last name</label>
+                                        <input type="text" class="form-control" placeholder="Write your last name"
+                                            value="{{ app.user.lastName|raw }}" id="lastName" name="lastName">
+                                    </div>
+                                    <input type="hidden" name="_token"
+                                        value="{{ csrf_token('FirstAndLastName' ~ userId) }}" />
+                                    <div class="col">
+                                        <button type="submit" class="btn btn-info mb-2">Record your name</button>
+                                    </div>
+                                </div>
+                            </div>
+                            Please write your First name and Last name for comments<br>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+
             <br>
             <h2 class="tricks-modal-title text-secondary mb-0 text-center">Add a trick</h2>
             <br><br>
 
             {{ form_start(formAddTrick) }}
-
-            <div class="form-group">
-                {{ form_row(formAddTrick.picture, {
-                label: 'Add the main picture',
-                type : "file",
-                attr : {'class': 'form-control'},
-                }) }}
-            </div>
-
+            {{ form_row(formAddTrick.picture, {
+            label: 'Add the main picture',
+            type : "file",
+            attr : {'class': 'form-control',},
+            }) }}
             <br>
-
             {{ form_row(formAddTrick.title, {
             label: 'Trick name',
             attr : {'class': 'form-control'}
             }) }}
-
             <br>
-
-            {# in fact field dscription/content #}
             {{ form_row(formAddTrick.content, {
             label: 'Description',
             attr : {'class': 'form-control'}
             }) }}
-
             <br>
-
             {{ form_row(formAddTrick.category, {
             label: 'Groupe',
             attr : {'class': 'form-control'}
             }) }}
-
             <br>
-            {# additionnal picture #}
             {{ form_row(formAddTrick.pictures, {
             label: 'Additional pictures',
-            attr : {'class': 'form-control'}
+            attr : {'class': 'form-control','required':'required'}
             }) }}
-
             <br><br>
-
             <button class="w-50 btn btn-lg btn-info" type="submit">Add this trick</button>
-
             {{ form_end(formAddTrick) }}
 
             <br>
-            <br>
-
-            {# <button type="button" class="bw-50 btn btn-lg btn-info">
-
-                {# test 1 <a href="{{ app.request.getSchemeAndHttpHost() }}/tricks/test/124">test
-                </a> #}
-
-                {# <a href="{{ app.request.getSchemeAndHttpHost() }}/tricks/test/124">test
-                </a>
-            </button> #}
-
-            <br>
-            <br><br>
-            <br>
-
         </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
     </div>
-    <br>
-    <br>
-    <br>
-    {% endblock %}
+</div>
+</div>
+</div>
+<br>
+<br>
+<br>
+{% endblock %}
+
+{% block javaScripts %}
+<script type="text/javascript" src="http://www.youtube.com/player_api"></script>
+<script src="{{ app.request.getSchemeAndHttpHost() }}/js/video.js"></script>
+{% endblock %}

@@ -2,7 +2,7 @@
 
 
 
-# Projet P6 of openclassrooms.com : create web site with symfony
+# Projet P6 of openclassrooms.com : create web site with Symfony without bundle
 
 OPENCLASSROOMS project P6 for DEV PHP/SYMFONY certificate
 
@@ -26,28 +26,28 @@ Create a website with symfony for Jimmy Sweat :  Snowtricks
 
 ## Getting Started
 
-How to use it ?
+How to install this website ?
 
-1) 
-2) 
-3) 
-4) 
-5) 
-6) that's it
+1) Clone the git depot : git clone https://github.com/tanguyguillo/snowtricks.git
+2) Open the folder created (git cd ...)
+3) Install dependance : composer install
+4) Create your DB and DATABASE_URL of .env.local (dev) and .env (prod)
+5) Do :  php bin/console make:migration and after php bin/console doctrine:migrations:migrate
+6) php bin/console s:r (start the server)
+7) that's it
 
 ## how to test
 
-You can see an onLine version to this URL (web site in english):
+You can check an on Line version of SnowTricks to this URL:
 
-<https://snowtricks.omegawebprod.com//>
+<https://snowtricks.omegawebprod.com/>
 
-admin's role:
+Admin: every registered user is his own admin (email validation)
 
-Every registred user is his own admin
+Make your own (email validation) or use user already created and confirmed :
 
-user's role:
-
-Make your own (email validation)
+userName : john
+password : johnisaniceguy
 
 ## IDE
 
@@ -55,5 +55,4 @@ Visual Studio Code
 
 ## Creator
 
-François marie Tanguy Guillo
-
+François Marie Tanguy Guillo

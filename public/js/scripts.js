@@ -1,12 +1,7 @@
-/*!
-    * Start Bootstrap - Freelancer v6.0.0 (https://startbootstrap.com/themes/freelancer)
-    * Copyright 2013-2020 Start Bootstrap
-    * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-freelancer/blob/master/LICENSE)
-    */
-(function ($) {
-    "use strict"; // Start of use strict
 
-    // Smooth scrolling using jQuery easing
+(function ($) {
+    "use strict";
+
     $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function () {
         if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
             var target = $(this.hash);
@@ -20,7 +15,6 @@
         }
     });
 
-    // Scroll to top button appear
     $(document).scroll(function () {
         var scrollDistance = $(this).scrollTop();
         if (scrollDistance > 100) {
@@ -30,12 +24,10 @@
         }
     });
 
-    // Closes responsive menu when a scroll trigger link is clicked
     $('.js-scroll-trigger').click(function () {
         $('.navbar-collapse').collapse('hide');
     });
 
-    // Image to Lightbox Overlay
     $('img').on('click', function () {
         $('#overlay')
             .css({ backgroundImage: `url(${this.src})` })
@@ -43,31 +35,6 @@
             .one('click', function () { $(this).removeClass('open'); });
     });
 
-    // Activate scrollspy to add active class to navbar items on scroll
-    // $('body').scrollSpy({
-    //     target: '#mainNav',
-    //     offset: 80
-    // });
-
-    // var scrollSpy = new bootstrap.ScrollSpy(document.body, {
-    //     target: '#mainNav',
-    //     offset: 80
-    // })
-
-    // Collapse Navbar  // not used....
-    var navbarCollapse = function () {
-        if ($("#mainNav").offset().top > 100) {
-            $("#mainNav").addClass("navbar-shrink");
-        } else {
-            $("#mainNav").removeClass("navbar-shrink");
-        }
-    };
-    // Collapse now if page is not at top
-    navbarCollapse();
-    // Collapse the navbar when page is scrolled
-    $(window).scroll(navbarCollapse);
-
-    // Floating label headings for the contact form
     $(function () {
         $("body").on("input propertychange", ".floating-label-form-group", function (e) {
             $(this).toggleClass("floating-label-form-group-with-value", !!$(e.target).val());
@@ -78,32 +45,4 @@
         });
     });
 
-    // var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-    // var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-    //     return new bootstrap.Popover(popoverTriggerEl)
-    // })
-
-
-
-
-
-
-    //var theHREF;
-
-    // $(".confirmModalLink").click(function (e) {
-
-    //     e.preventDefault();
-    //     // theHREF = $(this).attr("href");
-    //     $("#confirmModal").modal("show");
-    // });
-
-    // $("#confirmModalNo").click(function (e) {
-    //     $("#confirmModal").modal("hide");
-    // });
-
-    // $("#confirmModalYes").click(function (e) {
-    //     window.location.href = theHREF;
-    // });
-
-
-})(jQuery); // End of use strict
+})(jQuery);

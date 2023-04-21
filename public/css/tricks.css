@@ -1,17 +1,30 @@
 header {
-  /* min-height: 1110px; */
-  /* min-width: 900px !important; */
+  min-width: 375 !important;
   max-height: 800;
   overflow: hidden;
 }
 
-/*make staying the section on the bottom of the page*/
 section.copyright {
   z-index: 2;
-  /* position: fixed; */
   padding: 25px 0;
   bottom: 0;
   width: 100%;
+}
+
+select {
+  min-width: 100px;
+}
+
+button.float-center.ml-1.additionalPictureModify.btWhite {
+  background-color: white;
+  border: white;
+}
+
+.centered {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .scroll-to-tricks {
@@ -42,6 +55,12 @@ section.copyright {
 
 .border {
   padding: 30px;
+}
+
+.border-left {
+  border-left-color: #fff;
+  margin-left: 5px;
+  padding-left: 5px;
 }
 
 .btn-secondary {
@@ -77,7 +96,6 @@ span.trickName {
 
 /* for register and forgot password  */
 div.readyAccount a {
-  /*  color: #1f2d41; */
   color: #e83e8c;
   text-decoration: underline;
 }
@@ -106,7 +124,11 @@ h1#slogan {
 
 .arrow-up {
   position: absolute;
-  right: 1%;
+  right: 3%;
+}
+
+.additionalStuff {
+  padding-top: 20px;
 }
 
 .positionArrow {
@@ -131,14 +153,12 @@ div.col-md-2 {
   justify-content: center;
 }
 
-/* only 5 column */
 div.col-md-2.col-lg-2.mb-5 {
   margin: 1px;
 }
 
 footer {
   z-index: 2;
-  /* position: fixed; */
   padding: 25px 150;
   bottom: 0;
   width: 100%;
@@ -151,7 +171,6 @@ footer {
   margin-right: 2px;
 }
 
-/******************/
 ul .footerDown {
   padding: 0;
   margin: 0;
@@ -187,13 +206,16 @@ ul li a:hover .footerDown {
   height: 70px;
 }
 
+.logoSmallScreen {
+  padding: 21px;
+}
+
 *,
 ::after,
 ::before {
   box-sizing: border-box;
 }
 
-/* go down */
 .chevron-down {
   color: #1f2d41;
   position: absolute;
@@ -204,7 +226,6 @@ ul li a:hover .footerDown {
 
 .slogan {
   height: 70vh;
-  /* Relative to 100% of the height of the viewport**/
   text-align: center;
   width: 100%;
   display: flex;
@@ -218,17 +239,51 @@ ul li a:hover .footerDown {
   display: none;
 }
 
-/* *********** @media (max-width: 992px **************** */
-@media (max-width: 992px) {
-
-  /* hidden top menu on smalls screens */
-  section.menuTop {
-    visibility: hidden;
+@media (min-width: 992px) {
+  .footer-below {
+    visibility: visible !important;
   }
 
-  /* copyright hidden on smalls screens */
+  .additionalStuff {
+    display: visible !important;
+  }
+
+  .accordion,
+  .logoSmallScreen {
+    visibility: hidden !important;
+  }
+
+}
+
+@media (max-width: 992px) {
+
+  h1>span.grey {
+    font-size: medium;
+  }
+
+  .additionalStuff {
+    display: none !important;
+  }
+
+  .accordion,
+  .logoSmallScreen {
+    visibility: visible !important;
+  }
+
+  div.slogan {
+    font-size: 1.5rem
+  }
+
+  .menuTop {
+    visibility: hidden !important;
+  }
+
+  img.logoTop {
+    display: visible;
+  }
+
   .footer-below {
-    visibility: hidden;
+    display: none;
   }
 
   .menuBottom {
@@ -240,14 +295,6 @@ ul li a:hover .footerDown {
   }
 }
 
-/* ************ End @media (max-width: 992px *************** */
-
-@media (min-width: 992px) {
-  .footer-below {
-    visibility: visible !important;
-  }
-}
-
 .list-element .content {
   position: relative;
   width: 100%;
@@ -255,19 +302,6 @@ ul li a:hover .footerDown {
   transform-style: preserve-3d;
   transition: transform 0.8s cubic-bezier(0.75, 0, 0.85, 1);
 }
-
-/* #loadmore {
-    margin: 15px auto 0px;
-    display: table;
-    border: none;
-    padding: 5px 10px;
-    font-size: 18px;
-    cursor: pointer;
-    color: rgb(84, 187, 98);
-    border-radius: 2px;
-    background-color: #ffffff;
-    border: solid 1px green;
-} */
 
 .list .list-element:nth-child(1) {
   display: block;
@@ -277,9 +311,6 @@ ul li a:hover .footerDown {
   display: block;
 }
 
-/***************************/
-
-/* copyright */
 .footer-below {
   visibility: hidden;
 }
@@ -322,7 +353,10 @@ li {
   height: 150px
 }
 
-/* error message */
+.textWhite {
+  color: blue !important;
+}
+
 div>form>div>ul>li {
   color: #e83e8c;
 }
@@ -344,9 +378,13 @@ div>form>div>ul>li {
 .post-content {
   background: none repeat scroll 0 0 #FFFFFF;
   opacity: 0.5;
-  margin: -54px 20px 12px;
+  margin-top: 2%;
   position: relative;
 }
+
+/* div.caption.post-content h1 {
+  font-size: 15x;
+} */
 
 div.card {
   min-width: 90px;
@@ -359,9 +397,6 @@ div.card {
   color: #fff;
 }
 
-/* #page-top>footer {
-  max-height: 80px;
-} */
 
 i {
   color: #009da2;
@@ -373,25 +408,19 @@ i {
 
 .content {
   overflow: scroll;
-  border: #e83e8c 1px solid;
+  border: #495057 1px solid;
+  border-radius: 30px;
   height: auto;
   max-height: 300px;
   padding: 20px;
   margin: 30px;
 }
 
-.footer-below {}
+.footer-below {
+  margin-top: 25px;
+  margin-left: 50px;
+}
 
-/** in fact fooyer **/
-/* .copyright{
-  height :40px;
-} */
-
-/* .ul->list-inline-item{
- text-align: right;
-} */
-
-/* #page-top > section.page-section.tricks > div.d-flex.align-items-center.justify-content-center.h-100.w-100 > div > a > i */
 .bi-plus-circle-fill {
   color: #fff;
 }
@@ -400,7 +429,6 @@ i {
   color: #fff;
 }
 
-/********  modal ************/
 .modal-content {
   border: none;
   box-shadow: inset 1px 1px rgb(255 255 255 / 20%), inset -1px -1px rgb(255 255 255 / 10%), 1px 3px 24px -1px rgb(0 0 0 / 15%);
@@ -416,10 +444,9 @@ h5.modal-title {
 
 div>div>div.modal-body>p {
   color: #fff;
-  /* border-bottom: var(--bs-modal-header-border-width) solid */
 }
 
-div>div>div.modal-footer>button.btn.btn-primary {
+div.modal-footer>button.btn.btn.btn-primary {
   background-color: #e83e8c !important;
   border-color: rgba(255, 255, 255, 0.4);
 }
@@ -429,7 +456,7 @@ div>div>div.modal-footer>button.btn.btn-primary {
   border-color: rgba(255, 255, 255, 0.4);
 }
 
-div>div>div.modal-footer>button.btn.btn-secondary {
+div.modal-footer>button.btn.btn-secondary {
   background-color: rgba(255, 255, 255, 0.4);
   border-color: rgba(255, 255, 255, 0.4);
 }
@@ -444,9 +471,10 @@ div.modal-body {
   border-bottom: var(--bs-modal-header-border-width) solid
 }
 
-/******** End modal ************/
+.btNo {
+  padding-left: 20px;
+}
 
-/******** Single image lightbox ************/
 img {
   height: 100px;
 }
@@ -457,7 +485,9 @@ img {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(249, 246, 246, 0.9) none 100% / contain no-repeat;
+  background: rgba(17, 17, 17, 0.5) none 100% / contain no-repeat;
+  background-position: center;
+  margin: auto;
   z-index: 800;
   visibility: hidden;
   opacity: 0.5;
@@ -465,33 +495,19 @@ img {
 
 #overlay.open {
   visibility: visible;
-  /* cursor: zoom-out; */
-  cursor: pointer;
+  cursor: zoom-out;
   opacity: 1;
-  border-radius: 0.5rem !important;
 }
 
 .zoom {
   cursor: zoom-in;
 }
 
-#overlay:after {
-  /* X button icon */
-  content: "\2715";
-  position: absolute;
-  color: rgb(6, 6, 6);
-  top: 10px;
-  right: 20px;
-  font-size: 2em;
-}
-
-/******** End Single image lightbox ************/
-
 .displayNone {
   display: none;
 }
 
-.displayCntents {
+.displayContents {
   display: contents;
 }
 
@@ -506,4 +522,239 @@ img {
 
 label {
   color: white;
+}
+
+p .label a {
+  color: white;
+}
+
+div.rounded.shadow.p-3.mb-5.bg-white>form>div>h1>div {
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: none;
+  color: rgb(10, 10, 10);
+}
+
+element.style {
+  height: 50px;
+}
+
+textarea.form-control {
+  height: 200px;
+}
+
+.div .form-group {
+  color: rgb(10, 10, 10);
+
+}
+
+.form-label {
+  color: rgb(10, 10, 10);
+}
+
+#tricks_update_picture {
+  color: rgb(10, 10, 10);
+}
+
+.left {
+  width: 920px !important;
+  padding-bottom: 40px;
+  min-height: auto !important;
+  padding-right: 0;
+  float: left;
+}
+
+.left>p:first-of-type {
+  background: #ffd987;
+  font-style: italic;
+  padding: 5px 10px;
+  margin-bottom: 40px;
+}
+
+
+img.mr-3.rounded-circle {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+}
+
+.tip {
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  font-size: 1.2em;
+  position: relative;
+  width: 200px;
+}
+
+.tip:before {
+  position: absolute;
+  top: -14px;
+  left: 98px;
+  display: inline-block;
+  border-right: 14px solid transparent;
+  border-bottom: 14px solid #fff;
+  border-left: 14px solid transparent;
+  border-bottom-color: rgba(0, 0, 0, 0.2);
+  content: '';
+}
+
+.tip:after {
+  position: absolute;
+  top: -12px;
+  left: 99px;
+  display: inline-block;
+  border-right: 12px solid transparent;
+  border-bottom: 12px solid #fff;
+  border-left: 12px solid transparent;
+  content: '';
+}
+
+.tip.left:before {
+  border-top: 14px solid transparent;
+  border-right: 14px solid #fff;
+  border-bottom: 14px solid transparent;
+  border-right-color: rgba(0, 0, 0, 0.2);
+  left: -28px;
+  top: 20px;
+}
+
+.tip.left:after {
+  border-top: 12px solid transparent;
+  border-right: 12px solid #fff;
+  border-bottom: 12px solid transparent;
+  left: -24px;
+  top: 22px;
+}
+
+.widtLaC {
+  width: 100%;
+  height: 40px;
+}
+
+.posFctText {
+  margin-top: -30px;
+}
+
+.margCom {
+  padding-left: 50px;
+}
+
+.ajustPos {
+  margin-top: -12px !important;
+}
+
+.grey {
+  color: #009da2 !important;
+}
+
+.formDisplayNone {
+  display: none;
+}
+
+.flex-container {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+
+.flex-container>div {
+  margin-left: 40px;
+  margin-right: 40px;
+  text-align: center;
+  font-size: 30px;
+}
+
+form>div.mb-3>label {
+  color: white;
+}
+
+form>p.label a {
+  color: white;
+}
+
+form>p:nth-child(5)>a {
+  color: white;
+}
+
+input[type=submit] {
+  color: #fff;
+  background: #009da2;
+}
+
+input#file-upload-button {
+  background: #009da2;
+  cursor: pointer;
+}
+
+input#update_picture {
+  color: #fff;
+  background: #009da2;
+}
+
+input#deleteTrick {
+  color: #fff;
+  background: #009da2;
+}
+
+input#deleteTrick {
+  color: #fff;
+  background: #009da2;
+}
+
+input#update_pictures.form-control {
+  color: #fff;
+  background: #009da2;
+}
+
+input#tricks_picture.form-control {
+  color: #fff;
+  background: #009da2;
+  border-color: #009da2;
+  ;
+}
+
+input#tricks_pictures.form-control {
+  color: #fff;
+  background: #009da2;
+  border-color: #009da2;
+  ;
+}
+
+input#avatar_avatar.form-control {
+  color: #fff;
+  background: #009da2;
+  border-color: #009da2;
+  ;
+}
+
+button.showMore {
+  color: #fff;
+  border-color: #e83e8c;
+  background-color: #e83e8c;
+}
+
+.paddingAdditional {
+  padding: 10px;
+}
+
+.marginMainButton {
+  margin: 50px;
+}
+
+.iframe-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+  height: 0;
+}
+
+.iframe-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }

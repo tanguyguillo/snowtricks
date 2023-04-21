@@ -53,6 +53,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Tricks::class, orphanRemoval: true)]
     private Collection $tricks;
 
+    #[ORM\OneToMany(mappedBy: 'User', targetEntity: Comments::class, orphanRemoval: true)]
+    private Collection $comments;
+
+    #[Assert\Length(
+        min: 3,
+        max: 255,
+        minMessage: 'Your first name must be at least {{ limit }} characters long',
+        maxMessage: 'Your first name cannot be longer than {{ limit }} characters',
+    )]
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $firstName = null;
+
+    #[Assert\Length(
+        min: 3,
+        max: 255,
+        minMessage: 'Your first name must be at least {{ limit }} characters long',
+        maxMessage: 'Your first name cannot be longer than {{ limit }} characters',
+    )]
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $lastName = null;
+
     /**
      * initialisation function
      */
@@ -61,7 +82,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->addRole('ROLE_USER');
         $this->setAvatar("avatar-252×230.png");
         $this->tricks = new ArrayCollection();
-        // $this->comments = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function __toString()
@@ -80,6 +101,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->username;
     }
 
+    /**
+     * UserName here is a kins of trick name
+     *
+     * @param string $username
+     * @return self
+     */
     function setUserName(string $username): self
     {
         $this->username = $username;
@@ -121,7 +148,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        //return (string) $this->email;
         return (string) $this->username;
     }
 
@@ -171,12 +197,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    // public function getVerified(): bool
-    // {
-    //     $checkVerified = $this->isVerified;
+    public function getVerified(): bool
+    {
+        $checkVerified = $this->isVerified;
 
-    //     return $checkVerified;
-    // }
+        return $checkVerified;
+    }
 
     function getAvatar(): ?string
     {
@@ -216,6 +242,60 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $trick->setUser(null);
             }
         }
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Comments>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comments $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+            $comment->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comments $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getUser() === $this) {
+                $comment->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(?string $firstName): self
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(?string $lastName): self
+    {
+        $this->lastName = $lastName;
+
         return $this;
     }
 }
