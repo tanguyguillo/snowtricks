@@ -29,8 +29,6 @@ use Doctrine\ORM\EntityManagerInterface;
 
 use App\Controller\ServiceController;
 
-
-
 /**
  * class TrickController
  * 
@@ -193,7 +191,6 @@ class TrickController extends AbstractController
         $formAvatar->handleRequest($request);
         $user = $this->getUser();
         $userId = $user->getId();
-
         $currentAvatar = $user->getAvatar();
 
 
@@ -265,7 +262,6 @@ class TrickController extends AbstractController
 
             return $this->redirectToRoute('tricks_app_user_tricks_add');
         }
-
 
         return $this->render('tricks/add.html.twig', [
             'formAddTrick' =>  $formAddTrick->createView(),
