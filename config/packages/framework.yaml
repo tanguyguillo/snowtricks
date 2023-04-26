@@ -3,6 +3,8 @@ framework:
     secret: '%env(APP_SECRET)%'
     http_method_override: false
     csrf_protection: true
+    symfony.application_not_bootable:
+        enabled: true
 
     # Enables session support. Note that the session will ONLY be started if you read or write from it.
     # Remove or comment this section to explicitly disable session support.
