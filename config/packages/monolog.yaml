@@ -57,5 +57,8 @@ when@prod:
                 channels: ["!event", "!doctrine"]
             deprecation:
                 type: stream
+                level: INFO
                 channels: [deprecation]
                 path: php://stderr
+                symfony.verbose_logging_in_production: 
+                    enabled: true
