@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\TricksRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(TricksRepository $TricksRepository): Response
+    public function index(TricksRepository $TricksRepository, UserRepository $userRepository): Response
     {
         return $this->render('main_controller/index.html.twig', [
             'controller_name' => 'HomeController',
