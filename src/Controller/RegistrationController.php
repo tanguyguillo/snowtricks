@@ -3,8 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Repository\UserRepository;
-
 use App\Form\RegistrationFormType;
 use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
@@ -27,14 +25,14 @@ class RegistrationController extends AbstractController
         $this->emailVerifier = $emailVerifier;
     }
 
-    /**
-     * function register
-     *
-     * @param Request $request
-     * @param UserPasswordHasherInterface $userPasswordHasher
-     * @param EntityManagerInterface $entityManager
-     * @return Response
-     */
+/**
+ * function register
+ *
+ * @param Request $request
+ * @param UserPasswordHasherInterface $userPasswordHasher
+ * @param EntityManagerInterface $entityManager
+ * @return Response
+ */
     #[Route('/registration', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
@@ -54,9 +52,7 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
 
             // generate a signed url and email it to the user
-            $this->emailVerifier->sendEmailConfirmation(
-                'app_verify_email',
-                $user,
+            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
                     ->from(new Address('no-reply@snowtricks.omegawebprod.com', 'snowtricks.omegawebprod.com'))
                     ->to($user->getEmail())
@@ -65,7 +61,7 @@ class RegistrationController extends AbstractController
             );
 
             $this->addFlash('success', 'Your email address have to be verified.');
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_home'); 
         }
 
         return $this->render('registration/register.html.twig', [
@@ -91,35 +87,5 @@ class RegistrationController extends AbstractController
         return $this->redirectToRoute('app_home');
     }
 
-    //  1:27:25
 
-    #[Route('/renvoiverif', name: 'app_resend_check')]
-    public function resendCheck(Request $request, TranslatorInterface $translator): Response
-    {
-        $user = $this->getUser();
-        $this->emailVerifier($user);
-        return $this->redirectToRoute('app_home');
-    }
-
-    /**
-     * emailVerifier function
-     *
-     * @param [type] $user
-     * @return void
-     */
-    private function emailVerifier($user)
-    {
-        // generate a signed url and email it to the user .... idem
-        $this->emailVerifier->sendEmailConfirmation(
-            'app_verify_email',
-            $user,
-            (new TemplatedEmail())
-                ->from(new Address('no-reply@snowtricks.omegawebprod.com', 'snowtricks.omegawebprod.com'))
-                ->to($user->getEmail())
-                ->subject('Please Confirm your Email')
-                ->htmlTemplate('registration/confirmation_email.html.twig')
-        );
-
-        $this->addFlash('success', 'Your email address have to be verified.');
-    }
 }

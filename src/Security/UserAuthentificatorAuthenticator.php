@@ -33,8 +33,6 @@ class UserAuthentificatorAuthenticator extends AbstractLoginFormAuthenticator
 
         // if user is not verified : to go  ... $userTest = UserBadge($username),
 
-        var_dump('rrrrrr');
-
         $request->getSession()->set(Security::LAST_USERNAME, $username);
 
         return new Passport(
@@ -53,15 +51,6 @@ class UserAuthentificatorAuthenticator extends AbstractLoginFormAuthenticator
         //     $request->getSession()->set(Security::AUTHENTICATION_ERROR, "You are not verified. Check your emails.");
         //     return null;
         // }
-
-
-        // if (!$token->getUser()->isVerified()) { //isVerified show "undefined method"
-        //     $request->getSession()->set(Security::AUTHENTICATION_ERROR,
-        //         "You are not verified. Check your emails."
-        //     );
-        // }
-
-
 
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
