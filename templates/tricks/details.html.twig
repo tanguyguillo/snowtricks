@@ -50,19 +50,16 @@ SnowTricks - Trick detail - {{ trick.title }}
                     <div class="col-md-2 col-lg-2 mb-5 item">
                         <div class="mx-auto rounded shadow  paddingAdditional bg-white">
 
-                            <div class="embed-responsive embed-responsive-16by9">
-                                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/Lj69GncUIcg"
-                                    allowfullscreen></iframe>
-                            </div>
+                            {% set aVideo = 'Lj69GncUIcg' %}
 
-                            {# <div class="iframe-container">
+                            <div class="iframe-container">
                                 <iframe id="player" width="560" height="315"
-                                    src="https://www.youtube.com/embed/{{ aVideo }}" title="YouTube video player"
-                                    frameborder="0"
+                                    src="https://www.youtube.com/embed/{{ aVideo }}"
+                                    title="YouTube video player SnowTricks" frameborder="0"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                     allowfullscreen>
                                 </iframe>
-                            </div> #}
+                            </div>
                         </div>
                     </div>
 
