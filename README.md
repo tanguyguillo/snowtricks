@@ -11,7 +11,7 @@ Create a website with symfony for Jimmy Sweat :  Snowtricks
 
 ## Stack
 
- Symfony 6.2
+ Symfony 6.3.0
  PHP 8.08
  Maria DB
  Composer
