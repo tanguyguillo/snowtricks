@@ -11,7 +11,8 @@ Create a website with symfony for Jimmy Sweat :  Snowtricks
 
 ## Stack
 
- Symfony 6.3.0
+ Symfony 6.3.0 (End of support: January 2024) -- Requires: PHP 8.1.0 or higher
+ CLI version : 5.5.6
  PHP 8.08
  Maria DB
  Composer
@@ -29,10 +30,10 @@ How to install this website ?
 
 1) Clone the git depot : git clone https://github.com/tanguyguillo/snowtricks.git
 2) Open the folder created (git cd ...)
-3) Install dependance : composer install
+3) Install dependance : $ composer install
 4) Create your DB and DATABASE_URL of .env.local (dev) and .env (prod)
-5) php bin/console make:migration and after php bin/console doctrine:migrations:migrate
-6) symfony server:start
+5) $ php bin/console make:migration and after $ php bin/console doctrine:migrations:migrate
+6) $ symfony server:start
 7) that's it
 
 ## how to test
@@ -45,8 +46,8 @@ Admin: every registered user is his own admin (email validation)
 
 Make your own (email validation) or use user already created and confirmed :
 
-userName : john
-password : johnisaniceguy
+userName : John
+password : JohnIsANiceGuy@2023
 
 ## IDE
 

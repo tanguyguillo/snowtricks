@@ -60,7 +60,9 @@ class TrickController extends AbstractController
         $this->em = $em;
     }
 
+
     /**
+     * * 
      * function details (read)
      */
     #[Route('/details/{slug}', name: 'details')]

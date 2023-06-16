@@ -75,7 +75,7 @@ class Tricks
     #[Assert\Regex(
         pattern: '/^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/',
         match: false,
-        message: "Your youtube's address have not the goog format",
+        message: "Your youtube's address have not the good format",
     )]
     private Collection $videos;
 
