@@ -11,9 +11,9 @@ Create a website with symfony for Jimmy Sweat :  Snowtricks
 
 ## Stack
 
- Symfony 6.3.0 (End of support: January 2024) -- Requires: PHP 8.1.0 or higher
+ Symfony 6.3.0 (end of maintenance:  January 2024) -- Requires: PHP 8.1.0 or higher
  CLI version : 5.5.6
- PHP 8.08
+ PHP 8.1.13
  Maria DB
  Composer
  Twig
