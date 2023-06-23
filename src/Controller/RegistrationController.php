@@ -52,7 +52,9 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
 
             // generate a signed url and email it to the user
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+            $this->emailVerifier->sendEmailConfirmation(
+                'app_verify_email',
+                $user,
                 (new TemplatedEmail())
                     ->from(new Address('no-reply@snowtricks.omegawebprod.com', 'snowtricks.omegawebprod.com'))
                     ->to($user->getEmail())
@@ -61,7 +63,7 @@ class RegistrationController extends AbstractController
             );
 
             $this->addFlash('success', 'Your email address have to be verified.');
-            return $this->redirectToRoute('app_home'); 
+            return $this->redirectToRoute('app_home');
         }
 
         return $this->render('registration/register.html.twig', [
@@ -86,6 +88,4 @@ class RegistrationController extends AbstractController
 
         return $this->redirectToRoute('app_home');
     }
-
-
 }

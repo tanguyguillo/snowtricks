@@ -15,7 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 
 /**
  *  class RegistrationFormType
- * 
+ *
  */
 class RegistrationFormType extends AbstractType
 {

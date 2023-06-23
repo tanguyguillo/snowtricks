@@ -92,11 +92,11 @@ class ServiceController extends AbstractController
     }
 
     /**
-     *  function to delete 
-     * the  adding picture in trick on server - string (path of picture to delete on server) 
+     *  function to delete
+     * the  adding picture in trick on server - string (path of picture to delete on server)
      *
      * @param [type]  string
-     * 
+     *
      * @return bool
      */
     public function deletePicture($PictureWithPath)

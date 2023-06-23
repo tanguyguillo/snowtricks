@@ -5,11 +5,10 @@ namespace App\DataFixtures;
 use App\Entity\Category;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-
 use Symfony\Component\String\Slugger\AsciiSlugger;
 
 /**
- * class fixture 
+ * class fixture
  * php bin/console doctrine:fixtures:load
  */
 class CategoryFixtures extends Fixture

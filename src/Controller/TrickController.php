@@ -26,12 +26,11 @@ use App\Form\CommentsType;
 use App\Form\MovieType;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
-
 use App\Controller\ServiceController;
 
 /**
  * class TrickController
- * 
+ *
  */
 #[Route('/tricks', name: 'tricks_')]
 class TrickController extends AbstractController
@@ -62,7 +61,7 @@ class TrickController extends AbstractController
 
 
     /**
-     * * 
+     * *
      * function details (read)
      */
     #[Route('/details/{slug}', name: 'details')]
@@ -87,7 +86,7 @@ class TrickController extends AbstractController
         $Image = $tricks->getPicture();
         $date = date('Y-m-d H:i:s');
 
-        $comments = new Comments;
+        $comments = new Comments();
         $formComment = $this->createForm(CommentsType::class, $comments);
         $formComment->handleRequest($request);
 
@@ -105,14 +104,14 @@ class TrickController extends AbstractController
 
         $currentComments = $CommentsRepository->findBy(['relation' => $trickId], ['created_at' => 'desc']);
 
-        return $this->render('tricks/details.html.twig', compact('trick', 'author', 'additionalPictures', 'Image', 'date', 'formComment', 'currentComments', 'userId'));  // 
+        return $this->render('tricks/details.html.twig', compact('trick', 'author', 'additionalPictures', 'Image', 'date', 'formComment', 'currentComments', 'userId'));  //
     }
 
     /**
      * Function update (write)
      */
     #[Route('/details/modifications/{slug}', name: 'modifications')]
-    public function Update(EntityManagerInterface $entityManager, Request $request, $slug, TricksRepository $tricksRepository, UserRepository $userRepository,  Tricks $tricks, PicturesRepository $picturesRepository, Pictures $pictures): Response
+    public function Update(EntityManagerInterface $entityManager, Request $request, $slug, TricksRepository $tricksRepository, UserRepository $userRepository, Tricks $tricks, PicturesRepository $picturesRepository, Pictures $pictures): Response
     {
         $trick = $tricksRepository->findOneBy(['slug' => $slug]);
 
@@ -178,7 +177,7 @@ class TrickController extends AbstractController
 
     /*
      * function addTricks
-     * 
+     *
      * @return void
      */
     #[Route('/add', name: 'app_user_tricks_add')]
@@ -197,7 +196,6 @@ class TrickController extends AbstractController
 
 
         if ($formAddTrick->isSubmitted() && $formAddTrick->isValid()) {
-
             $pictureFile =  $formAddTrick->get('picture')->getData();
 
             if ($pictureFile) {
@@ -273,7 +271,7 @@ class TrickController extends AbstractController
         ]);
     }
 
-    /** 
+    /**
      * Function write your first and last name (in user) in add a tricks page
      */
     #[Route('/memberName/{userId}', name: 'app_memberName')]
@@ -282,7 +280,6 @@ class TrickController extends AbstractController
         $user = $this->getUser();
         $submittedToken = $request->request->get('_token');
         if ($this->isCsrfTokenValid('FirstAndLastName' . $userId, $submittedToken)) {
-
             $firstName = htmlentities($request->request->get('firstName'));
             $lastName = htmlentities($request->request->get('lastName'));
 
@@ -301,7 +298,7 @@ class TrickController extends AbstractController
     }
 
     /**
-     * function delete 
+     * function delete
      * trick for homePage with Ajax/JsonResponse
      *
      */
@@ -357,7 +354,6 @@ class TrickController extends AbstractController
     {
         $submittedToken = $request->request->get('_token');
         if ($this->isCsrfTokenValid('delete' . $pictureId, $submittedToken)) {
-
             $additionalPicture = $this->picturesRepository->find(array('id' => $pictureId));
 
             $file =  $additionalPicture->getPicture();
@@ -390,7 +386,7 @@ class TrickController extends AbstractController
 
     /**
      * function error
-     * 
+     *
      * @return  Response
      */
     #[Route('/error', name: 'app_user_tricks_error')]
