@@ -1,7 +1,5 @@
-# Snowtricks
 
-
-# Projet P6 of openclassrooms.com : create web site with Symfony without bundle
+# Snowtricks - Projet P6 of openclassrooms.com : create web site with Symfony without bundle
 
 OPENCLASSROOMS project P6 for DEV PHP/SYMFONY certificate
 
@@ -28,7 +26,7 @@ Create a website with symfony for Jimmy Sweat :  Snowtricks
 
 How to install this website ?
 
-1) Clone the git depot : git clone https://github.com/tanguyguillo/snowtricks.git
+1) Clone the git depot : git clone <https://github.com/tanguyguillo/snowtricks.git>
 2) Open the folder created (git cd ...)
 3) Install dependance : $ composer install
 4) Create your DB and DATABASE_URL of .env.local (dev) and .env (prod)
